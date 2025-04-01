@@ -70,7 +70,7 @@ class AdminController extends Controller
             'new_password' => 'required|confirmed'
         ]);
 
-        if(!Hash::check($request->new_password, auth::user()->password)){
+        if(!Hash::check($request->old_password, auth::user()->password)){
             $notification = array(
                 'messsage' => 'Old Password Does Not Match!',
                 'alert-type' => 'error'
