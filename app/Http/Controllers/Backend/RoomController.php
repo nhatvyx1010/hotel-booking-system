@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Room;
 use App\Models\Facility;
 use App\Models\MultiImage;
+use App\Models\RoomNumber;
 use Intervention\Image\Facades\Image;
 use Carbon\Carbon;
 
@@ -16,7 +17,8 @@ class RoomController extends Controller
         $basic_facility = Facility::where('rooms_id', $id)->get();
         $multiimgs = MultiImage::where('rooms_id', $id)->get();
         $editData = Room::find($id);
-        return view('backend.allroom.rooms.edit_rooms', compact('editData', 'basic_facility', 'multiimgs'));
+        $allroomNo = RoomNumber::where('rooms_id', $id)->get();
+        return view('backend.allroom.rooms.edit_rooms', compact('editData', 'basic_facility', 'multiimgs', 'allroomNo'));
     }
 
     public function UpdateRoom(Request $request, $id){
@@ -105,5 +107,48 @@ class RoomController extends Controller
             'alert-type' => 'success'
         );
         return redirect()->back()->with('message', 'Multi Image Deleted Successfully')->with('alert-type', 'success');
+    }
+
+    public function StoreRoomNumber(Request $request, $id){
+        $data = new RoomNumber();
+        $data->rooms_id = $id;
+        $data->room_type_id = $request->room_type_id;
+        $data->room_no = $request->room_no;
+        $data->status = $request->status;
+        $data->save();
+
+        $notification = array(
+            'messsage' => 'Room Number Added Successfully',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with('message', 'Room Number Added Successfully')->with('alert-type', 'success');
+    }
+
+    public function EditRoomNumber($id){
+        $editroomno = RoomNumber::find($id);
+        return view('backend.allroom.rooms.edit_room_number', compact('editroomno'));
+    }
+
+    public function UpdateRoomNumber(Request $request, $id){
+        $data = RoomNumber::find($id);
+        $data->room_no = $request->room_no;
+        $data->status = $request->status;
+        $data->save();
+
+        $notification = array(
+            'messsage' => 'Room Number Updated Successfully',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('room.type.list')->with('message', 'Room Number Updated Successfully')->with('alert-type', 'success');
+    }
+
+    public function DeleteRoomNumber($id){
+        RoomNumber::find($id)->delete();
+
+        $notification = array(
+            'messsage' => 'Room Number Deleted Successfully',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('room.type.list')->with('message', 'Room Number Deleted Successfully')->with('alert-type', 'success');
     }
 }

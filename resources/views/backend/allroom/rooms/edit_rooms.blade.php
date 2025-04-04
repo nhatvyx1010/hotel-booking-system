@@ -215,7 +215,61 @@
 
 
                             <div class="tab-pane fade" id="primaryprofile" role="tabpanel">
-                                <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</p>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <a class="card-title btn btn-primary float-right" onclick="addRoomNo()" id="addRoomNo">
+                                            <i class="lni lni-plus">Add New</i>
+                                        </a>
+                                        <div class="roomnoHide" id="roomnoHide">
+                                            <form action="{{ route('store.room.number', $editData->id) }}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="room_type_id" value="{{ $editData->roomtype_id }}">
+
+                                                <div class="row">
+                                            <div class="col-md-4">
+                                                <label for="input2" class="form-label">Room Number</label>
+                                                <input type="text" name="room_no" class="form-control" id="input2">
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label for="input7" class="form-label">Status</label>
+                                                <select name="status" id="input7" class="form-select">
+                                                    <option selected="">Selected Status...</option>
+                                                    <option value="Active">Active</option>
+                                                    <option value="Inactive">Inactive</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <button type="submit" class="btn btn-success" style="margin-top:28px; ">Save</button>
+                                            </div>
+
+                                            </div>
+                                            </form>
+                                        </div>
+                                        <table class="table mb-0 table-striped" id="roomview">
+									<thead>
+										<tr>
+											<th scope="col">Room Number</th>
+											<th scope="col">Status</th>
+											<th scope="col">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+                                        @foreach ($allroomNo as $item)
+										<tr>
+											<td>{{ $item->room_no }}</td>
+											<td>{{ $item->status }}</td>
+											<td>
+                                                <a href="{{ route('edit.roomno', $item->id) }}" class="btn btn-warning px-3 radius-30">Edit</a>
+                                                <a href="{{ route('delete.roomno', $item->id) }}" class="btn btn-danger px-3 radius-30" id="delete">Delete</a>
+                                            </td>
+										</tr>
+                                        @endforeach
+									</tbody>
+								</table>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
@@ -313,6 +367,17 @@
             counter -= 1
       });
    });
+</script>
+
+<script>
+    $('#roomnoHide').hide();
+    $('#roomview').show();
+
+   function addRoomNo(){
+        $('#roomnoHide').show();
+        $('#roomview').hide();
+        $('#addRoomNo').hide();
+   }
 </script>
 
 @endsection
