@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Backend\TeamController;
 use App\Http\Controllers\Backend\RoomTypeController;
 use App\Http\Controllers\Backend\RoomController;
+use App\Http\Controllers\Frontend\FrontendRoomController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -73,4 +74,10 @@ Route::middleware(['auth', 'roles:admin'])->group(function(){
         Route::get('/delete/room/{id}', 'DeleteRoom')->name('delete.room');
           
     });
+});
+
+Route::controller(FrontendRoomController::class)->group(function(){
+
+    Route::get('/rooms/', 'AllFrontendRoom')->name('frontend.room.all');
+      
 });
