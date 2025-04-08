@@ -80,5 +80,6 @@ Route::controller(FrontendRoomController::class)->group(function(){
 
     Route::get('/rooms/', 'AllFrontendRoom')->name('frontend.room.all');
     Route::get('/room/details/{id}', 'RoomDetailsPage');
+    Route::get('/bookings/', 'BookingSearch')->name('booking.search');
       
 });
