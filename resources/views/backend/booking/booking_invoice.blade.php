@@ -118,7 +118,7 @@
 
 
   <div class="thanks mt-3">
-    <p>Thanks For Your Booking.!</p>
+    <p>Thanks For Your Booking!</p>
   </div>
   <div class="authority float-right mt-5">
       <p>-----------------------------------</p>
