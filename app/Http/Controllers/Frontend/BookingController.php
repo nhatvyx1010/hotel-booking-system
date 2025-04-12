@@ -193,7 +193,12 @@ class BookingController extends Controller
             'phone' => $sendmail->phone,
         ];
 
-        Mail::to($sendmail->email)->send(new BookConfirm($data));
+        try {
+            Mail::to($sendmail->email)->send(new BookConfirm($data));
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+        
 
         $notification = array(
             'messsage' => 'Information Updated Successfully',
