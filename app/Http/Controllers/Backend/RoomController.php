@@ -48,7 +48,7 @@ class RoomController extends Controller
         if($request->facility_name == NULL){
 
             $notification = array(
-                'messsage' => 'Sorry! Not Any Basic Facility Select',
+                'message' => 'Sorry! Not Any Basic Facility Select',
                 'alert-type' => 'error'
             );
             return redirect()->back()->with('message', 'Sorry! Not Any Basic Item Select')->with('alert-type', 'error');
