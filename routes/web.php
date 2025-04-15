@@ -124,6 +124,12 @@ Route::middleware(['auth', 'roles:admin'])->group(function(){
         Route::post('/update/blog/post', 'UpdateBlogPost')->name('update.blog.post');
         Route::get('/delete/blog/post/{id}', 'DeleteBlogPost')->name('delete.blog.post');
     });
+
+    Route::controller(CommentController::class)->group(function(){
+
+        Route::get('/all/comment/', 'AllComment')->name('all.comment');
+        Route::post('/update/comment/status', 'UpdateCommentStatus')->name('update.comment.status');
+    });
 });
 
 Route::controller(FrontendRoomController::class)->group(function(){
