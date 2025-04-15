@@ -13,6 +13,7 @@ use App\Http\Controllers\Backend\RoomListController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\TestimonialController;
 use App\Http\Controllers\Backend\BlogController;
+use App\Http\Controllers\Backend\CommentController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -160,4 +161,9 @@ Route::controller(BlogController::class)->group(function(){
     Route::get('/blog/details/{slug}', 'BlogDetails');
     Route::get('/blog/cat/list/{id}', 'BlogCatList');
     Route::get('/blog', 'BlogList')->name('blog.list');
+});
+
+Route::controller(CommentController::class)->group(function(){
+
+    Route::post('/store/comment/', 'StoreComment')->name('store.comment');
 });
