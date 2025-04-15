@@ -5,10 +5,7 @@
                 <div class="language-list">
                     <select class="language-list-item">
                         <option>English</option>
-                        <option>العربيّة</option>
-                        <option>Deutsch</option>
-                        <option>Português</option>
-                        <option>简体中文</option>
+                        <option>Tiếng Việt</option>
                     </select>	
                 </div>
             </div>
@@ -18,11 +15,11 @@
                     <ul>
                         <li>
                             <i class='bx bx-home-alt'></i>
-                            <a href="#">123 Virgil A Stanton, Virginia, USA</a>
+                            <a href="#">Da Nang, Viet Nam</a>
                         </li>
                         <li>
                             <i class='bx bx-phone-call'></i>
-                            <a href="tel:+1-(123)-456-7890">+1 (123) 456 7890</a>
+                            <a href="tel:+1-(123)-456-7890">+84 959595959</a>
                         </li>
         @auth
         <li>
