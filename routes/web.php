@@ -154,3 +154,8 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/user/invoice/{id}', 'UserInvoice')->name('user.invoice');
     });
 });
+
+Route::controller(BlogController::class)->group(function(){
+
+    Route::get('/blog/details/{slug}', 'BlogDetails');
+});
