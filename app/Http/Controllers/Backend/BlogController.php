@@ -154,4 +154,11 @@ class BlogController extends Controller
         );
         return redirect()->back()->with('message', 'BlogPost Image Deleted Successfully')->with('alert-type', 'success');
     }
+
+    public function BlogDetails($slug){
+        $blog = BlogPost::where('post_slug', $slug)->first();
+        $bcategory = BlogCategory::latest()->get();
+        $lpost = BlogPost::latest()->limit(3)->get();
+        return view('frontend.blog.blog_details', compact('blog', 'bcategory', 'lpost'));
+    }
 }
