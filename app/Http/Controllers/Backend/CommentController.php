@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Http\Controllers\Backend;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\BlogCategory;
+use Intervention\Image\Facades\Image;
+use Carbon\Carbon;
+use App\Models\BlogPost;
+use App\Models\Comment;
+use Illuminate\Support\Facades\Auth;
+
+class CommentController extends Controller
+{
+    public function StoreComment(Request $request){
+        Comment::insert([
+            'user_id' => $request->user_id,
+            'post_id' => $request->post_id,
+            'message' => $request->message,
+            'created_at' => Carbon::now(),
+        ]);
+
+        $notification = array(
+            'message' => 'Comment Added Successfully Admin will approve',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with('message', 'Comment Added Successfully Admin will approve')->with('alert-type', 'success');
+    }
+}

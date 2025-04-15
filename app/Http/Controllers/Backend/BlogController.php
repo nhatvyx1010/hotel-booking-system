@@ -86,7 +86,7 @@ class BlogController extends Controller
         ]);
 
         $notification = array(
-            'messsage' => 'BlogPost Data Inserted Successfully',
+            'message' => 'BlogPost Data Inserted Successfully',
             'alert-type' => 'success'
         );
         return redirect()->route('all.blog.post')->with('message', 'BlogPost Data Inserted Successfully')->with('alert-type', 'success');
@@ -119,7 +119,7 @@ class BlogController extends Controller
             ]);
     
             $notification = array(
-                'messsage' => 'BlogPost Updated With Image Successfully',
+                'message' => 'BlogPost Updated With Image Successfully',
                 'alert-type' => 'success'
             );
             return redirect()->route('all.blog.post')->with('message', 'BlogPost Updated With Image Successfully')->with('alert-type', 'success');
@@ -135,7 +135,7 @@ class BlogController extends Controller
             ]);
     
             $notification = array(
-                'messsage' => 'BlogPost Updated Without Image Successfully',
+                'message' => 'BlogPost Updated Without Image Successfully',
                 'alert-type' => 'success'
             );
             return redirect()->route('all.blog.post')->with('message', 'BlogPost Updated Without Image Successfully')->with('alert-type', 'success');
@@ -149,10 +149,10 @@ class BlogController extends Controller
 
         BlogPost::findOrFail($id)->delete();
         $notification = array(
-            'messsage' => 'BlogPost Image Deleted Successfully',
+            'message' => 'BlogPost Deleted Successfully',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'BlogPost Image Deleted Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'BlogPost Deleted Successfully')->with('alert-type', 'success');
     }
 
     public function BlogDetails($slug){
