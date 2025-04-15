@@ -126,6 +126,18 @@
 			</ul>
 		</li>
 
+		<li>
+			<a class="has-arrow" href="javascript:;">
+				<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
+				</div>
+				<div class="menu-title">Manage Comment</div>
+			</a>
+			<ul>
+				<li> <a href="{{ route('all.comment') }}"><i class='bx bx-radio-circle'></i>All Comments</a>
+				</li>
+			</ul>
+		</li>
+
 		<li class="menu-label">Others</li>
 		<li>
 			<a href="#" target="_blank">
