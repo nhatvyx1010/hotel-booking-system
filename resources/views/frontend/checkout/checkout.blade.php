@@ -165,7 +165,7 @@
                                     </p>
 									<p>
        <input type="radio" class="pay_method" id="stripe" name="payment_method" value="Stripe">
-        <label for="stripe">Stripe</label>
+        <label for="stripe">BANK_TRANSFER</label>
           </p>
 
 
