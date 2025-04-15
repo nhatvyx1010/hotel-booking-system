@@ -1,3 +1,6 @@
+@php
+    $setting = App\Models\SiteSetting::find(1);
+@endphp
 <header class="top-header top-header-bg">
     <div class="container">
         <div class="row align-items-center">
@@ -15,11 +18,11 @@
                     <ul>
                         <li>
                             <i class='bx bx-home-alt'></i>
-                            <a href="#">Da Nang, Viet Nam</a>
+                            <a href="#">{{ $setting->address }}</a>
                         </li>
                         <li>
                             <i class='bx bx-phone-call'></i>
-                            <a href="tel:+1-(123)-456-7890">+84 959595959</a>
+                            <a href="tel:+1-(123)-456-7890">{{ $setting->phone }}</a>
                         </li>
         @auth
         <li>

@@ -35,7 +35,7 @@ class TeamController extends Controller
         ]);
 
         $notification = array(
-            'messsage' => 'Team Data Inserted Successfully',
+            'message' => 'Team Data Inserted Successfully',
             'alert-type' => 'success'
         );
         return redirect()->route('all.team')->with('message', 'Team Data Inserted Successfully')->with('alert-type', 'success');
@@ -64,7 +64,7 @@ class TeamController extends Controller
             ]);
     
             $notification = array(
-                'messsage' => 'Team Updated With Image Successfully',
+                'message' => 'Team Updated With Image Successfully',
                 'alert-type' => 'success'
             );
             return redirect()->route('all.team')->with('message', 'Team Updated With Image Successfully')->with('alert-type', 'success');
@@ -77,7 +77,7 @@ class TeamController extends Controller
             ]);
     
             $notification = array(
-                'messsage' => 'Team Updated Without Image Successfully',
+                'message' => 'Team Updated Without Image Successfully',
                 'alert-type' => 'success'
             );
             return redirect()->route('all.team')->with('message', 'Team Updated Without Image Successfully')->with('alert-type', 'success');
@@ -91,7 +91,7 @@ class TeamController extends Controller
 
         Team::findOrFail($id)->delete();
         $notification = array(
-            'messsage' => 'Team Image Deleted Successfully',
+            'message' => 'Team Image Deleted Successfully',
             'alert-type' => 'success'
         );
         return redirect()->back()->with('message', 'Team Image Deleted Successfully')->with('alert-type', 'success');
@@ -120,7 +120,7 @@ class TeamController extends Controller
             ]);
     
             $notification = array(
-                'messsage' => 'Book Area Updated With Image Successfully',
+                'message' => 'Book Area Updated With Image Successfully',
                 'alert-type' => 'success'
             );
             return redirect()->back()->with('message', 'Book Area Updated With Image Successfully')->with('alert-type', 'success');
@@ -133,7 +133,7 @@ class TeamController extends Controller
             ]);
     
             $notification = array(
-                'messsage' => 'Book Area Updated Without Image Successfully',
+                'message' => 'Book Area Updated Without Image Successfully',
                 'alert-type' => 'success'
             );
             return redirect()->back()->with('message', 'Book Area Updated Without Image Successfully')->with('alert-type', 'success');

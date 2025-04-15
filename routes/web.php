@@ -137,6 +137,11 @@ Route::middleware(['auth', 'roles:admin'])->group(function(){
         Route::get('/booking/report/', 'BookingReport')->name('booking.report');
         Route::post('/search-by-date', 'SearchByDate')->name('search-by-date');
     });
+
+    Route::controller(SettingController::class)->group(function(){
+        Route::get('/site/setting', 'SiteSetting')->name('site.setting');
+        Route::post('/site/update', 'SiteUpdate')->name('site.update');
+    });
 });
 
 Route::controller(FrontendRoomController::class)->group(function(){
