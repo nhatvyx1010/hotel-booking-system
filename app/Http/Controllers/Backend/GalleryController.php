@@ -91,4 +91,9 @@ class GalleryController extends Controller
         );
         return redirect()->back()->with('message', 'Selected Image Deleted Successfully')->with('alert-type', 'success');
     }
+
+    public function ShowGallery(){
+        $gallery = Gallery::latest()->get();
+        return view('frontend.gallery.show_gallery', compact('gallery'));
+    }
 }
