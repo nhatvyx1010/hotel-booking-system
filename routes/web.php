@@ -152,6 +152,8 @@ Route::middleware(['auth', 'roles:admin'])->group(function(){
         Route::post('/update/gallery', 'UpdateGallery')->name('update.gallery');
         Route::get('/delete/gallery/{id}', 'DeleteGallery')->name('delete.gallery');
         Route::post('/delete/gallery/multiple', 'DeleteGalleryMultiple')->name('delete.gallery.multiple');
+        
+        Route::get('/contact/message', 'ManageContactMessage')->name('contact.message');
     });
 });
 
@@ -200,4 +202,6 @@ Route::controller(CommentController::class)->group(function(){
 Route::controller(GalleryController::class)->group(function(){
 
     Route::get('/gallery', 'ShowGallery')->name('show.gallery');
+    Route::get('/contact', 'ContactUs')->name('contact.us');
+    Route::post('/store/contact', 'StoreContact')->name('store.contact');
 });
