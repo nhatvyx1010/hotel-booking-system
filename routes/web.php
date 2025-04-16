@@ -205,3 +205,8 @@ Route::controller(GalleryController::class)->group(function(){
     Route::get('/contact', 'ContactUs')->name('contact.us');
     Route::post('/store/contact', 'StoreContact')->name('store.contact');
 });
+
+Route::controller(BookingController::class)->group(function(){
+
+    Route::post('/mark-notification-as-read/{notification}', 'MarkAsRead');
+});
