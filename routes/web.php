@@ -196,3 +196,8 @@ Route::controller(CommentController::class)->group(function(){
 
     Route::post('/store/comment/', 'StoreComment')->name('store.comment');
 });
+
+Route::controller(GalleryController::class)->group(function(){
+
+    Route::get('/gallery', 'ShowGallery')->name('show.gallery');
+});
