@@ -10,21 +10,13 @@
 							<ol class="breadcrumb mb-0 p-0">
 								<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
 								</li>
-								<li class="breadcrumb-item active" aria-current="page">All Permission</li>
+								<li class="breadcrumb-item active" aria-current="page">All Roles Permission</li>
 							</ol>
 						</nav>
 					</div>
 					<div class="ms-auto">
 						<div class="btn-group">
-                        <a href="{{ route('add.permission') }}" class="btn btn-primary px-5"> Add Permission </a>
-						</div>
-
-                        <div class="btn-group">
-                        <a href="{{ route('import.permission') }}" class="btn btn-warning px-5"> Import</a>
-						</div>
-
-                        <div class="btn-group">
-                        <a href="{{ route('export') }}" class="btn btn-danger px-5"> Export </a>
+                        <a href="{{ route('add.roles.permission') }}" class="btn btn-primary px-5"> Add Role in Permission </a>
 						</div>
 					</div>
 				</div>
@@ -38,20 +30,24 @@
                     <thead>
                         <tr>
                             <th>Serial</th>
-                            <th>Permission Name</th>
-                            <th>Permission Group</th>
+                            <th>Roles Name</th>
+                            <th>Permission</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($permissions as $key=> $item)
+                        @foreach($roles as $key=> $item)
                             <tr>
                                 <td>{{ $key+1 }}</td>
                                 <td>{{ $item->name }}</td>
-                                <td>{{ $item->group_name }}</td>
                                 <td>
-                                    <a href="{{ route('edit.permission', $item->id) }}" class="btn btn-warning px-3 radius-30">Edit</a>
-                                    <a href="{{ route('delete.permission', $item->id) }}" class="btn btn-danger px-3 radius-30" id="delete">Delete</a>
+                                    @foreach ($item->permissions as $perm)
+                                        <span class="badge bg-danger">{{ $perm->name }}</span>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    <a href="{{ route('admin.edit.roles', $item->id) }}" class="btn btn-warning px-3 radius-30">Edit</a>
+                                    <a href="{{ route('admin.delete.roles', $item->id) }}" class="btn btn-danger px-3 radius-30" id="delete">Delete</a>
                                 </td>
                             </tr>
                         @endforeach
