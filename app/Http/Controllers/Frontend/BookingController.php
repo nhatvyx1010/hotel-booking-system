@@ -84,7 +84,7 @@ class BookingController extends Controller
             'phone' => 'required',
             'address' => 'required',
             'state' => 'required',
-            'zip_code' => 'required',
+            // 'zip_code' => 'required',
             'payment_method' => 'required',
         ]);
 
@@ -142,7 +142,7 @@ class BookingController extends Controller
             $data->phone = $request->phone;
             $data->country = $request->country;
             $data->state = $request->state;
-            $data->zip_code = $request->zip_code;
+            // $data->zip_code = $request->zip_code;
             $data->address = $request->address;
             $data->code = $code;
             $data->status = 0;

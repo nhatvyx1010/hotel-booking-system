@@ -18,9 +18,9 @@
                     </a>
                     <div class="content">
                         <ul>
-                            <li>{{ $item->created_at->format('M d Y') }}/li>
-                            <li><i class='bx bx-user'></i>29K</li>
-                            <li><i class='bx bx-message-alt-dots'></i>15K</li>
+                            <li>{{ $item->created_at->format('M d Y') }}</li>
+                            <!-- <li><i class='bx bx-user'></i>29K</li>
+                            <li><i class='bx bx-message-alt-dots'></i>15K</li> -->
                         </ul>
                         <h3>
                             <a href="{{ url('blog/details/'.$item->post_slug) }}">{{ $item->post_title }}</a>

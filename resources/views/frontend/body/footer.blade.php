@@ -14,7 +14,7 @@
                             </a>
                         </div>
                         <p>
-                            Aenean finibus convallis nisl sit amet hendrerit. Etiam blandit velit non lorem mattis, non ultrices eros bibendum .
+                        The end of the valley is close to the mouth. The foliage grows from the base, adding color and form.
                         </p>
                         <ul class="footer-list-contact">
                             <li>
@@ -124,10 +124,6 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-widget">
                         <h3>Newsletter</h3>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                            Nullam tempor eget ante fringilla rutrum aenean sed venenatis .
-                        </p>
                         <div class="footer-form">
                             <form class="newsletter-form" data-toggle="validator" method="POST">
                                 <div class="row">

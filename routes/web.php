@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HotelController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Backend\TeamController;
 use App\Http\Controllers\Backend\RoomTypeController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\Backend\CommentController;
 use App\Http\Controllers\Backend\ReportController;
 use App\Http\Controllers\Backend\GalleryController;
 use App\Http\Controllers\Backend\RoleController;
+use App\Http\Controllers\Frontend\VnpayController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -250,3 +252,196 @@ Route::controller(BookingController::class)->group(function(){
 
     Route::post('/mark-notification-as-read/{notification}', 'MarkAsRead');
 });
+
+///////////////// VNPAY ///////////////
+Route::post('/create-payment', [VnpayController::class, 'create']);
+Route::get('/return-vnpay', [VnpayController::class, 'return'])->name('return-vnpay');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////// Hotel Group Middleware ///////////////
+//
+Route::middleware(['auth', 'roles:hotel'])->group(function(){
+    Route::get('/hotel/dashboard', [HotelController::class, 'HotelDashboard'])->name('hotel.dashboard');
+    Route::get('/hotel/logout', [HotelController::class, 'HotelLogout'])->name('hotel.logout');
+    Route::get('/hotel/profile', [HotelController::class, 'HotelProfile'])->name('hotel.profile');
+    Route::post('/hotel/profile/store', [HotelController::class, 'HotelProfileStore'])->name('hotel.profile.store');
+    Route::get('/hotel/change/password', [HotelController::class, 'HotelChangePassword'])->name('hotel.change.password');
+    Route::post('/hotel/password/update', [HotelController::class, 'HotelPasswordUpdate'])->name('hotel.password.update');
+
+    
+    Route::controller(TeamController::class)->group(function(){
+        Route::get('/hotel/all/team', 'HotelAllTeam')->name('hotel.all.team');
+        Route::get('/hotel/add/team', 'HotelAddTeam')->name('hotel.add.team');
+        Route::post('/hotel/team/store', 'HotelStoreTeam')->name('hotel.team.store');
+        Route::get('/hotel/edit/team/{id}', 'HotelEditTeam')->name('hotel.edit.team');
+        Route::post('/hotel/team/update', 'HotelUpdateTeam')->name('hotel.team.update');
+        Route::get('/hotel/delete/team/{id}', 'HotelDeleteTeam')->name('hotel.delete.team');
+    });
+
+    Route::controller(TeamController::class)->group(function(){
+        Route::get('/hotel/book/area', 'HotelBookArea')->name('hotel.book.area');
+        Route::post('/hotel/book/area/update', 'HotelBookAreaUpdate')->name('hotel.book.area.update');
+    });
+
+});
+Route::get('/hotel/login', [HotelController::class, 'HotelLogin'])->name('hotel.login');
+Route::get('/hotel/register', [HotelController::class, 'HotelRegister'])->name('hotel.register');
+Route::post('/hotel/register/submit', [HotelController::class, 'HotelRegisterSubmit'])->name('hotel.register_submit');
+Route::post('/hotel/login_submit', [HotelController::class, 'HotelLoginSubmit'])->name('hotel.login_submit');
+Route::get('/hotel/logout', [HotelController::class, 'HotelLogout'])->name('hotel.logout');
+
+// Route::middleware(['auth', 'roles:hotel'])->group(function(){
+//     Route::controller(RoomTypeController::class)->group(function(){
+//         Route::get('/room/type/list', 'RoomTypeList')->name('room.type.list');
+//         Route::get('/add/room/type', 'AddRoomType')->name('add.room.type');
+//         Route::post('/room/type/store', 'RoomTypeStore')->name('room.type.store');
+//     });
+
+//     Route::controller(RoomController::class)->group(function(){
+
+//         Route::get('/edit/room/{id}', 'EditRoom')->name('edit.room');
+//         Route::post('/update/room/{id}', 'UpdateRoom')->name('update.room');
+//         Route::get('/multi/image/delete/{id}', 'MultiImageDelete')->name('multi.image.delete');
+    
+//         Route::post('/store/room/number/{id}', 'StoreRoomNumber')->name('store.room.number');
+//         Route::get('/edit/roomno/{id}', 'EditRoomNumber')->name('edit.roomno');
+//         Route::post('/update/roomno/{id}', 'UpdateRoomNumber')->name('update.roomno');
+//         Route::get('/delete/roomno/{id}', 'DeleteRoomNumber')->name('delete.roomno');
+    
+//         Route::get('/delete/room/{id}', 'DeleteRoom')->name('delete.room');
+          
+//     });
+
+//     Route::controller(BookingController::class)->group(function(){
+//         Route::get('/booking/list', 'BookingList')->name('booking.list');
+//         Route::get('/edit_booking/{id}', 'EditBooking')->name('edit_booking');
+//         Route::get('/download/invoice/{id}', 'DownloadInvoice')->name('download.invoice');
+//     });
+
+//     Route::controller(RoomListController::class)->group(function(){
+//         Route::get('/view/room/list', 'ViewRoomList')->name('view.room.list');
+//         Route::get('/add/room/list', 'AddRoomList')->name('add.room.list');
+//         Route::post('/store/roomlist', 'StoreRoomList')->name('store.roomlist');
+//     });
+
+//     Route::controller(SettingController::class)->group(function(){
+//         Route::get('/smtp/setting', 'SmtpSetting')->name('smtp.setting');
+//         Route::post('/smtp/update', 'SmtpUpdate')->name('smtp.update');
+//     });
+
+//     Route::controller(TestimonialController::class)->group(function(){
+//         Route::get('/all/testimonial', 'AllTestimonial')->name('all.testimonial');
+//         Route::get('/add/testimonial', 'AddTestimonial')->name('add.testimonial');
+//         Route::post('/store/testimonial', 'StoreTestimonial')->name('testimonial.store');
+
+//         Route::get('/edit/testimonial/{id}', 'EditTestimonial')->name('edit.testimonial');
+//         Route::post('/update/testimonial', 'UpdateTestimonial')->name('testimonial.update');
+//         Route::get('/delete/testimonial/{id}', 'DeleteTestimonial')->name('delete.testimonial');
+//     });
+
+//     Route::controller(BlogController::class)->group(function(){
+//         Route::get('/blog/category', 'BlogCategory')->name('blog.category');
+//         Route::post('/store/blog/category', 'StoreBlogCategory')->name('store.blog.category');
+//         Route::get('/edit/blog/category/{id}', 'EditBlogCategory');
+//         Route::post('/update/blog/category', 'UpdateBlogCategory')->name('update.blog.category');
+//         Route::get('/delete/blog/category/{id}', 'DeleteBlogCategory')->name('delete.blog.category');
+//     });
+
+//     Route::controller(BlogController::class)->group(function(){
+//         Route::get('/all/blog/post', 'AllBlogPost')->name('all.blog.post');
+//         Route::get('/add/blog/post', 'AddBlogPost')->name('add.blog.post');
+//         Route::post('/store/blog/post', 'StoreBlogPost')->name('store.blog.post');
+//         Route::get('/edit/blog/post/{id}', 'EditBlogPost')->name('edit.blog.post');
+//         Route::post('/update/blog/post', 'UpdateBlogPost')->name('update.blog.post');
+//         Route::get('/delete/blog/post/{id}', 'DeleteBlogPost')->name('delete.blog.post');
+//     });
+
+//     Route::controller(CommentController::class)->group(function(){
+
+//         Route::get('/all/comment/', 'AllComment')->name('all.comment');
+//         Route::post('/update/comment/status', 'UpdateCommentStatus')->name('update.comment.status');
+//     });
+
+//     Route::controller(ReportController::class)->group(function(){
+
+//         Route::get('/booking/report/', 'BookingReport')->name('booking.report');
+//         Route::post('/search-by-date', 'SearchByDate')->name('search-by-date');
+//     });
+
+//     Route::controller(SettingController::class)->group(function(){
+//         Route::get('/site/setting', 'SiteSetting')->name('site.setting');
+//         Route::post('/site/update', 'SiteUpdate')->name('site.update');
+//     });
+
+//     Route::controller(GalleryController::class)->group(function(){
+//         Route::get('/all/gallery', 'AllGallery')->name('all.gallery');
+//         Route::get('/add/gallery', 'AddGallery')->name('add.gallery');
+//         Route::post('/store/gallery', 'StoreGallery')->name('store.gallery');
+//         Route::get('/edit/gallery/{id}', 'EditGallery')->name('edit.gallery');
+//         Route::post('/update/gallery', 'UpdateGallery')->name('update.gallery');
+//         Route::get('/delete/gallery/{id}', 'DeleteGallery')->name('delete.gallery');
+//         Route::post('/delete/gallery/multiple', 'DeleteGalleryMultiple')->name('delete.gallery.multiple');
+        
+//         Route::get('/contact/message', 'ManageContactMessage')->name('contact.message');
+//     });
+
+//     Route::controller(RoleController::class)->group(function(){
+//         Route::get('/all/permission', 'AllPermission')->name('all.permission');
+//         Route::get('/add/permission', 'AddPermission')->name('add.permission');
+//         Route::post('/store/permission', 'StorePermission')->name('store.permission');
+//         Route::get('/edit/permission/{id}', 'EditPermission')->name('edit.permission');
+//         Route::post('/update/permission', 'UpdatePermission')->name('update.permission');
+//         Route::get('/delete/permission/{id}', 'DeletePermission')->name('delete.permission');
+//         Route::get('/import/permission', 'ImportPermission')->name('import.permission');
+//         Route::get('/export', 'Export')->name('export');
+//         Route::post('/import', 'Import')->name('import');
+//     });
+
+//     Route::controller(RoleController::class)->group(function(){
+//         Route::get('/all/roles', 'AllRoles')->name('all.roles');
+//         Route::get('/add/roles', 'AddRoles')->name('add.roles');
+//         Route::post('/store/roles', 'StoreRoles')->name('store.roles');
+//         Route::get('/edit/roles/{id}', 'EditRoles')->name('edit.roles');
+//         Route::post('/update/roles', 'UpdateRoles')->name('update.roles');
+//         Route::get('/delete/roles/{id}', 'DeleteRoles')->name('delete.roles');
+    
+    
+//         Route::get('/add/roles/permission', 'AddRolesPermission')->name('add.roles.permission');
+//         Route::post('/role/permission/store', 'RolePermissionStore')->name('role.permission.store');
+//         Route::get('/all/roles/permission', 'AllRolesPermission')->name('all.roles.permission');
+        
+//         Route::get('/admin/edit/roles/{id}', 'AdminEditRoles')->name('admin.edit.roles');
+//         Route::post('/admin/roles/update/{id}', 'AdminRolesUpdate')->name('admin.roles.update');
+//         Route::get('/admin/delete/roles/{id}', 'AdminDeleteRoles')->name('admin.delete.roles');
+//     });
+
+//     Route::controller(AdminController::class)->group(function(){
+//         Route::get('/all/admin', 'AllAdmin')->name('all.admin');
+//         Route::get('/add/admin', 'AddAdmin')->name('add.admin');
+//         Route::post('/store/admin', 'StoreAdmin')->name('store.admin');
+//         Route::get('/edit/admin/{id}', 'EditAdmin')->name('edit.admin');
+//         Route::post('/update/admin/{id}', 'UpdateAdmin')->name('update.admin');
+//         Route::get('/delete/admin/{id}', 'DeleteAdmin')->name('delete.admin');
+//     });
+// });

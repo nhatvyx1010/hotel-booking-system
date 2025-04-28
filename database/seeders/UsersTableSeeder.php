@@ -35,6 +35,15 @@ class UsersTableSeeder extends Seeder
                 'status' => 'active',
             ],
 
+            //User
+            [
+                'name' => 'Hotel',
+                'email' => 'hotel@gmail.com',
+                'password' => Hash::make('111'),
+                'role' => 'hotel',
+                'status' => 'active',
+            ],
+
         ]);
     }
 }
