@@ -22,7 +22,7 @@
         <!-- Checkout Area -->
 		<section class="checkout-area pt-100 pb-70">
 			<div class="container">
-				<form method="post" role="form" action="{{ route('checkout.store') }}" class="stripe_form require-validation" data-cc-on-file="false" data-stripe-publishable-key="{{ env('STRIPE_KEY') }}">
+				<form method="post" role="form" action="{{ url('/create-payment') }}" class="stripe_form require-validation" data-cc-on-file="false" data-stripe-publishable-key="{{ env('STRIPE_KEY') }}">
 					@csrf
 					<div class="row">
                         <div class="col-lg-8">
@@ -62,31 +62,31 @@
 										</div>
 									</div>
 
-									<div class="col-lg-6 col-md-12">
+									<div class="col-lg-4 col-md-12">
 										<div class="form-group">
-											<label>Phone</label>
+											<label>Phone <span class="required">*</span></label>
 											<input type="text" name="phone" class="form-control" value="{{ \Auth::user()->phone }}">
 										</div>
 									</div>
 
-									<div class="col-lg-6 col-md-6">
+									<div class="col-lg-4 col-md-6">
 										<div class="form-group">
 											<label>Address <span class="required">*</span></label>
 											<input type="text" name="address" class="form-control" value="{{ \Auth::user()->address }}">
 										</div>
 									</div>
 
-									<div class="col-lg-6 col-md-6">
+									<div class="col-lg-4 col-md-6">
 										<div class="form-group">
 											<label>State <span class="required">*</span></label>
 											<input type="text" name="state" class="form-control">
-											@if ($errors->has('state'))
-												<div class="text-danger">{{ $error->first('state') }}</div>
+											@if ($errors)
+												<div class="text-danger">{{ $errors }}</div>
 											@endif
 										</div>
 									</div>
 
-									<div class="col-lg-6 col-md-6">
+									<!-- <div class="col-lg-6 col-md-6">
 										<div class="form-group">
 											<label>ZipCode <span class="required">*</span></label>
 											<input type="text" name="zip_code" class="form-control">
@@ -94,7 +94,7 @@
 												<div class="text-danger">{{ $error->first('zip_code') }}</div>
 											@endif
 										</div>
-									</div>
+									</div> -->
 
 									<!-- <p>Session Value: {{ json_encode(session('book_date')) }}</p> -->
 
@@ -158,43 +158,66 @@
 
 						<div class="col-lg-8 col-md-8">
 							<div class="payment-box">
-                                <div class="payment-method">
-                                    <p>
-                                        <input type="radio" id="cash-on-delivery" name="payment_method" value="COD">
-                                        <label for="cash-on-delivery">Cash On Delivery</label>
-                                    </p>
-									<p>
-       <input type="radio" class="pay_method" id="stripe" name="payment_method" value="Stripe">
-        <label for="stripe">BANK_TRANSFER</label>
-          </p>
 
+                                          <div class="payment-method">
+                <p>
+                    <input type="radio" id="cash-on-delivery" name="payment_method" value="COD">
+                    <label for="cash-on-delivery">Cash On Delivery</label>
+                </p>
+                <p>
+                    <input type="radio" id="vnpay" name="payment_method" value="VNPAY">
+                    <label for="vnpay">Thanh toán với VNPAY</label>
+                </p>
 
-           <div id="stripe_pay" class="d-none">
-        <br>
-        <div class="form-row row">
-              <div class="col-xs-12 form-group required">
-                    <label class="control-label">Name on Card</label>
-                    <input class="form-control" size="4" type="text" />
-              </div>
-        </div>
-        <div class="form-row row">
-              <div class="col-xs-12 form-group  required">
-                    <label class="control-label">Card Number</label>
-                    <input autocomplete="off" class="form-control card-number" size="20" type="text" />
-              </div>
-        </div>
-        <div class="form-row row">
-              <div class="col-xs-12 col-md-4 form-group cvc required"><label class="control-label">CVC</label><input autocomplete="off" class="form-control card-cvc" placeholder="ex. 311" size="4" type="text" /></div>
-              <div class="col-xs-12 col-md-4 form-group expiration required"><label class="control-label">Expiration Month</label><input class="form-control card-expiry-month" placeholder="MM" size="2" type="text" /></div>
-              <div class="col-xs-12 col-md-4 form-group expiration required"><label class="control-label">Expiration Year</label><input class="form-control card-expiry-year" placeholder="YYYY" size="4" type="text" /></div>
-        </div>
-        <div class="form-row row">
-              <div class="col-md-12 error form-group hide"><div class="alert-danger alert">Please correct the errors and try again.</div></div>
-        </div>
-  </div>
-                                </div>
+                <!-- Nội dung khi chọn COD -->
+                <div id="cod_info" class="payment-info d-none">
+                    <p>You have chosen <strong>Cash On Delivery</strong>. Please prepare the exact amount upon delivery.</p>
+                    <p><strong>Bạn phải thanh toán 30% phí.</strong></p>
+                    <table class="table">
+                        <tr>
+                            <td><p>Subtotal</p></td>
+                            <td style="text-align: right"><p>${{ $subtotal }}</p></td>
+                        </tr>
+                        <tr>
+                            <td><p>Số tiền phải trả</p></td>
+                            <td style="text-align: right"><p>${{ $subtotal * 30 / 100 }}</p></td>
+                        </tr>
+                        <tr>
+                            <td><p>Discount</p></td>
+                            <td style="text-align: right"><p>${{ $discount }}</p></td>
+                        </tr>
+                        <tr>
+                            <td><p>Total</p></td>
+                            <td style="text-align: right"><p>${{ $subtotal * 30 / 100 - $discount }}</p></td>
+                        </tr>
+                        <!-- Hidden input để gửi total_price -->
+                        <input type="hidden" name="total_price" value="{{ $subtotal * 30 / 100 - $discount }}">
+                    </table>
+                </div>
 
-								<button type="submit" class="order-btn" id="myButton">Place to Order</button>
+                <!-- Nội dung khi chọn VNPAY -->
+                <div id="vnpay_info" class="payment-info d-none">
+                    <p>You have chosen <strong>Bank Transfer (VNPAY)</strong>. You will be redirected to payment processing.</p>
+                    <table class="table">
+                        <tr>
+                            <td><p>Subtotal</p></td>
+                            <td style="text-align: right"><p>${{ $subtotal }}</p></td>
+                        </tr>
+                        <tr>
+                            <td><p>Discount</p></td>
+                            <td style="text-align: right"><p>${{ $discount }}</p></td>
+                        </tr>
+                        <tr>
+                            <td><p>Total</p></td>
+                            <td style="text-align: right"><p>${{ $subtotal - $discount }}</p></td>
+                        </tr>
+                        <!-- Hidden input để gửi total_price -->
+                            <input type="hidden" name="total_price" value="{{ $subtotal - $discount }}">
+                    </table>
+                </div>
+            </div>
+
+            <button type="submit" class="order-btn" id="myButton">Place Order</button>
 
                             </div>
 						</div>
@@ -208,10 +231,42 @@
 	.hide{display:none}
 </style>
 
-
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
-<script type="text/javascript">
+<!-- Checkout Area End -->
+
+<style>
+    .d-none { display: none; }
+    .table { width: 100%; }
+    .table td { padding: 8px 0; }
+</style>
+
+<script>
+$(document).ready(function () {
+    $('input[name="payment_method"]').on('change', function () {
+        var payment_method = $(this).val();
+        if (payment_method === 'COD') {
+            $('#cod_info').removeClass('d-none');
+            $('#vnpay_info').addClass('d-none');
+        } else if (payment_method === 'VNPAY') {
+            $('#vnpay_info').removeClass('d-none');
+            $('#cod_info').addClass('d-none');
+        }
+    });
+
+    $('#checkout-form').on('submit', function (e) {
+        var pay_method = $('input[name="payment_method"]:checked').val();
+        if (!pay_method) {
+            alert('Please select a payment method.');
+            e.preventDefault();
+        }
+    });
+});
+</script>
+
+
+
+<!-- <script type="text/javascript">
 
       $(document).ready(function () {
 
@@ -301,6 +356,6 @@
             }
 
       });
-</script>
+</script> -->
 
 @endsection

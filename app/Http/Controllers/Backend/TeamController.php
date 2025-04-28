@@ -8,25 +8,34 @@ use App\Models\Team;
 use App\Models\BookArea;
 use Intervention\Image\Facades\Image;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class TeamController extends Controller
 {
-    public function AllTeam(){
-        $team = Team::latest()->get();
-        return view('backend.team.all_team', compact('team'));
+    public function HotelAllTeam(){
+        $user_id = Auth::id();
+    
+        $team = Team::where('hotel_id', $user_id)->latest()->get();
+    
+        return view('hotel.backend.team.all_team', compact('team'));
+    }
+    
+
+    public function HotelAddTeam(){
+        return view('hotel.backend.team.add_team');
     }
 
-    public function AddTeam(){
-        return view('backend.team.add_team');
-    }
+    public function HotelStoreTeam(Request $request){
+        // Lấy ID người dùng đang đăng nhập
+        $user_id = Auth::id();
 
-    public function StoreTeam(Request $request){
         $image = $request->file('image');
         $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
         Image::make($image)->resize(550, 670)->save('upload/team/'.$name_gen);
         $save_url = 'upload/team/'.$name_gen;
 
         Team::insert([
+            'hotel_id' => $user_id,
             'name' => $request->name,
             'position' => $request->position,
             'facebook' => $request->facebook,
@@ -38,15 +47,15 @@ class TeamController extends Controller
             'message' => 'Team Data Inserted Successfully',
             'alert-type' => 'success'
         );
-        return redirect()->route('all.team')->with('message', 'Team Data Inserted Successfully')->with('alert-type', 'success');
+        return redirect()->route('hotel.all.team')->with('message', 'Team Data Inserted Successfully')->with('alert-type', 'success');
     }
 
-    public function EditTeam($id){
+    public function HotelEditTeam($id){
         $team = Team::findOrFail($id);
-        return view('backend.team.edit_team', compact('team'));
+        return view('hotel.backend.team.edit_team', compact('team'));
     }
 
-    public function UpdateTeam(Request $request){
+    public function HotelUpdateTeam(Request $request){
         $team_id = $request->id;
 
         if($request->file('image')){
@@ -67,7 +76,7 @@ class TeamController extends Controller
                 'message' => 'Team Updated With Image Successfully',
                 'alert-type' => 'success'
             );
-            return redirect()->route('all.team')->with('message', 'Team Updated With Image Successfully')->with('alert-type', 'success');
+            return redirect()->route('hotel.all.team')->with('message', 'Team Updated With Image Successfully')->with('alert-type', 'success');
         } else {
             Team::findOrFail($team_id)->update([
                 'name' => $request->name,
@@ -80,11 +89,11 @@ class TeamController extends Controller
                 'message' => 'Team Updated Without Image Successfully',
                 'alert-type' => 'success'
             );
-            return redirect()->route('all.team')->with('message', 'Team Updated Without Image Successfully')->with('alert-type', 'success');
+            return redirect()->route('hotel.all.team')->with('message', 'Team Updated Without Image Successfully')->with('alert-type', 'success');
         }
     }
 
-    public function DeleteTeam($id){
+    public function HotelDeleteTeam($id){
         $item = Team::findOrFail($id);
         $img = $item->image;
         unlink($img);
@@ -97,12 +106,20 @@ class TeamController extends Controller
         return redirect()->back()->with('message', 'Team Image Deleted Successfully')->with('alert-type', 'success');
     }
 
-    public function BookArea(){
-        $book = BookArea::find(1);
-        return view('backend.bookarea.book_area', compact('book'));
+    public function HotelBookArea(){
+        $user_id = Auth::id();
+    
+        $book = BookArea::where('hotel_id', $user_id)->first();  // Dùng first() để lấy bản ghi đầu tiên
+    
+        if (!$book) {
+            return redirect()->route('hotel.dashboard')->with('error', 'No book area found for this hotel');
+        }
+    
+        return view('hotel.backend.bookarea.book_area', compact('book'));
     }
+    
 
-    public function BookAreaUpdate(Request $request){
+    public function HotelBookAreaUpdate(Request $request){
         $book_id = $request->id;
 
         if($request->file('image')){

@@ -1,5 +1,15 @@
 @extends('admin.admin_dashboard')
 @section('admin')
+
+<style>
+    /* Thêm màu nền và màu chữ cho các dòng quan trọng */
+.important-row {
+    background-color: #ffeb3b; /* Màu nền vàng nhạt */
+    font-weight: bold;
+    color: #d32f2f; /* Màu chữ đỏ */
+}
+
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <div class="page-content">
@@ -117,6 +127,7 @@
                                     <style>
                                         .test_table td{text-align: right}
                                     </style>
+                                    
                                     <table class="table test_table" style="float: right" border="none">
                                         <tr>
                                             <td>Subtotal</td>
@@ -126,11 +137,25 @@
                                             <td>Discount</td>
                                             <td>${{ $editData->discount }}</td>
                                         </tr>
-                                        <tr>
+                                        <tr> <!-- Nhấn mạnh Grand Total -->
                                             <td>Grand Total</td>
                                             <td>${{ $editData->total_price }}</td>
                                         </tr>
+                                        <tr class="important-row"> <!-- Nhấn mạnh Prepaid Amount -->
+                                            <td>Prepaid Amount</td>
+                                            <td>${{ $editData->prepaid_amount }}</td>
+                                        </tr>
+                                        <tr class="important-row"> <!-- Nhấn mạnh Remaining Amount -->
+                                            <td>Remaining Amount</td>
+                                            <td>{{ number_format($editData->remaining_amount, 0, ',', '.') }} VNĐ</td>
+                                        </tr>
+                                        <tr  class="important-row">
+                                            <td>Total Amount</td>
+                                            <td>${{ $editData->total_amount }}</td>
+                                        </tr>
                                     </table>
+
+
                                 </div>
 
                                 <div style="clear: both"></div>

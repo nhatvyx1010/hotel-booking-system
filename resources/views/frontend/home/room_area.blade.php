@@ -37,7 +37,7 @@
                                 <p>{{ $item->short_desc }}</p>
                                 <ul>
                                     <li><i class='bx bx-user'></i>{{ $item->room_capacity }} Person</li>
-                                    <li><i class='bx bx-expand'></i>{{ $item->size }}ft2</li>
+                                    <li><i class='bx bx-expand'></i>{{ $item->size }}</li>
                                 </ul>
 
                                 <ul>

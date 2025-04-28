@@ -76,7 +76,7 @@
 <!-- Book Area Two End -->
 
 <!-- Services Area Three -->
-@include('frontend.home.services')
+<!-- @include('frontend.home.services') -->
 <!-- Services Area Three End -->
 
 <!-- Team Area Three -->
@@ -88,7 +88,7 @@
 <!-- Testimonials Area Three End -->
 
 <!-- FAQ Area -->
-@include('frontend.home.faq')
+<!-- @include('frontend.home.faq') -->
 <!-- FAQ Area End -->
 
 <!-- Blog Area -->
