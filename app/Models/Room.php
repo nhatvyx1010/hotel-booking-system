@@ -17,4 +17,9 @@ class Room extends Model
     public function room_numbers(){
         return $this->hasMany(RoomNumber::class, 'rooms_id')->where('status', 'Active');
     }
+
+    public function bookings(){
+        return $this->hasManyThrough(Booking::class, BookingRoomList::class, 'room_number_id', 'id', 'id', 'booking_id');
+    }
+
 }

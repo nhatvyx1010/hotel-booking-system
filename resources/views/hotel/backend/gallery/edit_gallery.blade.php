@@ -23,7 +23,7 @@
     <div class="col-lg-12">
         <div class="card">
 							<div class="card-body p-4">
-                            <form class="row g-3" action="{{ route('update.gallery') }}" method="post" enctype="multipart/form-data">
+                            <form class="row g-3" action="{{ route('hotel.update.gallery') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="id" value="{{ $gallery->id }}">
 

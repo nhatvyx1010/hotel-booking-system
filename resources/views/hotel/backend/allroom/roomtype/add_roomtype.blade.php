@@ -22,7 +22,7 @@
             <div class="row">
     <div class="col-lg-8">
         <div class="card">
-            <form id="myForm" action="{{ route('room.type.store') }}" method="post">
+            <form id="myForm" action="{{ route('hotel.room.type.store') }}" method="post">
                 @csrf
             <div class="card-body">
                 <div class="row mb-3">

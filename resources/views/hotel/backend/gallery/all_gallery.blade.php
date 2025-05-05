@@ -15,7 +15,7 @@
 					</div>
 					<div class="ms-auto">
 						<div class="btn-group">
-                        <a href="{{ route('add.gallery') }}" class="btn btn-primary px-5"> Add Gallery</a>
+                        <a href="{{ route('hotel.add.gallery') }}" class="btn btn-primary px-5"> Add Gallery</a>
 						</div>
 					</div>
 				</div>
@@ -25,7 +25,7 @@
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
-                <form action="{{ route('delete.gallery.multiple') }}" method="POST">
+                <form action="{{ route('hotel.delete.gallery.multiple') }}" method="POST">
                     @csrf
                 
                 <table class="table table-striped table-bordered" style="width:100%">
@@ -46,8 +46,8 @@
                                 <td>{{ $key+1 }}</td>
                                 <td><img src="{{ asset($item->photo_name) }}" alt="" style="width:70px; height:40px"></td>
                                 <td>
-                                    <a href="{{ route('edit.gallery', $item->id) }}" class="btn btn-warning px-3 radius-30">Edit</a>
-                                    <a href="{{ route('delete.gallery', $item->id) }}" class="btn btn-danger px-3 radius-30" id="delete">Delete</a>
+                                    <a href="{{ route('hotel.edit.gallery', $item->id) }}" class="btn btn-warning px-3 radius-30">Edit</a>
+                                    <a href="{{ route('hotel.delete.gallery', $item->id) }}" class="btn btn-danger px-3 radius-30" id="delete">Delete</a>
                                 </td>
                             </tr>
                         @endforeach

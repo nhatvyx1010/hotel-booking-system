@@ -15,7 +15,7 @@
 					</div>
 					<div class="ms-auto">
 						<div class="btn-group">
-                        <a href="{{ route('add.room.type') }}" class="btn btn-primary px-5"> Add Room Type </a>
+                        <a href="{{ route('hotel.add.room.type') }}" class="btn btn-primary px-5"> Add Room Type </a>
 						</div>
 					</div>
 				</div>
@@ -47,8 +47,8 @@
                             <td>
 
      @foreach ($rooms as $roo) 
-    <a href="{{ route('edit.room',$roo->id) }}" class="btn btn-warning px-3 radius-30"> Edit</a>
-    <a href="{{ route('delete.room',$roo->id) }}" class="btn btn-danger px-3 radius-30" id="delete"> Delete</a>
+    <a href="{{ route('hotel.edit.room',$roo->id) }}" class="btn btn-warning px-3 radius-30"> Edit</a>
+    <a href="{{ route('hotel.delete.room',$roo->id) }}" class="btn btn-danger px-3 radius-30" id="delete"> Delete</a>
     @endforeach  
                             </td>
                         </tr>
