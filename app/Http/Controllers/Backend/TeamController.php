@@ -106,54 +106,42 @@ class TeamController extends Controller
         return redirect()->back()->with('message', 'Team Image Deleted Successfully')->with('alert-type', 'success');
     }
 
-    public function HotelBookArea(){
+    public function HotelBookArea()
+    {
         $user_id = Auth::id();
-    
-        $book = BookArea::where('hotel_id', $user_id)->first();  // Dùng first() để lấy bản ghi đầu tiên
-    
-        if (!$book) {
-            return redirect()->route('hotel.dashboard')->with('error', 'No book area found for this hotel');
-        }
-    
+        $book = BookArea::where('hotel_id', $user_id)->first();
+
         return view('hotel.backend.bookarea.book_area', compact('book'));
     }
-    
 
-    public function HotelBookAreaUpdate(Request $request){
-        $book_id = $request->id;
+    public function HotelBookAreaUpdate(Request $request)
+    {
+        $user_id = Auth::id();
+        $book = BookArea::where('hotel_id', $user_id)->first();
 
-        if($request->file('image')){
+        $data = [
+            'hotel_id' => $user_id,
+            'short_title' => $request->short_title,
+            'main_title' => $request->main_title,
+            'short_desc' => $request->short_desc,
+            'link_url' => $request->link_url,
+        ];
+
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-            Image::make($image)->resize(1000, 1000)->save('upload/bookarea/'.$name_gen);
-            $save_url = 'upload/bookarea/'.$name_gen;
-    
-            BookArea::findOrFail($book_id)->update([
-                'short_title' => $request->short_title,
-                'main_title' => $request->main_title,
-                'short_desc' => $request->short_desc,
-                'link_url' => $request->link_url,
-                'image' => $save_url,
-            ]);
-    
-            $notification = array(
-                'message' => 'Book Area Updated With Image Successfully',
-                'alert-type' => 'success'
-            );
-            return redirect()->back()->with('message', 'Book Area Updated With Image Successfully')->with('alert-type', 'success');
-        } else {
-            BookArea::findOrFail($book_id)->update([
-                'short_title' => $request->short_title,
-                'main_title' => $request->main_title,
-                'short_desc' => $request->short_desc,
-                'link_url' => $request->link_url,
-            ]);
-    
-            $notification = array(
-                'message' => 'Book Area Updated Without Image Successfully',
-                'alert-type' => 'success'
-            );
-            return redirect()->back()->with('message', 'Book Area Updated Without Image Successfully')->with('alert-type', 'success');
+            $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+            Image::make($image)->resize(1000, 1000)->save('upload/bookarea/' . $name_gen);
+            $data['image'] = 'upload/bookarea/' . $name_gen;
         }
+
+        if ($book) {
+            $book->update($data);
+            $message = $request->hasFile('image') ? 'Book Area Updated With Image Successfully' : 'Book Area Updated Without Image Successfully';
+        } else {
+            BookArea::create($data);
+            $message = $request->hasFile('image') ? 'Book Area Created With Image Successfully' : 'Book Area Created Without Image Successfully';
+        }
+
+        return redirect()->back()->with('message', $message)->with('alert-type', 'success');
     }
 }

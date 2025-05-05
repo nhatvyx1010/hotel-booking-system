@@ -12,7 +12,7 @@
         <tr>
             <td>{{ $room_number->room_no }}</td>
             <td>
-                <a href="{{ route('assign_room_store', [$booking->id, $room_number->id]) }}" class="btn bg-primary"><i class="lni lni-circle-plus"></i></a>
+                <a href="{{ route('hotel.assign_room_store', [$booking->id, $room_number->id]) }}" class="btn bg-primary"><i class="lni lni-circle-plus"></i></a>
             </td>
         </tr>
         @endforeach

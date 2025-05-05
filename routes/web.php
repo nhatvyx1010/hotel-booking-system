@@ -204,9 +204,12 @@ Route::controller(FrontendRoomController::class)->group(function(){
     Route::get('/rooms/', 'AllFrontendRoom')->name('frontend.room.all');
     Route::get('/room/details/{id}', 'RoomDetailsPage');
     Route::get('/bookings/', 'BookingSearch')->name('booking.search');
+    Route::get('/booking_hotel/', 'BookingSearchHotel')->name('booking.search.hotel');
+    Route::get('/bookinglistroomsearch/', 'BookingListRoomSearch')->name('booking.list.room.search');
     Route::get('/search/room/details/{id}', 'SearchRoomDetails')->name('search_room_details');
       
     Route::get('/check_room_availability/', 'CheckRoomAvailability')->name('check_room_availability');
+    Route::get('/check_room_availability_hotel/', 'CheckRoomAvailabilityHotel')->name('check_room_availability_hotel');
 });
 
 Route::middleware(['auth'])->group(function(){
@@ -261,24 +264,6 @@ Route::get('/return-vnpay', [VnpayController::class, 'return'])->name('return-vn
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ///////////////// Hotel Group Middleware ///////////////
 //
 Route::middleware(['auth', 'roles:hotel'])->group(function(){
@@ -304,6 +289,66 @@ Route::middleware(['auth', 'roles:hotel'])->group(function(){
         Route::post('/hotel/book/area/update', 'HotelBookAreaUpdate')->name('hotel.book.area.update');
     });
 
+    Route::controller(RoomTypeController::class)->group(function(){
+        Route::get('/hotel/room/type/list', 'HotelRoomTypeList')->name('hotel.room.type.list');
+        Route::get('/hotel/add/room/type', 'HotelAddRoomType')->name('hotel.add.room.type');
+        Route::post('/hotel/room/type/store', 'HotelRoomTypeStore')->name('hotel.room.type.store');
+    });
+
+    Route::controller(RoomController::class)->group(function(){
+
+        Route::get('/hotel/edit/room/{id}', 'HotelEditRoom')->name('hotel.edit.room');
+        Route::post('/hotel/update/room/{id}', 'HotelUpdateRoom')->name('hotel.update.room');
+        Route::get('/hotel/multi/image/delete/{id}', 'HotelMultiImageDelete')->name('hotel.multi.image.delete');
+    
+        Route::post('/hotel/store/room/number/{id}', 'HotelStoreRoomNumber')->name('hotel.store.room.number');
+        Route::get('/hotel/edit/roomno/{id}', 'HotelEditRoomNumber')->name('hotel.edit.roomno');
+        Route::post('/hotel/update/roomno/{id}', 'HotelUpdateRoomNumber')->name('hotel.update.roomno');
+        Route::get('/hotel/delete/roomno/{id}', 'HotelDeleteRoomNumber')->name('hotel.delete.roomno');
+    
+        Route::get('/hotel/delete/room/{id}', 'HotelDeleteRoom')->name('hotel.delete.room');
+          
+    });
+
+    Route::controller(BookingController::class)->group(function(){
+        Route::get('/hotel/booking/list', 'HotelBookingList')->name('hotel.booking.list');
+        Route::get('/hotel/edit_booking/{id}', 'HotelEditBooking')->name('hotel.edit_booking');
+        Route::get('/hotel/download/invoice/{id}', 'HotelDownloadInvoice')->name('hotel.download.invoice');
+
+        //// BOOKING MANAGE ////
+        Route::post('/hotel/update/booking/status/{id}', 'HotelUpdateBookingStatus')->name('hotel.update.booking.status');
+        Route::post('/hotel/update/booking/{id}', 'HotelUpdateBooking')->name('hotel.update.booking');
+
+        Route::get('/hotel/assign_room/{id}', 'HotelAssignRoom')->name('hotel.assign_room');
+        Route::get('/hotel/assign_room/store/{booking_id}/{room_number_id}', 'HotelAssignRoomStore')->name('hotel.assign_room_store');
+        Route::get('/hotel/assign_room_delete/{id}', 'HotelAssignRoomDelete')->name('hotel.assign_room_delete');
+
+        Route::get('/hotel/check_room_availability/', 'HotelCheckRoomAvailability')->name('hotel.check_room_availability');
+
+    });
+
+    Route::controller(RoomListController::class)->group(function(){
+        Route::get('/hotel/view/room/list', 'HotelViewRoomList')->name('hotel.view.room.list');
+        Route::get('/hotel/add/room/list', 'HotelAddRoomList')->name('hotel.add.room.list');
+        Route::post('/hotel/store/roomlist', 'HotelStoreRoomList')->name('hotel.store.roomlist');
+    });
+
+    Route::controller(ReportController::class)->group(function(){
+
+        Route::get('/hotel/booking/report/', 'HotelBookingReport')->name('hotel.booking.report');
+        Route::post('/hotel/search-by-date', 'HotelSearchByDate')->name('hotel.search-by-date');
+    });
+
+    Route::controller(GalleryController::class)->group(function(){
+        Route::get('/hotel/all/gallery', 'HotelAllGallery')->name('hotel.all.gallery');
+        Route::get('/hotel/add/gallery', 'HotelAddGallery')->name('hotel.add.gallery');
+        Route::post('/hotel/store/gallery', 'HotelStoreGallery')->name('hotel.store.gallery');
+        Route::get('/hotel/edit/gallery/{id}', 'HotelEditGallery')->name('hotel.edit.gallery');
+        Route::post('/hotel/update/gallery', 'HotelUpdateGallery')->name('hotel.update.gallery');
+        Route::get('/hotel/delete/gallery/{id}', 'HotelDeleteGallery')->name('hotel.delete.gallery');
+        Route::post('/hotel/delete/gallery/multiple', 'HotelDeleteGalleryMultiple')->name('hotel.delete.gallery.multiple');
+    });
+
 });
 Route::get('/hotel/login', [HotelController::class, 'HotelLogin'])->name('hotel.login');
 Route::get('/hotel/register', [HotelController::class, 'HotelRegister'])->name('hotel.register');
@@ -312,99 +357,9 @@ Route::post('/hotel/login_submit', [HotelController::class, 'HotelLoginSubmit'])
 Route::get('/hotel/logout', [HotelController::class, 'HotelLogout'])->name('hotel.logout');
 
 // Route::middleware(['auth', 'roles:hotel'])->group(function(){
-//     Route::controller(RoomTypeController::class)->group(function(){
-//         Route::get('/room/type/list', 'RoomTypeList')->name('room.type.list');
-//         Route::get('/add/room/type', 'AddRoomType')->name('add.room.type');
-//         Route::post('/room/type/store', 'RoomTypeStore')->name('room.type.store');
-//     });
 
-//     Route::controller(RoomController::class)->group(function(){
 
-//         Route::get('/edit/room/{id}', 'EditRoom')->name('edit.room');
-//         Route::post('/update/room/{id}', 'UpdateRoom')->name('update.room');
-//         Route::get('/multi/image/delete/{id}', 'MultiImageDelete')->name('multi.image.delete');
-    
-//         Route::post('/store/room/number/{id}', 'StoreRoomNumber')->name('store.room.number');
-//         Route::get('/edit/roomno/{id}', 'EditRoomNumber')->name('edit.roomno');
-//         Route::post('/update/roomno/{id}', 'UpdateRoomNumber')->name('update.roomno');
-//         Route::get('/delete/roomno/{id}', 'DeleteRoomNumber')->name('delete.roomno');
-    
-//         Route::get('/delete/room/{id}', 'DeleteRoom')->name('delete.room');
-          
-//     });
 
-//     Route::controller(BookingController::class)->group(function(){
-//         Route::get('/booking/list', 'BookingList')->name('booking.list');
-//         Route::get('/edit_booking/{id}', 'EditBooking')->name('edit_booking');
-//         Route::get('/download/invoice/{id}', 'DownloadInvoice')->name('download.invoice');
-//     });
-
-//     Route::controller(RoomListController::class)->group(function(){
-//         Route::get('/view/room/list', 'ViewRoomList')->name('view.room.list');
-//         Route::get('/add/room/list', 'AddRoomList')->name('add.room.list');
-//         Route::post('/store/roomlist', 'StoreRoomList')->name('store.roomlist');
-//     });
-
-//     Route::controller(SettingController::class)->group(function(){
-//         Route::get('/smtp/setting', 'SmtpSetting')->name('smtp.setting');
-//         Route::post('/smtp/update', 'SmtpUpdate')->name('smtp.update');
-//     });
-
-//     Route::controller(TestimonialController::class)->group(function(){
-//         Route::get('/all/testimonial', 'AllTestimonial')->name('all.testimonial');
-//         Route::get('/add/testimonial', 'AddTestimonial')->name('add.testimonial');
-//         Route::post('/store/testimonial', 'StoreTestimonial')->name('testimonial.store');
-
-//         Route::get('/edit/testimonial/{id}', 'EditTestimonial')->name('edit.testimonial');
-//         Route::post('/update/testimonial', 'UpdateTestimonial')->name('testimonial.update');
-//         Route::get('/delete/testimonial/{id}', 'DeleteTestimonial')->name('delete.testimonial');
-//     });
-
-//     Route::controller(BlogController::class)->group(function(){
-//         Route::get('/blog/category', 'BlogCategory')->name('blog.category');
-//         Route::post('/store/blog/category', 'StoreBlogCategory')->name('store.blog.category');
-//         Route::get('/edit/blog/category/{id}', 'EditBlogCategory');
-//         Route::post('/update/blog/category', 'UpdateBlogCategory')->name('update.blog.category');
-//         Route::get('/delete/blog/category/{id}', 'DeleteBlogCategory')->name('delete.blog.category');
-//     });
-
-//     Route::controller(BlogController::class)->group(function(){
-//         Route::get('/all/blog/post', 'AllBlogPost')->name('all.blog.post');
-//         Route::get('/add/blog/post', 'AddBlogPost')->name('add.blog.post');
-//         Route::post('/store/blog/post', 'StoreBlogPost')->name('store.blog.post');
-//         Route::get('/edit/blog/post/{id}', 'EditBlogPost')->name('edit.blog.post');
-//         Route::post('/update/blog/post', 'UpdateBlogPost')->name('update.blog.post');
-//         Route::get('/delete/blog/post/{id}', 'DeleteBlogPost')->name('delete.blog.post');
-//     });
-
-//     Route::controller(CommentController::class)->group(function(){
-
-//         Route::get('/all/comment/', 'AllComment')->name('all.comment');
-//         Route::post('/update/comment/status', 'UpdateCommentStatus')->name('update.comment.status');
-//     });
-
-//     Route::controller(ReportController::class)->group(function(){
-
-//         Route::get('/booking/report/', 'BookingReport')->name('booking.report');
-//         Route::post('/search-by-date', 'SearchByDate')->name('search-by-date');
-//     });
-
-//     Route::controller(SettingController::class)->group(function(){
-//         Route::get('/site/setting', 'SiteSetting')->name('site.setting');
-//         Route::post('/site/update', 'SiteUpdate')->name('site.update');
-//     });
-
-//     Route::controller(GalleryController::class)->group(function(){
-//         Route::get('/all/gallery', 'AllGallery')->name('all.gallery');
-//         Route::get('/add/gallery', 'AddGallery')->name('add.gallery');
-//         Route::post('/store/gallery', 'StoreGallery')->name('store.gallery');
-//         Route::get('/edit/gallery/{id}', 'EditGallery')->name('edit.gallery');
-//         Route::post('/update/gallery', 'UpdateGallery')->name('update.gallery');
-//         Route::get('/delete/gallery/{id}', 'DeleteGallery')->name('delete.gallery');
-//         Route::post('/delete/gallery/multiple', 'DeleteGalleryMultiple')->name('delete.gallery.multiple');
-        
-//         Route::get('/contact/message', 'ManageContactMessage')->name('contact.message');
-//     });
 
 //     Route::controller(RoleController::class)->group(function(){
 //         Route::get('/all/permission', 'AllPermission')->name('all.permission');

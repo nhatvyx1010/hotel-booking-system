@@ -122,7 +122,6 @@ class VnpayController extends Controller
     }
 
     public function vnpayOrder(Request $request){
-        $user = User::where('role', 'admin')->get();
 
             $book_data = Session::get('book_date');
             $toDate = Carbon::parse($book_data['check_in']);
@@ -204,7 +203,8 @@ class VnpayController extends Controller
             'alert-type' => 'success'
         );
 
-        Notification::send($user, new BookingComplete($request->name));
+        // $user = Auth::get();
+        // Notification::send($user, new BookingComplete($request->name));
 
 
     }

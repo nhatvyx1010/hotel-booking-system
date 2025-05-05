@@ -22,7 +22,7 @@
             <div class="row">
     <div class="col-lg-8">
         <div class="card">
-            <form action="{{ route('update.roomno', $editroomno->id) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('hotel.update.roomno', $editroomno->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
             <div class="card-body">
                 <div class="row mb-3">

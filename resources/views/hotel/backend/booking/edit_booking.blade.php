@@ -176,7 +176,7 @@
                                     <tr>
                                         <td>{{ $assign_room->room_number->room_no }}</td>
                                         <td>
-                                            <a href="{{ route('assign_room_delete', $assign_room->id) }}" id="delete">Delete</a>
+                                            <a href="{{ route('hotel.assign_room_delete', $assign_room->id) }}" id="delete">Delete</a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -188,7 +188,7 @@
                                 @endif
                             </div>
 
-                            <form action="{{ route('update.booking.status', $editData->id) }}" method="POST">
+                            <form action="{{ route('hotel.update.booking.status', $editData->id) }}" method="POST">
                                 @csrf
                                 <div class="row" style="margin-top: 40px">
                                     <div clas="col-md-5">
@@ -229,7 +229,7 @@
 							</div>
 						</div>
 						   <div class="card-body">
-                            <form action="{{ route('update.booking', $editData->id) }}" method="POST">
+                            <form action="{{ route('hotel.update.booking', $editData->id) }}" method="POST">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-12 mb-2">
@@ -310,7 +310,7 @@
 
         $(".assign_room").on('click', function(){
             $.ajax({
-                url: "{{ route('assign_room', $editData->id) }}",
+                url: "{{ route('hotel.assign_room', $editData->id) }}",
                 success: function(data){
                     $('.myModal .modal-body').html(data);
                     $('.myModal').modal('show');
@@ -325,7 +325,7 @@
         var room_id = "{{ $editData->rooms_id }}";
 
         $.ajax({
-        url: "{{ route('check_room_availability') }}",
+        url: "{{ route('hotel.check_room_availability') }}",
         data: {room_id:room_id, check_in:check_in, check_out:check_out},
         success: function(data){
             $(".availability").text(data['available_room']);

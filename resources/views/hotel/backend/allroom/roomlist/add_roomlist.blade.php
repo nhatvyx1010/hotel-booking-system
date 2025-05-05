@@ -24,7 +24,7 @@
     <div class="card">
 							<div class="card-body p-4">
 
-								<form method="POST" action="{{ route('store.roomlist') }}" class="row g-3">
+								<form method="POST" action="{{ route('hotel.store.roomlist') }}" class="row g-3">
                                     @csrf
 									<div class="col-md-4">
 										<label for="roomtype_id" class="form-label">Room Type</label>

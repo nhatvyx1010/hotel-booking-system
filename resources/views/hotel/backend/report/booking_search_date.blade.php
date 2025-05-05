@@ -17,7 +17,7 @@
 					</div>
 					<div class="ms-auto">
 						<div class="btn-group">
-                        <a href="{{ route('booking.report') }}" class="btn btn-primary px-5">Booking Report</a>
+                        <a href="{{ route('hotel.booking.report') }}" class="btn btn-primary px-5">Booking Report</a>
 						</div>
 					</div>
 				</div>
@@ -49,7 +49,7 @@
                                 <td>{{ $item->payment_method }}</td>
                                 <td>${{ $item->total_price }}</td>
                                 <td>
-                                <a href="{{ route('download.invoice', $item->id) }}" class="btn btn-warning px-3 radius-10"><i class="lni lni-download"></i>Download Invoice</a>
+                                <a href="{{ route('hotel.download.invoice', $item->id) }}" class="btn btn-warning px-3 radius-10"><i class="lni lni-download"></i>Download Invoice</a>
                                 </td>
                             </tr>
                         @endforeach

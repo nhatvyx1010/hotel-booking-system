@@ -59,4 +59,16 @@ class User extends Authenticatable
             return $hasPermission;
         }
     }
+
+    public function bookarea()
+    {
+        return $this->hasOne(BookArea::class, 'hotel_id', 'id');
+    }
+
+    public function room_numbers()
+    {
+        return $this->hasMany(Room::class, 'hotel_id', 'id');
+        // Room.hotel_id = User.id
+    }
+
 }

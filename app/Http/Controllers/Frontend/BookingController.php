@@ -179,12 +179,66 @@ class BookingController extends Controller
         return view('backend.booking.booking_list',compact('allData'));
     }
 
+    public function HotelBookingList(){
+        $user_id = Auth::id();  // Lấy ID người dùng hiện tại
+
+        $allData = Booking::whereHas('room', function($query) use ($user_id) {
+            $query->where('hotel_id', $user_id);
+        })
+        ->orderBy('id', 'desc')
+        ->get();
+    
+        return view('hotel.backend.booking.booking_list', compact('allData'));
+    }
+
     public function EditBooking($id){
         $editData = Booking::with('room')->find($id);
         return view('backend.booking.edit_booking', compact('editData'));
     }
 
+    public function HotelEditBooking($id) {
+        $user_id = Auth::id();  // Lấy ID người dùng hiện tại
+    
+        // Lọc booking theo hotel_id từ bảng rooms
+        $editData = Booking::with('room')
+            ->whereHas('room', function($query) use ($user_id) {
+                $query->where('hotel_id', $user_id);
+            })
+            ->find($id);
+    
+        return view('hotel.backend.booking.edit_booking', compact('editData'));
+    }    
+
     public function UpdateBookingStatus(Request $request, $id){
+        $booking = Booking::find($id);
+        $booking->payment_status = $request->payment_status;
+        $booking->status = $request->status;
+        $booking->save();
+
+        $sendmail = Booking::find($id);
+        $data = [
+            'check_in' => $sendmail->check_in,
+            'check_out' => $sendmail->check_out,
+            'name' => $sendmail->name,
+            'email' => $sendmail->email,
+            'phone' => $sendmail->phone,
+        ];
+
+        try {
+            Mail::to($sendmail->email)->send(new BookConfirm($data));
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+        
+
+        $notification = array(
+            'messsage' => 'Information Updated Successfully',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with('message', 'Information Updated Successfully')->with('alert-type', 'success');
+    }
+    
+    public function HotelUpdateBookingStatus(Request $request, $id){
         $booking = Booking::find($id);
         $booking->payment_status = $request->payment_status;
         $booking->status = $request->status;
@@ -247,6 +301,41 @@ class BookingController extends Controller
         );
         return redirect()->back()->with('message', 'Booking Updated Successfully')->with('alert-type', 'success');
     }
+    
+    public function HotelUpdateBooking(Request $request, $id){
+        if($request->available_room < $request->number_of_rooms){
+            $notification = array(
+                'messsage' => 'Something Want To Wrong!',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with('message', 'Something Want To Wrong!')->with('alert-type', 'error');
+        }
+        $data = Booking::find($id);
+        $data->number_of_rooms = $request->number_of_rooms;
+        $data->check_in = date('Y-m-d', strtotime($request->check_in));
+        $data->check_out = date('Y-m-d', strtotime($request->check_out));
+        $data->save();
+
+        BookingRoomList::where('booking_id', $id)->delete();
+        RoomBookedDate::where('booking_id', $id)->delete();
+
+        $sdate = date('Y-m-d', strtotime($request->check_in));
+        $edate = date('Y-m-d', strtotime($request->check_out));
+        $eldate = Carbon::create($edate)->subDay();
+        $d_period = CarbonPeriod::create($sdate, $eldate);
+        foreach($d_period as $period){
+            $booked_dates = new RoomBookedDate();
+            $booked_dates->booking_id = $data->id;
+            $booked_dates->room_id = $data->rooms_id;
+            $booked_dates->book_date = date('Y-m-d', strtotime($period));
+            $booked_dates->save();
+        }
+        $notification = array(
+            'messsage' => 'Booking Updated Successfully',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with('message', 'Booking Updated Successfully')->with('alert-type', 'success');
+    }
 
     public function AssignRoom($booking_id){
         $booking = Booking::find($booking_id);
@@ -257,8 +346,43 @@ class BookingController extends Controller
         $room_numbers = RoomNumber::where('rooms_id', $booking->rooms_id)->whereNotIn('id', $assign_room_ids)->where('status', 'Active')->get();
         return view('backend.booking.assign_room', compact('booking', 'room_numbers'));
     }
+    
+    public function HotelAssignRoom($booking_id){
+        $booking = Booking::find($booking_id);
+        $booking_date_array = RoomBookedDate::where('booking_id', $booking_id)->pluck('book_date')->toArray();
+        $check_date_booking_ids = RoomBookedDate::whereIn('book_date', $booking_date_array)->where('room_id', $booking->rooms_id)->distinct()->pluck('booking_id')->toArray();
+        $booking_ids = Booking::whereIn('id', $check_date_booking_ids)->pluck('id')->toArray();
+        $assign_room_ids = BookingRoomList::whereIn('booking_id', $booking_ids)->pluck('room_number_id')->toArray();
+        $room_numbers = RoomNumber::where('rooms_id', $booking->rooms_id)->whereNotIn('id', $assign_room_ids)->where('status', 'Active')->where('hotel_id', Auth::id())->get();
+        return view('hotel.backend.booking.assign_room', compact('booking', 'room_numbers'));
+    }
 
     public function AssignRoomStore($booking_id, $room_number_id){
+        $booking = Booking::find($booking_id);
+        $check_data = BookingRoomList::where('booking_id', $booking_id)->count();
+
+        if($check_data < $booking->number_of_rooms){
+            $assign_data = new BookingRoomList();
+            $assign_data->booking_id = $booking_id;
+            $assign_data->room_id = $booking->rooms_id;
+            $assign_data->room_number_id = $room_number_id;
+            $assign_data->save();
+            
+            $notification = array(
+                'messsage' => 'Room Assgined Successfully',
+                'alert-type' => 'success'
+            );
+            return redirect()->back()->with('message', 'Room Assgined Successfully')->with('alert-type', 'success');
+        }else{
+            $notification = array(
+                'messsage' => 'Room Arready Assign',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with('message', 'Room Arready Assign')->with('alert-type', 'error');
+        }
+    }
+    
+    public function HotelAssignRoomStore($booking_id, $room_number_id){
         $booking = Booking::find($booking_id);
         $check_data = BookingRoomList::where('booking_id', $booking_id)->count();
 
@@ -294,15 +418,151 @@ class BookingController extends Controller
         return redirect()->back()->with('message', 'Assign Room Deleted Successfully')->with('alert-type', 'success');
     }
 
+    public function HotelAssignRoomDelete($id){
+        $assign_room = BookingRoomList::find($id);
+        $assign_room->delete();
+
+        $notification = array(
+            'messsage' => 'Assign Room Deleted Successfully ',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with('message', 'Assign Room Deleted Successfully')->with('alert-type', 'success');
+    }
+    
+    public function CheckRoomAvailability(Request $request){
+        $user_id = Auth::id();
+
+        $sdate = date('Y-m-d', strtotime($request->check_in));
+        $edate = date('Y-m-d', strtotime($request->check_out));
+        $alldate = Carbon::create($edate)->subDay();
+        $d_period = CarbonPeriod::create($sdate, $alldate);
+
+        $dt_array = [];
+        foreach ($d_period as $period) {
+            $dt_array[] = $period->format('Y-m-d');
+        }
+
+        $check_date_booking_ids = RoomBookedDate::whereIn('book_date', $dt_array)
+                                    ->distinct()
+                                    ->pluck('booking_id')
+                                    ->toArray();
+
+        $room = Room::where('hotel_id', $user_id)
+                    ->withCount('room_numbers')
+                    ->find($request->room_id);
+
+        if (!$room) {
+            return response()->json([
+                'available_room' => 0,
+                'total_nights' => 0,
+                'message' => 'Room not found or does not belong to this hotel.'
+            ], 404);
+        }
+
+        $bookings = Booking::withCount('assign_rooms')
+                    ->whereIn('id', $check_date_booking_ids)
+                    ->where('rooms_id', $room->id)
+                    ->get()
+                    ->toArray();
+
+        $total_book_room = array_sum(array_column($bookings, 'assign_rooms_count'));
+        $av_room = $room->room_numbers_count - $total_book_room;
+
+        $toDate = Carbon::parse($request->check_in);
+        $fromDate = Carbon::parse($request->check_out);
+        $nights = $toDate->diffInDays($fromDate);
+
+        return response()->json([
+            'available_room' => $av_room,
+            'total_nights' => $nights
+        ]);
+    }
+    
+    public function HotelCheckRoomAvailability(Request $request){
+        $user_id = Auth::id();
+
+        $sdate = date('Y-m-d', strtotime($request->check_in));
+        $edate = date('Y-m-d', strtotime($request->check_out));
+        $alldate = Carbon::create($edate)->subDay();
+        $d_period = CarbonPeriod::create($sdate, $alldate);
+
+        $dt_array = [];
+        foreach ($d_period as $period) {
+            $dt_array[] = $period->format('Y-m-d');
+        }
+
+        $check_date_booking_ids = RoomBookedDate::whereIn('book_date', $dt_array)
+                                    ->distinct()
+                                    ->pluck('booking_id')
+                                    ->toArray();
+
+        $room = Room::where('hotel_id', $user_id)
+                    ->withCount('room_numbers')
+                    ->find($request->room_id);
+
+        if (!$room) {
+            return response()->json([
+                'available_room' => 0,
+                'total_nights' => 0,
+                'message' => 'Room not found or does not belong to this hotel.'
+            ], 404);
+        }
+
+        $bookings = Booking::withCount('assign_rooms')
+                    ->whereIn('id', $check_date_booking_ids)
+                    ->where('rooms_id', $room->id)
+                    ->get()
+                    ->toArray();
+
+        $total_book_room = array_sum(array_column($bookings, 'assign_rooms_count'));
+        $av_room = $room->room_numbers_count - $total_book_room;
+
+        $toDate = Carbon::parse($request->check_in);
+        $fromDate = Carbon::parse($request->check_out);
+        $nights = $toDate->diffInDays($fromDate);
+
+        return response()->json([
+            'available_room' => $av_room,
+            'total_nights' => $nights
+        ]);
+    }
+
     public function DownloadInvoice($id){
         $editData = Booking::with('room')->find($id);
-        $pdf = Pdf::loadView('backend.booking.booking_invoice', compact('editData'))
+        $pdf = Pdf::loadView('hotel.backend.booking.booking_invoice', compact('editData'))
         ->setPaper('a4')->setOption([
             'tempDir' => public_path(),
             'chroot' => public_path(),
         ]);
         return $pdf->download('invoice.pdf');
     }
+
+    public function HotelDownloadInvoice($id) {
+        $user_id = Auth::id();  // Lấy ID người dùng hiện tại
+    
+        // Lọc booking theo hotel_id từ bảng rooms
+        $editData = Booking::with('room')
+            ->whereHas('room', function($query) use ($user_id) {
+                $query->where('hotel_id', $user_id);
+            })
+            ->find($id);
+    
+        // Kiểm tra xem booking có tồn tại không
+        if (!$editData) {
+            abort(404);  // Nếu không có booking phù hợp, trả về lỗi 404
+        }
+    
+        // Tạo và tải hóa đơn PDF
+        $pdf = Pdf::loadView('hotel.backend.booking.booking_invoice', compact('editData'))
+            ->setPaper('a4')
+            ->setOption([
+                'tempDir' => public_path(),
+                'chroot' => public_path(),
+            ]);
+    
+        return $pdf->download('invoice.pdf');
+    }
+    
 
     public function UserBooking(){
         $id = Auth::user()->id;

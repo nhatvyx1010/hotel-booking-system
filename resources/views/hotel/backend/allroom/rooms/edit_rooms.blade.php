@@ -35,7 +35,7 @@
 						<div class="card">
 							<div class="card-body p-4">
 								<h5 class="mb-4">Update Room</h5>
-			<form class="row g-3" action="{{ route('update.room', $editData->id) }}" method="post" enctype="multipart/form-data">
+			<form class="row g-3" action="{{ route('hotel.update.room', $editData->id) }}" method="post" enctype="multipart/form-data">
 				@csrf
 
                 <div class="col-md-4">
@@ -62,7 +62,7 @@
 					<input type="file" name="multi_img[]" class="form-control" multiple id="multiImg" accept="image/jpeg, image/jpg, image/gif, image/png">
 					@foreach ($multiimgs as $item)
 					<img src="{{ (!empty($item->multi_img)) ? url('upload/roomimg/multi_img/'.$item->multi_img) : url('upload/no_image.jpg') }}" alt="Admin" class="bg-primary" width="60">
-                        <a href="{{ route('multi.image.delete', $item->id) }}"><i class="lni lni-close"></i></a>
+                        <a href="{{ route('hotel.multi.image.delete', $item->id) }}"><i class="lni lni-close"></i></a>
                     @endforeach
                     <div class="row" id="preview_img"></div>
 				</div>
@@ -221,7 +221,7 @@
                                             <i class="lni lni-plus">Add New</i>
                                         </a>
                                         <div class="roomnoHide" id="roomnoHide">
-                                            <form action="{{ route('store.room.number', $editData->id) }}" method="post">
+                                            <form action="{{ route('hotel.store.room.number', $editData->id) }}" method="post">
                                                 @csrf
                                                 <input type="hidden" name="room_type_id" value="{{ $editData->roomtype_id }}">
 
@@ -261,8 +261,8 @@
 											<td>{{ $item->room_no }}</td>
 											<td>{{ $item->status }}</td>
 											<td>
-                                                <a href="{{ route('edit.roomno', $item->id) }}" class="btn btn-warning px-3 radius-30">Edit</a>
-                                                <a href="{{ route('delete.roomno', $item->id) }}" class="btn btn-danger px-3 radius-30" id="delete">Delete</a>
+                                                <a href="{{ route('hotel.edit.roomno', $item->id) }}" class="btn btn-warning px-3 radius-30">Edit</a>
+                                                <a href="{{ route('hotel.delete.roomno', $item->id) }}" class="btn btn-danger px-3 radius-30" id="delete">Delete</a>
                                             </td>
 										</tr>
                                         @endforeach
