@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\RoomController;
 use App\Http\Controllers\Frontend\FrontendRoomController;
 use App\Http\Controllers\Frontend\BookingController;
 use App\Http\Controllers\Backend\RoomListController;
+use App\Http\Controllers\Backend\CityController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\TestimonialController;
 use App\Http\Controllers\Backend\BlogController;
@@ -18,7 +19,9 @@ use App\Http\Controllers\Backend\CommentController;
 use App\Http\Controllers\Backend\ReportController;
 use App\Http\Controllers\Backend\GalleryController;
 use App\Http\Controllers\Backend\RoleController;
+use App\Http\Controllers\Backend\AdminHotelController;
 use App\Http\Controllers\Frontend\VnpayController;
+use App\Http\Controllers\Frontend\AboutController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -61,6 +64,16 @@ Route::middleware(['auth', 'roles:admin'])->group(function(){
         Route::post('/team/update', 'UpdateTeam')->name('team.update');
         Route::get('/delete/team/{id}', 'DeleteTeam')->name('delete.team');
     });
+
+    Route::controller(CityController::class)->group(function(){
+        Route::get('/all/city', 'CityAll')->name('all.city');
+        Route::get('/add/city', 'CityAdd')->name('add.city');
+        Route::post('/city/store', 'CityStore')->name('city.store');
+        Route::get('/edit/city/{id}', 'CityEdit')->name('edit.city');
+        Route::post('/city/update', 'CityUpdate')->name('city.update');
+        Route::get('/delete/city/{id}', 'CityDestroy')->name('delete.city');
+    });
+
     Route::controller(TeamController::class)->group(function(){
         Route::get('/book/area', 'BookArea')->name('book.area');
         Route::post('/book/area/update', 'BookAreaUpdate')->name('book.area.update');
@@ -197,6 +210,15 @@ Route::middleware(['auth', 'roles:admin'])->group(function(){
         Route::post('/update/admin/{id}', 'UpdateAdmin')->name('update.admin');
         Route::get('/delete/admin/{id}', 'DeleteAdmin')->name('delete.admin');
     });
+
+    Route::controller(AdminHotelController::class)->group(function(){
+        Route::get('/all/hotel', 'AllHotel')->name('all.hotel');
+        Route::get('/add/hotel', 'AddHotel')->name('add.hotel');
+        Route::post('/store/hotel', 'StoreHotel')->name('store.hotel');
+        Route::get('/edit/hotel/{id}', 'EditHotel')->name('edit.hotel');
+        Route::post('/update/hotel/{id}', 'UpdateHotel')->name('update.hotel');
+        Route::get('/delete/hotel/{id}', 'DeleteHotel')->name('delete.hotel');
+    });
 });
 
 Route::controller(FrontendRoomController::class)->group(function(){
@@ -205,9 +227,11 @@ Route::controller(FrontendRoomController::class)->group(function(){
     Route::get('/room/details/{id}', 'RoomDetailsPage');
     Route::get('/bookings/', 'BookingSearch')->name('booking.search');
     Route::get('/booking_hotel/', 'BookingSearchHotel')->name('booking.search.hotel');
+    Route::get('/hotel_detail/{id}', 'HotelDetail')->name('booking.search.hotel_detail');
     Route::get('/bookinglistroomsearch/', 'BookingListRoomSearch')->name('booking.list.room.search');
+    Route::get('/hotelsearchcity/{id}', 'HotelSearchCity')->name('hotel.search.city');
     Route::get('/search/room/details/{id}', 'SearchRoomDetails')->name('search_room_details');
-      
+    
     Route::get('/check_room_availability/', 'CheckRoomAvailability')->name('check_room_availability');
     Route::get('/check_room_availability_hotel/', 'CheckRoomAvailabilityHotel')->name('check_room_availability_hotel');
 });
@@ -228,6 +252,11 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/assign_room_delete/{id}', 'AssignRoomDelete')->name('assign_room_delete');
 
         Route::get('/user/booking/', 'UserBooking')->name('user.booking');
+        Route::get('/user/booking_canceled/', 'UserBookingCanceled')->name('user.booking_canceled');
+
+        Route::get('/user/booking/cancel-form/{id}','ShowCancelForm')->name('user.booking.cancel.form');
+        Route::post('/user/booking/cancel-store/{id}', 'StoreCancelReason')->name('user.booking.cancel.store');
+
         Route::get('/user/invoice/{id}', 'UserInvoice')->name('user.invoice');
     });
 });
@@ -254,6 +283,15 @@ Route::controller(GalleryController::class)->group(function(){
 Route::controller(BookingController::class)->group(function(){
 
     Route::post('/mark-notification-as-read/{notification}', 'MarkAsRead');
+});
+
+Route::controller(AboutController::class)->group(function(){
+
+    Route::get('/about', 'AboutUs')->name('about.us');
+    Route::get('/services', 'Service')->name('services.us');
+    Route::get('/terms', 'TermsUs')->name('terms.us');
+    Route::get('/privacy', 'PrivacyUs')->name('privacy.us');
+    Route::get('/testimonials/list', 'TestimonialsList')->name('testimonials.list');
 });
 
 ///////////////// VNPAY ///////////////
@@ -312,6 +350,9 @@ Route::middleware(['auth', 'roles:hotel'])->group(function(){
 
     Route::controller(BookingController::class)->group(function(){
         Route::get('/hotel/booking/list', 'HotelBookingList')->name('hotel.booking.list');
+        Route::get('/cancel/pending/list', 'HotelBookingCancelPendingList')->name('hotel.booking.cancel_pending.list');
+        Route::get('/cancel/complete/list', 'HotelBookingCancelCompleteList')->name('hotel.booking.cancel_complete.list');
+
         Route::get('/hotel/edit_booking/{id}', 'HotelEditBooking')->name('hotel.edit_booking');
         Route::get('/hotel/download/invoice/{id}', 'HotelDownloadInvoice')->name('hotel.download.invoice');
 
@@ -354,7 +395,7 @@ Route::get('/hotel/login', [HotelController::class, 'HotelLogin'])->name('hotel.
 Route::get('/hotel/register', [HotelController::class, 'HotelRegister'])->name('hotel.register');
 Route::post('/hotel/register/submit', [HotelController::class, 'HotelRegisterSubmit'])->name('hotel.register_submit');
 Route::post('/hotel/login_submit', [HotelController::class, 'HotelLoginSubmit'])->name('hotel.login_submit');
-Route::get('/hotel/logout', [HotelController::class, 'HotelLogout'])->name('hotel.logout');
+// Route::get('/hotel/logout', [HotelController::class, 'HotelLogout'])->name('hotel.logout');
 
 // Route::middleware(['auth', 'roles:hotel'])->group(function(){
 

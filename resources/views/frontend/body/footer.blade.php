@@ -38,37 +38,32 @@
                         <h3>Links</h3>
                         <ul class="footer-list">
                             <li>
-                                <a href="about.html" target="_blank">
+                                <a href="{{ route('about.us') }}" target="_blank">
                                     <i class='bx bx-caret-right'></i>
                                     About Us
                                 </a>
                             </li> 
                             <li>
-                                <a href="services-1.html" target="_blank">
+                                <a href="{{ route('services.us') }}" target="_blank">
                                     <i class='bx bx-caret-right'></i>
                                     Services
                                 </a>
                             </li> 
-                            <li>
-                                <a href="team.html" target="_blank">
-                                    <i class='bx bx-caret-right'></i>
-                                    Team
-                                </a>
                             </li> 
                             <li>
-                                <a href="gallery.html" target="_blank">
+                                <a href="{{ route('show.gallery') }}" target="_blank">
                                     <i class='bx bx-caret-right'></i>
                                     Gallery
                                 </a>
                             </li> 
                             <li>
-                                <a href="terms-condition.html" target="_blank">
+                                <a href="{{ route('terms.us') }}" target="_blank">
                                     <i class='bx bx-caret-right'></i>
-                                    Terms 
+                                    Terms & Conditions 
                                 </a>
                             </li> 
                             <li>
-                                <a href="privacy-policy.html" target="_blank">
+                                <a href="{{ route('privacy.us') }}" target="_blank">
                                     <i class='bx bx-caret-right'></i>
                                     Privacy Policy
                                 </a>
@@ -82,37 +77,31 @@
                         <h3>Useful Links</h3>
                         <ul class="footer-list">
                             <li>
-                                <a href="index.html" target="_blank">
+                                <a href="{{ url('/') }}" target="_blank">
                                     <i class='bx bx-caret-right'></i>
                                     Home
                                 </a>
                             </li> 
                             <li>
-                                <a href="blog-1.html" target="_blank">
+                                <a href="{{ route('blog.list') }}" target="_blank">
                                     <i class='bx bx-caret-right'></i>
                                     Blog
                                 </a>
                             </li> 
                             <li>
-                                <a href="faq.html" target="_blank">
-                                    <i class='bx bx-caret-right'></i>
-                                    FAQ
-                                </a>
-                            </li> 
-                            <li>
-                                <a href="testimonials.html" target="_blank">
+                                <a href="{{ route('testimonials.list') }}" target="_blank">
                                     <i class='bx bx-caret-right'></i>
                                     Testimonials
                                 </a>
                             </li> 
                             <li>
-                                <a href="gallery.html" target="_blank">
+                                <a href="{{ route('show.gallery') }}" target="_blank">
                                     <i class='bx bx-caret-right'></i>
                                     Gallery
                                 </a>
                             </li> 
                             <li>
-                                <a href="contact.html" target="_blank">
+                                <a href="{{ route('contact.us') }}" target="_blank">
                                     <i class='bx bx-caret-right'></i>
                                     Contact Us
                                 </a>

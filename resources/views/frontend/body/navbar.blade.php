@@ -28,7 +28,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="about.html" class="nav-link">
+                            <a href="{{ route('about.us') }}" class="nav-link">
                                 About
                             </a>
                         </li>
@@ -38,11 +38,11 @@
                             </a>
                         </li> -->
 
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="{{ route('show.gallery') }}" class="nav-link">
                                 Gallery 
                             </a>
-                        </li>
+                        </li> -->
 
                         <li class="nav-item">
                             <a href="{{ route('blog.list') }}" class="nav-link">
@@ -52,7 +52,7 @@
     @php
         $room = App\Models\Room::latest()->get();
     @endphp
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="{{ route('frontend.room.all') }}" class="nav-link">
                                 All Rooms
                                 <i class='bx bx-chevron-down'></i>
@@ -66,7 +66,7 @@
                                 </li>
                                 @endforeach
                             </ul>
-                        </li>
+                        </li> -->
 
                         <li class="nav-item">
                             <a href="{{ route('contact.us') }}" class="nav-link">

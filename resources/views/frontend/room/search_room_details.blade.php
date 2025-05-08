@@ -30,7 +30,8 @@
                                 <form action="{{ route('user_booking_store', $roomdetails->id) }}" method="post" id="bk_form">
                                     @csrf
                                     
-                                    <input type="hidden" name="room_id" value="{{ $roomdetails->id }}">
+                                    <input hidden name="room_id" id="room_id" value="{{ $roomdetails->id }}">
+                                    <input hidden name="hotel_id" id="hotel_id" value="{{ $roomdetails->hotel_id }}">
                                     <div class="row align-items-center">
                                         <div class="col-lg-12">
                                             <div class="form-group">
@@ -295,7 +296,7 @@
                                             <li><i class='bx bxs-hotel'></i>{{ $item->bed_style }}</li>
                                         </ul>
                                         
-                                        <a href="room-details.html" class="book-more-btn">
+                                        <a href="#" class="book-more-btn">
                                             Book Now
                                         </a>
                                     </div>
@@ -313,9 +314,11 @@
     $(document).ready(function () {
        var check_in = "{{ old('check_in') }}";
        var check_out = "{{ old('check_out') }}";
+       var hotel_id = "{{ $roomdetails->hotel_id }}";
        var room_id = "{{ $room_id }}";
+
        if (check_in != '' && check_out != ''){
-          getAvaility(check_in, check_out, room_id);
+          getAvaility(check_in, check_out, room_id, hotel_id);
        }
 
 
@@ -324,7 +327,7 @@
           var check_in = $("#check_in").val();
 
           if(check_in != '' && check_out != ''){
-             getAvaility(check_in, check_out, room_id);
+             getAvaility(check_in, check_out, room_id, hotel_id);
           }
        });
 
@@ -333,17 +336,17 @@
           var check_in = $("#check_in").val();
 
           if(check_in != '' && check_out != ''){
-             getAvaility(check_in, check_out, room_id);
+             getAvaility(check_in, check_out, room_id, hotel_id);
           }
        });
 
 
     });
 
-    function getAvaility(check_in, check_out, room_id) {
+    function getAvaility(check_in, check_out, room_id, hotel_id) {
        $.ajax({
           url: "{{ route('check_room_availability_hotel') }}",
-          data: {room_id:room_id, check_in:check_in, check_out:check_out},
+          data: {room_id:room_id, check_in:check_in, check_out:check_out, hotel_id:hotel_id},
           success: function(data){
              $(".available_room").html('Availability : <span class="text-success">'+data['available_room']+' Rooms</span>');
              $("#available_room").val(data['available_room']);

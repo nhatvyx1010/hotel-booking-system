@@ -16,6 +16,75 @@
 </div>
 <!-- Inner Banner End -->
 
+<!-- Banner Form Area -->
+<div class="banner-form-area">
+    <div class="container" >
+        <div class="banner-form">
+            <!-- <form method="get" action="{{ route('booking.search') }}"> -->
+            <form method="get" action="{{ route('booking.list.room.search') }}">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-3">
+                        <div class="form-group">
+                            <label>CHECK IN TIME</label>
+                            <div class="input-group">
+                                <input autocomplete="off" type="text" required name="check_in" class="form-control dt_picker" placeholder="yyy-mm-dd" value="{{ old('check_in') }}">
+                                <span class="input-group-addon"></span>
+                            </div>
+                            <i class='bx bxs-chevron-down'></i>	
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3">
+                        <div class="form-group">
+                            <label>CHECK OUT TIME</label>
+                            <div class="input-group">
+                                <input autocomplete="off" type="text" required name="check_out" class="form-control dt_picker" placeholder="yyy-mm-dd" value="{{ old('check_out') }}">
+                                <span class="input-group-addon"></span>
+                            </div>
+                            <i class='bx bxs-chevron-down'></i>	
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <label>GUESTS</label>
+                            <select name="persion" class="form-control">
+                                @for($i = 1; $i <= 4; $i++)
+                                    <option value="{{ sprintf('%02d', $i) }}" {{ old('persion') == sprintf('%02d', $i) ? 'selected' : '' }}>
+                                        {{ sprintf('%02d', $i) }}
+                                    </option>
+                                @endfor
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <label>City</label>
+                            <select name="city_id" class="form-control">
+                                <option value="">Select a City</option>
+                                @foreach($cities as $city)
+                                    <option value="{{ $city->id }}" {{ old('city_id') == $city->id ? 'selected' : '' }}>
+                                        {{ $city->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-2">
+                        <button type="submit" class="default-btn btn-bg-one border-radius-5">
+                            Check Availability
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<!-- Banner Form Area End -->
+
 <!-- Room Area -->
 <div class="room-area pt-100 pb-70">
     <div class="container">
@@ -28,23 +97,22 @@
             @forelse($hotels as $hotel)
                 <div class="col-12 mb-5">
                     <!-- Hotel Card -->
-                    <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+                    <div class="card border-0 shadow-lg rounded-3 overflow-hidden">
                         <div class="row g-0 align-items-center">
                             <div class="col-lg-4">
-                                <img src="{{ asset($hotel->bookarea->image ?? 'upload/default.jpg') }}" class="img-fluid w-100 h-100" style="object-fit: cover;" alt="{{ $hotel->name }}">
+                                <img src="{{ asset($hotel->bookarea->image ?? 'upload/default.jpg') }}" class="img-fluid w-100 h-100" style="object-fit: cover; border-radius: 10px;" alt="{{ $hotel->name }}">
                             </div>
                             <div class="col-lg-8">
                                 <div class="card-body p-4">
-                                    <h4 class="card-title mb-3">{{ $hotel->bookarea->short_title ?? $hotel->name }}</h4>
-                                    <p class="card-text mb-4">{{ $hotel->bookarea->short_desc ?? '' }}</p>
-                                    <!-- <a href="{{ $hotel->bookarea->link_url ?? '#' }}" target="_blank" class="btn btn-outline-primary mb-4">Visit Hotel Website</a> -->
+                                    <h4 class="card-title mb-3 text-primary">{{ $hotel->bookarea->short_title ?? $hotel->name }}</h4>
+                                    <p class="card-text mb-4 text-muted">{{ $hotel->bookarea->short_desc ?? '' }}</p>
                                     
                                     <a href="{{ route('booking.search.hotel', [
                                                     'hotel_id' => $hotel->id,
                                                     'check_in' => old('check_in'),
                                                     'check_out' => old('check_out'),
                                                     'persion' => old('persion')
-                                                ]) }}" target="_blank" class="btn btn-outline-primary mb-4">
+                                                ]) }}" target="_blank" class="btn btn-outline-primary mb-4 rounded-pill px-4 py-2">
                                         Visit Hotel Website
                                     </a>
 
@@ -86,7 +154,6 @@
                                                     <a href="{{ route('search_room_details', $foundRoom->id.'?check_in='.old('check_in').'&check_out='.old('check_out').'&persion='.old('persion')) }}" class="text-dark">
                                                         {{ $foundRoom->type->name }}
                                                     </a>
-
                                                 </h6>
                                                 <small class="text-muted">${{ $foundRoom->price }} / night</small>
                                                 <div class="rating text-warning mt-1">

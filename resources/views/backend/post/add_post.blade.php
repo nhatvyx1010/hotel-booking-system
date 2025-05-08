@@ -27,48 +27,58 @@
                             @csrf
 
                                 <div class="col-md-6">
-										<label for="input7" class="form-label">Blog Category</label>
-										<select name="blogcat_id" id="input7" class="form-select">
-											<option selected="">Select Category</option>
-                                            @foreach ($blogcat as $cat)
-											<option value="{{ $cat->id }}">{{ $cat->category_name }}</option>
-                                            @endforeach
-										</select>
-									</div>
+                                    <label for="input7" class="form-label">Blog Category</label>
+                                    <select name="blogcat_id" id="input7" class="form-select">
+                                        <option selected="">Select Category</option>
+                                        @foreach ($blogcat as $cat)
+                                        <option value="{{ $cat->id }}">{{ $cat->category_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
-									<div class="col-md-6">
-										<label for="input1" class="form-label">Post Title</label>
-										<input type="text" name="post_title" class="form-control" id="input1">
-									</div>
+                                <div class="col-md-6">
+                                    <label for="input7" class="form-label">Hotel</label>
+                                    <select name="hotel_id" id="input7" class="form-select">
+                                        <option selected="">Select Hotel</option>
+                                        @foreach ($hotels as $hotel)
+                                        <option value="{{ $hotel->id }}">{{ $hotel->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
-                                    <div class="col-md-12">
-										<label for="input11" class="form-label">Short Description</label>
-										<textarea name="short_desc" class="form-control" id="input11" rows="3"></textarea>
-									</div>
+                                <div class="col-md-6">
+                                    <label for="input1" class="form-label">Post Title</label>
+                                    <input type="text" name="post_title" class="form-control" id="input1">
+                                </div>
 
-                                    <div class="col-md-12">
-										<label for="input11" class="form-label">Post Description</label>
-										<textarea name="long_desc" class="form-control" id="myeditorinstance"></textarea>
-									</div>
+                                <div class="col-md-12">
+                                    <label for="input11" class="form-label">Short Description</label>
+                                    <textarea name="short_desc" class="form-control" id="input11" rows="3"></textarea>
+                                </div>
 
-									<div class="col-md-6">
-										<label for="input1" class="form-label">Post Title</label>
-										<input class="form-control" name="post_image" type="file" id="image" />
-									</div>
+                                <div class="col-md-12">
+                                    <label for="input11" class="form-label">Post Description</label>
+                                    <textarea name="long_desc" class="form-control" id="myeditorinstance"></textarea>
+                                </div>
 
-                                    <div class="col-md-6">
-										<label for="input1" class="form-label"></label>
-										<img id="showImage" src="{{ url('upload/no_image.jpg') }}" alt="Admin" class="rounded-circle p-1 bg-primary" width="80">
-									</div>
+                                <div class="col-md-6">
+                                    <label for="input1" class="form-label">Post Title</label>
+                                    <input class="form-control" name="post_image" type="file" id="image" />
+                                </div>
 
-									<div class="col-md-12">
-										<div class="d-md-flex d-grid align-items-center gap-3">
-											<button type="submit" class="btn btn-primary px-4">Submit</button>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
+                                <div class="col-md-6">
+                                    <label for="input1" class="form-label"></label>
+                                    <img id="showImage" src="{{ url('upload/no_image.jpg') }}" alt="Admin" class="rounded-circle p-1 bg-primary" width="80">
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="d-md-flex d-grid align-items-center gap-3">
+                                        <button type="submit" class="btn btn-primary px-4">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
     </div>
             </div>
         </div>
