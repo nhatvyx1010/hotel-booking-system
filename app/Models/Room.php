@@ -22,4 +22,10 @@ class Room extends Model
         return $this->hasManyThrough(Booking::class, BookingRoomList::class, 'room_number_id', 'id', 'id', 'booking_id');
     }
 
+    public function hotel()
+    {
+        return $this->belongsTo(User::class, 'hotel_id', 'id');
+    }
+
+
 }

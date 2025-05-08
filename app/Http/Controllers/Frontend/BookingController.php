@@ -180,15 +180,42 @@ class BookingController extends Controller
     }
 
     public function HotelBookingList(){
-        $user_id = Auth::id();  // Lấy ID người dùng hiện tại
+        $user_id = Auth::id(); 
 
         $allData = Booking::whereHas('room', function($query) use ($user_id) {
             $query->where('hotel_id', $user_id);
         })
+        ->whereIn('status', [0, 1])
         ->orderBy('id', 'desc')
         ->get();
     
         return view('hotel.backend.booking.booking_list', compact('allData'));
+    }
+
+    public function HotelBookingCancelPendingList() {
+        $user_id = Auth::id(); 
+    
+        $allData = Booking::whereHas('room', function($query) use ($user_id) {
+            $query->where('hotel_id', $user_id);
+        })
+        ->where('status', 2) // Lọc các booking có trạng thái 2 (canceled)
+        ->orderBy('id', 'desc')
+        ->get();
+    
+        return view('hotel.backend.booking.booking_cancel_pending_list', compact('allData'));
+    }
+    
+    public function HotelBookingCancelCompleteList() {
+        $user_id = Auth::id(); 
+    
+        $allData = Booking::whereHas('room', function($query) use ($user_id) {
+            $query->where('hotel_id', $user_id);
+        })
+        ->where('status', 3) // Lọc các booking có trạng thái 2 (canceled)
+        ->orderBy('id', 'desc')
+        ->get();
+    
+        return view('hotel.backend.booking.booking_cancel_complete_list', compact('allData'));
     }
 
     public function EditBooking($id){
@@ -563,11 +590,28 @@ class BookingController extends Controller
         return $pdf->download('invoice.pdf');
     }
     
-
-    public function UserBooking(){
+    public function UserBooking() {
         $id = Auth::user()->id;
-        $allData = Booking::where('user_id', $id)->orderBy('id', 'desc')->get();
+    
+        $allData = Booking::with(['room.type']) // Load room + room.type
+            ->where('user_id', $id)
+            ->whereIn('status', [0, 1])
+            ->orderBy('id', 'desc')
+            ->get();
+    
         return view('frontend.dashboard.user_booking', compact('allData'));
+    }
+    
+    public function UserBookingCanceled() {
+        $id = Auth::user()->id;
+    
+        $allData = Booking::with(['room.type']) // Load room + room.type
+            ->where('user_id', $id)
+            ->where('status', 2)
+            ->orderBy('id', 'desc')
+            ->get();
+    
+        return view('frontend.dashboard.user_booking_canceleds', compact('allData'));
     }
 
     public function UserInvoice($id){
@@ -589,4 +633,41 @@ class BookingController extends Controller
 
         return response()->json(['count' => $user->unreadNotifications()->count()]);
     }
+
+
+    // Hiển thị form lý do huỷ
+    public function ShowCancelForm($id)
+    {
+        $booking = Booking::with(['room.type'])->findOrFail($id);
+
+        return view('frontend.dashboard.cancel_form', compact('booking'));
+    }
+
+    public function StoreCancelReason(Request $request, $id)
+    {
+        $booking = Booking::findOrFail($id);
+
+        $hoursDiff = now()->diffInHours($booking->check_in, false);
+        if ($hoursDiff < 24) {
+            return redirect()->back()->with('error', 'Không thể huỷ và hoàn tiền khi thời gian nhận phòng còn dưới 24h.');
+        }
+
+        $validated = $request->validate([
+            'cancel_reason' => 'required|string|max:500',
+            'phone' => 'required|string|max:20',
+            'bank_account' => 'required|string|max:30',
+            'bank_name' => 'required|string|max:100',
+        ]);
+
+        $booking->update([
+            'cancel_reason' => $validated['cancel_reason'],
+            'refund_phone' => $validated['phone'],
+            'refund_bank_code' => $validated['bank_account'],
+            'refund_bank_name' => $validated['bank_name'],
+            'status' => '2',
+        ]);
+
+        return redirect()->route('user.booking')->with('success', 'Huỷ booking thành công. Bạn sẽ được hoàn tiền trong vòng 5 ngày làm việc.');
+    }
+
 }

@@ -20,6 +20,21 @@
 			</a>
 		</li>
 
+		<li>
+			<a class="has-arrow" href="javascript:;">
+				<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
+				</div>
+				<div class="menu-title">Manage Hotel</div>
+			</a>
+			<ul>
+				<li> <a href="{{ route('all.hotel') }}"><i class='bx bx-radio-circle'></i>All Hotel</a>
+				</li>
+
+				<li> <a href="{{ route('add.hotel') }}"><i class='bx bx-radio-circle'></i>Add Hotel</a>
+				</li>
+			</ul>
+		</li>
+
 		<li class="menu-label">Booking Manage</li>
 		<li>
 			<a href="javascript:;" class="has-arrow">
@@ -103,6 +118,20 @@
 			</ul>
 		</li>
 
+		<li>
+			<a class="has-arrow" href="javascript:;">
+				<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
+				</div>
+				<div class="menu-title">City</div>
+			</a>
+			<ul>
+				<li> <a href="{{ route('all.city') }}"><i class='bx bx-radio-circle'></i>All City</a>
+				</li>
+
+				<li> <a href="{{ route('add.city') }}"><i class='bx bx-radio-circle'></i>Add City</a>
+				</li>
+			</ul>
+		</li>
 		<!-- <li>
 			<a class="has-arrow" href="javascript:;">
 				<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>

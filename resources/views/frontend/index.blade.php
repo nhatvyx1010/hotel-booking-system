@@ -6,8 +6,6 @@
     <div class="container">
         <div class="banner-content">
             <h1>Discover a Hotel to Book a Suitable Room</h1>
-            
-                
         </div>
     </div>
 </div>
@@ -15,9 +13,8 @@
 
 <!-- Banner Form Area -->
 <div class="banner-form-area">
-    <div class="container">
+    <div class="container" >
         <div class="banner-form">
-
             <!-- <form method="get" action="{{ route('booking.search') }}"> -->
             <form method="get" action="{{ route('booking.list.room.search') }}">
                 <div class="row align-items-center">
@@ -54,8 +51,20 @@
                             </select>	
                         </div>
                     </div>
+                    
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <label>City</label>
+                            <select name="city_id" class="form-control">
+                                <option value="">Select a City</option>
+                                @foreach($cities as $city)
+                                    <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
 
-                    <div class="col-lg-4 col-md-4">
+                    <div class="col-lg-2 col-md-2">
                         <button type="submit" class="default-btn btn-bg-one border-radius-5">
                             Check Availability
                         </button>
@@ -70,23 +79,21 @@
 
 <!-- Room Area -->
 @include('frontend.home.room_area')
-<!-- Room Area End -->
 
 <!-- Book Area Two-->
 @include('frontend.home.room_area_2')
-<!-- Book Area Two End -->
+
+<!-- Services Area Three -->
+@include('frontend.home.room_area_3')
 
 <!-- Services Area Three -->
 <!-- @include('frontend.home.services') -->
-<!-- Services Area Three End -->
 
 <!-- Team Area Three -->
-@include('frontend.home.team')
-<!-- Team Area Three End -->
+<!-- @include('frontend.home.team') -->
 
 <!-- Testimonials Area Three -->
 @include('frontend.home.testimonials')
-<!-- Testimonials Area Three End -->
 
 <!-- FAQ Area -->
 <!-- @include('frontend.home.faq') -->

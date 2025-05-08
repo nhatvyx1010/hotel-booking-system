@@ -32,6 +32,7 @@
                             <th>Serial</th>
                             <th>Post Title</th>
                             <th>Blog Category</th>
+                            <th>Hotel</th>
                             <th>Post Image</th>
                             <th>Action</th>
                         </tr>
@@ -42,6 +43,7 @@
                                 <td>{{ $key+1 }}</td>
                                 <td>{{ $item->post_title }}</td>
                                 <td>{{ $item['blog']['category_name'] }}</td>
+                                <td>{{ $item->hotel?->name ?? 'N/A' }}</td>
                                 <td><img src="{{ asset($item->post_image) }}" alt="" style="width:70px; height:40px"></td>
                                 <td>
                                     <a href="{{ route('edit.blog.post', $item->id) }}" class="btn btn-warning px-3 radius-30">Edit</a>

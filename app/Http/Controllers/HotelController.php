@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Hotel;
-use App\Models\City;
+use App\Models\User;
 
 class HotelController extends Controller
 {
@@ -69,17 +68,22 @@ class HotelController extends Controller
     }
     //End Method
     
-    public function HotelLogout() {
-        Auth::guard('hotel')->logout();
-        return redirect()->route('hotel.login')->with('success', 'Logout Success');
+    public function HotelLogout(Request $request){
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
     //End Method
     
     public function HotelProfile() {
-        $city = City::latest()->get();
-        $id = Auth::guard('hotel')->id();
-        $profileData = Hotel::find($id);
-        return view('hotel.hotel_profile', compact('profileData', 'city'));
+        // $city = City::latest()->get();
+        $id = Auth::user()->id;
+        $profileData = User::find($id);
+        return view('hotel.hotel_profile_view', compact('profileData'));
     }
     //End Method
     
@@ -167,4 +171,6 @@ class HotelController extends Controller
         return back()->with($notification);
     }
     //End Method
+
+    
 }

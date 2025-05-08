@@ -73,6 +73,39 @@
 			</ul>
 		</li>
 		<li>
+			<a href="javascript:;" class="has-arrow">
+				<div class="parent-icon"><i class='bx bx-cart'></i></div>
+				<div class="menu-title">Cancel Booking</div>
+				@php
+					$cancelPendingCount = App\Models\Booking::whereHas('room', function($query) {
+						$query->where('hotel_id', Auth::id());
+					})
+					->where('status', 2)
+					->count();
+				@endphp
+				@if($cancelPendingCount > 0)
+					<span style="color: red; font-weight: bold;"> ({{ $cancelPendingCount }})</span>
+				@endif
+			</a>
+			<ul>
+				<li>
+					<a href="{{ route('hotel.booking.cancel_pending.list') }}">
+						<i class='bx bx-radio-circle'></i>Cancel Pending
+						
+						@if($cancelPendingCount > 0)
+							<span style="font-weight: bold;"> ({{ $cancelPendingCount }})</span>
+						@endif
+					</a>
+				</li>
+				<li>
+					<a href="{{ route('hotel.booking.cancel_complete.list') }}">
+						<i class='bx bx-radio-circle'></i>Cancel Complete
+					</a>
+				</li>
+			</ul>
+		</li>
+
+		<li>
 			<a class="has-arrow" href="javascript:;">
 				<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
 				</div>

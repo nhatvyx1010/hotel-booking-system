@@ -14,6 +14,8 @@ use App\Models\Facility;
 use App\Models\RoomBookedDate;
 use App\Models\Booking;
 use App\Models\User;
+use App\Models\Gallery;
+use App\Models\City;
 
 class FrontendRoomController extends Controller
 {
@@ -63,6 +65,8 @@ class FrontendRoomController extends Controller
         $facility = Facility::where('rooms_id', $id)->get();
         $otherRooms = Room::where('id', '!=', $id)->orderBy('id', 'DESC')->limit(2)->get();
         $room_id = $id;
+
+        // dd( $roomdetails, $multiImage, $facility, $otherRooms);
         return view('frontend.room.search_room_details', compact('roomdetails', 'multiImage', 'facility', 'otherRooms', 'room_id'));
     }
 
@@ -132,12 +136,42 @@ class FrontendRoomController extends Controller
         // Lấy hotel_id từ rooms
         $hotel_ids = $rooms->pluck('hotel_id')->unique();
 
-        // Tìm danh sách hotels
-        $hotels = User::with('bookarea')
-                        ->withCount('room_numbers')
-                        ->whereIn('id', $hotel_ids)
-                        ->get();
-        return view('frontend.listhotel.search_room', compact('hotels', 'check_date_booking_ids'));
+        $city_id = $request->city_id;
+
+        $hotelQuery = User::with('bookarea')
+            ->withCount('room_numbers')
+            ->whereIn('id', $hotel_ids);
+
+        if (!empty($city_id)) {
+            $hotelQuery->where('city_id', $city_id);
+        }
+
+        $hotels = $hotelQuery->get();
+        $cities = City::all();
+
+        return view('frontend.listhotel.search_room', compact('hotels', 'check_date_booking_ids', 'cities'));
+    }
+
+    public function HotelSearchCity($city_id)
+    {
+        // Lấy danh sách hotels theo city_id
+        $hotels = User::with(['bookarea', 'room_numbers', 'rooms.type'])
+                    ->where('role', 'hotel')
+                    ->where('city_id', $city_id)
+                    ->where('status', 1)
+                    ->get();
+
+        // Lấy tất cả room có status = 1
+        $rooms = Room::where('status', 1)->get();
+
+        // Gán room ngẫu nhiên cho mỗi hotel (nếu có)
+        foreach ($hotels as $hotel) {
+            $randomRoom = $rooms->where('hotel_id', $hotel->id)->first();
+            $hotel->random_room = $randomRoom;
+        }
+        $cities = City::all();
+
+        return view('frontend.listhotel.search_room_city', compact('hotels', 'cities', 'city_id'));
     }
     
     public function BookingSearchHotel(Request $request){
@@ -163,14 +197,42 @@ class FrontendRoomController extends Controller
 
         $rooms = Room::withCount('room_numbers')
                     ->where('status', '1')
-                    ->where('hotel_id', $request->hotel_id) // Thêm điều kiện lọc theo hotel_id
+                    ->where('hotel_id', $request->hotel_id)
                     ->get();
 
-        return view('frontend.room.search_room', compact('rooms', 'check_date_booking_ids'));
+        $gallery = Gallery::where('hotel_id', $request->hotel_id)->latest()->get();
+
+        $hotel = User::where('id', $request->hotel_id)->where('role', 'hotel')->first();
+        $bookArea = BookArea::where('hotel_id', $request->hotel_id)->first();
+
+        return view('frontend.room.search_room', compact('rooms', 'check_date_booking_ids', 'gallery', 'bookArea', 'hotel'));
+    }
+
+    
+    public function HotelDetail($id){
+        $rooms = Room::withCount('room_numbers')
+                    ->where('status', '1')
+                    ->where('hotel_id', $id)
+                    ->get();
+
+        $hotelId = $rooms->first()?->hotel_id;
+
+        $gallery = $hotelId
+            ? Gallery::where('hotel_id', $hotelId)->latest()->get()
+            : collect(); 
+
+        $hotel = User::where('id', $id)->where('role', 'hotel')->first();
+        $bookArea = BookArea::where('hotel_id', $id)->first();
+
+        $cities = City::all();
+
+        return view('frontend.room.search_hotel_detail', compact('rooms', 'gallery', 'bookArea', 'hotel', 'cities'));
     }
 
 
     public function CheckRoomAvailabilityHotel(Request $request){
+        $hotel_id_val = $request->hotel_id;
+
         $sdate = date('Y-m-d', strtotime($request->check_in));
         $edate = date('Y-m-d', strtotime($request->check_out));
         $alldate = Carbon::create($edate)->subDay();
@@ -181,14 +243,14 @@ class FrontendRoomController extends Controller
         }
         $check_date_booking_ids = RoomBookedDate::whereIn('book_date', $dt_array)->distinct()->pluck('booking_id')->toArray();
 
-        $room = Room::where('hotel_id', $request->hotel_id)
+        $room = Room::where('hotel_id', $hotel_id_val)
             ->withCount('room_numbers')
             ->find($request->room_id);
         
         $bookings = Booking::withCount('assign_rooms')
             ->whereIn('id', $check_date_booking_ids)
-            ->whereHas('room', function ($query) use ($hotel_id) {
-                $query->where('hotel_id', $hotel_id);
+            ->whereHas('room', function ($query) use ($hotel_id_val) {
+                $query->where('hotel_id', $hotel_id_val);
             })
             ->where('rooms_id', $room->id)
             ->get()
