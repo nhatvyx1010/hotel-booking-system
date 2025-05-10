@@ -37,8 +37,7 @@
                             <th>Check IN/OUT</th>
                             <th>Total Room</th>
                             <th>Guest</th>
-                            <th>Payment</th>
-                            <th>Status</th>
+                            <th>Cancel Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -53,20 +52,13 @@
                                 <td><span class="badge bg-primary"> {{ $item->check_in }}</span> / <br><span class="badge bg-warning text-dark"> {{ $item->check_out }}</span></td>
                                 <td>{{ $item->number_of_rooms }}</td>
                                 <td>{{ $item->persion }}</td>
-                                <td>
-                                    @if($item->payment_status == '1')
+                                <td>@if($item->status == '3')
                                         <span class="text-success">Complete</span>
-                                    @else
-                                        <span class="text-danger">Pending</span>
-                                    @endif
-                                </td>
-                                <td>@if($item->status == '1')
-                                        <span class="text-success">Active</span>
                                     @else
                                         <span class="text-danger">Pending</span>
                                     @endif</td>
                                 <td>
-                                    <a href="{{ route('delete.team', $item->id) }}" class="btn btn-danger px-3 radius-30" id="delete">Delete</a>
+                                    <a href="{{ route('hotel.booking.cancel_complete.detail', $item->id) }}" class="btn btn-primary px-3 radius-30">Detail</a>
                                 </td>
                             </tr>
                         @endforeach

@@ -19,7 +19,8 @@ class AdminHotelController extends Controller
     }
     
     public function AddHotel(){
-        return view('backend.hotel.add_hotel');
+        $cities = City::latest()->get();
+        return view('backend.hotel.add_hotel', compact('cities'));
     }
 
     public function StoreHotel(Request $request){
@@ -30,6 +31,7 @@ class AdminHotelController extends Controller
             'phone' => 'nullable|string|max:15',
             'address' => 'nullable|string|max:255',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'city_id' => ['required', 'exists:cities,id'],
         ]);
 
         $hotel = new User();
@@ -38,11 +40,12 @@ class AdminHotelController extends Controller
         $hotel->password = bcrypt($request->password);
         $hotel->phone = $request->phone;
         $hotel->address = $request->address;
+        $hotel->city_id = $request->city_id;
         $hotel->role = 'hotel';
         $hotel->status = 'active';
         
-        if ($request->file('image')) {
-            $file = $request->file('image');
+        if ($request->file('photo')) {
+            $file = $request->file('photo');
             @unlink(public_path('upload/admin_images/' . $hotel->photo));
             $filename = date('YmdHi') . $file->getClientOriginalName();
             $file->move(public_path('upload/admin_images'), $filename);
@@ -82,6 +85,7 @@ class AdminHotelController extends Controller
         $hotel->phone = $request->phone;
         $hotel->address = $request->address;
         $hotel->city_id = $request->city_id;
+        $hotel->status = $request->status;
         
         if ($request->file('image')) {
             $file = $request->file('image');

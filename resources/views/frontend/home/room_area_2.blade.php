@@ -1,7 +1,7 @@
 @php
     $cities = App\Models\City::whereHas('hotels', function($query) {
-        $query->where('status', 'active'); // chỉ lấy thành phố có ít nhất 1 khách sạn hoạt động
-    })->get();
+        $query->where('status', 'active');
+    })->limit(4)->get();
 @endphp
 
 <div class="city-area pt-100 pb-70 section-bg" style="background-color:#ffffff">

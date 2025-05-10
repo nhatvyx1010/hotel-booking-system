@@ -66,7 +66,7 @@
                                         <span class="text-danger">Pending</span>
                                     @endif</td>
                                 <td>
-                                    <a href="{{ route('delete.team', $item->id) }}" class="btn btn-danger px-3 radius-30" id="delete">Delete</a>
+                                    <a href="{{ route('hotel.booking.cancel_pending.detail', $item->id) }}" class="btn btn-primary px-3 radius-30" >Detail</a>
                                 </td>
                             </tr>
                         @endforeach

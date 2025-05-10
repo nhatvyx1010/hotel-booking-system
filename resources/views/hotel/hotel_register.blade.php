@@ -58,18 +58,49 @@
 				<div class="mb-3">
                       <label class="form-label">Store Name</label>
                       <input type="text" name="name" class="form-control" id="name" placeholder="Enter Name">
+					  
+						@error('name')
+							<small class="text-danger">{{ $message }}</small>
+						@enderror
+					  
                   </div>
                   <div class="mb-3">
                       <label class="form-label">Phone</label>
                       <input type="text" name="phone" class="form-control" id="phone" placeholder="Enter Phone">
+					  
+						@error('phone')
+							<small class="text-danger">{{ $message }}</small>
+						@enderror
                   </div>
                   <div class="mb-3">
                       <label class="form-label">Address</label>
                       <input type="text" name="address" class="form-control" id="address" placeholder="Enter Address">
+					  
+						@error('address')
+							<small class="text-danger">{{ $message }}</small>
+						@enderror
                   </div>
+
+				  <input type="hidden" name="city_id" id="city_id">
+					<div class="mb-3">
+						<label class="form-label">City</label>
+						<input list="cities" name="city_name" class="form-control" placeholder="Enter city name" required>
+						<datalist id="cities">
+							@foreach ($cities as $city)
+								<option value="{{ $city->name }}" data-id="{{ $city->id }}"></option>
+							@endforeach
+						</datalist>
+						@error('city_name')
+							<small class="text-danger">{{ $message }}</small>
+						@enderror
+					</div>
+
                   <div class="mb-3">
                       <label class="form-label">Email</label>
                       <input type="email" name="email" class="form-control" id="email" placeholder="Enter Email">
+					  @error('email')
+						<small class="text-danger">{{ $message }}</small>
+						@enderror
                   </div>
 				  <div class="mb-3">
                       <div class="d-flex align-items-start">
@@ -82,7 +113,26 @@
                           <input type="password" name="password" class="form-control" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
                           <button class="btn btn-light shadow-none ms-0" type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
                       </div>
+					  @error('password')
+						<small class="text-danger">{{ $message }}</small>
+						@enderror
                   </div>
+				  <div class="mb-3">
+						<div class="d-flex align-items-start">
+							<div class="flex-grow-1">
+								<label class="form-label">Confirm Password</label>
+							</div>
+						</div>
+						
+						<div class="input-group auth-pass-inputgroup">
+							<input type="password" name="password_confirmation" class="form-control" placeholder="Confirm password" aria-label="Password" aria-describedby="password-addon">
+							<button class="btn btn-light shadow-none ms-0" type="button" id="password-confirm-addon"><i class="mdi mdi-eye-outline"></i></button>
+						</div>
+						@error('password_confirmation')
+							<small class="text-danger">{{ $message }}</small>
+						@enderror
+					</div>
+
 
             </div>
             <div class="col-12">
@@ -92,7 +142,7 @@
             </div>
             <div class="col-12">
                 <div class="text-center ">
-                    <p class="mb-0">Don't have an account yet? <a href="{{ route('hotel.register') }}">Sign up here</a>
+                    <p class="mb-0">Don't have an account yet? <a href="{{ route('hotel.login') }}">Sign in here</a>
                     </p>
                 </div>
             </div>
@@ -143,6 +193,24 @@
 			});
 		});
 	</script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const cityInput = document.querySelector('input[name="city_name"]');
+			const cityIdInput = document.getElementById('city_id');
+			const datalist = document.getElementById('cities');
+
+			cityInput.addEventListener('input', function () {
+				const value = cityInput.value;
+				const option = Array.from(datalist.options).find(opt => opt.value === value);
+				if (option) {
+					cityIdInput.value = option.getAttribute('data-id');
+				} else {
+					cityIdInput.value = ''; // clear if not matched
+				}
+			});
+		});
+	</script>
+
 	<!--app JS-->
 	<script src="{{asset('backend/assets/js/app.js')}}"></script>
 </body>

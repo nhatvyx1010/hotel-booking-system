@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\City;
+use Illuminate\Validation\Rules;
+use Illuminate\Auth\Events\Registered;
 
 class HotelController extends Controller
 {
@@ -16,32 +19,47 @@ class HotelController extends Controller
     //End Method
 
     public function HotelRegister() {
-        return view('hotel.hotel_register');
+        $cities = City::latest()->get();
+        return view('hotel.hotel_register', compact('cities'));
     }
     //End Method
 
     public function HotelRegisterSubmit(Request $request) {
-        $request->validate([
-            'name' => ['required', 'string', 'max:200'],
-            'email' => ['required', 'string', 'unique:hotels'
-            ]
-        ]);
-        Hotel::insert([
+        try {
+            $request->validate([
+                'name' => ['required', 'string', 'max:200'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+                'phone' => ['required', 'string'],
+                'address' => ['required', 'string'],
+                'city_id' => ['required', 'exists:cities,id'],
+            ]);
+        } catch (ValidationException $e) {
+            dd($e->errors());
+        }
+    
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'password' => Hash::make($request->password),
             'phone' => $request->phone,
             'address' => $request->address,
-            'password' => Hash::make($request->password),
+            'city_id' => $request->city_id,
             'role' => 'hotel',
-            'status' => '0',
+            'status' => 'inactive',
         ]);
-
+    
+        event(new Registered($user));
+    
+        Auth::login($user);
+    
         $notification = array(
-            'message' => 'Hotel Register Successfully!',
+            'message' => 'Hotel Registered Successfully!',
             'alert-type' => 'success'
         );
 
-        return redirect()->route('hotel.login')->with($notification);
+        // return redirect()->route('login')->with($notification);
+        return redirect()->route('hotel.dashboard')->with($notification);
     }
     //End Method
     

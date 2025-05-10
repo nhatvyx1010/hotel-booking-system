@@ -53,6 +53,24 @@
                                     </div>
                                 </div>
 
+                                <input type="hidden" name="city_id" id="city_id">
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">City</h6>
+                                    </div>
+                                    <div class="form-group col-sm-9 text-secondary">
+                                        <input list="cities" name="city_name" class="form-control" placeholder="Enter city name" required>
+                                        <datalist id="cities">
+                                            @foreach ($cities as $city)
+                                                <option value="{{ $city->name }}" data-id="{{ $city->id }}"></option>
+                                            @endforeach
+                                        </datalist>
+                                        @error('city_name')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                </div>
+
                                 <div class="row mb-3">
                                     <div class="col-sm-3"><h6 class="mb-0">Password</h6></div>
                                     <div class="form-group col-sm-9 text-secondary">
@@ -143,4 +161,23 @@
         });
     });
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const cityInput = document.querySelector('input[name="city_name"]');
+        const cityIdInput = document.getElementById('city_id');
+        const datalist = document.getElementById('cities');
+
+        cityInput.addEventListener('input', function () {
+            const value = cityInput.value;
+            const option = Array.from(datalist.options).find(opt => opt.value === value);
+            if (option) {
+                cityIdInput.value = option.getAttribute('data-id');
+            } else {
+                cityIdInput.value = ''; // clear if not matched
+            }
+        });
+    });
+</script>
+
 @endsection

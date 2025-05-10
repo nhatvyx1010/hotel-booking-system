@@ -21,6 +21,7 @@ use App\Models\RoomNumber;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\BookConfirm;
+use App\Mail\BookCancelConfirm;
 use App\Models\User;
 use App\Notifications\BookingComplete;
 use Illuminate\Support\Facades\Notification;
@@ -76,7 +77,6 @@ class BookingController extends Controller
     }
 
     public function CheckoutStore(Request $request){
-        $user = User::where('role', 'admin')->get();
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required',
@@ -169,9 +169,24 @@ class BookingController extends Controller
             'alert-type' => 'success'
         );
 
-        Notification::send($user, new BookingComplete($request->name));
+        // $hotel_id = $room->hotel_id;
+        // $hotel = User::where('role', 'hotel')->where('id', $hotel_id)->first();
+        // if ($hotel) {
+        //     Notification::send($hotel, new BookingComplete($request->name));
+        // }
 
-        return redirect('/')->with('message', 'Booking Added Successfully')->with('alert-type', 'success');
+        $admin = User::where('role', 'admin')->get();
+        if ($admin) {
+            dd($admin);
+            Notification::send($admin, new BookingComplete($request->name));
+            
+        }
+
+        return redirect('/')->with([
+            'message' => 'Booking Added Successfully',
+            'alert-type' => 'success'
+        ]);
+        // return redirect('/')->with('message', 'Booking Added Successfully')->with('alert-type', 'success');
     }
 
     public function BookingList(){
@@ -204,6 +219,32 @@ class BookingController extends Controller
     
         return view('hotel.backend.booking.booking_cancel_pending_list', compact('allData'));
     }
+
+    public function HotelBookingCancelPendingDetail($id) {
+        $user_id = Auth::id();  // Lấy ID người dùng hiện tại
+    
+        // Lọc booking theo hotel_id từ bảng rooms
+        $editData = Booking::with('room')
+            ->whereHas('room', function($query) use ($user_id) {
+                $query->where('hotel_id', $user_id);
+            })
+            ->find($id);
+    
+        return view('hotel.backend.booking.booking_cancel_detail', compact('editData'));
+    }    
+
+    public function HotelBookingCancelCompleteDetail($id) {
+        $user_id = Auth::id();  // Lấy ID người dùng hiện tại
+    
+        // Lọc booking theo hotel_id từ bảng rooms
+        $editData = Booking::with('room')
+            ->whereHas('room', function($query) use ($user_id) {
+                $query->where('hotel_id', $user_id);
+            })
+            ->find($id);
+    
+        return view('hotel.backend.booking.booking_cancel_complete_detail', compact('editData'));
+    }    
     
     public function HotelBookingCancelCompleteList() {
         $user_id = Auth::id(); 
@@ -292,6 +333,34 @@ class BookingController extends Controller
             'alert-type' => 'success'
         );
         return redirect()->back()->with('message', 'Information Updated Successfully')->with('alert-type', 'success');
+    }
+    
+    public function HotelUpdateBookingCancelStatus(Request $request, $id){
+        $booking = Booking::find($id);
+        $booking->status = $request->status;
+        $booking->save();
+
+        $sendmail = Booking::find($id);
+        $data = [
+            'check_in' => $sendmail->check_in,
+            'check_out' => $sendmail->check_out,
+            'name' => $sendmail->name,
+            'email' => $sendmail->email,
+            'phone' => $sendmail->phone,
+        ];
+
+        try {
+            Mail::to($sendmail->email)->send(new BookCancelConfirm($data));
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+        
+
+        $notification = array(
+            'messsage' => 'Cancel Booking Successfully',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with('message', 'Cancel Booking Successfully')->with('alert-type', 'success');
     }
 
     public function UpdateBooking(Request $request, $id){

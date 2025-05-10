@@ -21,45 +21,54 @@
     <div class="container">
         <div class="privacy-content">
             <h4>1. Introduction</h4>
-            <p>We value your privacy and are committed to protecting your personal data. This privacy policy explains how we collect, use, and protect your information when you use our hotel booking platform.</p>
+            <p>We respect your privacy and are committed to protecting your personal data. This Privacy Policy outlines how we collect, use, share, and safeguard information across our hotel booking platform, which connects users with various accommodation providers.</p>
 
             <h4>2. Information We Collect</h4>
             <ul>
-                <li>Personal details such as name, email, and phone number</li>
-                <li>Booking details (hotel, dates, preferences)</li>
-                <li>Payment information (processed securely)</li>
-                <li>IP address, browser data, and cookies</li>
+                <li>Personal information: name, email address, phone number, and account credentials</li>
+                <li>Booking information: selected property, stay dates, guest preferences</li>
+                <li>Payment data: processed securely through third-party payment gateways</li>
+                <li>Technical data: IP address, device type, browser info, and usage data via cookies</li>
             </ul>
 
             <h4>3. How We Use Your Information</h4>
             <ul>
-                <li>To process and manage your bookings</li>
-                <li>To improve our services and website experience</li>
-                <li>To communicate promotions or service updates</li>
-                <li>To comply with legal obligations</li>
+                <li>To process your accommodation bookings and provide customer support</li>
+                <li>To communicate booking confirmations, updates, and service messages</li>
+                <li>To personalize your experience and improve our platform</li>
+                <li>To send relevant offers and promotional messages, with your consent</li>
+                <li>To comply with applicable legal obligations and regulations</li>
             </ul>
 
             <h4>4. Sharing Your Information</h4>
-            <p>We share your data only with the hotels you book and with trusted third parties necessary to provide our services. We never sell your data.</p>
+            <p>We share your personal data only with:</p>
+            <ul>
+                <li>The hotels or accommodations you book through our platform</li>
+                <li>Trusted service providers (e.g., payment processors, analytics, and customer support)</li>
+                <li>Government authorities when required by law</li>
+            </ul>
+            <p>We do not sell your personal data to third parties.</p>
 
-            <h4>5. Data Protection</h4>
-            <p>We implement appropriate technical and organizational measures to safeguard your data.</p>
+            <h4>5. Data Security</h4>
+            <p>We implement strong security measures to protect your data from unauthorized access, alteration, disclosure, or destruction.</p>
 
             <h4>6. Your Rights</h4>
             <ul>
-                <li>Access your personal data</li>
-                <li>Request corrections or deletion</li>
-                <li>Object to or restrict certain processing</li>
+                <li>Access your personal data and request a copy</li>
+                <li>Request correction or deletion of your data</li>
+                <li>Withdraw consent where processing is based on consent</li>
+                <li>Object to or restrict processing under certain circumstances</li>
             </ul>
+            <p>You can exercise these rights by contacting us directly.</p>
 
             <h4>7. Cookies</h4>
-            <p>We use cookies to enhance your experience. You may disable cookies in your browser settings.</p>
+            <p>We use cookies and similar technologies to understand user behavior, improve performance, and personalize content. You can manage cookie preferences through your browser settings.</p>
 
-            <h4>8. Changes to this Policy</h4>
-            <p>We may update this policy periodically. The latest version will always be available on our website.</p>
+            <h4>8. Policy Updates</h4>
+            <p>We may update this Privacy Policy from time to time. The latest version will always be posted on our website with an updated effective date.</p>
 
-            <h4>9. Contact</h4>
-            <p>If you have questions, contact us at: <a href="mailto:bookinghotel@booking.com">bookinghotel@booking.com</a></p>
+            <h4>9. Contact Us</h4>
+            <p>If you have any questions or concerns about this Privacy Policy or how we handle your data, please contact us at: <a href="mailto:bookinghotel@booking.com">bookinghotel@booking.com</a></p>
         </div>
     </div>
 </div>
