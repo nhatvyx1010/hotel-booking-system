@@ -76,6 +76,9 @@ class User extends Authenticatable
         return $this->belongsTo(City::class, 'city_id', 'id');
     }
     
-
+    public function rooms()
+    {
+        return $this->hasMany(Room::class, 'hotel_id', 'id');
+    }
 
 }

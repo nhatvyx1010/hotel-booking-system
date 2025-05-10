@@ -95,6 +95,19 @@
                                     </div>
                                 </div>
 
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Status</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <select name="status" class="form-control">
+                                            <option value="active" {{ $hotel->status == 'active' ? 'selected' : '' }}>Active</option>
+                                            <option value="inactive" {{ $hotel->status == 'inactive' ? 'selected' : '' }}>In Active</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
                                 <div class="row">
                                     <div class="col-sm-3"></div>
                                     <div class="col-sm-9 text-secondary">

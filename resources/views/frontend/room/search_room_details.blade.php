@@ -197,19 +197,19 @@
 
  <div class="col-lg-6">
  <div class="services-bar-widget">
-        <h3 class="title">Room Details</h3>
-        <div class="side-bar-list">
-            <ul>
-               <li>
-                    <a href="#"> <b>View : </b>{{ $roomdetails->view }}<i class='bx bxs-cloud-download'></i></a>
-                </li>
-                <li>
-                     <a href="#"> <b>Bed Style : </b>{{ $roomdetails->bed_style }} <i class='bx bxs-cloud-download'></i></a>
-                </li>
-                 
-            </ul>
-        </div>
-    </div> 
+    <h3 class="title">Room Details</h3>
+    <div class="side-bar-list">
+        <ul>
+            <li>
+                <a href="#"> <b>View : </b>{{ $roomdetails->view }}<i class='bx bxs-cloud-download'></i></a>
+            </li>
+            <li>
+                    <a href="#"> <b>Bed Style : </b>{{ $roomdetails->bed_style }} <i class='bx bxs-cloud-download'></i></a>
+            </li>
+                
+        </ul>
+    </div>
+</div> 
 
                     </div> 
                         </div>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\City;
@@ -12,7 +14,7 @@ class UserController extends Controller
 {
     public function Index(){
         $cities = City::whereHas('hotels', function($query) {
-            $query->where('status', 'active'); // chỉ lấy thành phố có ít nhất 1 khách sạn hoạt động
+            $query->where('status', 'active');
         })->get();
         return view('frontend.index', compact('cities'));
     }
@@ -91,4 +93,37 @@ class UserController extends Controller
         );
         return back()->with('message', 'Password Change Successfully')->with('alert-type', 'success');
     }
+
+
+
+    #Send Message
+    public function SendMessage(Request $request)
+    {
+        $message = $request->input('message');
+        $history = session('message_history', []);
+        if (!is_array($history)) {
+            $history = [];
+        }
+
+
+        try {
+            $response = Http::post('http://172.20.0.41:8001/chat', [
+                'message' => $message,
+                'history' => $history
+            ]);
+
+            if ($response->successful()) {
+                $data = $response->json();
+                session(['message_history' => $data['history']]);
+                return response()->json($data);
+            } else {
+                \Log::error('API Error: ' . $response->status() . ' - ' . $response->body());
+                return response()->json(['error' => 'Không thể gửi tin nhắn'], 500);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Exception: ' . $e->getMessage());
+            return response()->json(['error' => 'Lỗi khi gọi API'], 500);
+        }
+    }
+
 }

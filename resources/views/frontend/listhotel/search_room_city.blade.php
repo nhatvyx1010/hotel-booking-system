@@ -99,7 +99,9 @@
                     <div class="card border-0 shadow-lg rounded-3 overflow-hidden">
                         <div class="row g-0 align-items-center">
                             <div class="col-lg-4">
+                                <!-- <img src="{{ asset($hotel->bookarea->image ?? 'upload/no_images.jpg') }}" class="img-fluid w-100 h-100" style="object-fit: cover; border-radius: 10px;" alt="{{ $hotel->name }}"> -->
                                 <img src="{{ asset($hotel->bookarea->image ?? 'upload/no_images.jpg') }}" class="img-fluid w-100 h-100" style="object-fit: cover; border-radius: 10px;" alt="{{ $hotel->name }}">
+
                             </div>
                             <div class="col-lg-8">
                                 <div class="card-body p-4">
@@ -114,6 +116,17 @@
                                                 ]) }}" target="_blank" class="btn btn-outline-primary mb-4 rounded-pill px-4 py-2">
                                         Visit Hotel Website
                                     </a>
+                                    
+                                    <ul>
+                                        <li>
+                                            <b>Views: </b>
+                                                @forelse($hotel->room_views as $view)
+                                                    <span class="badge bg-primary me-1">{{ $view }}</span>
+                                                @empty
+                                                    <span class="text-muted">No view data</span>
+                                                @endforelse
+                                        </li>
+                                    </ul>
 
                                     @if($hotel->random_room)
                                         <div class="d-flex align-items-center mt-3">
@@ -141,7 +154,6 @@
                                     @else
                                         <p class="text-danger mt-3">No rooms available for this hotel.</p>
                                     @endif
-
 
                                 </div>
                             </div>

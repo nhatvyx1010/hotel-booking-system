@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\TeamController;
 use App\Http\Controllers\Backend\RoomTypeController;
 use App\Http\Controllers\Backend\RoomController;
@@ -351,13 +352,16 @@ Route::middleware(['auth', 'roles:hotel'])->group(function(){
     Route::controller(BookingController::class)->group(function(){
         Route::get('/hotel/booking/list', 'HotelBookingList')->name('hotel.booking.list');
         Route::get('/cancel/pending/list', 'HotelBookingCancelPendingList')->name('hotel.booking.cancel_pending.list');
+        Route::get('/cancel/pending/detail/{id}', 'HotelBookingCancelPendingDetail')->name('hotel.booking.cancel_pending.detail');
         Route::get('/cancel/complete/list', 'HotelBookingCancelCompleteList')->name('hotel.booking.cancel_complete.list');
-
+        Route::get('/cancel/complete/detail/{id}', 'HotelBookingCancelCompleteDetail')->name('hotel.booking.cancel_complete.detail');
+        
         Route::get('/hotel/edit_booking/{id}', 'HotelEditBooking')->name('hotel.edit_booking');
         Route::get('/hotel/download/invoice/{id}', 'HotelDownloadInvoice')->name('hotel.download.invoice');
 
         //// BOOKING MANAGE ////
         Route::post('/hotel/update/booking/status/{id}', 'HotelUpdateBookingStatus')->name('hotel.update.booking.status');
+        Route::post('/hotel/update/booking/cancel/status/{id}', 'HotelUpdateBookingCancelStatus')->name('hotel.update.booking.cancel.status');
         Route::post('/hotel/update/booking/{id}', 'HotelUpdateBooking')->name('hotel.update.booking');
 
         Route::get('/hotel/assign_room/{id}', 'HotelAssignRoom')->name('hotel.assign_room');
@@ -395,6 +399,12 @@ Route::get('/hotel/login', [HotelController::class, 'HotelLogin'])->name('hotel.
 Route::get('/hotel/register', [HotelController::class, 'HotelRegister'])->name('hotel.register');
 Route::post('/hotel/register/submit', [HotelController::class, 'HotelRegisterSubmit'])->name('hotel.register_submit');
 Route::post('/hotel/login_submit', [HotelController::class, 'HotelLoginSubmit'])->name('hotel.login_submit');
+
+Route::post('/send-message', [UserController::class, 'SendMessage'])->name('send.message');
+
+Route::get('/admin/bookings/chart-data', [DashboardController::class, 'getBookingChartData']);
+Route::get('/admin/bookings/chart-data-hotel', [DashboardController::class, 'getBookingChartDataHotel']);
+
 // Route::get('/hotel/logout', [HotelController::class, 'HotelLogout'])->name('hotel.logout');
 
 // Route::middleware(['auth', 'roles:hotel'])->group(function(){

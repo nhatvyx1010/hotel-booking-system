@@ -1,4 +1,13 @@
 <header>
+	<style>
+		.notification-unread {
+			background-color:rgb(212, 212, 212); /* màu sẫm hơn cho chưa đọc */
+		}
+
+		.notification-read {
+			background-color: #ffffff; /* màu bình thường cho đã đọc */
+		}
+	</style>
 	<div class="topbar d-flex align-items-center">
 		<nav class="navbar navbar-expand gap-3">
 			<div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
@@ -44,16 +53,20 @@
 								@endphp
 
 								@forelse ($user->notifications as $notification)
-								<a class="dropdown-item" href="javascript:;" onclick="markNotificationAsRead('{{ $notification->id }}')">
-									<div class="d-flex align-items-center">
-										<div class="notify bg-light-success text-success"><i class='bx bx-check-square'></i>
+									@php
+										$isUnread = $notification->read_at === null;
+									@endphp
+									<a class="dropdown-item {{ $isUnread ? 'notification-unread' : 'notification-read' }}" href="javascript:;" onclick="markNotificationAsRead('{{ $notification->id }}')">
+
+										<div class="d-flex align-items-center">
+											<div class="notify bg-light-success text-success"><i class='bx bx-check-square'></i>
+											</div>
+											<div class="flex-grow-1">
+												<h6 class="msg-name">{{ $notification->data['message'] }}<span class="msg-time float-end">{{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</span></h6>
+												<p class="msg-info">New Booking</p>
+											</div>
 										</div>
-										<div class="flex-grow-1">
-											<h6 class="msg-name">{{ $notification->data['message'] }}<span class="msg-time float-end">{{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</span></h6>
-											<p class="msg-info">New Booking</p>
-										</div>
-									</div>
-								</a>
+									</a>
 								@empty
 								@endforelse
 							</div>
@@ -65,9 +78,6 @@
 						</div>
 					</li>
 					<li class="nav-item dropdown dropdown-large">
-						<a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <span class="alert-count">8</span>
-							<i class='bx bx-shopping-bag'></i>
-						</a>
 						<div class="dropdown-menu dropdown-menu-end">
 							<a href="javascript:;">
 								<div class="msg-header">

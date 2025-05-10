@@ -71,7 +71,6 @@
         @else
             <span class="badge bg-info text-dark">Cancel Pending</span>
         @endif
-        <a href="{{ route('user.booking.cancel.form', $item->id) }}" class="btn btn-sm btn-danger mt-2">Cancel</a>
       </td>
     </tr>
     @endforeach

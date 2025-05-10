@@ -55,12 +55,12 @@
                     <div class="col-lg-2 col-md-2">
                         <div class="form-group">
                             <label>City</label>
-                            <select name="city_id" class="form-control">
-                                <option value="">Select a City</option>
+                            <input list="cities" name="city_id" class="form-control" placeholder="Enter city name">
+                            <datalist id="cities">
                                 @foreach($cities as $city)
-                                    <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                    <option value="{{ $city->name }}" data-id="{{ $city->id }}"></option>
                                 @endforeach
-                            </select>
+                            </datalist>
                         </div>
                     </div>
 

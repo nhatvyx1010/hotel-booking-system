@@ -206,6 +206,18 @@ class VnpayController extends Controller
         // $user = Auth::get();
         // Notification::send($user, new BookingComplete($request->name));
 
+        
+        $hotel_id = $room->hotel_id;
+        $hotel = User::where('role', 'hotel')->where('id', $hotel_id)->first();
+        if ($hotel) {
+            Notification::send($hotel, new BookingComplete($request->name));
+        }
+
+        $admin = User::where('role', 'admin')->get();
+        if ($admin) {
+            Notification::send($admin, new BookingComplete($request->name));
+        }
+
 
     }
 }

@@ -168,6 +168,11 @@ class FrontendRoomController extends Controller
         foreach ($hotels as $hotel) {
             $randomRoom = $rooms->where('hotel_id', $hotel->id)->first();
             $hotel->random_room = $randomRoom;
+            
+            // Gán danh sách các loại view mà khách sạn có
+            $hotelRooms = $rooms->where('hotel_id', $hotel->id);
+            $roomViews = $hotelRooms->pluck('view')->unique()->values();
+            $hotel->room_views = $roomViews;
         }
         $cities = City::all();
 
@@ -177,14 +182,14 @@ class FrontendRoomController extends Controller
     public function BookingSearchHotel(Request $request){
         $request->flash();
 
-        if($request->check_in == $request->check_out){
+        // if($request->check_in == $request->check_out){
 
-            $notification = array(
-                'messsage' => 'Something want to wrong',
-                'alert-type' => 'error'
-            );
-            return redirect()->back()->with('message', 'Something want to wrong')->with('alert-type', 'error');
-        }
+        //     $notification = array(
+        //         'messsage' => 'Something want to wrong',
+        //         'alert-type' => 'error'
+        //     );
+        //     return redirect()->back()->with('message', 'Something want to wrong')->with('alert-type', 'error');
+        // }
         $sdate = date('Y-m-d', strtotime($request->check_in));
         $edate = date('Y-m-d', strtotime($request->check_out));
         $alldate = Carbon::create($edate)->subDay();
