@@ -29,7 +29,7 @@
 								<div>
 									<p class="mb-0 text-secondary">Total Booking</p>
 									<h4 class="my-1 text-info">{{ count($bookings) }}</h4>
-									<p class="mb-0 font-13">Today Total Price: ${{ $todayPrice }}</p>
+									<p class="mb-0 font-13">Today Total Price:  {{ number_format($todayPrice, 0, ',', '.') }} VNĐ</p>
 								</div>
 								<div class="widgets-icons-2 rounded-circle bg-gradient-blues text-white ms-auto"><i class='bx bxs-cart'></i>
 								</div>
@@ -90,7 +90,7 @@
 						   <div class="d-flex align-items-center">
 							   <div>
 								   <p class="mb-0 text-secondary">Total Price</p>
-								   <h4 class="my-1 text-warning">${{ $totalPrice }}</h4>
+								   <h4 class="my-1 text-warning"> {{ number_format($totalPrice, 0, ',', '.') }} VNĐ</h4>
 								   <p class="mb-0 font-13">VNĐ</p>
 							   </div>
 							   <div class="widgets-icons-2 rounded-circle bg-gradient-orange text-white ms-auto"><i class='bx bxs-group'></i>

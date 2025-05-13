@@ -62,7 +62,7 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label for="input1" class="form-label">Post Title</label>
+                                    <label for="input1" class="form-label">Post Image</label>
                                     <input class="form-control" name="post_image" type="file" id="image" />
                                 </div>
 

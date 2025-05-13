@@ -16,6 +16,7 @@ use App\Models\Booking;
 use App\Models\User;
 use App\Models\Gallery;
 use App\Models\City;
+use Illuminate\Support\Facades\Auth;
 
 class FrontendRoomController extends Controller
 {
@@ -61,13 +62,15 @@ class FrontendRoomController extends Controller
     public function SearchRoomDetails(Request $request, $id){
         $request->flash();
         $roomdetails = Room::find($id);
+        $hotel = $roomdetails->hotel;
+
         $multiImage = MultiImage::where('rooms_id', $id)->get();
         $facility = Facility::where('rooms_id', $id)->get();
         $otherRooms = Room::where('id', '!=', $id)->orderBy('id', 'DESC')->limit(2)->get();
         $room_id = $id;
 
         // dd( $roomdetails, $multiImage, $facility, $otherRooms);
-        return view('frontend.room.search_room_details', compact('roomdetails', 'multiImage', 'facility', 'otherRooms', 'room_id'));
+        return view('frontend.room.search_room_details', compact('roomdetails', 'multiImage', 'facility', 'otherRooms', 'room_id', 'hotel'));
     }
 
     public function CheckRoomAvailability(Request $request){
@@ -82,7 +85,7 @@ class FrontendRoomController extends Controller
         $check_date_booking_ids = RoomBookedDate::whereIn('book_date', $dt_array)->distinct()->pluck('booking_id')->toArray();
 
     
-        $hotel_id = 7;
+        $hotel_id = Auth::id();
     
         $room = Room::where('hotel_id', $hotel_id)
             ->withCount('room_numbers')
@@ -106,7 +109,7 @@ class FrontendRoomController extends Controller
         $fromDate = Carbon::parse($request->check_out);
         $nights = $toDate->diffInDays($fromDate);
 
-        return response()->json(['available_room'=>$av_room, 'total_nights'=>$nights]);
+        return response()->json(['available_room'=>$av_room, 'total_nights'=>$nights, 'room_price' => $room->price]);
     }
 
     
@@ -149,7 +152,10 @@ class FrontendRoomController extends Controller
         $hotels = $hotelQuery->get();
         $cities = City::all();
 
-        return view('frontend.listhotel.search_room', compact('hotels', 'check_date_booking_ids', 'cities'));
+        $city = City::find($city_id);
+        $cityName = $city ? $city->name : null;
+
+        return view('frontend.listhotel.search_room', compact('hotels', 'check_date_booking_ids', 'cities', 'cityName'));
     }
 
     public function HotelSearchCity($city_id)
@@ -176,7 +182,10 @@ class FrontendRoomController extends Controller
         }
         $cities = City::all();
 
-        return view('frontend.listhotel.search_room_city', compact('hotels', 'cities', 'city_id'));
+        $city = City::find($city_id);
+        $cityName = $city ? $city->name : null;
+
+        return view('frontend.listhotel.search_room_city', compact('hotels', 'cities', 'city_id', 'cityName'));
     }
     
     public function BookingSearchHotel(Request $request){

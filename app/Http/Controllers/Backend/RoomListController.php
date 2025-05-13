@@ -192,7 +192,6 @@ class RoomListController extends Controller
         $data = new Booking();
         $data->rooms_id = $room->id;
         $data->user_id = Auth::user()->id;
-        $data->hotel_id = Auth::id();
         $data->check_in = date('Y-m-d', strtotime($request['check_in']));
         $data->check_out = date('Y-m-d', strtotime($request['check_out']));
         $data->persion = $request->number_of_person;
@@ -212,6 +211,9 @@ class RoomListController extends Controller
         $data->zip_code = $request->zip_code;
         $data->address = $request->address;
         $data->code = $code;
+        $data->prepaid_amount = $request->prepaid_amount;
+        $data->total_amount = $request->total_amount;
+        $data->remaining_amount = $request->remaining_amount;
         $data->status = 0;
         $data->created_at = Carbon::now();
     

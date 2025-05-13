@@ -676,7 +676,7 @@ class BookingController extends Controller
     
         $allData = Booking::with(['room.type']) // Load room + room.type
             ->where('user_id', $id)
-            ->where('status', 2)
+            ->whereIn('status', [2, 3])
             ->orderBy('id', 'desc')
             ->get();
     

@@ -82,10 +82,10 @@
                                         <tr>
                                             <td>{{ $editData->room->type->name }}</td>
                                             <td>{{ $editData->number_of_rooms }}</td>
-                                            <td>${{ $editData->actual_price }}</td>
+                                            <td>{{ number_format($editData->actual_price, 0, ',', '.') }} VNĐ</td>
                                             <td><span class="badge bg-primary"> {{ $editData->check_in }}</span> / <br><span class="badge bg-warning text-dark"> {{ $editData->check_out }}</span></td>
                                             <td>{{ $editData->total_night }}</td>
-                                            <td>${{ $editData->actual_price * $editData->number_of_rooms }}</td>
+                                            <td>{{ number_format($editData->actual_price * $editData->number_of_rooms, 0, ',', '.') }} VNĐ</td>
                                         </tr>
                                     </tbody>
 
@@ -96,15 +96,15 @@
   <table class="table test_table" style="float: right" border="none">
                                         <tr>
                                             <td>Subtotal</td>
-                                            <td>${{ $editData->subtotal }}</td>
+                                            <td>{{ number_format($editData->subtotal, 0, ',', '.') }} VNĐ</td>
                                         </tr>
                                         <tr>
                                             <td>Discount</td>
-                                            <td>${{ $editData->discount }}</td>
+                                            <td>{{ number_format($editData->discount, 0, ',', '.') }} VNĐ</td>
                                         </tr>
                                         <tr>
                                             <td>Grand Total</td>
-                                            <td>${{ $editData->total_price }}</td>
+                                            <td>{{ number_format($editData->total_price, 0, ',', '.') }} VNĐ</td>
                                         </tr>
                                     </table>
  

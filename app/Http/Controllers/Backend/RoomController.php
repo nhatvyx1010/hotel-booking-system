@@ -111,6 +111,14 @@ class RoomController extends Controller
     
         $room = Room::where('id', $id)->where('hotel_id', $user_id)->first();
     
+        $roomtype_id = $room->roomtype_id;
+        $room_type = RoomType::find($roomtype_id);
+
+        if ($room_type) {
+            $room_type->name = $request->roomtype_name;
+            $room_type->save(); 
+        }
+
         if (!$room) {
             return redirect()->back()->with('error', 'Room not found for this hotel');
         }
@@ -246,6 +254,15 @@ class RoomController extends Controller
         
         if (!$room) {
             return redirect()->back()->with('error', 'Room not found for this hotel');
+        }
+        $isDuplicate = RoomNumber::where('hotel_id', $user_id)
+                        ->where('room_no', $request->room_no)
+                        ->exists();
+
+        if ($isDuplicate) {
+            return redirect()->back()
+                ->with('message', 'Room number already exists for this hotel.')
+                ->with('alert-type', 'error');
         }
     
         $data = new RoomNumber();

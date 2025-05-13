@@ -32,27 +32,28 @@
                                     
                                     <input type="hidden" name="room_id" value="{{ $roomdetails->id }}">
                                     <div class="row align-items-center">
-                                        <div class="col-lg-12">
+                                        <div class="col-lg-3 col-md-3">
                                             <div class="form-group">
-                                                <label>Check in</label>
+                                                <label>CHECK IN TIME</label>
                                                 <div class="input-group">
-                                                    <input autocomplete="off" type="text" required name="check_in" id="check_in" class="form-control dt_picker" value="{{ old('check_in') ? date('Y-m-d', strtotime(old('check_in'))) : '' }}">
+                                                    <input autocomplete="off" type="text" required name="check_in" class="form-control dt_picker" placeholder="yyy-mm-dd" value="{{ old('check_in') }}">
                                                     <span class="input-group-addon"></span>
                                                 </div>
-                                                <i class='bx bxs-calendar'></i>
+                                                <i class='bx bxs-chevron-down'></i>	
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-12">
+                                        <div class="col-lg-3 col-md-3">
                                             <div class="form-group">
-                                                <label>Check Out</label>
+                                                <label>CHECK OUT TIME</label>
                                                 <div class="input-group">
-                                                    <input autocomplete="off" type="text" required name="check_out" id="check_out" class="form-control dt_picker" value="{{ old('check_out') ? date('Y-m-d', strtotime(old('check_out'))) : '' }}">
+                                                    <input autocomplete="off" type="text" required name="check_out" class="form-control dt_picker" placeholder="yyy-mm-dd" value="{{ old('check_out') }}">
                                                     <span class="input-group-addon"></span>
                                                 </div>
-                                                <i class='bx bxs-calendar'></i>
+                                                <i class='bx bxs-chevron-down'></i>	
                                             </div>
                                         </div>
+
 
                                         <div class="col-lg-12">
                                             <div class="form-group">
@@ -135,7 +136,7 @@
                                 <ul>
                                     
                                     <li>
-                                       <b> Basic : ${{ $roomdetails->price }}/Night/Room</b>
+                                       <b> Basic : {{ number_format($roomdetails->price, 0, ',', '.') }} VNĐ/Night/Room</b>
                                     </li> 
                                  
                                 </ul>
@@ -287,7 +288,7 @@
                                         <p>{{ $item->short_desc }}</p>
                                         <ul>
                                             <li><i class='bx bx-user'></i>{{ $item->room_capacity }} Person</li>
-                                            <li><i class='bx bx-expand'></i>{{ $item->size }}ft2</li>
+                                            <li><i class='bx bx-expand'></i>{{ $item->size }}m2</li>
                                         </ul>
 
                                         <ul>
@@ -310,6 +311,11 @@
         <!-- Room Details Other End -->
 
         <script>
+            
+    function formatCurrency(number) {
+        return number.toLocaleString('vi-VN') + ' VNĐ';
+    }
+    
     $(document).ready(function () {
        var check_in = "{{ old('check_in') }}";
        var check_out = "{{ old('check_out') }}";
@@ -352,19 +358,17 @@
        });
     }
 
-    function price_calculate(total_nights){
-       var room_price = $("#room_price").val();
-       var discount_p = $("#discount_p").val();
-       var select_room = $("#select_room").val();
+    function price_calculate(total_nights) {
+        var room_price = parseFloat($("#room_price").val()) || 0;
+        var discount_p = parseFloat($("#discount_p").val()) || 0;
+        var select_room = parseInt($("#select_room").val()) || 1;
 
-       var sub_total = room_price * total_nights * parseInt(select_room);
+        var sub_total = room_price * total_nights * select_room;
+        var discount_price = (discount_p / 100) * sub_total;
 
-       var discount_price = (parseInt(discount_p)/100)*sub_total;
-
-       $(".t_subtotal").text(sub_total);
-       $(".t_discount").text(discount_price);
-       $(".t_g_total").text(sub_total-discount_price);
-
+        $(".t_subtotal").text(formatCurrency(sub_total));
+        $(".t_discount").text(formatCurrency(discount_price));
+        $(".t_g_total").text(formatCurrency(sub_total - discount_price));
     }
 
     $("#bk_form").on('submit', function () {
@@ -383,5 +387,66 @@
 
     })
  </script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script>
+    $(document).ready(function () {
+        // Khởi tạo datepicker cho cả check_in và check_out
+        $(".dt_picker").datepicker({
+            dateFormat: "yy-mm-dd",
+            autoclose: true
+        });
+
+        // Lắng nghe sự kiện khi người dùng chọn ngày check_in
+        $("input[name='check_in']").on("change", function () {
+            var checkInDate = $(this).val(); // Lấy ngày check_in
+            if (checkInDate) {
+                var checkIn = new Date(checkInDate); // Chuyển check_in thành đối tượng Date
+                var checkOutDate = new Date(checkIn); // Sao chép giá trị check_in
+                checkOutDate.setDate(checkOutDate.getDate() + 1); // Cộng thêm 1 ngày
+
+                // Định dạng lại ngày check_out
+                var day = checkOutDate.getDate();
+                var month = checkOutDate.getMonth() + 1; // Lưu ý tháng trong JavaScript bắt đầu từ 0
+                var year = checkOutDate.getFullYear();
+                // Đảm bảo rằng ngày và tháng có 2 chữ số
+                if (day < 10) day = '0' + day;
+                if (month < 10) month = '0' + month;
+                var formattedDate = year + '-' + month + '-' + day;
+
+                // Đặt giá trị cho check_out
+                $("input[name='check_out']").val(formattedDate);
+                // Thiết lập ngày bắt đầu chọn cho check_out phải sau check_in
+                $("input[name='check_out']").datepicker("setStartDate", formattedDate);
+
+                // Cập nhật vùng chọn ngày của check_out để ẩn các ngày trước check_in
+                $("input[name='check_out']").datepicker("option", "beforeShowDay", function(date) {
+                    return [date > checkIn, '']; // Nếu ngày check_out bằng check_in hoặc nhỏ hơn, không thể chọn
+                });
+            }
+        });
+
+        // Lắng nghe sự kiện khi người dùng chọn ngày check_out
+        $("input[name='check_out']").on("change", function () {
+            var checkInDate = $("input[name='check_in']").val(); // Lấy ngày check_in
+            var checkOutDate = $(this).val(); // Lấy ngày check_out
+
+            if (checkInDate && checkOutDate) {
+                var checkIn = new Date(checkInDate);
+                var checkOut = new Date(checkOutDate);
+
+                // Kiểm tra nếu ngày check_out <= check_in
+                if (checkOut <= checkIn) {
+                    alert("Ngày check-out phải sau ngày check-in ít nhất 1 ngày.");
+                    $(this).val(""); // Xóa giá trị check_out nếu không hợp lệ
+                }
+            }
+        });
+    });
+</script>
+
 
 @endsection
