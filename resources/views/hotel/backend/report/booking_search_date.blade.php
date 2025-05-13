@@ -47,7 +47,7 @@
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->email }}</td>
                                 <td>{{ $item->payment_method }}</td>
-                                <td>${{ $item->total_price }}</td>
+                                <td>{{ number_format($item->total_price, 0, ',', '.') }} VNĐ</td>
                                 <td>
                                 <a href="{{ route('hotel.download.invoice', $item->id) }}" class="btn btn-warning px-3 radius-10"><i class="lni lni-download"></i>Download Invoice</a>
                                 </td>

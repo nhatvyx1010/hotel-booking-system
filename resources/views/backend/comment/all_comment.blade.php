@@ -46,9 +46,10 @@
                         @foreach($allcomment as $key=> $item)
                             <tr>
                                 <td>{{ $key+1 }}</td>
-                                <td>{{ $item['user']['name'] }}</td>
-                                <td>{{ Str::limit($item['post']['post_title'], 30) }}</td>
-                                <td>{{ Str::limit($item->message, 40) }}</td>
+                                <td>{{ $item->user->name ?? 'N/A' }}</td>
+                                <td>{{ Str::limit($item->post->post_title ?? 'N/A', 30) }}</td>
+                                <td>{{ Str::limit($item->message ?? 'N/A', 40) }}</td>
+
                                 <td>
                                     <div class="form-check-danger form-check form-switch">
                                         <input class="form-check-input status-toggle large-checkbox" type="checkbox" id="flexSwitchCheckCheckedDanger" data-comment-id="{{ $item->id }}" {{ $item->status ? 'checked' : '' }}>

@@ -36,13 +36,6 @@
 											<div class="select-box">
 												<select name="country" class="form-control">
 													<option value="Viet Nam">Viet Nam</option>
-													<option value="Japan">Japan</option>
-													<option value="Korea">Korea</option>
-													<option value="China">China</option>
-													<option value="United Kingdom">United Kingdom</option>
-													<option value="Germany">Germany</option>
-													<option value="France">France</option>
-													<option value="Singapore">Singapore</option>
 												</select>
 											</div>
 										</div>
@@ -52,6 +45,9 @@
 										<div class="form-group">
 											<label>Name <span class="required">*</span></label>
 											<input type="text" name="name" class="form-control" value="{{ \Auth::user()->name }}">
+											@error('name')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
 										</div>
 									</div>
 
@@ -59,6 +55,9 @@
 										<div class="form-group">
 											<label>Email <span class="required">*</span></label>
 											<input type="email" name="email" class="form-control" value="{{ \Auth::user()->email }}">
+											@error('email')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
 										</div>
 									</div>
 
@@ -66,6 +65,9 @@
 										<div class="form-group">
 											<label>Phone <span class="required">*</span></label>
 											<input type="text" name="phone" class="form-control" value="{{ \Auth::user()->phone }}">
+											@error('phone')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
 										</div>
 									</div>
 
@@ -73,6 +75,9 @@
 										<div class="form-group">
 											<label>Address <span class="required">*</span></label>
 											<input type="text" name="address" class="form-control" value="{{ \Auth::user()->address }}">
+											@error('address')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
 										</div>
 									</div>
 
@@ -80,9 +85,9 @@
 										<div class="form-group">
 											<label>State <span class="required">*</span></label>
 											<input type="text" name="state" class="form-control">
-											@if ($errors)
-												<div class="text-danger">{{ $errors }}</div>
-											@endif
+											@error('state')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
 										</div>
 									</div>
 
@@ -137,15 +142,15 @@
                                                   </tr>
                                                   <tr>
                                                         <td><p>Subtotal</p></td>
-                                                        <td style="text-align: right"><p>${{ $subtotal }}</p></td>
+                                                        <td style="text-align: right"><p>{{ number_format($subtotal, 0, ',', '.') }} VNĐ</p></td>
                                                   </tr>
                                                   <tr>
                                                         <td><p>Discount</p></td>
-                                                        <td style="text-align:right"> <p>${{ $discount }}</p></td>
+                                                        <td style="text-align:right"> <p>{{ number_format($discount, 0, ',', '.') }} VNĐ</p></td>
                                                   </tr>
                                                   <tr>
                                                         <td><p>Total</p></td>
-                                                        <td style="text-align:right"> <p>${{ $subtotal - $discount }}</p></td>
+                                                        <td style="text-align:right"> <p>{{ number_format($subtotal - $discount, 0, ',', '.') }} VNĐ</p></td>
                                                   </tr>
                                             </table>
               
@@ -176,19 +181,19 @@
                     <table class="table">
                         <tr>
                             <td><p>Subtotal</p></td>
-                            <td style="text-align: right"><p>${{ $subtotal }}</p></td>
+                            <td style="text-align: right"><p>{{ number_format($subtotal, 0, ',', '.') }} VNĐ</p></td>
                         </tr>
                         <tr>
                             <td><p>Số tiền phải trả</p></td>
-                            <td style="text-align: right"><p>${{ $subtotal * 30 / 100 }}</p></td>
+                            <td style="text-align: right"><p>{{ number_format($subtotal * 30 / 100, 0, ',', '.') }} VNĐ</p></td>
                         </tr>
                         <tr>
                             <td><p>Discount</p></td>
-                            <td style="text-align: right"><p>${{ $discount }}</p></td>
+                            <td style="text-align: right"><p>{{ number_format($discount, 0, ',', '.') }} VNĐ</p></td>
                         </tr>
                         <tr>
                             <td><p>Total</p></td>
-                            <td style="text-align: right"><p>${{ $subtotal * 30 / 100 - $discount }}</p></td>
+                            <td style="text-align: right"><p>{{ number_format($subtotal * 30 / 100 - $discount, 0, ',', '.') }} VNĐ</p></td>
                         </tr>
                         <!-- Hidden input để gửi total_price -->
                         <input type="hidden" name="total_price" value="{{ $subtotal * 30 / 100 - $discount }}">
@@ -201,15 +206,15 @@
                     <table class="table">
                         <tr>
                             <td><p>Subtotal</p></td>
-                            <td style="text-align: right"><p>${{ $subtotal }}</p></td>
+                            <td style="text-align: right"><p>{{ number_format($subtotal, 0, ',', '.') }} VNĐ</p></td>
                         </tr>
                         <tr>
                             <td><p>Discount</p></td>
-                            <td style="text-align: right"><p>${{ $discount }}</p></td>
+                            <td style="text-align: right"><p>{{ number_format($discount, 0, ',', '.') }} VNĐ</p></td>
                         </tr>
                         <tr>
                             <td><p>Total</p></td>
-                            <td style="text-align: right"><p>${{ $subtotal - $discount }}</p></td>
+                            <td style="text-align: right"><p>{{ number_format($subtotal - $discount, 0, ',', '.') }} VNĐ</p></td>
                         </tr>
                         <!-- Hidden input để gửi total_price -->
                             <input type="hidden" name="total_price" value="{{ $subtotal - $discount }}">

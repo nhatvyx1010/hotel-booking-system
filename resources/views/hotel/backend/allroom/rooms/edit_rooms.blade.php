@@ -40,7 +40,7 @@
 
                 <div class="col-md-4">
                     <label for="input1" class="form-label">Room Type Name </label>
-                    <input type="text" name="roomtype_id" class="form-control" id="input1" value="{{ $editData['type']['name'] }}" >
+                    <input type="text" name="roomtype_name" class="form-control" id="input1" value="{{ $editData['type']['name'] }}" >
                 </div>
 				<div class="col-md-4">
 					<label for="input2" class="form-label">Total Adult</label>
@@ -90,7 +90,14 @@
 					<select name="view" id="input7" class="form-select">
 						<option selected="">Choose...</option>
 						<option value="Sea View" {{$editData->view == 'Sea View'?'selected':''}}>Sea View</option>
-						<option value="Hill View" {{$editData->view == 'Hill View'?'selected':''}}>Hill View</option>
+						<option value="Mountain View" {{$editData->view == 'Mountain View'?'selected':''}}>Mountain View</option>
+						<option value="City View" {{$editData->view == 'City View'?'selected':''}}>City View</option>
+						<option value="Garden View" {{$editData->view == 'Garden View'?'selected':''}}>Garden View</option>
+						<option value="River View" {{$editData->view == 'River View'?'selected':''}}>River View</option>
+						<option value="Ocean View" {{$editData->view == 'Ocean View'?'selected':''}}>Ocean View</option>
+						<option value="Forest View" {{$editData->view == 'Forest View'?'selected':''}}>Forest View</option>
+						<option value="Park View" {{$editData->view == 'Park View'?'selected':''}}>Park View</option>
+						<option value="No View" {{$editData->view == 'No View'?'selected':''}}>No View</option>
 					</select>
 				</div>
 
@@ -98,8 +105,10 @@
 					<label for="input7" class="form-label">Bed Style</label>
 					<select name="bed_style" id="input7" class="form-select">
 						<option selected="">Choose...</option>
-						<option value="Queen Bed" {{$editData->bed_style == 'Queen Bed'?'selected':''}}>Queen Bed</option>
+						<option value="Single Bed" {{$editData->bed_style == 'Single Bed'?'selected':''}}>Single Bed</option>
 						<option value="Twin Bed" {{$editData->bed_style == 'Twin Bed'?'selected':''}}>Twin Bed</option>
+						<option value="Double Bed" {{$editData->bed_style == 'Double Bed'?'selected':''}}>Double Bed</option>
+						<option value="Queen Bed" {{$editData->bed_style == 'Queen Bed'?'selected':''}}>Queen Bed</option>
 						<option value="King Bed" {{$editData->bed_style == 'King Bed'?'selected':''}}>King Bed</option>
 					</select>
 				</div>
@@ -115,84 +124,62 @@
 				</div>
 
 				<div class="row mt-2">
- <div class="col-md-12 mb-3">
+<div id="facility_container">
     @forelse ($basic_facility as $item)
-    <div class="basic_facility_section_remove" id="basic_facility_section_remove">
-       <div class="row add_item">
-          <div class="col-md-8">
-             <label for="facility_name" class="form-label"> Room Facilities </label>
-             <select name="facility_name[]" id="facility_name" class="form-control">
-                   <option value="">Select Facility</option>
-                   <option value="Complimentary Breakfast" {{$item->facility_name == 'Complimentary Breakfast'?'selected':''}}>Complimentary Breakfast</option>
-  <option value="32/42 inch LED TV"  {{$item->facility_name == 'Complimentary Breakfast'?'selected':''}}> 32/42 inch LED TV</option>
-
- <option value="Smoke alarms"  {{$item->facility_name == 'Smoke alarms'?'selected':''}}>Smoke alarms</option>
-
- <option value="Minibar" {{$item->facility_name == 'Complimentary Breakfast'?'selected':''}}> Minibar</option>
-
- <option value="Work Desk"  {{$item->facility_name == 'Work Desk'?'selected':''}}>Work Desk</option>
-
- <option value="Free Wi-Fi" {{$item->facility_name == 'Free Wi-Fi'?'selected':''}}>Free Wi-Fi</option>
-
- <option value="Safety box" {{$item->facility_name == 'Safety box'?'selected':''}} >Safety box</option>
-
- <option value="Rain Shower" {{$item->facility_name == 'Rain Shower'?'selected':''}} >Rain Shower</option>
-
- <option value="Slippers" {{$item->facility_name == 'Slippers'?'selected':''}} >Slippers</option>
-
- <option value="Hair dryer" {{$item->facility_name == 'Hair dryer'?'selected':''}} >Hair dryer</option>
-
- <option value="Wake-up service"  {{$item->facility_name == 'Wake-up service'?'selected':''}}>Wake-up service</option>
-
- <option value="Laundry & Dry Cleaning" {{$item->facility_name == 'Laundry & Dry Cleaning'?'selected':''}} >Laundry & Dry Cleaning</option>
- 
- <option value="Electronic door lock"  {{$item->facility_name == 'Electronic door lock'?'selected':''}}>Electronic door lock</option> 
-             </select>
-          </div>
-          <div class="col-md-4">
-             <div class="form-group" style="padding-top: 30px;">
-                   <a class="btn btn-success addeventmore"><i class="lni lni-circle-plus"></i></a>
-                   <span class="btn btn-danger btn-sm removeeventmore"><i class="lni lni-circle-minus"></i></span>
-             </div>
-          </div>
-       </div>
-    </div>
-
+        <div class="basic_facility_row row mb-3">
+            <div class="col-md-8">
+                <label for="facility_name" class="form-label">Room Facilities</label>
+                <select name="facility_name[]" class="form-control facility-select">
+                    <option value="">Select Facility</option>
+                    <option value="Complimentary Breakfast" {{ $item->facility_name == 'Complimentary Breakfast' ? 'selected' : '' }}>Complimentary Breakfast</option>
+                    <option value="32/42 inch LED TV" {{ $item->facility_name == '32/42 inch LED TV' ? 'selected' : '' }}>32/42 inch LED TV</option>
+                    <option value="Smoke alarms" {{ $item->facility_name == 'Smoke alarms' ? 'selected' : '' }}>Smoke alarms</option>
+                    <option value="Minibar" {{ $item->facility_name == 'Minibar' ? 'selected' : '' }}>Minibar</option>
+                    <option value="Work Desk" {{ $item->facility_name == 'Work Desk' ? 'selected' : '' }}>Work Desk</option>
+                    <option value="Free Wi-Fi" {{ $item->facility_name == 'Free Wi-Fi' ? 'selected' : '' }}>Free Wi-Fi</option>
+                    <option value="Safety box" {{ $item->facility_name == 'Safety box' ? 'selected' : '' }}>Safety box</option>
+                    <option value="Rain Shower" {{ $item->facility_name == 'Rain Shower' ? 'selected' : '' }}>Rain Shower</option>
+                    <option value="Slippers" {{ $item->facility_name == 'Slippers' ? 'selected' : '' }}>Slippers</option>
+                    <option value="Hair dryer" {{ $item->facility_name == 'Hair dryer' ? 'selected' : '' }}>Hair dryer</option>
+                    <option value="Wake-up service" {{ $item->facility_name == 'Wake-up service' ? 'selected' : '' }}>Wake-up service</option>
+                    <option value="Laundry & Dry Cleaning" {{ $item->facility_name == 'Laundry & Dry Cleaning' ? 'selected' : '' }}>Laundry & Dry Cleaning</option>
+                    <option value="Electronic door lock" {{ $item->facility_name == 'Electronic door lock' ? 'selected' : '' }}>Electronic door lock</option>
+                </select>
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <button type="button" class="btn btn-success add-facility me-2"><i class="lni lni-circle-plus"></i></button>
+                <button type="button" class="btn btn-danger remove-facility"><i class="lni lni-circle-minus"></i></button>
+            </div>
+        </div>
     @empty
-
-         <div class="basic_facility_section_remove" id="basic_facility_section_remove">
-             <div class="row add_item">
-                 <div class="col-md-6">
-                     <label for="basic_facility_name" class="form-label">Room Facilities </label>
-                     <select name="facility_name[]" id="basic_facility_name" class="form-control">
- <option value="">Select Facility</option>
- <option value="Complimentary Breakfast">Complimentary Breakfast</option>
- <option value="32/42 inch LED TV" > 32/42 inch LED TV</option>
- <option value="Smoke alarms" >Smoke alarms</option>
- <option value="Minibar"> Minibar</option>
- <option value="Work Desk" >Work Desk</option>
- <option value="Free Wi-Fi">Free Wi-Fi</option>
- <option value="Safety box" >Safety box</option>
- <option value="Rain Shower" >Rain Shower</option>
- <option value="Slippers" >Slippers</option>
- <option value="Hair dryer" >Hair dryer</option>
- <option value="Wake-up service" >Wake-up service</option>
- <option value="Laundry & Dry Cleaning" >Laundry & Dry Cleaning</option>
- <option value="Electronic door lock" >Electronic door lock</option> 
-                     </select>
-                 </div>
-                 <div class="col-md-6">
-                     <div class="form-group" style="padding-top: 30px;">
-         <a class="btn btn-success addeventmore"><i class="lni lni-circle-plus"></i></a>
-
-        <span class="btn btn-danger removeeventmore"><i class="lni lni-circle-minus"></i></span>
-                     </div>
-                 </div>
-             </div>
-         </div>
-
+        {{-- If no facilities, load 1 blank row --}}
+        <div class="basic_facility_row row mb-3">
+            <div class="col-md-8">
+                <label for="facility_name" class="form-label">Room Facilities</label>
+                <select name="facility_name[]" class="form-control facility-select">
+                    <option value="">Select Facility</option>
+                    <option value="Complimentary Breakfast">Complimentary Breakfast</option>
+                    <option value="32/42 inch LED TV">32/42 inch LED TV</option>
+                    <option value="Smoke alarms">Smoke alarms</option>
+                    <option value="Minibar">Minibar</option>
+                    <option value="Work Desk">Work Desk</option>
+                    <option value="Free Wi-Fi">Free Wi-Fi</option>
+                    <option value="Safety box">Safety box</option>
+                    <option value="Rain Shower">Rain Shower</option>
+                    <option value="Slippers">Slippers</option>
+                    <option value="Hair dryer">Hair dryer</option>
+                    <option value="Wake-up service">Wake-up service</option>
+                    <option value="Laundry & Dry Cleaning">Laundry & Dry Cleaning</option>
+                    <option value="Electronic door lock">Electronic door lock</option>
+                </select>
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <button type="button" class="btn btn-success add-facility me-2"><i class="lni lni-circle-plus"></i></button>
+                <button type="button" class="btn btn-danger remove-facility"><i class="lni lni-circle-minus"></i></button>
+            </div>
+        </div>
     @endforelse
-
+</div>
 
 
                      </div> 
@@ -378,6 +365,63 @@
         $('#roomview').hide();
         $('#addRoomNo').hide();
    }
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function updateFacilityOptions() {
+        let selectedValues = [];
+
+        // Thu thập các lựa chọn đã chọn
+        $('.facility-select').each(function () {
+            const val = $(this).val();
+            if (val) selectedValues.push(val);
+        });
+
+        // Hiển thị tất cả các option trước
+        $('.facility-select').each(function () {
+            $(this).find('option').show();
+        });
+
+        // Ẩn những cái đã được chọn trong các dropdown khác
+        $('.facility-select').each(function () {
+            const currentVal = $(this).val();
+            $(this).find('option').each(function () {
+                if (selectedValues.includes($(this).val()) && $(this).val() !== currentVal) {
+                    $(this).hide();
+                }
+            });
+        });
+    }
+
+    $(document).ready(function () {
+        updateFacilityOptions();
+
+        // Thêm dòng mới
+        $(document).on('click', '.add-facility', function () {
+            const row = $(this).closest('.basic_facility_row');
+            const clone = row.clone();
+
+            // Reset dropdown
+            clone.find('select').val('');
+
+            $('#facility_container').append(clone);
+            updateFacilityOptions();
+        });
+
+        // Xoá dòng
+        $(document).on('click', '.remove-facility', function () {
+            if ($('.basic_facility_row').length > 1) {
+                $(this).closest('.basic_facility_row').remove();
+                updateFacilityOptions();
+            }
+        });
+
+        // Khi thay đổi dropdown
+        $(document).on('change', '.facility-select', function () {
+            updateFacilityOptions();
+        });
+    });
 </script>
 
 @endsection

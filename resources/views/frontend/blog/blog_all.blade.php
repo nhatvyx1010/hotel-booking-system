@@ -76,15 +76,16 @@
                             <div class="services-bar-widget">
                                 <h3 class="title">Blog Category</h3>
                                 <div class="side-bar-categories">
-                                @foreach ($bcategory as $cat)
                                     <ul>
-                                        <li>
-                                            <a href="{{ url('blog/cat/list/'.$cat->id) }}">{{ $cat->category_name }}</a>
-                                        </li>
+                                        @foreach ($bcategory->take(5) as $cat)
+                                            <li>
+                                                <a href="{{ url('blog/cat/list/'.$cat->id) }}">{{ $cat->category_name }}</a>
+                                            </li>
+                                        @endforeach
                                     </ul>
-                                    @endforeach
                                 </div>
                             </div>
+
                             <div class="side-bar-widget">
                                 <h3 class="title">Recent Posts</h3>
                                 <div class="widget-popular-post">

@@ -61,16 +61,15 @@
                     <div class="col-lg-2 col-md-2">
                         <div class="form-group">
                             <label>City</label>
-                            <select name="city_id" class="form-control">
-                                <option value="">Select a City</option>
+                            <input list="cities" id="city_name" class="form-control" placeholder="Enter city name" value="{{ old('city_name') ?? $cityName ?? '' }}">
+                            <datalist id="cities">
                                 @foreach($cities as $city)
-                                    <option value="{{ $city->id }}" {{ old('city_id') == $city->id ? 'selected' : '' }}>
-                                        {{ $city->name }}
-                                    </option>
+                                    <option value="{{ $city->name }}" data-id="{{ $city->id }}"></option>
                                 @endforeach
-                            </select>
+                            </datalist>
                         </div>
                     </div>
+                    <input type="hidden" name="city_id" id="city_id" value="{{ old('city_id') ?? $selectedCityId ?? '' }}">
 
                     <div class="col-lg-2 col-md-2">
                         <button type="submit" class="default-btn btn-bg-one border-radius-5">
@@ -184,5 +183,100 @@
     </div>
 </div>
 <!-- Room Area End -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Check if there is already a city_name in the input field when the page loads
+    var cityName = document.getElementById('city_name').value;
+    var cities = document.querySelectorAll('#cities option');
+    var cityId = '';
+
+    // If there is a city_name, find the corresponding city_id
+    cities.forEach(function(option) {
+        if (option.value === cityName) {
+            cityId = option.getAttribute('data-id');
+        }
+    });
+
+    // Set the city_id in the hidden input field
+    document.getElementById('city_id').value = cityId;
+
+    // Add event listener to update the city_id when the user selects a new city
+    document.getElementById('city_name').addEventListener('input', function() {
+        var selectedCityName = this.value;
+        var selectedCityId = '';
+
+        cities.forEach(function(option) {
+            if (option.value === selectedCityName) {
+                selectedCityId = option.getAttribute('data-id');
+            }
+        });
+
+        document.getElementById('city_id').value = selectedCityId;
+    });
+});
+
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script>
+    $(document).ready(function () {
+        // Khởi tạo datepicker cho cả check_in và check_out
+        $(".dt_picker").datepicker({
+            dateFormat: "yy-mm-dd",
+            autoclose: true
+        });
+
+        // Lắng nghe sự kiện khi người dùng chọn ngày check_in
+        $("input[name='check_in']").on("change", function () {
+            var checkInDate = $(this).val(); // Lấy ngày check_in
+            if (checkInDate) {
+                var checkIn = new Date(checkInDate); // Chuyển check_in thành đối tượng Date
+                var checkOutDate = new Date(checkIn); // Sao chép giá trị check_in
+                checkOutDate.setDate(checkOutDate.getDate() + 1); // Cộng thêm 1 ngày
+
+                // Định dạng lại ngày check_out
+                var day = checkOutDate.getDate();
+                var month = checkOutDate.getMonth() + 1; // Lưu ý tháng trong JavaScript bắt đầu từ 0
+                var year = checkOutDate.getFullYear();
+                // Đảm bảo rằng ngày và tháng có 2 chữ số
+                if (day < 10) day = '0' + day;
+                if (month < 10) month = '0' + month;
+                var formattedDate = year + '-' + month + '-' + day;
+
+                // Đặt giá trị cho check_out
+                $("input[name='check_out']").val(formattedDate);
+                // Thiết lập ngày bắt đầu chọn cho check_out phải sau check_in
+                $("input[name='check_out']").datepicker("setStartDate", formattedDate);
+
+                // Cập nhật vùng chọn ngày của check_out để ẩn các ngày trước check_in
+                $("input[name='check_out']").datepicker("option", "beforeShowDay", function(date) {
+                    return [date > checkIn, '']; // Nếu ngày check_out bằng check_in hoặc nhỏ hơn, không thể chọn
+                });
+            }
+        });
+
+        // Lắng nghe sự kiện khi người dùng chọn ngày check_out
+        $("input[name='check_out']").on("change", function () {
+            var checkInDate = $("input[name='check_in']").val(); // Lấy ngày check_in
+            var checkOutDate = $(this).val(); // Lấy ngày check_out
+
+            if (checkInDate && checkOutDate) {
+                var checkIn = new Date(checkInDate);
+                var checkOut = new Date(checkOutDate);
+
+                // Kiểm tra nếu ngày check_out <= check_in
+                if (checkOut <= checkIn) {
+                    alert("Ngày check-out phải sau ngày check-in ít nhất 1 ngày.");
+                    $(this).val(""); // Xóa giá trị check_out nếu không hợp lệ
+                }
+            }
+        });
+    });
+</script>
 
 @endsection
