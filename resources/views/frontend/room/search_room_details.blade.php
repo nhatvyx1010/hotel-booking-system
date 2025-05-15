@@ -275,9 +275,9 @@
                             </div>
 
                             <div class="room-details-review">
-                                <h2>Clients Review and Retting's</h2>
+                                <h2>Client Review and Rating</h2>
                                 <div class="review-ratting">
-                                    <h3>Your retting: </h3>
+                                    <h3>Your rating: </h3>
                                     <i class='bx bx-star'></i>
                                     <i class='bx bx-star'></i>
                                     <i class='bx bx-star'></i>
@@ -322,7 +322,7 @@
                             <div class="row align-items-center">
                                 <div class="col-lg-5 col-md-4 p-0">
                                     <div class="room-card-img">
-                                        <a href="{{ url('room/details/'.$item->id) }}">
+                                        <a href="{{ url('search/room/details/'.$item->id) }}">
                                             <img src="{{asset('upload/roomimg/'.$item->image)}}" alt="Images">
                                         </a>
                                     </div>
@@ -331,7 +331,7 @@
                                 <div class="col-lg-7 col-md-8 p-0">
                                     <div class="room-card-content">
                                          <h3>
-                                             <a href="{{ url('room/details/'.$item->id) }}">{{ $item['type']['name'] }}</a>
+                                             <a href="{{ url('search/room/details/'.$item->id) }}">{{ $item['type']['name'] }}</a>
                                         </h3>
                                         <span>{{ $item->price }}</span>
                                         <div class="rating">

@@ -107,7 +107,7 @@ class UserController extends Controller
 
 
         try {
-            $response = Http::post('http://172.20.0.41:8001/chat', [
+            $response = Http::post('http://192.168.1.13:8001/chat', [
                 'message' => $message,
                 'history' => $history
             ]);

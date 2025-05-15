@@ -154,7 +154,7 @@
                                                         {{ $foundRoom->type->name }}
                                                     </a>
                                                 </h6>
-                                                <small class="text-muted">${{ $foundRoom->price }} / night</small>
+                                                <small class="text-muted">{{ number_format($foundRoom->price, 0, ',', '.') }} VNĐ / night</small>
                                                 <div class="rating text-warning mt-1">
                                                     <i class='bx bxs-star'></i>
                                                     <i class='bx bxs-star'></i>

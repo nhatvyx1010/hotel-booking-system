@@ -88,29 +88,32 @@
                                     @enderror
                                 </div>
 
-                                <div class="form-group mt-3">
-                                    <label for="phone">Số điện thoại nhận hoàn tiền</label>
-                                    <input type="text" name="phone" id="phone" class="form-control" value="{{ old('phone') }}" required>
-                                    @error('phone')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                                @if ($hoursDiff >= 24)
+                                    <div class="form-group mt-3">
+                                        <label for="phone">Số điện thoại nhận hoàn tiền</label>
+                                        <input type="text" name="phone" id="phone" class="form-control" value="{{ old('phone') }}" required>
+                                        @error('phone')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-                                <div class="form-group mt-3">
-                                    <label for="bank_account">Số tài khoản ngân hàng</label>
-                                    <input type="text" name="bank_account" id="bank_account" class="form-control" value="{{ old('bank_account') }}" required>
-                                    @error('bank_account')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                                    <div class="form-group mt-3">
+                                        <label for="bank_account">Số tài khoản ngân hàng</label>
+                                        <input type="text" name="bank_account" id="bank_account" class="form-control" value="{{ old('bank_account') }}" required>
+                                        @error('bank_account')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
 
-                                <div class="form-group mt-3">
-                                    <label for="bank_name">Tên ngân hàng</label>
-                                    <input type="text" name="bank_name" id="bank_name" class="form-control" value="{{ old('bank_name') }}" required>
-                                    @error('bank_name')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                                    <div class="form-group mt-3">
+                                        <label for="bank_name">Tên ngân hàng</label>
+                                        <input type="text" name="bank_name" id="bank_name" class="form-control" value="{{ old('bank_name') }}" required>
+                                        @error('bank_name')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                @endif
+
 
                                 <button type="submit" class="btn btn-danger mt-3" {{ $hoursDiff < 24 ? 'disabled' : '' }}>
                                     Submit Cancellation
