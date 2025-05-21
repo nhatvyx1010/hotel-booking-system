@@ -59,11 +59,11 @@
                                     <div class="form-group">
                                         <label>GUESTS</label>
                                         <select name="persion" class="form-control">
-                                            <option>01</option>
-                                            <option>02</option>
-                                            <option>03</option>
-                                            <option>04</option>
-                                        </select>	
+                                            <option value="01" {{ old('persion') == '01' ? 'selected' : '' }}>01</option>
+                                            <option value="02" {{ old('persion') == '02' ? 'selected' : '' }}>02</option>
+                                            <option value="03" {{ old('persion') == '03' ? 'selected' : '' }}>03</option>
+                                            <option value="04" {{ old('persion') == '04' ? 'selected' : '' }}>04</option>
+                                        </select>
                                     </div>
                                 </div>
 

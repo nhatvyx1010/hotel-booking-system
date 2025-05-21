@@ -662,7 +662,7 @@ class BookingController extends Controller
     public function UserBooking() {
         $id = Auth::user()->id;
     
-        $allData = Booking::with(['room.type']) // Load room + room.type
+        $allData = Booking::with(['room.type', 'room.hotel']) // Load room + room.type
             ->where('user_id', $id)
             ->whereIn('status', [0, 1])
             ->orderBy('id', 'desc')

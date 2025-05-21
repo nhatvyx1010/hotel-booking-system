@@ -16,9 +16,6 @@
 <ul> 
         
     <li>
-        <a href="{{ route('dashboard') }}">User Dashboard</a>
-    </li>
-    <li>
         <a href="{{ route('user.profile') }}">User Profile </a>
     </li>
     <li>

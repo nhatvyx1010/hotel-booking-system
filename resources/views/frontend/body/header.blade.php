@@ -27,7 +27,7 @@
         @auth
         <li>
             <i class='bx bxs-user-pin'></i>
-            <a href="{{ route('dashboard') }}">Dashboard</a>
+            <a href="{{ route('user.profile') }}">Profile</a>
         </li>
         <li>
             <i class='bx bxs-user-retangle'></i>

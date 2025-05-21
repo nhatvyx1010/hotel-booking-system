@@ -17,12 +17,14 @@ use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\TestimonialController;
 use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\CommentController;
+use App\Http\Controllers\Backend\AdminReviewController;
 use App\Http\Controllers\Backend\ReportController;
 use App\Http\Controllers\Backend\GalleryController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\AdminHotelController;
 use App\Http\Controllers\Frontend\VnpayController;
 use App\Http\Controllers\Frontend\AboutController;
+use App\Http\Controllers\Frontend\ReviewController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -149,6 +151,13 @@ Route::middleware(['auth', 'roles:admin'])->group(function(){
         Route::get('/all/comment/', 'AllComment')->name('all.comment');
         Route::post('/update/comment/status', 'UpdateCommentStatus')->name('update.comment.status');
     });
+
+    Route::controller(AdminReviewController::class)->group(function(){
+
+        Route::get('/all/review/', 'AllReview')->name('all.review');
+        Route::post('/update/review/status', 'UpdateReviewStatus')->name('update.review.status');
+    });
+
 
     Route::controller(ReportController::class)->group(function(){
 
@@ -393,6 +402,11 @@ Route::middleware(['auth', 'roles:hotel'])->group(function(){
         Route::get('/hotel/delete/gallery/{id}', 'HotelDeleteGallery')->name('hotel.delete.gallery');
         Route::post('/hotel/delete/gallery/multiple', 'HotelDeleteGalleryMultiple')->name('hotel.delete.gallery.multiple');
     });
+    
+    Route::controller(ReviewController::class)->group(function(){
+        Route::get('/hotel/all/review/', 'HotelAllReview')->name('hotel.all.review');
+        Route::post('/reviews/{id}/reply', 'HotelReply')->name('reviews.reply');
+    });
 
 });
 Route::get('/hotel/login', [HotelController::class, 'HotelLogin'])->name('hotel.login');
@@ -404,6 +418,11 @@ Route::post('/send-message', [UserController::class, 'SendMessage'])->name('send
 
 Route::get('/admin/bookings/chart-data', [DashboardController::class, 'getBookingChartData']);
 Route::get('/admin/bookings/chart-data-hotel', [DashboardController::class, 'getBookingChartDataHotel']);
+
+
+
+Route::post('/validate-booking-review', [ReviewController::class, 'ValidateBooking'])->name('validate.booking.for.review');
+Route::post('/reviews/store', [ReviewController::class, 'ReviewStore'])->name('reviews.store');
 
 // Route::get('/hotel/logout', [HotelController::class, 'HotelLogout'])->name('hotel.logout');
 

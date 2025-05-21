@@ -1,7 +1,17 @@
 @php
     $hotels = App\Models\User::where('role', 'hotel')->where('status', 'active')->latest()->limit(4)->get();
 @endphp
+<style>
+    .hotel-name {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Giới hạn 2 dòng */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 3em; /* Đảm bảo chiều cao cố định tương đương 2 dòng */
+}
 
+</style>
 <div class="hotel-area pt-100 pb-70 section-bg" style="background-color:#ffffff">
     <div class="container">
         <div class="section-title text-center">
@@ -23,7 +33,7 @@
 
                         <div class="col-lg-7 col-md-8 p-0">
                             <div class="room-card-content">
-                                <h3>
+                                <h3 class="hotel-name">
                                     <a href="{{ url('hotel_detail/'.$hotel->id) }}">{{ $hotel->name }}</a>
                                 </h3>
                                 <p><i class='bx bx-phone'></i> {{ $hotel->phone }}</p>

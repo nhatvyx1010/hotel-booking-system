@@ -1,5 +1,28 @@
 @extends('frontend.main_master')
 @section('main')
+<style>
+    .star-rating {
+        display: flex;
+        gap: 5px;
+        cursor: pointer;
+    }
+
+    .star {
+        font-size: 1.8rem;
+        color: #ccc;
+        transition: color 0.2s ease-in-out;
+    }
+
+    .star.selected,
+    .star.hovered {
+        color: rgb(181, 105, 82) !important; /* cam đỏ */
+    }
+    .bxs-star {
+        color: rgb(181, 105, 82) !important;
+    }
+
+</style>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
         <!-- Inner Banner -->
@@ -54,11 +77,11 @@
                                     <div class="form-group">
                                         <label>GUESTS</label>
                                         <select name="persion" class="form-control">
-                                            <option>01</option>
-                                            <option>02</option>
-                                            <option>03</option>
-                                            <option>04</option>
-                                        </select>	
+                                            <option value="01" {{ old('persion') == '01' ? 'selected' : '' }}>01</option>
+                                            <option value="02" {{ old('persion') == '02' ? 'selected' : '' }}>02</option>
+                                            <option value="03" {{ old('persion') == '03' ? 'selected' : '' }}>03</option>
+                                            <option value="04" {{ old('persion') == '04' ? 'selected' : '' }}>04</option>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -273,33 +296,97 @@
  
 
                             </div>
-
-                            <div class="room-details-review">
+                            <div class="room-details-review mt-5">
                                 <h2>Client Review and Rating</h2>
-                                <div class="review-ratting">
-                                    <h3>Your rating: </h3>
-                                    <i class='bx bx-star'></i>
-                                    <i class='bx bx-star'></i>
-                                    <i class='bx bx-star'></i>
-                                    <i class='bx bx-star'></i>
-                                    <i class='bx bx-star'></i>
-                                </div>
-                                <form >
-                                    <div class="row">
-                                        <div class="col-lg-12 col-md-12">
-                                            <div class="form-group">
-                                                <textarea name="message" class="form-control"  cols="30" rows="8" required data-error="Write your message" placeholder="Write your review here.... "></textarea>
+                                {{-- Danh sách đánh giá --}}
+                                <div class="review-list mb-5">
+                                    @forelse($reviews as $review)
+                                        <div class="card mb-3 shadow-sm">
+                                            <div class="card-body">
+                                                <h5>{{ $review->user->name }}</h5>
+                                                <p>
+                                                    <strong>Room:</strong> {{ $review->booking->room->type->name ?? 'N/A' }} <br>
+                                                    <strong>Nights:</strong> {{ $review->booking->total_night ?? '?' }} |
+                                                    <strong>Month:</strong> {{ \Carbon\Carbon::parse($review->created_at)->format('F Y') }} |
+                                                    <strong>People:</strong> {{ $review->booking->persion ?? '?' }} <br>
+                                                    <strong>Review Date:</strong> {{ $review->created_at->format('d/m/Y') }}
+                                                </p>
+                                                <div>
+                                                    <strong>Rating:</strong>
+                                                    @for($i = 1; $i <= 5; $i++)
+                                                        <i class="bx {{ $i <= $review->rating ? 'bxs-star' : 'bx-star' }}" 
+                                                        style="{{ $i <= $review->rating ? 'color: red;' : '' }}"></i>
+                                                    @endfor
+                                                </div>
+                                                <p class="mt-2">{{ $review->comment }}</p>
                                             </div>
+
+                                            {{-- Phản hồi từ khách sạn --}}
+                                            @if ($review->replies->isNotEmpty())
+                                                @foreach($review->replies as $reply)
+                                                    <div class="card bg-light ms-4 me-4 mb-2 border-start border-primary border-3">
+                                                        <div class="card-body py-2">
+                                                            <strong class="text-primary">Hotel Reply:</strong>
+                                                            <p class="mb-1">{{ $reply->comment }}</p>
+                                                            <small class="text-muted">{{ $reply->created_at->diffForHumans() }}</small>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @endif
+
+                                            {{-- Form trả lời nếu là khách sạn và chưa trả lời --}}
+                                            @if (auth()->check() && auth()->id() === $review->hotel_id && $review->replies->isEmpty())
+                                                <form action="{{ route('reviews.reply', $review->id) }}" method="POST" class="ms-4 me-4 mb-4">
+                                                    @csrf
+                                                    <textarea name="comment" class="form-control mb-2" placeholder="Reply to this review..." rows="2" required></textarea>
+                                                    <button type="submit" class="btn btn-sm btn-outline-primary">Send Reply</button>
+                                                </form>
+                                            @endif
+                                        </div>
+                                    @empty
+                                        <p class="text-muted">No reviews yet.</p>
+                                    @endforelse
+                                </div>
+
+                                {{-- Form đánh giá hoặc modal validate --}}
+                                @if(session('canReview'))
+                                    {{-- Form đánh giá --}}
+                                    <form method="POST" action="{{ route('reviews.store') }}" class="mt-4">
+                                        @csrf
+                                        <input type="hidden" name="hotel_id" value="{{ $hotel->id }}">
+                                        <input type="hidden" name="booking_id" value="{{ session('booking_id') }}">
+
+                                        <div class="form-group mb-3">
+                                            <label for="rating">Rating:</label>
+                                            <div class="form-group">
+                                                <label>Rating</label>
+                                                <div id="star-rating" class="star-rating">
+                                                    @for($i = 1; $i <= 5; $i++)
+                                                        <span class="star" data-value="{{ $i }}">&#9733;</span>
+                                                    @endfor
+                                                </div>
+                                                <input type="hidden" name="rating" id="rating" required>
+                                            </div>
+
                                         </div>
 
-                                        <div class="col-lg-12 col-md-12">
-                                            <button type="submit" class="default-btn btn-bg-three">
-                                                Submit Review
-                                            </button>
+                                        <div class="form-group mb-3">
+                                            <label for="comment">Your Review:</label>
+                                            <textarea name="comment" class="form-control" rows="4" required placeholder="Write your review here..."></textarea>
                                         </div>
-                                    </div>
-                                </form>
+
+                                        <button type="submit" class="default-btn btn-bg-three border-radius-5">
+                                            Submit Review
+                                        </button>
+                                    </form>
+                                @else
+                                    {{-- Nút xác thực đặt phòng --}}
+                                    <button class="default-btn btn-bg-one border-radius-5" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                                        Bạn cần đặt phòng trước khi đánh giá – Xác thực đặt phòng
+                                    </button>
+                                @endif
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -322,7 +409,7 @@
                             <div class="row align-items-center">
                                 <div class="col-lg-5 col-md-4 p-0">
                                     <div class="room-card-img">
-                                        <a href="{{ url('search/room/details/'.$item->id) }}">
+                                        <a href="{{ url('search/room/details/'.$item->id) }}?check_in={{ request('check_in') }}&check_out={{ request('check_out') }}&persion={{ request('persion') }}">
                                             <img src="{{asset('upload/roomimg/'.$item->image)}}" alt="Images">
                                         </a>
                                     </div>
@@ -331,7 +418,9 @@
                                 <div class="col-lg-7 col-md-8 p-0">
                                     <div class="room-card-content">
                                          <h3>
-                                             <a href="{{ url('search/room/details/'.$item->id) }}">{{ $item['type']['name'] }}</a>
+                                             <a href="{{ url('search/room/details/'.$item->id) }}?check_in={{ request('check_in') }}&check_out={{ request('check_out') }}&persion={{ request('persion') }}">
+                                                {{ $item['type']['name'] }}
+                                            </a>
                                         </h3>
                                         <span>{{ $item->price }}</span>
                                         <div class="rating">
@@ -366,7 +455,56 @@
         </div>
         <!-- Room Details Other End -->
 
-        <script>
+
+
+<!-- Review Modal -->
+<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reviewModalLabel">Nhập chi tiết đặt phòng của bạn</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+      </div>
+      <form id="bookingValidationForm" method="POST" action="{{ route('validate.booking.for.review') }}">
+        @csrf
+        <input type="hidden" name="hotel_id" value="{{ $hotel->id }}">
+        <div class="modal-body">
+          <p>Vui lòng kiểm tra email xác nhận đặt phòng để tìm mã số đặt phòng và email đặt phòng:</p>
+
+          <div class="mb-3">
+            <label for="booking_code" class="form-label">Mã số đặt phòng</label>
+            <input type="text" name="booking_code" id="booking_code" class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="booking_email" class="form-label">Email đặt phòng</label>
+            <input type="email" name="booking_email" id="booking_email" class="form-control" required>
+          </div>
+
+          <p class="text-muted mt-2">
+            <small>
+              Chỉ khách đặt qua website và nghỉ tại chỗ nghỉ trên mới có thể viết đánh giá. Điều này giúp chúng tôi thu thập các đánh giá từ khách thực, như bạn vậy.
+            </small>
+          </p>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="default-btn btn-bg-one border-radius-5">Đánh giá kỳ nghỉ của bạn</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+    $('#btn-show-review').on('click', function () {
+        $('#review-form').removeClass('d-none');
+        $(this).hide();
+    });
+</script>
+
+
+<script>
     $(document).ready(function () {
        var check_in = "{{ old('check_in') }}";
        var check_out = "{{ old('check_out') }}";
@@ -503,5 +641,35 @@
         });
     });
 </script>
+
+<script>
+    $(document).ready(function () {
+        const stars = $('#star-rating .star');
+
+        stars.on('mouseenter', function () {
+            const val = $(this).data('value');
+            highlightStars(val);
+        });
+
+        stars.on('mouseleave', function () {
+            const selectedVal = $('#rating').val();
+            highlightStars(selectedVal);
+        });
+
+        stars.on('click', function () {
+            const val = $(this).data('value');
+            $('#rating').val(val);
+            highlightStars(val);
+        });
+
+        function highlightStars(value) {
+            stars.each(function () {
+                const starVal = $(this).data('value');
+                $(this).toggleClass('selected', starVal <= value);
+            });
+        }
+    });
+</script>
+
 
 @endsection
