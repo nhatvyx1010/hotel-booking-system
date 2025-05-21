@@ -45,6 +45,7 @@
   <thead>
     <tr>
       <th scope="col">Booking Number</th>
+      <th scope="col">Hotel Name</th>
       <th scope="col">Booking Date</th>
       <th scope="col">Customer</th>
       <th scope="col">Room</th>
@@ -57,6 +58,7 @@
     @foreach ($allData as $item)
     <tr>
       <td><a href="{{ route('user.invoice', $item->id) }}">{{ $item->code }}</a></td>
+      <td>{{ $item['room']['hotel']['name'] }}</td>
       <td>{{ $item->created_at->format('d/m/Y') }}</td>
       <td>{{ $item['user']['name'] }}</td>
       <td>

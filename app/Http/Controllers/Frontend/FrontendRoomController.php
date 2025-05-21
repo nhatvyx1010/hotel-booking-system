@@ -15,6 +15,7 @@ use App\Models\RoomBookedDate;
 use App\Models\Booking;
 use App\Models\User;
 use App\Models\Gallery;
+use App\Models\Review;
 use App\Models\City;
 use Illuminate\Support\Facades\Auth;
 
@@ -72,7 +73,16 @@ class FrontendRoomController extends Controller
         $room_id = $id;
 
         // dd( $roomdetails, $multiImage, $facility, $otherRooms);
-        return view('frontend.room.search_room_details', compact('roomdetails', 'multiImage', 'facility', 'otherRooms', 'room_id', 'hotel'));
+
+        $reviews = Review::with('user', 'booking.room')
+                ->where('hotel_id', $hotel->id)
+                ->where('status', 'approved')
+                ->whereNull('parent_id')
+                ->get();
+
+        $canReview = session('canReview', false);
+
+        return view('frontend.room.search_room_details', compact('roomdetails', 'multiImage', 'facility', 'otherRooms', 'room_id', 'hotel', 'reviews', 'canReview'));
     }
 
     public function CheckRoomAvailability(Request $request){
