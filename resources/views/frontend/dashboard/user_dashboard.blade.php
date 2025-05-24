@@ -7,7 +7,7 @@
         <div class="inner-title">
             <ul>
                 <li>
-                    <a href="index.html">Home</a>
+                    <a href="index.html">Trang chủ</a>
                 </li>
                 <li><i class='bx bx-chevron-right'></i></li>
                 <li>User Dashboard </li>
@@ -40,9 +40,9 @@
 
 <div class="col-md-4">
 <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
-<div class="card-header">Total Booking</div>
+<div class="card-header">Tổng số đặt phòng</div>
 <div class="card-body">
-<h1 class="card-title" style="font-size: 45px;">3 Total</h1>
+<h1 class="card-title" style="font-size: 45px;">3 Tổng</h1>
 
 </div>
 </div>                   
@@ -50,9 +50,9 @@
 
         <div class="col-md-4">
 <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
-<div class="card-header">Pending Booking </div>
+<div class="card-header">Đặt phòng đang chờ xử lý </div>
 <div class="card-body">
-<h1 class="card-title" style="font-size: 45px;">3 Pending</h1>
+<h1 class="card-title" style="font-size: 45px;">3 Đang chờ</h1>
 
 </div>
 </div>                   
@@ -61,9 +61,9 @@
 
         <div class="col-md-4">
 <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
-<div class="card-header">Complete Booking</div>
+<div class="card-header">Đặt phòng hoàn thành</div>
 <div class="card-body">
-<h1 class="card-title" style="font-size: 45px;">3 Complete</h1>
+<h1 class="card-title" style="font-size: 45px;">3 Hoàn thành</h1>
 
 </div>
 </div>                   

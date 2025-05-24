@@ -5,13 +5,13 @@
 <div class="page-content">
     <!--breadcrumb-->
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">Add Testimonial</div>
+        <div class="breadcrumb-title pe-3">Thêm Lời Nhận Xét</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Add Testimonial</li>
+                    <li class="breadcrumb-item active" aria-current="page">Thêm Lời Nhận Xét</li>
                 </ol>
             </nav>
         </div>
@@ -27,7 +27,7 @@
             <div class="card-body">
                 <div class="row mb-3">
                     <div class="col-sm-3">
-                        <h6 class="mb-0">Name</h6>
+                        <h6 class="mb-0">Tên</h6>
                     </div>
                     <div class="form-group col-sm-9 text-secondary">
                         <input type="text" name="name" class="form-control" />
@@ -35,7 +35,7 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-sm-3">
-                        <h6 class="mb-0">City</h6>
+                        <h6 class="mb-0">Thành phố</h6>
                     </div>
                     <div class="form-group col-sm-9 text-secondary">
                         <input type="text" name="city" class="form-control" />
@@ -43,7 +43,7 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-sm-3">
-                        <h6 class="mb-0">Message</h6>
+                        <h6 class="mb-0">Lời nhắn</h6>
                     </div>
                     <div class="form-group col-sm-9 text-secondary">
                     <textarea name="message" class="form-control" id="input11" placeholder="Message ..." rows="3"></textarea>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-sm-3">
-                        <h6 class="mb-0">Photo</h6>
+                        <h6 class="mb-0">Ảnh đại diện</h6>
                     </div>
                     <div class="form-group col-sm-9 text-secondary">
                         <input class="form-control" name="image" type="file" id="image" />
@@ -70,7 +70,7 @@
                 <div class="row">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-9 text-secondary">
-                        <input type="submit" class="btn btn-primary px-4" value="Save Changes" />
+                        <input type="submit" class="btn btn-primary px-4" value="Lưu thay đổi" />
                     </div>
                 </div>
             </div>
@@ -113,16 +113,16 @@
                     },
                     messages :{
                         name: {
-                            required : 'Please Enter Team Name',
+                            required : 'Vui lòng nhập tên của bạn',
                         }, 
                         position: {
-                            required : 'Please Enter Team Position',
+                            required : 'Vui lòng nhập thành phố',
                         }, 
                         facebook: {
-                            required : 'Please Enter Facebook Url',
+                            required : 'Vui lòng nhập lời nhắn',
                         }, 
                         image: {
-                            required : 'Please Select Image',
+                            required : 'Vui lòng chọn ảnh',
                         }, 
                     },
                     errorElement : 'span', 

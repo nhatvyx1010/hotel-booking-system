@@ -10,13 +10,13 @@
 							<ol class="breadcrumb mb-0 p-0">
 								<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
 								</li>
-								<li class="breadcrumb-item active" aria-current="page">All Testimonial</li>
+								<li class="breadcrumb-item active" aria-current="page">Tất cả lời nhận xét</li>
 							</ol>
 						</nav>
 					</div>
 					<div class="ms-auto">
 						<div class="btn-group">
-                        <a href="{{ route('add.testimonial') }}" class="btn btn-primary px-5"> Add Testimonial </a>
+                        <a href="{{ route('add.testimonial') }}" class="btn btn-primary px-5"> Thêm lời nhận xét </a>
 						</div>
 					</div>
 				</div>
@@ -29,11 +29,11 @@
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Serial</th>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>City</th>
-                            <th>Action</th>
+                            <th>STT</th>
+                            <th>Ảnh</th>
+                            <th>Tên</th>
+                            <th>Thành phố</th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,8 +44,8 @@
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->city }}</td>
                                 <td>
-                                    <a href="{{ route('edit.testimonial', $item->id) }}" class="btn btn-warning px-3 radius-30">Edit</a>
-                                    <a href="{{ route('delete.testimonial', $item->id) }}" class="btn btn-danger px-3 radius-30" id="delete">Delete</a>
+                                    <a href="{{ route('edit.testimonial', $item->id) }}" class="btn btn-warning px-3 radius-30">Sửa</a>
+                                    <a href="{{ route('delete.testimonial', $item->id) }}" class="btn btn-danger px-3 radius-30" id="delete">Xóa</a>
                                 </td>
                             </tr>
                         @endforeach

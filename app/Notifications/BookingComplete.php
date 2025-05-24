@@ -41,9 +41,9 @@ class BookingComplete extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line('Giới thiệu về thông báo.')
+                    ->action('Xem thông báo', url('/'))
+                    ->line('Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!');
     }
 
     /**
@@ -55,7 +55,7 @@ class BookingComplete extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => 'New Booking Added In Hotel'
+            'message' => 'Đã có đặt phòng mới tại khách sạn'
         ];
     }
 }

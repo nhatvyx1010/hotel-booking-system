@@ -25,10 +25,10 @@ class BlogController extends Controller
         ]);
 
         $notification = array(
-            'message' => 'Blog Category Added Successfully',
+            'message' => 'Thêm danh mục blog thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Blog Category Added Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Thêm danh mục blog thành công')->with('alert-type', 'success');
     }
 
     public function EditBlogCategory($id){
@@ -44,19 +44,19 @@ class BlogController extends Controller
         ]);
 
         $notification = array(
-            'message' => 'Blog Category Updated Successfully',
+            'message' => 'Cập nhật danh mục blog thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Blog Category Updated Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Cập nhật danh mục blog thành công')->with('alert-type', 'success');
     }
 
     public function DeleteBlogCategory($id){
         BlogCategory::find($id)->delete();
         $notification = array(
-            'message' => 'Blog Category Deleted Successfully',
+            'message' => 'Xóa danh mục blog thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Blog Category Deleted Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Xóa danh mục blog thành công')->with('alert-type', 'success');
     }
 
     public function AllBlogPost(){
@@ -95,10 +95,10 @@ class BlogController extends Controller
         BlogPost::insert($blogPostData);
 
         $notification = array(
-            'message' => 'BlogPost Data Inserted Successfully',
+            'message' => 'Thêm bài viết blog thành công',
             'alert-type' => 'success'
         );
-        return redirect()->route('all.blog.post')->with('message', 'BlogPost Data Inserted Successfully')->with('alert-type', 'success');
+        return redirect()->route('all.blog.post')->with('message', 'Thêm bài viết blog thành công')->with('alert-type', 'success');
     }
 
     public function EditBlogPost($id){
@@ -132,10 +132,10 @@ class BlogController extends Controller
             ]);
     
             $notification = array(
-                'message' => 'BlogPost Updated With Image Successfully',
+                'message' => 'Cập nhật bài viết blog thành công (có ảnh)',
                 'alert-type' => 'success'
             );
-            return redirect()->route('all.blog.post')->with('message', 'BlogPost Updated With Image Successfully')->with('alert-type', 'success');
+            return redirect()->route('all.blog.post')->with('message', 'Cập nhật bài viết blog thành công (có ảnh)')->with('alert-type', 'success');
         } else {
             // Cập nhật bài viết mà không thay đổi ảnh và hotel_id (nếu có)
             BlogPost::findOrFail($post_id)->update([
@@ -150,10 +150,10 @@ class BlogController extends Controller
             ]);
     
             $notification = array(
-                'message' => 'BlogPost Updated Without Image Successfully',
+                'message' => 'Cập nhật bài viết blog thành công (không có ảnh)',
                 'alert-type' => 'success'
             );
-            return redirect()->route('all.blog.post')->with('message', 'BlogPost Updated Without Image Successfully')->with('alert-type', 'success');
+            return redirect()->route('all.blog.post')->with('message', 'Cập nhật bài viết blog thành công (không có ảnh)')->with('alert-type', 'success');
         }
     }
 
@@ -164,10 +164,10 @@ class BlogController extends Controller
 
         BlogPost::findOrFail($id)->delete();
         $notification = array(
-            'message' => 'BlogPost Deleted Successfully',
+            'message' => 'Xóa bài viết blog thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'BlogPost Deleted Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Xóa bài viết blog thành công')->with('alert-type', 'success');
     }
 
     public function BlogDetails($slug){

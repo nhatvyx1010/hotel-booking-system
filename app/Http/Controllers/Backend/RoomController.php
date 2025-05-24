@@ -32,7 +32,7 @@ class RoomController extends Controller
         $allroomNo = RoomNumber::where('rooms_id', $id)->where('hotel_id', $user_id)->get();
     
         if (!$editData) {
-            return redirect()->route('hotel.dashboard')->with('error', 'Room not found for this hotel');
+            return redirect()->route('hotel.dashboard')->with('error', 'Không tìm thấy phòng thuộc khách sạn này');
         }
     
         return view('hotel.backend.allroom.rooms.edit_rooms', compact('editData', 'basic_facility', 'multiimgs', 'allroomNo'));
@@ -64,10 +64,10 @@ class RoomController extends Controller
         if($request->facility_name == NULL){
 
             $notification = array(
-                'message' => 'Sorry! Not Any Basic Facility Select',
+                'message' => 'Xin lỗi! Bạn chưa chọn tiện ích cơ bản nào',
                 'alert-type' => 'error'
             );
-            return redirect()->back()->with('message', 'Sorry! Not Any Basic Item Select')->with('alert-type', 'error');
+            return redirect()->back()->with('message', 'Xin lỗi! Bạn chưa chọn tiện ích cơ bản nào')->with('alert-type', 'error');
         } else{
             Facility::where('rooms_id', $id)->delete();
             $facilities = Count($request->facility_name);
@@ -100,10 +100,10 @@ class RoomController extends Controller
         }
 
         $notification = array(
-            'messsage' => 'Room Updated Successfully',
+            'messsage' => 'Cập nhật phòng thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Room Updated Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Cập nhật phòng thành công')->with('alert-type', 'success');
     }
 
     public function HotelUpdateRoom(Request $request, $id){
@@ -120,7 +120,7 @@ class RoomController extends Controller
         }
 
         if (!$room) {
-            return redirect()->back()->with('error', 'Room not found for this hotel');
+            return redirect()->back()->with('error', 'Không tìm thấy phòng thuộc khách sạn này');
         }
     
         $room->roomtype_id = $room->roomtype_id;
@@ -145,7 +145,7 @@ class RoomController extends Controller
         $room->save();
     
         if($request->facility_name == NULL){
-            return redirect()->back()->with('message', 'Sorry! Not Any Basic Item Select')->with('alert-type', 'error');
+            return redirect()->back()->with('message', 'Xin lỗi! Bạn chưa chọn tiện ích cơ bản nào')->with('alert-type', 'error');
         } else {
             Facility::where('rooms_id', $id)->delete();
             $facilities = count($request->facility_name);
@@ -178,10 +178,10 @@ class RoomController extends Controller
         }
     
         $notification = array(
-            'message' => 'Room Updated Successfully',
+            'message' => 'Cập nhật phòng thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Room Updated Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Cập nhật phòng thành công')->with('alert-type', 'success');
     }    
 
     public function MultiImageDelete($id){
@@ -191,18 +191,18 @@ class RoomController extends Controller
             $imagePath = $deletedata->multi_img;
             if(file_exists($imagePath)){
                 unlink($imagePath);
-                echo "Image Unlinked Successfully";
+                echo "Xóa ảnh thành công";
             }else{
-                echo "Image does not exist";
+                echo "Ảnh không tồn tại";
             }
 
             MultiImage::where('id', $id)->delete();
         }
         $notification = array(
-            'messsage' => 'Multi Image Deleted Successfully',
+            'messsage' => 'Xóa đa ảnh hình thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Multi Image Deleted Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Xóa đa ảnh hình thành công')->with('alert-type', 'success');
     }
 
     public function HotelMultiImageDelete($id){
@@ -216,19 +216,19 @@ class RoomController extends Controller
             $imagePath = $deletedata->multi_img;
             if(file_exists($imagePath)){
                 unlink($imagePath);
-                echo "Image Unlinked Successfully";
+                echo "Xóa ảnh thành công";
             } else {
-                echo "Image does not exist";
+                echo "Ảnh không tồn tại";
             }
             MultiImage::where('id', $id)->delete();
     
             $notification = array(
-                'message' => 'Multi Image Deleted Successfully',
+                'message' => 'Xóa đa ảnh hình thành công',
                 'alert-type' => 'success'
             );
-            return redirect()->back()->with('message', 'Multi Image Deleted Successfully')->with('alert-type', 'success');
+            return redirect()->back()->with('message', 'Xóa đa ảnh hình thành công')->with('alert-type', 'success');
         } else {
-            return redirect()->back()->with('error', 'Image not found for this hotel');
+            return redirect()->back()->with('error', 'Ảnh không tồn tại');
         }
     }
     
@@ -241,10 +241,10 @@ class RoomController extends Controller
         $data->save();
 
         $notification = array(
-            'messsage' => 'Room Number Added Successfully',
+            'messsage' => 'Thêm số phòng thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Room Number Added Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Thêm số phòng thành công')->with('alert-type', 'success');
     }
 
     public function HotelStoreRoomNumber(Request $request, $id){
@@ -253,7 +253,7 @@ class RoomController extends Controller
         $room = Room::where('id', $id)->where('hotel_id', $user_id)->first();
         
         if (!$room) {
-            return redirect()->back()->with('error', 'Room not found for this hotel');
+            return redirect()->back()->with('error', 'Không tìm thấy phòng thuộc khách sạn này');
         }
         $isDuplicate = RoomNumber::where('hotel_id', $user_id)
                         ->where('room_no', $request->room_no)
@@ -261,7 +261,7 @@ class RoomController extends Controller
 
         if ($isDuplicate) {
             return redirect()->back()
-                ->with('message', 'Room number already exists for this hotel.')
+                ->with('message', 'Số phòng đã tồn tại trong khách sạn này.')
                 ->with('alert-type', 'error');
         }
     
@@ -274,10 +274,10 @@ class RoomController extends Controller
         $data->save();
     
         $notification = array(
-            'message' => 'Room Number Added Successfully',
+            'message' => 'Thêm số phòng thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Room Number Added Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Thêm số phòng thành công')->with('alert-type', 'success');
     }
     
 
@@ -298,10 +298,10 @@ class RoomController extends Controller
         $data->save();
 
         $notification = array(
-            'messsage' => 'Room Number Updated Successfully',
+            'messsage' => 'Cập nhật số phòng thành công',
             'alert-type' => 'success'
         );
-        return redirect()->route('room.type.list')->with('message', 'Room Number Updated Successfully')->with('alert-type', 'success');
+        return redirect()->route('room.type.list')->with('message', 'Cập nhật số phòng thành công')->with('alert-type', 'success');
     }
 
     public function HotelUpdateRoomNumber(Request $request, $id)
@@ -315,7 +315,7 @@ class RoomController extends Controller
             ->first();
     
         if (!$roomNumber) {
-            return redirect()->back()->with('error', 'Room Number not found for this hotel');
+            return redirect()->back()->with('error', 'Không tìm thấy số phòng thuộc khách sạn này');
         }
     
         $roomNumber->room_no = $request->room_no;
@@ -323,7 +323,7 @@ class RoomController extends Controller
         $roomNumber->save();
     
         return redirect()->route('hotel.room.type.list')
-            ->with('message', 'Room Number Updated Successfully')
+            ->with('message', 'Cập nhật số phòng thành công')
             ->with('alert-type', 'success');
     }    
 
@@ -331,20 +331,20 @@ class RoomController extends Controller
         RoomNumber::find($id)->delete();
 
         $notification = array(
-            'messsage' => 'Room Number Deleted Successfully',
+            'message' => 'Xóa số phòng thành công',
             'alert-type' => 'success'
         );
-        return redirect()->route('room.type.list')->with('message', 'Room Number Deleted Successfully')->with('alert-type', 'success');
+        return redirect()->route('room.type.list')->with('message', 'Xóa số phòng thành công')->with('alert-type', 'success');
     }
 
     public function HotelDeleteRoomNumber($id){
         RoomNumber::find($id)->delete();
 
         $notification = array(
-            'messsage' => 'Room Number Deleted Successfully',
+            'message' => 'Xóa số phòng thành công',
             'alert-type' => 'success'
         );
-        return redirect()->route('hotel.room.type.list')->with('message', 'Room Number Deleted Successfully')->with('alert-type', 'success');
+        return redirect()->route('hotel.room.type.list')->with('message', 'Xóa số phòng thành công')->with('alert-type', 'success');
     }
 
     public function DeleteRoom(Request $request, $id){
@@ -369,10 +369,10 @@ class RoomController extends Controller
         $room->delete();
 
         $notification = array(
-            'messsage' => 'Room Deleted Successfully',
+            'messsage' => 'Xóa phòng thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Room Deleted Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Xóa phòng thành công')->with('alert-type', 'success');
     }
 
     public function HotelDeleteRoom(Request $request, $id){
@@ -380,7 +380,7 @@ class RoomController extends Controller
         $room = Room::where('id', $id)->where('hotel_id', $user_id)->first();
     
         if (!$room) {
-            return redirect()->back()->with('error', 'Room not found for this hotel');
+            return redirect()->back()->with('error', 'Không tìm thấy phòng thuộc khách sạn này');
         }
     
         if(file_exists('upload/roomimg/'.$room->image) AND ! empty($room->image)){
@@ -404,9 +404,9 @@ class RoomController extends Controller
         $room->delete();
     
         $notification = array(
-            'message' => 'Room Deleted Successfully',
+            'message' => 'Xóa phòng thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Room Deleted Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Xóa phòng thành công')->with('alert-type', 'success');
     }
 }

@@ -16,19 +16,19 @@
 <ul> 
         
     <li>
-        <a href="{{ route('user.profile') }}">User Profile </a>
+        <a href="{{ route('user.profile') }}">Hồ sơ người dùng</a>
     </li>
     <li>
-        <a href="{{ route('user.change.password') }}">Change Password</a>
+        <a href="{{ route('user.change.password') }}">Đổi mật khẩu</a>
     </li>
     <li>
-        <a href="{{ route('user.booking') }}">Booking Details </a>
+        <a href="{{ route('user.booking') }}">Chi tiết đặt phòng</a>
     </li>
     <li>
-        <a href="{{ route('user.booking_canceled') }}">Booking Canceleds </a>
+        <a href="{{ route('user.booking_canceled') }}">Đơn đặt phòng đã hủy </a>
     </li>
     <li>
-        <a href="{{ route('user.logout') }}">Logout </a>
+        <a href="{{ route('user.logout') }}">Đăng xuất </a>
     </li>
 </ul>
                         </div>

@@ -10,7 +10,7 @@
 							<ol class="breadcrumb mb-0 p-0">
 								<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
 								</li>
-								<li class="breadcrumb-item active" aria-current="page">All Booking</li>
+								<li class="breadcrumb-item active" aria-current="page">Tất Cả Đơn Đặt Phòng</li>
 							</ol>
 						</nav>
 					</div>
@@ -29,17 +29,17 @@
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Serial</th>
-                            <th>Booking Number</th>
-                            <th>Booking Date</th>
-                            <th>Hotel</th>
-                            <th>Customer</th>
-                            <th>Room</th>
-                            <th>Check IN/OUT</th>
-                            <th>Total Room</th>
-                            <th>Guest</th>
-                            <th>Payment</th>
-                            <th>Status</th>
+                            <th>STT</th>
+                            <th>Mã Đơn Đặt</th>
+                            <th>Ngày Đặt</th>
+                            <th>Khách Sạn</th>
+                            <th>Khách Hàng</th>
+                            <th>Phòng</th>
+                            <th>Ngày Nhận/Trả</th>
+                            <th>Tổng Số Phòng</th>
+                            <th>Số Khách</th>
+                            <th>Thanh Toán</th>
+                            <th>Trạng Thái</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,15 +56,15 @@
                                 <td>{{ $item->persion }}</td>
                                 <td>
                                     @if($item->payment_status == '1')
-                                        <span class="text-success">Complete</span>
+                                        <span class="text-success">Hoàn Thành</span>
                                     @else
-                                        <span class="text-danger">Pending</span>
+                                        <span class="text-danger">Chờ Xử Lý</span>
                                     @endif
                                 </td>
                                 <td>@if($item->status == '1')
-                                        <span class="text-success">Active</span>
+                                        <span class="text-success">Hoàn thành</span>
                                     @else
-                                        <span class="text-danger">Pending</span>
+                                        <span class="text-danger">Chờ Xử Lý</span>
                                     @endif
                                 </td>
                             </tr>

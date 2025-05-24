@@ -28,10 +28,16 @@ class UserController extends Controller
     public function UserStore(Request $request){
         $id = Auth::user()->id;
         $data = User::find($id);
+        
+        if ($request->email !== $data->email) {
+            $data->email_verified_at = null;
+        }
+
         $data->name =$request->name;
         $data->email =$request->email;
         $data->phone =$request->phone;
         $data->address =$request->address;
+
 
         if($request->file('photo')){
             $file = $request->file('photo');
@@ -43,10 +49,10 @@ class UserController extends Controller
         $data->save();
 
         $notification = array(
-            'messsage' => 'User Profile Updated Successfully',
+            'messsage' => 'Cập nhật hồ sơ người dùng thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'User Profile Updated Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Cập nhật hồ sơ người dùng thành công')->with('alert-type', 'success');
     }
 
     public function UserLogout(Request $request){
@@ -57,11 +63,11 @@ class UserController extends Controller
         $request->session()->regenerateToken();
 
         $notification = array(
-            'messsage' => 'User Logout Successfully',
+            'messsage' => 'Đăng xuất thành công',
             'alert-type' => 'success'
         );
 
-        return redirect('/login')->with('message', 'User Logout Successfully')->with('alert-type', 'success');
+        return redirect('/login')->with('message', 'Đăng xuất thành công')->with('alert-type', 'success');
     }
 
     public function UserChangePassword(){
@@ -77,10 +83,10 @@ class UserController extends Controller
 
         if(!Hash::check($request->old_password, auth::user()->password)){
             $notification = array(
-                'messsage' => 'Old Password Does Not Match!',
+                'message' => 'Mật khẩu cũ không khớp!',
                 'alert-type' => 'error'
             );
-            return back()->with('message', 'Old Password Does Not Match!')->with('alert-type', 'error');
+            return back()->with('message', 'Mật khẩu cũ không khớp!')->with('alert-type', 'error');
         }
 
         //Update the password
@@ -88,10 +94,10 @@ class UserController extends Controller
             'password' => Hash::make($request->new_password)
         ]);
         $notification = array(
-            'messsage' => 'Password Change Successfully',
+            'message' => 'Đổi mật khẩu thành công',
             'alert-type' => 'success'
         );
-        return back()->with('message', 'Password Change Successfully')->with('alert-type', 'success');
+        return back()->with('message', 'Đổi mật khẩu thành công')->with('alert-type', 'success');
     }
 
 
@@ -125,5 +131,4 @@ class UserController extends Controller
             return response()->json(['error' => 'Lỗi khi gọi API'], 500);
         }
     }
-
 }

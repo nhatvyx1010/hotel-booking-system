@@ -39,7 +39,7 @@ class VnpayController extends Controller
             'name' => 'required',
             'email' => 'required',
             'country' => 'required',
-            'phone' => 'required',
+            'phone' => ['required', 'regex:/^0\d{9}$/'],
             'address' => 'required',
             'state' => 'required',
             // 'zip_code' => 'required',
@@ -115,7 +115,7 @@ class VnpayController extends Controller
 
             $this->vnpayOrder($mergedRequest);
 
-            return redirect('/')->with('message', 'Booking Added Successfully')->with('alert-type', 'success');
+            return redirect('/')->with('message', 'Đặt phòng thành công')->with('alert-type', 'success');
             // return redirect('/')->with('success', 'Thanh toán thành công!');
         }
         return redirect('/')->with('error', 'Thanh toán thất bại!');
@@ -138,13 +138,13 @@ class VnpayController extends Controller
 
             if($request->payment_method == 'VNPAY'){
                 
-                $payment_method_value = "thanh toan bang VNPAY";
+                $payment_method_value = "Thanh toán bằng VNPay";
                 $prepaid_amount = $total_price; // 100% của tổng tiền
                 $remaining_amount = $total_price - $prepaid_amount; // Số tiền còn lại cần trả
                 $payment_status = 1;
 
             } else{
-                $payment_method_value = "thanh toan truc tiep";
+                $payment_method_value = "Thanh toán trực tiếp";
                 $payment_status = 0;
                 $prepaid_amount = $total_price * 0.3; // 30% của tổng tiền
                 $remaining_amount = $total_price - $prepaid_amount; // Số tiền còn lại cần trả
@@ -199,7 +199,7 @@ class VnpayController extends Controller
         Session::forget('book_date');
         
         $notification = array(
-            'messsage' => 'Booking Added Successfully',
+            'messsage' => 'Đặt phòng thành công',
             'alert-type' => 'success'
         );
 
@@ -217,7 +217,5 @@ class VnpayController extends Controller
         if ($admin) {
             Notification::send($admin, new BookingComplete($request->name));
         }
-
-
     }
 }

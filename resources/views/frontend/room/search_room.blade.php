@@ -19,7 +19,7 @@
         <div class="inner-banner inner-bg9">
             <div class="container">
                 <div class="inner-title">
-                    <h3>Rooms</h3>
+                    <h3>Phòng</h3>
                 </div>
             </div>
         </div>
@@ -35,7 +35,7 @@
                                 <input type="text" required name="hotel_id" value="{{ $hotel->id }}" hidden>
                                 <div class="col-lg-3 col-md-3">
                                     <div class="form-group">
-                                        <label>CHECK IN TIME</label>
+                                        <label>THỜI GIAN CHECK IN</label>
                                         <div class="input-group">
                                             <input autocomplete="off" type="text" required name="check_in" class="form-control dt_picker" placeholder="yyy-mm-dd" value="{{ old('check_in') }}">
                                             <span class="input-group-addon"></span>
@@ -46,7 +46,7 @@
 
                                 <div class="col-lg-3 col-md-3">
                                     <div class="form-group">
-                                        <label>CHECK OUT TIME</label>
+                                        <label>THỜI GIAN CHECK OUT</label>
                                         <div class="input-group">
                                             <input autocomplete="off" type="text" required name="check_out" class="form-control dt_picker" placeholder="yyy-mm-dd" value="{{ old('check_out') }}">
                                             <span class="input-group-addon"></span>
@@ -57,7 +57,7 @@
 
                                 <div class="col-lg-2 col-md-2">
                                     <div class="form-group">
-                                        <label>GUESTS</label>
+                                        <label>KHÁCH</label>
                                         <select name="persion" class="form-control">
                                             <option value="01" {{ old('persion') == '01' ? 'selected' : '' }}>01</option>
                                             <option value="02" {{ old('persion') == '02' ? 'selected' : '' }}>02</option>
@@ -69,7 +69,7 @@
 
                                 <div class="col-lg-2 col-md-2">
                                     <button type="submit" class="default-btn btn-bg-one border-radius-5">
-                                        Check Availability
+                                        Kiểm tra tình trạng
                                     </button>
                                 </div>
                             </div>
@@ -84,8 +84,8 @@
         <div class="room-area pt-100 pb-70">
             <div class="container">
                 <div class="section-title text-center">
-                    <span class="sp-color">ROOMS</span>
-                    <h2>Our Rooms & Rates</h2>
+                    <span class="sp-color">PHÒNG</span>
+                    <h2>Phòng & Giá cả của chúng tôi</h2>
                 </div>
                 <div class="row pt-45">
                     <?php $empty_array = []; ?>
@@ -109,7 +109,7 @@
                                 <h6><a href="{{ route('search_room_details', $item->id.'?check_in='.old('check_in').'&check_out='.old('check_out').'&persion='.old('persion')) }}">{{ $item['type']['name'] }}</a></h6>
                                 <ul>
                                     <li class="text-color">{{ number_format($item->price, 0, ',', '.') }} VNĐ</li>
-                                    <li class="text-color">Per Night</li>
+                                    <li class="text-color">Mỗi đêm</li>
                                 </ul>
                                 <div class="rating text-color">
                                     <i class='bx bxs-star'></i>
@@ -130,7 +130,7 @@
                     @endforeach
 
                     @if (count($rooms) == count($empty_array))
-                    <p class="text-center text-danger">Sorry No Data Found</p>
+                    <p class="text-center text-danger">Xin lỗi, không tìm thấy dữ liệu phù hợp</p>
                     @endif
 
                 </div>
@@ -144,7 +144,7 @@
         <div class="inner-banner inner-bg3"  style="height: 150px;">
             <div class="container">
                 <div class="inner-title">
-                    <h3>Gallery</h3>
+                    <h3>Thư viện ảnh</h3>
                 </div>
             </div>
         </div>

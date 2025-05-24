@@ -107,7 +107,7 @@ class ReviewController extends Controller
             'status' => 'approved'
         ]);
 
-        return redirect()->back()->with('success', 'Reply posted.');
+        return redirect()->back()->with('success', 'Phản hồi đã được gửi.');
     }
 
     public function HotelAllReview()

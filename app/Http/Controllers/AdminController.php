@@ -53,10 +53,10 @@ class AdminController extends Controller
         $data->save();
 
         $notification = array(
-            'messsage' => 'Admin Profile Updated Successfully',
+            'messsage' => 'Cập nhật hồ sơ quản trị viên thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Admin Profile Updated Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Cập nhật hồ sơ quản trị viên thành công')->with('alert-type', 'success');
     }
 
     public function AdminChangePassword(){
@@ -74,10 +74,10 @@ class AdminController extends Controller
 
         if(!Hash::check($request->old_password, auth::user()->password)){
             $notification = array(
-                'messsage' => 'Old Password Does Not Match!',
+                'messsage' => 'Mật khẩu cũ không đúng!',
                 'alert-type' => 'error'
             );
-            return back()->with('message', 'Old Password Does Not Match!')->with('alert-type', 'error');
+            return back()->with('message', 'Mật khẩu cũ không đúng!')->with('alert-type', 'error');
         }
 
         //Update the password
@@ -85,10 +85,10 @@ class AdminController extends Controller
             'password' => Hash::make($request->new_password)
         ]);
         $notification = array(
-            'messsage' => 'Password Change Successfully',
+            'messsage' => 'Đổi mật khẩu thành công',
             'alert-type' => 'success'
         );
-        return back()->with('message', 'Password Change Successfully')->with('alert-type', 'success');
+        return back()->with('message', 'Đổi mật khẩu thành công')->with('alert-type', 'success');
     }
 
     public function AllAdmin(){
@@ -120,10 +120,10 @@ class AdminController extends Controller
         }
 
         $notification = array(
-            'messsage' => 'Admin User Created Successfully',
+            'messsage' => 'Tạo người dùng quản trị viên thành công',
             'alert-type' => 'success'
         );
-        return redirect()->route('all.admin')->with('message', 'Admin User Created Successfully')->with('alert-type', 'success');
+        return redirect()->route('all.admin')->with('message', 'Tạo người dùng quản trị viên thành công')->with('alert-type', 'success');
     }
 
     public function EditAdmin($id){
@@ -151,10 +151,10 @@ class AdminController extends Controller
         }
 
         $notification = array(
-            'messsage' => 'Admin User Updated Successfully',
+            'messsage' => 'Cập nhật người dùng quản trị viên thành công',
             'alert-type' => 'success'
         );
-        return redirect()->route('all.admin')->with('message', 'Admin User Updated Successfully')->with('alert-type', 'success');
+        return redirect()->route('all.admin')->with('message', 'Cập nhật người dùng quản trị viên thành công')->with('alert-type', 'success');
     }
 
     public function DeleteAdmin($id){
@@ -164,9 +164,9 @@ class AdminController extends Controller
         }
 
         $notification = array(
-            'messsage' => 'Admin User Deleted Successfully',
+            'messsage' => 'Xóa người dùng quản trị viên thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Admin User Deleted Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Xóa người dùng quản trị viên thành công')->with('alert-type', 'success');
     }
 }

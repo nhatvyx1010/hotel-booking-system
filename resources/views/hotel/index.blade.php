@@ -176,7 +176,7 @@
 									@foreach($allData as $key=> $item)
 										<tr>
 											<td>{{ $key+1 }}</td>
-											<td><a href="{{ route('edit_booking', $item->id) }}"> {{ $item->code }}</a></td>
+											<td><a href="{{ route('hotel.edit_booking', $item->id) }}"> {{ $item->code }}</a></td>
 											<td>{{ $item->created_at->format('d/m/Y') }}</td>
 											<td>{{ $item['user']['name'] }}</td>
 											<td>{{ $item['room']['type']['name'] }}</td>

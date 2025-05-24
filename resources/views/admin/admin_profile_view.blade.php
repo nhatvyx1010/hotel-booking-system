@@ -5,25 +5,25 @@
 <div class="page-content">
     <!--breadcrumb-->
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">User Profile</div>
+        <div class="breadcrumb-title pe-3">Hồ sơ người dùng</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+                    <li class="breadcrumb-item active" aria-current="page">Hồ sơ người dùng</li>
                 </ol>
             </nav>
         </div>
         <div class="ms-auto">
             <div class="btn-group">
-                <button type="button" class="btn btn-primary">Settings</button>
+                <button type="button" class="btn btn-primary">Cài đặt</button>
                 <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">	<span class="visually-hidden">Toggle Dropdown</span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">	<a class="dropdown-item" href="javascript:;">Action</a>
-                    <a class="dropdown-item" href="javascript:;">Another action</a>
-                    <a class="dropdown-item" href="javascript:;">Something else here</a>
-                    <div class="dropdown-divider"></div>	<a class="dropdown-item" href="javascript:;">Separated link</a>
+                    <a class="dropdown-item" href="javascript:;">Action khác</a>
+                    <a class="dropdown-item" href="javascript:;">Một tùy chọn khác</a>
+                    <div class="dropdown-divider"></div>	<a class="dropdown-item" href="javascript:;">Liên kết tách biệt</a>
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@
             <div class="card-body">
                 <div class="row mb-3">
                     <div class="col-sm-3">
-                        <h6 class="mb-0">Name</h6>
+                        <h6 class="mb-0">Họ và tên</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
                         <input type="text" name="name" class="form-control" value="{{ $profileData->name }}" />
@@ -79,7 +79,7 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-sm-3">
-                        <h6 class="mb-0">Phone</h6>
+                        <h6 class="mb-0">Số điện thoại</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
                         <input type="text" name="phone" class="form-control" value="{{ $profileData->phone }}" />
@@ -87,7 +87,7 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-sm-3">
-                        <h6 class="mb-0">Address</h6>
+                        <h6 class="mb-0">Địa chỉ</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
                         <input type="text" name="address" class="form-control" value="{{ $profileData->address }}" />
@@ -95,7 +95,7 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-sm-3">
-                        <h6 class="mb-0">Photo</h6>
+                        <h6 class="mb-0">Ảnh đại diện</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
                         <input class="form-control" name="photo" type="file" id="image" />

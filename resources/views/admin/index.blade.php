@@ -27,9 +27,9 @@
 						<div class="card-body">
 							<div class="d-flex align-items-center">
 								<div>
-									<p class="mb-0 text-secondary">Total Booking</p>
+									<p class="mb-0 text-secondary">Tổng số đơn đặt</p>
 									<h4 class="my-1 text-info">{{ count($bookings) }}</h4>
-									<p class="mb-0 font-13">Today Total Price:  {{ number_format($todayPrice, 0, ',', '.') }} VNĐ</p>
+									<p class="mb-0 font-13">Tổng tiền hôm nay:  {{ number_format($todayPrice, 0, ',', '.') }} VNĐ</p>
 								</div>
 								<div class="widgets-icons-2 rounded-circle bg-gradient-blues text-white ms-auto"><i class='bx bxs-cart'></i>
 								</div>
@@ -42,9 +42,9 @@
 					   <div class="card-body">
 						   <div class="d-flex align-items-center">
 							   <div>
-								   <p class="mb-0 text-secondary">Pending Booking</p>
+								   <p class="mb-0 text-secondary">Đơn chờ xử lý</p>
 								   <h4 class="my-1 text-warning">{{ count($pending) }}</h4>
-								   <p class="mb-0 font-13">{{ $pendingRate }}% of total bookings</p>
+								   <p class="mb-0 font-13">{{ $pendingRate }}% tổng số đơn</p>
 							   </div>
 							   <div class="widgets-icons-2 rounded-circle bg-warning text-white ms-auto"><i class='bx bxs-wallet'></i>
 							   </div>
@@ -57,9 +57,9 @@
 					   <div class="card-body">
 						   <div class="d-flex align-items-center">
 							   <div>
-								   <p class="mb-0 text-secondary">Complete Booking</p>
+								   <p class="mb-0 text-secondary">Đơn hoàn tất</p>
 								   <h4 class="my-1 text-success">{{ count($complete) }}</h4>
-								   <p class="mb-0 font-13">{{ $completeRate }}% of total bookings</p>
+								   <p class="mb-0 font-13">{{ $completeRate }}% tổng số đơn</p>
 							   </div>
 							   <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto"><i class='bx bxs-bar-chart-alt-2' ></i>
 							   </div>
@@ -72,9 +72,9 @@
 						<div class="card-body">
 							<div class="d-flex align-items-center">
 								<div>
-									<p class="mb-0 text-secondary">Canceled Booking</p>
+									<p class="mb-0 text-secondary">Đơn bị hủy</p>
 									<h4 class="my-1 text-danger">{{ count($cancel) }}</h4>
-									<p class="mb-0 font-13">{{ $cancelRate }}% of total bookings</p>
+									<p class="mb-0 font-13">{{ $cancelRate }}% tổng số đơn</p>
 								</div>
 								<div class="widgets-icons-2 rounded-circle bg-danger text-white ms-auto">
 									<i class='bx bx-x-circle'></i>
@@ -89,7 +89,7 @@
 					   <div class="card-body">
 						   <div class="d-flex align-items-center">
 							   <div>
-								   <p class="mb-0 text-secondary">Total Price</p>
+								   <p class="mb-0 text-secondary">Tổng tiền</p>
 								   <h4 class="my-1 text-warning"> {{ number_format($totalPrice, 0, ',', '.') }} VNĐ</h4>
 								   <p class="mb-0 font-13">VNĐ</p>
 							   </div>
@@ -103,14 +103,14 @@
 
 				<div class="row">
 					<div class="d-flex align-items-center mb-3">
-						<label for="dateFilter" class="me-2">View By:</label>
+						<label for="dateFilter" class="me-2">Xem theo:</label>
 						<select id="dateFilter" class="form-select me-2" style="width: 150px;">
-							<option value="week">Week</option>
-							<option value="month">Month</option>
-							<option value="year">Year</option>
+							<option value="week">Tuần</option>
+							<option value="month">Tháng</option>
+							<option value="year">Năm</option>
 						</select>
-						<button id="prevBtn" class="btn btn-outline-secondary me-1">← Prev</button>
-						<button id="nextBtn" class="btn btn-outline-secondary">Next →</button>
+						<button id="prevBtn" class="btn btn-outline-secondary me-1">← Trước</button>
+						<button id="nextBtn" class="btn btn-outline-secondary">Sau →</button>
 					</div>
 
                    <div class="col-12 col-lg-12 d-flex">
@@ -118,7 +118,7 @@
 						<div class="card-header">
 							<div class="d-flex align-items-center">
 								<div>
-									<h6 class="mb-0">Sales Overview</h6>
+									<h6 class="mb-0">Tổng quan doanh thu</h6>
 								</div>
 							</div>
 						</div>
@@ -133,7 +133,7 @@
 					<div class="card-header">
 						<div class="d-flex align-items-center">
 							<div>
-								<h6 class="mb-0">Recent Bookings</h6>
+								<h6 class="mb-0">Đơn đặt gần đây</h6>
 							</div>
 
 						</div>
@@ -143,14 +143,15 @@
 							<table class="table table-striped table-bordered" style="width:100%">
 								<thead>
 									<tr>
-										<th>Serial</th>
-										<th>Booking Number</th>
-										<th>Booking Date</th>
-										<th>Customer</th>
-										<th>Room</th>
-										<th>Check IN/OUT</th>
-										<th>Total Room</th>
-										<th>Guest</th>
+										<th>STT</th>
+										<th>Mã đơn</th>
+										<th>Ngày đặt</th>
+										<th>Khách hàng</th>
+										<th>Tên khách sạn</th>
+										<th>Phòng</th>
+										<th>Nhận/Trả</th>
+										<th>Số phòng</th>
+										<th>Khách</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -160,6 +161,7 @@
 											<td><a href="{{ route('edit_booking', $item->id) }}"> {{ $item->code }}</a></td>
 											<td>{{ $item->created_at->format('d/m/Y') }}</td>
 											<td>{{ $item['user']['name'] }}</td>
+											<td>{{ $item['room']['hotel']['name'] ?? 'N/A' }}</td>
 											<td>{{ $item['room']['type']['name'] }}</td>
 											<td><span class="badge bg-primary"> {{ $item->check_in }}</span> / <span class="badge bg-warning text-dark"> {{ $item->check_out }}</span></td>
 											<td>{{ $item->number_of_rooms }}</td>

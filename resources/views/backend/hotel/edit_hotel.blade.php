@@ -5,13 +5,13 @@
 <div class="page-content">
     <!--breadcrumb-->
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">Edit Hotel</div>
+        <div class="breadcrumb-title pe-3">Chỉnh sửa khách sạn</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Edit Hotel</li>
+                    <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa khách sạn</li>
                 </ol>
             </nav>
         </div>
@@ -28,7 +28,7 @@
                             <div class="card-body">
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Hotel Name</h6>
+                                        <h6 class="mb-0">Tên khách sạn</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <input type="text" name="name" class="form-control" value="{{ $hotel->name }}" />
@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Hotel Email</h6>
+                                        <h6 class="mb-0">Email khách sạn</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <input type="email" name="email" class="form-control" value="{{ $hotel->email }}" />
@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Phone</h6>
+                                        <h6 class="mb-0">Số điện thoại</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <input type="text" name="phone" class="form-control" value="{{ $hotel->phone }}" />
@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Address</h6>
+                                        <h6 class="mb-0">Địa chỉ</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <input type="text" name="address" class="form-control" value="{{ $hotel->address }}" />
@@ -61,11 +61,11 @@
                                 
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">City</h6>
+                                        <h6 class="mb-0">Thành phố</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <select name="city_id" class="form-control">
-                                            <option value="" disabled>Select a city</option>
+                                            <option value="" disabled>Chọn thành phố</option>
                                             @foreach($cities as $city)
                                                 <option value="{{ $city->id }}" {{ $hotel->city_id == $city->id ? 'selected' : '' }}>
                                                     {{ $city->name }}
@@ -77,7 +77,7 @@
 
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Hotel Photo</h6>
+                                        <h6 class="mb-0">Ảnh khách sạn</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <input class="form-control" name="image" type="file" id="image" />
@@ -97,12 +97,12 @@
 
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Status</h6>
+                                        <h6 class="mb-0">Trạng thái</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <select name="status" class="form-control">
-                                            <option value="active" {{ $hotel->status == 'active' ? 'selected' : '' }}>Active</option>
-                                            <option value="inactive" {{ $hotel->status == 'inactive' ? 'selected' : '' }}>In Active</option>
+                                            <option value="active" {{ $hotel->status == 'active' ? 'selected' : '' }}>Hoạt động</option>
+                                            <option value="inactive" {{ $hotel->status == 'inactive' ? 'selected' : '' }}>Không hoạt động</option>
                                         </select>
                                     </div>
                                 </div>
@@ -111,7 +111,7 @@
                                 <div class="row">
                                     <div class="col-sm-3"></div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="submit" class="btn btn-primary px-4" value="Save Changes" />
+                                        <input type="submit" class="btn btn-primary px-4" value="Lưu thay đổi" />
                                     </div>
                                 </div>
                             </div>

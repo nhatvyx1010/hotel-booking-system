@@ -16,7 +16,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 	<link href="{{ asset('backend/assets/css/app.css') }}" rel="stylesheet">
 	<link href="{{ asset('backend/assets/css/icons.css') }}" rel="stylesheet">
-	<title>404 Page</title>
+	<title>Trang 404</title>
 </head>
 
 <body>
@@ -31,13 +31,13 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent1">
 					<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-						<li class="nav-item"> <a class="nav-link active" aria-current="page" href="#"><i class='bx bx-home-alt me-1'></i>Home</a>
+						<li class="nav-item"> <a class="nav-link active" aria-current="page" href="#"><i class='bx bx-home-alt me-1'></i>Trang chủ</a>
 						</li>
-						<li class="nav-item"> <a class="nav-link" href="#"><i class='bx bx-user me-1'></i>About</a>
+						<li class="nav-item"> <a class="nav-link" href="#"><i class='bx bx-user me-1'></i>Giới thiệu</a>
 						</li>
-						<li class="nav-item"> <a class="nav-link" href="#"><i class='bx bx-category-alt me-1'></i>Features</a>
+						<li class="nav-item"> <a class="nav-link" href="#"><i class='bx bx-category-alt me-1'></i>Tính năng</a>
 						</li>
-						<li class="nav-item"> <a class="nav-link" href="#"><i class='bx bx-microphone me-1'></i>Contact</a>
+						<li class="nav-item"> <a class="nav-link" href="#"><i class='bx bx-microphone me-1'></i>Liên hệ</a>
 						</li>
 					</ul>
 				</div>
@@ -50,12 +50,12 @@
 						<div class="col col-xl-5">
 							<div class="card-body p-4">
 								<h1 class="display-1"><span class="text-primary">4</span><span class="text-danger">0</span><span class="text-success">4</span></h1>
-								<h2 class="font-weight-bold display-4">Lost in Space</h2>
-								<p>You have reached the edge of the universe.
-									<br>The page you requested could not be found.
-									<br>Dont'worry and return to the previous page.</p>
-								<div class="mt-5"> <a href="javascript:;" class="btn btn-primary btn-lg px-md-5 radius-30">Go Home</a>
-									<a href="javascript:;" class="btn btn-outline-dark btn-lg ms-3 px-md-5 radius-30">Back</a>
+								<h2 class="font-weight-bold display-4">Lạc giữa không gian</h2>
+								<p>Bạn đã đến tận cùng của vũ trụ.
+									<br>Trang bạn yêu cầu không thể tìm thấy.
+									<br>Đừng lo, hãy quay lại trang trước.</p>
+								<div class="mt-5"> <a href="{{ url('/') }}" class="btn btn-primary btn-lg px-md-5 radius-30">Về trang chủ</a>
+									<a href="{{ url('/') }}" class="btn btn-outline-dark btn-lg ms-3 px-md-5 radius-30">Quay lại</a>
 								</div>
 							</div>
 						</div>
@@ -70,7 +70,7 @@
 		<div class="bg-white p-3 fixed-bottom border-top shadow">
 			<div class="d-flex align-items-center justify-content-between flex-wrap">
 				<ul class="list-inline mb-0">
-					<li class="list-inline-item">Follow Us :</li>
+					<li class="list-inline-item">Theo dõi chúng tôi:</li>
 					<li class="list-inline-item"><a href="javascript:;"><i class='bx bxl-facebook me-1'></i>Facebook</a>
 					</li>
 					<li class="list-inline-item"><a href="javascript:;"><i class='bx bxl-twitter me-1'></i>Twitter</a>
@@ -78,7 +78,7 @@
 					<li class="list-inline-item"><a href="javascript:;"><i class='bx bxl-google me-1'></i>Google</a>
 					</li>
 				</ul>
-				<p class="mb-0">Copyright © 2025. All right reserved.</p>
+				<p class="mb-0">Bản quyền © 2025. Đã đăng ký bản quyền.</p>
 			</div>
 		</div>
 	</div>

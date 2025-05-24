@@ -48,10 +48,10 @@ class GalleryController extends Controller
         }
 
         $notification = array(
-            'message' => 'Gallery Inserted Successfully',
+            'message' => 'Thêm ảnh thư viện thành công',
             'alert-type' => 'success'
         );
-        return redirect()->route('all.gallery')->with('message', 'Gallery Inserted Successfully')->with('alert-type', 'success');
+        return redirect()->route('all.gallery')->with('message', 'Thêm ảnh thư viện thành công')->with('alert-type', 'success');
     }
 
     public function HotelStoreGallery(Request $request){
@@ -71,11 +71,11 @@ class GalleryController extends Controller
         }
     
         $notification = array(
-            'message' => 'Gallery Inserted Successfully',
+            'message' => 'Thêm ảnh thư viện thành công',
             'alert-type' => 'success'
         );
     
-        return redirect()->route('hotel.all.gallery')->with('message', 'Gallery Inserted Successfully')->with('alert-type', 'success');
+        return redirect()->route('hotel.all.gallery')->with('message', 'Thêm ảnh thư viện thành công')->with('alert-type', 'success');
     }    
 
     public function EditGallery($id){
@@ -87,7 +87,7 @@ class GalleryController extends Controller
         $user_id = Auth::id();
         $gallery = Gallery::where('hotel_id', $user_id)->find($id);
         if (!$gallery) {
-            return redirect()->route('hotel.all.gallery')->with('message', 'Gallery not found')->with('alert-type', 'error');
+            return redirect()->route('hotel.all.gallery')->with('message', 'Không tìm thấy ảnh thư viện')->with('alert-type', 'error');
         }
     
         return view('hotel.backend.gallery.edit_gallery', compact('gallery'));
@@ -106,10 +106,10 @@ class GalleryController extends Controller
         ]);
 
         $notification = array(
-            'message' => 'Gallery Updated Successfully',
+            'message' => 'Cập nhật ảnh thư viện thành công',
             'alert-type' => 'success'
         );
-        return redirect()->route('all.gallery')->with('message', 'Gallery Updated Successfully')->with('alert-type', 'success');
+        return redirect()->route('all.gallery')->with('message', 'Cập nhật ảnh thư viện thành công')->with('alert-type', 'success');
     }
 
     public function HotelUpdateGallery(Request $request){
@@ -119,7 +119,7 @@ class GalleryController extends Controller
     
         $gallery = Gallery::where('hotel_id', $user_id)->find($gal_id);
         if (!$gallery) {
-            return redirect()->route('hotel.all.gallery')->with('message', 'Gallery not found')->with('alert-type', 'error');
+            return redirect()->route('hotel.all.gallery')->with('message', 'Không tìm thấy ảnh thư viện')->with('alert-type', 'error');
         }
     
         $name_gen = hexdec(uniqid()).'.'.$img->getClientOriginalExtension();
@@ -131,11 +131,11 @@ class GalleryController extends Controller
         ]);
     
         $notification = array(
-            'message' => 'Gallery Updated Successfully',
+            'message' => 'Cập nhật ảnh thư viện thành công',
             'alert-type' => 'success'
         );
     
-        return redirect()->route('hotel.all.gallery')->with('message', 'Gallery Updated Successfully')->with('alert-type', 'success');
+        return redirect()->route('hotel.all.gallery')->with('message', 'Cập nhật ảnh thư viện thành công')->with('alert-type', 'success');
     }    
 
     public function DeleteGallery($id){
@@ -145,10 +145,10 @@ class GalleryController extends Controller
 
         Gallery::findOrFail($id)->delete();
         $notification = array(
-            'message' => 'Gallery Image Deleted Successfully',
+            'message' => 'Xóa ảnh thư viện thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Gallery Image Deleted Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Xóa ảnh thư viện thành công')->with('alert-type', 'success');
     }
 
     public function HotelDeleteGallery($id){
@@ -160,11 +160,11 @@ class GalleryController extends Controller
     
         $item->delete();
         $notification = array(
-            'message' => 'Gallery Image Deleted Successfully',
+            'message' => 'Xóa ảnh thư viện thành công',
             'alert-type' => 'success'
         );
     
-        return redirect()->back()->with('message', 'Gallery Image Deleted Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Xóa ảnh thư viện thành công')->with('alert-type', 'success');
     }    
 
     public function DeleteGalleryMultiple(Request $request){
@@ -177,10 +177,10 @@ class GalleryController extends Controller
         }
 
         $notification = array(
-            'message' => 'Selected Image Deleted Successfully',
+            'message' => 'Xóa các ảnh đã chọn thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Selected Image Deleted Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Xóa các ảnh đã chọn thành công')->with('alert-type', 'success');
     }
 
     public function HotelDeleteGalleryMultiple(Request $request){
@@ -197,11 +197,11 @@ class GalleryController extends Controller
         }
     
         $notification = array(
-            'message' => 'Selected Image Deleted Successfully',
+            'message' => 'Xóa các ảnh đã chọn thành công',
             'alert-type' => 'success'
         );
     
-        return redirect()->back()->with('message', 'Selected Image Deleted Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Xóa các ảnh đã chọn thành công')->with('alert-type', 'success');
     }    
 
     public function ShowGallery(){
@@ -224,10 +224,10 @@ class GalleryController extends Controller
         ]);
 
         $notification = array(
-            'message' => 'Your Message Send Successfully',
+            'message' => 'Gửi tin nhắn thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Your Message Send Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Gửi tin nhắn thành công')->with('alert-type', 'success');
     }
 
     public function ManageContactMessage(){

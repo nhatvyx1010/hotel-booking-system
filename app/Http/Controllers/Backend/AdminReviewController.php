@@ -27,10 +27,10 @@ class AdminReviewController extends Controller
         if ($review && in_array($status, ['pending', 'approved', 'rejected'])) {
             $review->status = $status;
             $review->save();
-            return response()->json(['message' => 'Review Status Updated Successfully']);
+            return response()->json(['message' => 'Cập nhật trạng thái đánh giá thành công']);
         }
 
-        return response()->json(['message' => 'Invalid data'], 400);
+        return response()->json(['message' => 'Dữ liệu không hợp lệ'], 400);
     }
 
     public function StoreReview(Request $request)
@@ -51,6 +51,6 @@ class AdminReviewController extends Controller
             'status' => 'pending',
         ]);
 
-        return redirect()->back()->with('message', 'Review submitted and waiting for approval');
+        return redirect()->back()->with('message', 'Đánh giá đã gửi và đang chờ phê duyệt');
     }
 }

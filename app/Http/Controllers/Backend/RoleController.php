@@ -30,10 +30,10 @@ class RoleController extends Controller
         ]);
 
         $notification = array(
-            'message' => 'Permission Created Successfully',
+            'message' => 'Quyền đã được tạo thành công',
             'alert-type' => 'success'
         );
-        return redirect()->route('all.permission')->with('message', 'Permission Created Successfully')->with('alert-type', 'success');
+        return redirect()->route('all.permission')->with('message', 'Quyền đã được tạo thành công')->with('alert-type', 'success');
     }
 
     public function EditPermission($id){
@@ -49,20 +49,20 @@ class RoleController extends Controller
         ]);
 
         $notification = array(
-            'message' => 'Permission Updated Successfully',
+            'message' => 'Quyền đã được cập nhật thành công',
             'alert-type' => 'success'
         );
-        return redirect()->route('all.permission')->with('message', 'Permission Updated Successfully')->with('alert-type', 'success');
+        return redirect()->route('all.permission')->with('message', 'Quyền đã được cập nhật thành công')->with('alert-type', 'success');
     }
 
     public function DeletePermission($id){
         Permission::find($id)->delete();
 
         $notification = array(
-            'message' => 'Permission Deleted Successfully',
+            'message' => 'Quyền đã được xóa thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Permission Deleted Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Quyền đã được xóa thành công')->with('alert-type', 'success');
     }
 
     public function ImportPermission(){
@@ -77,10 +77,10 @@ class RoleController extends Controller
         Excel::import(new PermissionImport, $request->file('import_file'));
 
         $notification = array(
-            'message' => 'Permission Imported Successfully',
+            'message' => 'Nhập quyền thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Permission Imported Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Nhập quyền thành công')->with('alert-type', 'success');
     }
 
     public function AllRoles(){
@@ -98,10 +98,10 @@ class RoleController extends Controller
         ]);
 
         $notification = array(
-            'message' => 'Role Created Successfully',
+            'message' => 'Vai trò đã được tạo thành công',
             'alert-type' => 'success'
         );
-        return redirect()->route('all.roles')->with('message', 'Role Created Successfully')->with('alert-type', 'success');
+        return redirect()->route('all.roles')->with('message', 'Vai trò đã được tạo thành công')->with('alert-type', 'success');
     }
 
     public function EditRoles($id){
@@ -116,19 +116,19 @@ class RoleController extends Controller
         ]);
 
         $notification = array(
-            'message' => 'Role Updated Successfully',
+            'message' => 'Vai trò đã được cập nhật thành công',
             'alert-type' => 'success'
         );
-        return redirect()->route('all.roles')->with('message', 'Role Updated Successfully')->with('alert-type', 'success');
+        return redirect()->route('all.roles')->with('message', 'Vai trò đã được cập nhật thành công')->with('alert-type', 'success');
     }
 
     public function DeleteRoles($id){
         Role::find($id)->delete();
         $notification = array(
-            'message' => 'Role Deleted Successfully',
+            'message' => 'Vai trò đã được xóa thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Role Deleted Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Vai trò đã được xóa thành công')->with('alert-type', 'success');
     }
 
     public function AddRolesPermission(){
@@ -149,10 +149,10 @@ class RoleController extends Controller
         }
 
         $notification = array(
-            'message' => 'Role Permission Added Successfully',
+            'message' => 'Quyền vai trò đã được thêm thành công',
             'alert-type' => 'success'
         );
-        return redirect()->route('all.roles.permission')->with('message', 'Role Permission Added Successfully')->with('alert-type', 'success');
+        return redirect()->route('all.roles.permission')->with('message', 'Quyền vai trò đã được thêm thành công')->with('alert-type', 'success');
     }
 
     public function AllRolesPermission(){
@@ -176,10 +176,10 @@ class RoleController extends Controller
         }
 
         $notification = array(
-            'message' => 'Role Permission Updated Successfully',
+            'message' => 'Quyền vai trò đã được cập nhật thành công',
             'alert-type' => 'success'
         );
-        return redirect()->route('all.roles.permission')->with('message', 'Role Permission Updated Successfully')->with('alert-type', 'success');
+        return redirect()->route('all.roles.permission')->with('message', 'Quyền vai trò đã được cập nhật thành công')->with('alert-type', 'success');
     }
 
     public function AdminDeleteRoles($id){
@@ -189,9 +189,9 @@ class RoleController extends Controller
         }
 
         $notification = array(
-            'message' => 'Role Permission Deleted Successfully',
+            'message' => 'Quyền vai trò đã được xóa thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Role Permission Deleted Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Quyền vai trò đã được xóa thành công')->with('alert-type', 'success');
     }
 }

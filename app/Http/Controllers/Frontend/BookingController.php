@@ -39,10 +39,10 @@ class BookingController extends Controller
             return view('frontend.checkout.checkout', compact('book_data', 'room', 'nights'));
         }else{
                 $notification = array(
-                    'messsage' => 'Something want to wrong!',
+                    'messsage' => 'Đã xảy ra lỗi!',
                     'alert-type' => 'error'
                 );
-                return redirect('/')->with('message', 'Something want to wrong!')->with('alert-type', 'error');
+                return redirect('/')->with('message', 'Đã xảy ra lỗi!')->with('alert-type', 'error');
         }
     }
 
@@ -56,10 +56,10 @@ class BookingController extends Controller
 
         if($request->available_room < $request->number_of_rooms){
             $notification = array(
-                'messsage' => 'Something want to wrong!',
+                'messsage' => 'Đã xảy ra lỗi!',
                 'alert-type' => 'error'
             );
-            return redirect()->back()->with('message', 'Something want to wrong!')->with('alert-type', 'error');
+            return redirect()->back()->with('message', 'Đã xảy ra lỗi!')->with('alert-type', 'error');
         }
 
         Session::forget('book_date');
@@ -104,7 +104,7 @@ class BookingController extends Controller
                     "amount" => $total_price * 100,
                     "currency" => "usd",
                     "source" => $request->stripeToken,
-                    "description" => "Payment For Booking. Booking Number ".$code,
+                    "description" => "Thanh toán cho đặt phòng. Mã đặt phòng ".$code,
                 ]);
 
                 if($s_pay['status'] == 'succeeded'){
@@ -112,10 +112,10 @@ class BookingController extends Controller
                     $transation_id = $s_pay->id;
                 }else{
                     $notification = array(
-                        'messsage' => 'Sorry Payment Fail',
+                        'messsage' => 'Thanh toán thất bại',
                         'alert-type' => 'error'
                     );
-                    return redirect('/')->with('message', 'Sorry Payment Fail')->with('alert-type', 'error');
+                    return redirect('/')->with('message', 'Thanh toán thất bại')->with('alert-type', 'error');
                 }
             } else{
                 $payment_status = 0;
@@ -165,7 +165,7 @@ class BookingController extends Controller
         Session::forget('book_date');
 
         $notification = array(
-            'messsage' => 'Booking Added Successfully',
+            'messsage' => 'Đặt phòng thành công',
             'alert-type' => 'success'
         );
 
@@ -183,7 +183,7 @@ class BookingController extends Controller
         }
 
         return redirect('/')->with([
-            'message' => 'Booking Added Successfully',
+            'message' => 'Đặt phòng thành công',
             'alert-type' => 'success'
         ]);
         // return redirect('/')->with('message', 'Booking Added Successfully')->with('alert-type', 'success');
@@ -261,7 +261,9 @@ class BookingController extends Controller
 
     public function EditBooking($id){
         $editData = Booking::with('room')->find($id);
-        return view('backend.booking.edit_booking', compact('editData'));
+        $hotel = User::where('id', $editData->room->hotel_id)
+                        ->first();
+        return view('backend.booking.edit_booking', compact('editData', 'hotel'));
     }
 
     public function HotelEditBooking($id) {
@@ -283,13 +285,24 @@ class BookingController extends Controller
         $booking->status = $request->status;
         $booking->save();
 
-        $sendmail = Booking::find($id);
+        $sendmail = Booking::with('room')->find($id);
+
+        $hotel = User::where('id', $sendmail->room->hotel_id)->first();
         $data = [
             'check_in' => $sendmail->check_in,
             'check_out' => $sendmail->check_out,
             'name' => $sendmail->name,
             'email' => $sendmail->email,
             'phone' => $sendmail->phone,
+            'hotel_name' => $hotel->name,
+            'hotel_phone' => $hotel->phone,
+            'hotel_email' => $hotel->email,
+            'hotel_address' => $hotel->address,
+            
+            'discount' => $sendmail->discount,
+            'prepaid_amount' => $sendmail->prepaid_amount,
+            'remaining_amount' => $sendmail->remaining_amount,
+            'total_amount' => $sendmail->total_amount,
         ];
 
         try {
@@ -300,10 +313,10 @@ class BookingController extends Controller
         
 
         $notification = array(
-            'messsage' => 'Information Updated Successfully',
+            'message' => 'Cập nhật thông tin thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Information Updated Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Cập nhật thông tin thành công')->with('alert-type', 'success');
     }
     
     public function HotelUpdateBookingStatus(Request $request, $id){
@@ -312,13 +325,24 @@ class BookingController extends Controller
         $booking->status = $request->status;
         $booking->save();
 
-        $sendmail = Booking::find($id);
+        $sendmail = Booking::with('room')->find($id);
+        
+        $hotel = User::where('id', $sendmail->room->hotel_id)->first();
         $data = [
             'check_in' => $sendmail->check_in,
             'check_out' => $sendmail->check_out,
             'name' => $sendmail->name,
             'email' => $sendmail->email,
             'phone' => $sendmail->phone,
+            'hotel_name' => $hotel->name,
+            'hotel_phone' => $hotel->phone,
+            'hotel_email' => $hotel->email,
+            'hotel_address' => $hotel->address,
+
+            'discount' => $sendmail->discount,
+            'prepaid_amount' => $sendmail->prepaid_amount,
+            'remaining_amount' => $sendmail->remaining_amount,
+            'total_amount' => $sendmail->total_amount,
         ];
 
         try {
@@ -329,10 +353,10 @@ class BookingController extends Controller
         
 
         $notification = array(
-            'messsage' => 'Information Updated Successfully',
+            'messsage' => 'Cập nhật thông tin thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Information Updated Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Cập nhật thông tin thành công')->with('alert-type', 'success');
     }
     
     public function HotelUpdateBookingCancelStatus(Request $request, $id){
@@ -340,13 +364,24 @@ class BookingController extends Controller
         $booking->status = $request->status;
         $booking->save();
 
-        $sendmail = Booking::find($id);
+        $sendmail = Booking::with('room')->find($id);
+
+        $hotel = User::where('id', $sendmail->room->hotel_id)->first();
         $data = [
             'check_in' => $sendmail->check_in,
             'check_out' => $sendmail->check_out,
             'name' => $sendmail->name,
             'email' => $sendmail->email,
             'phone' => $sendmail->phone,
+            'hotel_name' => $hotel->name,
+            'hotel_phone' => $hotel->phone,
+            'hotel_email' => $hotel->email,
+            'hotel_address' => $hotel->address,
+            
+            'discount' => $sendmail->discount,
+            'prepaid_amount' => $sendmail->prepaid_amount,
+            'remaining_amount' => $sendmail->remaining_amount,
+            'total_amount' => $sendmail->total_amount,
         ];
 
         try {
@@ -357,19 +392,19 @@ class BookingController extends Controller
         
 
         $notification = array(
-            'messsage' => 'Cancel Booking Successfully',
+            'messsage' => 'Hủy đặt phòng thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Cancel Booking Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Hủy đặt phòng thành công')->with('alert-type', 'success');
     }
 
     public function UpdateBooking(Request $request, $id){
         if($request->available_room < $request->number_of_rooms){
             $notification = array(
-                'messsage' => 'Something Want To Wrong!',
+                'messsage' => 'Đã xảy ra lỗi!',
                 'alert-type' => 'error'
             );
-            return redirect()->back()->with('message', 'Something Want To Wrong!')->with('alert-type', 'error');
+            return redirect()->back()->with('message', 'Đã xảy ra lỗi!')->with('alert-type', 'error');
         }
         $data = Booking::find($id);
         $data->number_of_rooms = $request->number_of_rooms;
@@ -392,19 +427,19 @@ class BookingController extends Controller
             $booked_dates->save();
         }
         $notification = array(
-            'messsage' => 'Booking Updated Successfully',
+            'messsage' => 'Cập nhật đặt phòng thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Booking Updated Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Cập nhật đặt phòng thành công')->with('alert-type', 'success');
     }
     
     public function HotelUpdateBooking(Request $request, $id){
         if($request->available_room < $request->number_of_rooms){
             $notification = array(
-                'messsage' => 'Something Want To Wrong!',
+                'messsage' => 'Đã xảy ra lỗi!',
                 'alert-type' => 'error'
             );
-            return redirect()->back()->with('message', 'Something Want To Wrong!')->with('alert-type', 'error');
+            return redirect()->back()->with('message', 'Đã xảy ra lỗi!')->with('alert-type', 'error');
         }
         $data = Booking::find($id);
         $data->number_of_rooms = $request->number_of_rooms;
@@ -427,10 +462,10 @@ class BookingController extends Controller
             $booked_dates->save();
         }
         $notification = array(
-            'messsage' => 'Booking Updated Successfully',
+            'messsage' => 'Cập nhật đặt phòng thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Booking Updated Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Cập nhật đặt phòng thành công')->with('alert-type', 'success');
     }
 
     public function AssignRoom($booking_id){
@@ -465,16 +500,16 @@ class BookingController extends Controller
             $assign_data->save();
             
             $notification = array(
-                'messsage' => 'Room Assgined Successfully',
+                'messsage' => 'Phòng đã được gán thành công',
                 'alert-type' => 'success'
             );
-            return redirect()->back()->with('message', 'Room Assgined Successfully')->with('alert-type', 'success');
+            return redirect()->back()->with('message', 'Phòng đã được gán thành công')->with('alert-type', 'success');
         }else{
             $notification = array(
-                'messsage' => 'Room Arready Assign',
+                'messsage' => 'Phòng đã được gán trước đó',
                 'alert-type' => 'error'
             );
-            return redirect()->back()->with('message', 'Room Arready Assign')->with('alert-type', 'error');
+            return redirect()->back()->with('message', 'Phòng đã được gán trước đó')->with('alert-type', 'error');
         }
     }
     
@@ -490,16 +525,16 @@ class BookingController extends Controller
             $assign_data->save();
             
             $notification = array(
-                'messsage' => 'Room Assgined Successfully',
+                'messsage' => 'Phòng đã được gán thành công',
                 'alert-type' => 'success'
             );
-            return redirect()->back()->with('message', 'Room Assgined Successfully')->with('alert-type', 'success');
+            return redirect()->back()->with('message', 'Phòng đã được gán thành công')->with('alert-type', 'success');
         }else{
             $notification = array(
-                'messsage' => 'Room Arready Assign',
+                'messsage' => 'Phòng đã được gán trước đó',
                 'alert-type' => 'error'
             );
-            return redirect()->back()->with('message', 'Room Arready Assign')->with('alert-type', 'error');
+            return redirect()->back()->with('message', 'Phòng đã được gán trước đó')->with('alert-type', 'error');
         }
     }
 
@@ -508,10 +543,10 @@ class BookingController extends Controller
         $assign_room->delete();
 
         $notification = array(
-            'messsage' => 'Assign Room Deleted Successfully ',
+            'message' => 'Xóa gán phòng thành công ',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Assign Room Deleted Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Xóa gán phòng thành công')->with('alert-type', 'success');
     }
 
     public function HotelAssignRoomDelete($id){
@@ -519,10 +554,10 @@ class BookingController extends Controller
         $assign_room->delete();
 
         $notification = array(
-            'messsage' => 'Assign Room Deleted Successfully ',
+            'message' => 'Xóa gán phòng thành công ',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Assign Room Deleted Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Xóa gán phòng thành công')->with('alert-type', 'success');
     }
     
     public function CheckRoomAvailability(Request $request){
@@ -551,7 +586,7 @@ class BookingController extends Controller
             return response()->json([
                 'available_room' => 0,
                 'total_nights' => 0,
-                'message' => 'Room not found or does not belong to this hotel.'
+                'message' => 'Phòng không tìm thấy hoặc không thuộc khách sạn này.'
             ], 404);
         }
 
@@ -600,7 +635,7 @@ class BookingController extends Controller
             return response()->json([
                 'available_room' => 0,
                 'total_nights' => 0,
-                'message' => 'Room not found or does not belong to this hotel.'
+                'message' => 'Phòng không tìm thấy hoặc không thuộc khách sạn này.'
             ], 404);
         }
 
@@ -625,7 +660,10 @@ class BookingController extends Controller
 
     public function DownloadInvoice($id){
         $editData = Booking::with('room')->find($id);
-        $pdf = Pdf::loadView('hotel.backend.booking.booking_invoice', compact('editData'))
+        $hotel = User::where('id', $editData->room->hotel_id)
+                        ->first();
+
+        $pdf = Pdf::loadView('hotel.backend.booking.booking_invoice', compact('editData', 'hotel'))
         ->setPaper('a4')->setOption([
             'tempDir' => public_path(),
             'chroot' => public_path(),
@@ -643,13 +681,16 @@ class BookingController extends Controller
             })
             ->find($id);
     
+        $hotel = User::where('id', $user_id)
+                        ->first();
+        // dd($hotel);
         // Kiểm tra xem booking có tồn tại không
         if (!$editData) {
             abort(404);  // Nếu không có booking phù hợp, trả về lỗi 404
         }
     
         // Tạo và tải hóa đơn PDF
-        $pdf = Pdf::loadView('hotel.backend.booking.booking_invoice', compact('editData'))
+        $pdf = Pdf::loadView('hotel.backend.booking.booking_invoice', compact('editData', 'hotel'))
             ->setPaper('a4')
             ->setOption([
                 'tempDir' => public_path(),
@@ -674,7 +715,7 @@ class BookingController extends Controller
     public function UserBookingCanceled() {
         $id = Auth::user()->id;
     
-        $allData = Booking::with(['room.type']) // Load room + room.type
+        $allData = Booking::with(['room.type', 'room.hotel']) // Load room + room.type
             ->where('user_id', $id)
             ->whereIn('status', [2, 3])
             ->orderBy('id', 'desc')
@@ -685,7 +726,11 @@ class BookingController extends Controller
 
     public function UserInvoice($id){
         $editData = Booking::with('room')->find($id);
-        $pdf = Pdf::loadView('backend.booking.booking_invoice', compact('editData'))
+        
+        $hotel = User::where('id', $editData->room->hotel_id)
+                        ->first();
+
+        $pdf = Pdf::loadView('backend.booking.booking_invoice', compact('editData', 'hotel'))
         ->setPaper('a4')->setOption([
             'tempDir' => public_path(),
             'chroot' => public_path(),
@@ -736,7 +781,7 @@ class BookingController extends Controller
             'status' => '2',
         ]);
 
-        return redirect()->route('user.booking')->with('success', 'Huỷ booking thành công. Bạn sẽ được hoàn tiền trong vòng 5 ngày làm việc.');
+        return redirect()->route('user.booking')->with('success', 'Huỷ đặt phòng thành công. Bạn sẽ được hoàn tiền trong vòng 5 ngày làm việc.');
     }
 
 }

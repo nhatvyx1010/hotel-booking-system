@@ -7,7 +7,7 @@
                 <div class="inner-title">
                     <ul>
                         <li>
-                            <a href="index.html">Home</a>
+                            <a href="index.html">Trang chủ</a>
                         </li>
                         <li><i class='bx bx-chevron-right'></i></li>
                         <li>Blog</li>
@@ -44,7 +44,7 @@
                                             </h3>
                                             <p>{{ $item->short_desc }}</p>
                                             <a href="{{ url('blog/details/'.$item->post_slug) }}" class="read-btn">
-                                                Read More
+                                                Xem thêm
                                             </a>
                                         </div>
                                     </div>
@@ -67,14 +67,14 @@
                         <div class="side-bar-wrap">
                             <div class="search-widget">
                                 <form class="search-form">
-                                    <input type="search" class="form-control" placeholder="Search...">
+                                    <input type="search" class="form-control" placeholder="Tìm kiếm...">
                                     <button type="submit">
                                         <i class="bx bx-search"></i>
                                     </button>
                                 </form>
                             </div>
                             <div class="services-bar-widget">
-                                <h3 class="title">Blog Category</h3>
+                                <h3 class="title">Danh mục blog</h3>
                                 <div class="side-bar-categories">
                                     <ul>
                                         @foreach ($bcategory->take(5) as $cat)
@@ -87,7 +87,7 @@
                             </div>
 
                             <div class="side-bar-widget">
-                                <h3 class="title">Recent Posts</h3>
+                                <h3 class="title">Bài viết gần đây</h3>
                                 <div class="widget-popular-post">
                                 @foreach ($lpost as $post)
                                     <article class="item">

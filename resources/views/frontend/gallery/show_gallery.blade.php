@@ -7,12 +7,12 @@
                 <div class="inner-title">
                     <ul>
                         <li>
-                            <a href="index.html">Home</a>
+                            <a href="index.html">Trang Chủ</a>
                         </li>
                         <li><i class='bx bx-chevron-right'></i></li>
-                        <li>Gallery</li>
+                        <li>Thư Viện Ảnh</li>
                     </ul>
-                    <h3>Gallery</h3>
+                    <h3>Thư Viện Ảnh</h3>
                 </div>
             </div>
         </div>

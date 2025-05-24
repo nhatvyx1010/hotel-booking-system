@@ -54,7 +54,7 @@ class HotelController extends Controller
         Auth::login($user);
     
         $notification = array(
-            'message' => 'Hotel Registered Successfully!',
+            'message' => 'Đăng ký khách sạn thành công!',
             'alert-type' => 'success'
         );
 
@@ -74,9 +74,9 @@ class HotelController extends Controller
             'password' => $check['password'],
         ];
         if (Auth::guard('hotel')->attempt($data)) {
-            return redirect()->route('hotel.dashboard')->with('success', 'Login Successfully');
+            return redirect()->route('hotel.dashboard')->with('success', 'Đăng nhập thành công');
         }else{
-            return redirect()->route('hotel.login')->with('error', 'Invalid Creadentials');
+            return redirect()->route('hotel.login')->with('error', 'Thông tin đăng nhập không hợp lệ');
         }
     }
     //End Method
@@ -139,7 +139,7 @@ class HotelController extends Controller
 
         $data->save();
         $notification = array(
-            'message' => 'Profile Update Successfully',
+            'message' => 'Cập nhật hồ sơ thành công',
             'alert-type' => 'success'
         );
         return redirect()->back()->with($notification);
@@ -172,7 +172,7 @@ class HotelController extends Controller
 
         if (!Hash::check($request->old_password, $hotel->password)) {
             $notification = array(
-                'message' => 'Old Password Does Not Match!',
+                'message' => 'Mật khẩu cũ không khớp!',
                 'alert-type' => 'error'
             );
             return back()->with($notification);
@@ -183,12 +183,10 @@ class HotelController extends Controller
             'password' => Hash::make($request->new_password)
         ]);
         $notification = array(
-            'message' => 'Password Change Successfully!',
+            'message' => 'Đổi mật khẩu thành công!',
             'alert-type' => 'success'
         );
         return back()->with($notification);
     }
     //End Method
-
-    
 }

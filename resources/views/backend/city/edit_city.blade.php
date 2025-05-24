@@ -5,12 +5,12 @@
 
     <!--breadcrumb-->
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">Edit City</div>
+        <div class="breadcrumb-title pe-3">Chỉnh Sửa Thành Phố</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Edit City</li>
+                    <li class="breadcrumb-item active" aria-current="page">Chỉnh Sửa Thành Phố</li>
                 </ol>
             </nav>
         </div>
@@ -32,7 +32,7 @@
                                 {{-- Name --}}
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">City Name</h6>
+                                        <h6 class="mb-0">Tên Thành Phố</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <input type="text" name="name" class="form-control" value="{{ $city->name }}" required />
@@ -42,7 +42,7 @@
                                 {{-- Description --}}
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Description</h6>
+                                        <h6 class="mb-0">Mô Tả</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <textarea name="description" class="form-control" rows="4" required>{{ $city->description }}</textarea>
@@ -62,7 +62,7 @@
                                 {{-- Image --}}
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">City Image</h6>
+                                        <h6 class="mb-0">Hình Ảnh Thành Phố</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <input type="file" name="image" class="form-control" />
@@ -76,7 +76,7 @@
                                 <div class="row">
                                     <div class="col-sm-3"></div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="submit" class="btn btn-primary px-4" value="Save Changes" />
+                                        <input type="submit" class="btn btn-primary px-4" value="Lưu Thay Đổi" />
                                     </div>
                                 </div>
                                 

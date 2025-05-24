@@ -7,8 +7,8 @@
 <div class="city-area pt-100 pb-70 section-bg" style="background-color:#ffffff">
     <div class="container">
         <div class="section-title text-center">
-            <span class="sp-color">CITIES</span>
-            <h2>Our Top Cities</h2>
+            <span class="sp-color">THÀNH PHỐ</span>
+            <h2>Những Thành Phố Hàng Đầu Của Chúng Tôi</h2>
         </div>
         <div class="row pt-45">
             @foreach ($cities as $city)
@@ -30,10 +30,10 @@
                                 </h3>
                                 <p><i class='bx bx-map'></i> {{ $city->name }}</p>
                                 <p><i class='bx bx-info-circle'></i> {{ $city->description }}</p>
-                                <p><i class='bx bx-hotel'></i> {{ $city->hotels->count() }} Active Hotels</p>
+                                <p><i class='bx bx-hotel'></i> {{ $city->hotels->count() }} Khách Sạn Đang Hoạt Động</p>
 
                                 <a href="{{ url('city/details/'.$city->id) }}" class="book-more-btn mt-2">
-                                    View Details
+                                    Xem Chi Tiết
                                 </a>
                             </div>
                         </div>

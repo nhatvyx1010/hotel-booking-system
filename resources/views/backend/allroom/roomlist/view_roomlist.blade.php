@@ -10,13 +10,13 @@
 							<ol class="breadcrumb mb-0 p-0">
 								<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
 								</li>
-								<li class="breadcrumb-item active" aria-current="page">All Room List</li>
+								<li class="breadcrumb-item active" aria-current="page">Danh sách phòng</li>
 							</ol>
 						</nav>
 					</div>
 					<div class="ms-auto">
 						<div class="btn-group">
-                        <a href="{{ route('add.room.list') }}" class="btn btn-primary px-5"> Add Booking </a>
+                        <a href="{{ route('add.room.list') }}" class="btn btn-primary px-5"> Thêm đặt phòng </a>
 						</div>
 					</div>
 				</div>
@@ -29,14 +29,14 @@
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Serial</th>
-                            <th>Room Type</th>
-                            <th>Room Number</th>
-                            <th>Booking Status</th>
-                            <th>Check In/ Out Date</th>
-                            <th>Booking Number</th>
-                            <th>Customer</th>
-                            <th>Stastus</th>
+                            <th>STT</th>
+                            <th>Loại phòng</th>
+                            <th>Số phòng</th>
+                            <th>Trạng thái đặt phòng</th>
+                            <th>Ngày nhận/trả phòng</th>
+                            <th>Mã số đặt phòng</th>
+                            <th>Khách hàng</th>
+                            <th>Trạng thái</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,18 +48,18 @@
                                 <td>
                                     @if($item->booking_id != '')
                                         @if($item->booking_status == 1)
-                                            <span class="badge bg-danger">Booked</span>
+                                            <span class="badge bg-danger">Đã đặt</span>
                                         @else
-                                            <span class="badge bg-warning">Pending</span>
+                                            <span class="badge bg-warning">Chờ xử lý</span>
                                         @endif
                                     @else
-                                        <span class="badge bg-success">Available</span>
+                                        <span class="badge bg-success">Còn trống</span>
                                     @endif
                                 </td>
                                 <td>
                                     @if ($item->booking_id != '')
                                         <span class="badge rounded-pill bg-secondary">{{ date('d-m-Y', strtotime($item->check_in)) }}</span>
-                                        to
+                                        đến
                                         <span class="badge rounded-pill bg-info text-dark">{{ date('d-m-Y', strtotime($item->check_out)) }}</span>
                                     @endif
                                 </td>
@@ -75,9 +75,9 @@
                                 </td>
                                 <td>
                                     @if($item->status == 'Active')
-                                    <span class="badge bg-success">Published</span>
+                                    <span class="badge bg-success">Đã xuất bản</span>
                                     @else
-                                    <span class="badge bg-danger">InActive</span>
+                                    <span class="badge bg-danger">Không hoạt động</span>
                                     @endif
                                 </td>
                             </tr>

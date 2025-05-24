@@ -44,10 +44,10 @@ class TeamController extends Controller
         ]);
 
         $notification = array(
-            'message' => 'Team Data Inserted Successfully',
+            'message' => 'Dữ liệu Team đã được thêm thành công',
             'alert-type' => 'success'
         );
-        return redirect()->route('hotel.all.team')->with('message', 'Team Data Inserted Successfully')->with('alert-type', 'success');
+        return redirect()->route('hotel.all.team')->with('message', 'Dữ liệu Team đã được thêm thành công')->with('alert-type', 'success');
     }
 
     public function HotelEditTeam($id){
@@ -73,10 +73,10 @@ class TeamController extends Controller
             ]);
     
             $notification = array(
-                'message' => 'Team Updated With Image Successfully',
+                'message' => 'Cập nhật Team có ảnh thành công',
                 'alert-type' => 'success'
             );
-            return redirect()->route('hotel.all.team')->with('message', 'Team Updated With Image Successfully')->with('alert-type', 'success');
+            return redirect()->route('hotel.all.team')->with('message', 'Cập nhật Team có ảnh thành công')->with('alert-type', 'success');
         } else {
             Team::findOrFail($team_id)->update([
                 'name' => $request->name,
@@ -86,10 +86,10 @@ class TeamController extends Controller
             ]);
     
             $notification = array(
-                'message' => 'Team Updated Without Image Successfully',
+                'message' => 'Cập nhật Team không ảnh thành công',
                 'alert-type' => 'success'
             );
-            return redirect()->route('hotel.all.team')->with('message', 'Team Updated Without Image Successfully')->with('alert-type', 'success');
+            return redirect()->route('hotel.all.team')->with('message', 'Cập nhật Team không ảnh thành công')->with('alert-type', 'success');
         }
     }
 
@@ -100,10 +100,10 @@ class TeamController extends Controller
 
         Team::findOrFail($id)->delete();
         $notification = array(
-            'message' => 'Team Image Deleted Successfully',
+            'message' => 'Xóa ảnh Team thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Team Image Deleted Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Xóa ảnh Team thành công')->with('alert-type', 'success');
     }
 
     public function HotelBookArea()
@@ -136,10 +136,10 @@ class TeamController extends Controller
 
         if ($book) {
             $book->update($data);
-            $message = $request->hasFile('image') ? 'Book Area Updated With Image Successfully' : 'Book Area Updated Without Image Successfully';
+            $message = $request->hasFile('image') ? 'Book Area Cập nhật có ảnh thành công' : 'Book Area Cập nhật không ảnh thành công';
         } else {
             BookArea::create($data);
-            $message = $request->hasFile('image') ? 'Book Area Created With Image Successfully' : 'Book Area Created Without Image Successfully';
+            $message = $request->hasFile('image') ? 'Book Area Tạo có ảnh thành công' : 'Book Area Tạo không ảnh thành công';
         }
 
         return redirect()->back()->with('message', $message)->with('alert-type', 'success');

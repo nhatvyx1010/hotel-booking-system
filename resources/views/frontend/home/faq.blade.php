@@ -4,9 +4,9 @@
             <div class="col-lg-6">
                 <div class="faq-content faq-content-bg2">
                     <div class="section-title">
-                        <span class="sp-color">FEEL FREE TO ASK QUESTION</span>
-                        <h2>Let's Start a Free of Questions and Get a Quick Support</h2>
-                        <p>We are the agency who always gives you a priority on the free of question and you can easily make a question on the bunch.</p>
+                        <span class="sp-color">HÃY THOẢI MÁI ĐẶT CÂU HỎI</span>
+                        <h2>Hãy Bắt Đầu Với Những Câu Hỏi Miễn Phí Và Nhận Hỗ Trợ Nhanh Chóng</h2>
+                        <p>Chúng tôi là công ty luôn ưu tiên hỗ trợ miễn phí các câu hỏi của bạn và bạn có thể dễ dàng đặt câu hỏi nhiều lần.</p>
                     </div>
 
                     <div class="faq-accordion">
@@ -14,14 +14,12 @@
                             <li class="accordion-item">
                                 <a class="accordion-title" href="javascript:void(0)">
                                     <i class='bx bx-plus'></i>
-                                    How I Will Book a Room or Resort?
+                                    Làm thế nào để tôi đặt phòng?
                                 </a>
 
                                 <div class="accordion-content">
                                     <p> 
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at diam leo. Mauris a ante placerat,
-                                        dignissim orci eget, viverra ante. Mauris ornare pellentesque augue. Curabitur leo nibh, ultrices 
-                                        vel ultricies eu, vulputate at felis.
+                                        Việc đặt phòng rất đơn giản và nhanh chóng. Bạn chỉ cần lựa chọn ngày, loại phòng phù hợp và thực hiện các bước hướng dẫn trên trang web. Nếu cần hỗ trợ, chúng tôi luôn sẵn sàng giúp bạn.
                                     </p>
                                 </div>
                             </li>
@@ -29,14 +27,12 @@
                             <li class="accordion-item">
                                 <a class="accordion-title" href="javascript:void(0)">
                                     <i class='bx bx-plus'></i>
-                                    How I Will Be Able to Add on the Admin Portal? 
+                                    Làm sao tôi có thể thêm thông tin trên cổng quản trị Admin?
                                 </a>
 
                                 <div class="accordion-content">
                                     <p> 
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at diam leo. Mauris a ante placerat,
-                                        dignissim orci eget, viverra ante. Mauris ornare pellentesque augue. Curabitur leo nibh, ultrices 
-                                        vel ultricies eu, vulputate at felis.
+                                        Bạn có thể đăng nhập vào cổng quản trị Admin với tài khoản được cấp và thực hiện các thao tác thêm, sửa, xóa thông tin một cách dễ dàng theo hướng dẫn.
                                     </p>
                                 </div>
                             </li>
@@ -44,14 +40,12 @@
                             <li class="accordion-item">
                                 <a class="accordion-title" href="javascript:void(0)">
                                     <i class='bx bx-plus'></i>
-                                    What are the Benefits of These Agencies?
+                                    Các lợi ích của các đơn vị này là gì?
                                 </a>
 
                                 <div class="accordion-content">
                                     <p> 
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at diam leo. Mauris a ante placerat,
-                                        dignissim orci eget, viverra ante. Mauris ornare pellentesque augue. Curabitur leo nibh, ultrices 
-                                        vel ultricies eu, vulputate at felis.
+                                        Các đơn vị này mang lại nhiều lợi ích như hỗ trợ khách hàng tận tình, cung cấp dịch vụ chất lượng, giá cả hợp lý và đa dạng lựa chọn phù hợp nhu cầu.
                                     </p>
                                 </div>
                             </li>
@@ -59,14 +53,12 @@
                             <li class="accordion-item">
                                 <a class="accordion-title active" href="javascript:void(0)">
                                     <i class='bx bx-plus'></i>
-                                    How I Will Make Payment for Room Book?
+                                    Tôi sẽ thanh toán cho việc đặt phòng như thế nào?
                                 </a>
 
                                 <div class="accordion-content show">
                                     <p> 
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at diam leo. Mauris a ante placerat,
-                                        dignissim orci eget, viverra ante. Mauris ornare pellentesque augue. Curabitur leo nibh, ultrices 
-                                        vel ultricies eu, vulputate at felis.
+                                        Bạn có thể thanh toán qua nhiều hình thức như chuyển khoản ngân hàng, thanh toán qua ví điện tử hoặc trực tiếp tại quầy lễ tân khi nhận phòng, tùy theo lựa chọn của bạn.
                                     </p>
                                 </div>
                             </li>

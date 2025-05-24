@@ -9,13 +9,13 @@
 							<ol class="breadcrumb mb-0 p-0">
 								<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
 								</li>
-								<li class="breadcrumb-item active" aria-current="page">Room Type List</li>
+								<li class="breadcrumb-item active" aria-current="page">Danh sách loại phòng</li>
 							</ol>
 						</nav>
 					</div>
 					<div class="ms-auto">
 						<div class="btn-group">
-                        <a href="{{ route('add.room.type') }}" class="btn btn-primary px-5"> Add Room Type </a>
+                        <a href="{{ route('add.room.type') }}" class="btn btn-primary px-5"> Thêm loại phòng </a>
 						</div>
 					</div>
 				</div>
@@ -28,10 +28,10 @@
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Serial</th>
-                            <th>Image</th>
-                            <th>Name</th> 
-                            <th>Action</th>
+                            <th>STT</th>
+                            <th>Hình ảnh</th>
+                            <th>Tên</th> 
+                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,8 +47,8 @@
                             <td>
 
      @foreach ($rooms as $roo) 
-    <a href="{{ route('edit.room',$roo->id) }}" class="btn btn-warning px-3 radius-30"> Edit</a>
-    <a href="{{ route('delete.room',$roo->id) }}" class="btn btn-danger px-3 radius-30" id="delete"> Delete</a>
+    <a href="{{ route('edit.room',$roo->id) }}" class="btn btn-warning px-3 radius-30"> Sửa</a>
+    <a href="{{ route('delete.room',$roo->id) }}" class="btn btn-danger px-3 radius-30" id="delete"> Xóa</a>
     @endforeach  
                             </td>
                         </tr>
@@ -64,8 +64,4 @@
     <hr/>
      
 </div>
-
-
-
-
 @endsection

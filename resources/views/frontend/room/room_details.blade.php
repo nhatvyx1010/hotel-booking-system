@@ -7,10 +7,10 @@
                 <div class="inner-title">
                     <ul>
                         <li>
-                            <a href="index.html">Home</a>
+                            <a href="index.html">Trang Chủ</a>
                         </li>
                         <li><i class='bx bx-chevron-right'></i></li>
-                        <li>Room Details </li>
+                        <li>Chi Tiết Phòng</li>
                     </ul>
                     <h3>{{ $roomdetails->type->name }}</h3>
                 </div>
@@ -25,12 +25,12 @@
                     <div class="col-lg-4">
                         <div class="room-details-side">
                             <div class="side-bar-form">
-                                <h3>Booking Sheet </h3>
+                                <h3>Phiếu Đặt Phòng </h3>
                                 <form id="bk_form">
     <div class="row align-items-center">
         <div class="col-lg-12">
             <div class="form-group">
-                <label>Check in</label>
+                <label>Ngày Check in</label>
                 <div class="input-group">
                     <input autocomplete="off" type="text" required name="check_in" id="check_in" class="form-control dt_picker" value="{{ old('check_in') ? date('Y-m-d', strtotime(old('check_in'))) : '' }}">
                     <span class="input-group-addon"></span>
@@ -41,7 +41,7 @@
 
         <div class="col-lg-12">
             <div class="form-group">
-                <label>Check Out</label>
+                <label>Ngày Check out</label>
                 <div class="input-group">
                     <input autocomplete="off" type="text" required name="check_out" id="check_out" class="form-control dt_picker" value="{{ old('check_out') ? date('Y-m-d', strtotime(old('check_out'))) : '' }}">
                     <span class="input-group-addon"></span>
@@ -52,7 +52,7 @@
 
         <div class="col-lg-12">
             <div class="form-group">
-                <label>Numbers of Persons</label>
+                <label>Số Người</label>
                 <select class="form-control" id="number_persion" name="number_persion">
                     <option>01</option>
                     <option>02</option>
@@ -65,7 +65,7 @@
 
         <div class="col-lg-12">
             <div class="form-group">
-                <label>Numbers of Rooms</label>
+                <label>Số Phòng</label>
                 <select class="form-control number_of_rooms" id="select_room" name="select_room">
                     <option>01</option>
                     <option>02</option>
@@ -84,15 +84,12 @@
         <input type="hidden" id="total_adult" value="{{ $roomdetails->room_capacity }}">
         
         <div class="col-lg-12 col-md-12">
-            <button type="submit" class="default-btn btn-bg-three border-radius-5">Book Now</button>
+            <button type="submit" class="default-btn btn-bg-three border-radius-5">Đặt Ngay</button>
         </div>
         
     </div>
 </form>
-
                             </div>
-
-                          
                         </div>
                     </div>
 
@@ -106,16 +103,12 @@
                                 @endforeach 
                             </div>
 
-
- 
-
-
                             <div class="room-details-title">
                                 <h2>{{ $roomdetails->type->name }}</h2>
                                 <ul>
                                     
                                     <li>
-                                       <b> Basic : {{ number_format($roomdetails->price, 0, ',', '.') }} VNĐ/Night/Room</b>
+                                       <b> Giá cơ bản : {{ number_format($roomdetails->price, 0, ',', '.') }} VNĐ/Đêm/Phòng</b>
                                     </li> 
                                  
                                 </ul>
@@ -126,81 +119,56 @@
                                     {!! $roomdetails->description !!}
                                 </p>
 
-
-
-
    <div class="side-bar-plan">
-                                <h3>Basic Plan Facilities</h3>
+                                <h3>Tiện Nghi Kế Hoạch Cơ Bản</h3>
                                 <ul>
                                     @foreach ($facility as $fac)
                                     <li><a href="#">{{ $fac->facility_name }}</a></li>
                                     @endforeach
                                 </ul>
-
-                                
                             </div>
-
-
-
-
-
-
 
 <div class="row"> 
  <div class="col-lg-6">
-
-
-
  <div class="services-bar-widget">
-                                <h3 class="title">Room Details</h3>
+                                <h3 class="title">Chi Tiết Phòng</h3>
         <div class="side-bar-list">
             <ul>
                <li>
-                    <a href="#"> <b>Capacity : </b>{{ $roomdetails->room_capacity }}<i class='bx bxs-cloud-download'></i></a>
+                    <a href="#"> <b>Sức chứa : </b>{{ $roomdetails->room_capacity }}</a>
                 </li>
                 <li>
-                     <a href="#"> <b>Size : </b>{{ $roomdetails->size }}<i class='bx bxs-cloud-download'></i></a>
+                     <a href="#"> <b>Kích thước : </b>{{ $roomdetails->size }}</a>
                 </li>
                
                
             </ul>
         </div>
     </div>
-
-
-
-
  </div>
-
-
-
  <div class="col-lg-6">
  <div class="services-bar-widget">
-        <h3 class="title">Room Details</h3>
+        <h3 class="title">Chi Tiết Phòng</h3>
         <div class="side-bar-list">
             <ul>
                <li>
-                    <a href="#"> <b>View : </b>{{ $roomdetails->view }}<i class='bx bxs-cloud-download'></i></a>
+                    <a href="#"> <b>View : </b>{{ $roomdetails->view }}</a>
                 </li>
                 <li>
-                     <a href="#"> <b>Bed Style : </b>{{ $roomdetails->bed_style }} <i class='bx bxs-cloud-download'></i></a>
+                     <a href="#"> <b>Kiểu giường : </b>{{ $roomdetails->bed_style }} </a>
                 </li>
                  
             </ul>
         </div>
     </div> 
-
                     </div> 
                         </div>
-
- 
-
                             </div>
 
                             <div class="room-details-review">
-                                <h2>Clients Review and Retting's</h2>
+                                <h2>Đánh giá và Xếp hạng của Khách Hàng</h2>
                                 <div class="review-ratting">
-                                    <h3>Your retting: </h3>
+                                    <h3>Đánh giá của bạn: </h3>
                                     <i class='bx bx-star'></i>
                                     <i class='bx bx-star'></i>
                                     <i class='bx bx-star'></i>
@@ -211,13 +179,13 @@
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12">
                                             <div class="form-group">
-                                                <textarea name="message" class="form-control"  cols="30" rows="8" required data-error="Write your message" placeholder="Write your review here.... "></textarea>
+                                                <textarea name="message" class="form-control"  cols="30" rows="8" required data-error="Viết nhận xét của bạn" placeholder="Viết nhận xét của bạn tại đây.... "></textarea>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-12 col-md-12">
                                             <button type="submit" class="default-btn btn-bg-three">
-                                                Submit Review
+                                                Gửi nhận xét
                                             </button>
                                         </div>
                                     </div>
@@ -234,7 +202,7 @@
         <div class="room-details-other pb-70">
             <div class="container">
                 <div class="room-details-text">
-                    <h2>Other Rooms</h2>
+                    <h2>Các phòng khác</h2>
                 </div>
 
                 <div class="row ">
@@ -266,7 +234,7 @@
                                         </div>
                                         <p>{{ $item->short_desc }}</p>
                                         <ul>
-                                            <li><i class='bx bx-user'></i>{{ $item->room_capacity }} Person</li>
+                                            <li><i class='bx bx-user'></i>{{ $item->room_capacity }} Người</li>
                                             <li><i class='bx bx-expand'></i>{{ $item->size }}m2</li>
                                         </ul>
 
@@ -276,7 +244,7 @@
                                         </ul>
                                         
                                         <a href="room-details.html" class="book-more-btn">
-                                            Book Now
+                                            Đặt phòng ngay
                                         </a>
                                     </div>
                                 </div>
@@ -288,10 +256,6 @@
             </div>
         </div>
         <!-- Room Details Other End -->
-
-
-
-
 
 <script>
 $(document).ready(function () {
@@ -331,7 +295,7 @@ function getAvaility(check_in, check_out, room_id, hotel_id) {
             hotel_id: hotel_id
         },
         success: function (data) {
-            $(".available_room").html('Availability : <span class="text-success">' + data['available_room'] + ' Rooms</span>');
+            $(".available_room").html('Tình trạng phòng : <span class="text-success">' + data['available_room'] + ' Phòng</span>');
             $("#available_room").val(data['available_room']);
             price_calculate(data['total_nights']);
         }
@@ -356,7 +320,7 @@ $("#bk_form").on('submit', function () {
     var select_room = parseInt($("#select_room").val());
 
     if (select_room > av_room) {
-        alert('Sorry, you selected more rooms than available.');
+        alert('Xin lỗi, bạn đã chọn số phòng nhiều hơn số phòng hiện có.');
         return false;
     }
 
@@ -364,7 +328,7 @@ $("#bk_form").on('submit', function () {
     var total_adult = parseInt($("#total_adult").val());
 
     if (number_persion > total_adult) {
-        alert('Sorry, number of persons exceeds room capacity.');
+        alert('Xin lỗi, số người vượt quá sức chứa của phòng.');
         return false;
     }
 });

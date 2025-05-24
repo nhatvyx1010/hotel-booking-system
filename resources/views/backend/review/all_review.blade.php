@@ -16,7 +16,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a></li>
-                    <li class="breadcrumb-item active" aria-current="page">All Reviews</li>
+                    <li class="breadcrumb-item active" aria-current="page">Tất cả Đánh giá</li>
                 </ol>
             </nav>
         </div>
@@ -30,12 +30,12 @@
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Serial</th>
-                            <th>User</th>
-                            <th>Hotel</th>
-                            <th>Rating</th>
-                            <th>Comment</th>
-                            <th>Action</th>
+                            <th>STT</th>
+                            <th>Người dùng</th>
+                            <th>Khách sạn</th>
+                            <th>Đánh giá (Rating)</th>
+                            <th>Bình luận</th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -80,7 +80,7 @@
             var isChecked = $(this).is(':checked');
 
             $.ajax({
-                url: "{{ route('update.review.status') }}", // bạn cần tạo route này
+                url: "{{ route('update.review.status') }}",
                 method: "POST",
                 data: {
                     review_id: reviewId,
@@ -91,7 +91,7 @@
                     toastr.success(response.message);
                 },
                 error: function () {
-                    toastr.error("Something went wrong.");
+                    toastr.error("Đã có lỗi xảy ra.");
                 }
             });
         });

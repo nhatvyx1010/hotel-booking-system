@@ -34,10 +34,10 @@ class TestimonialController extends Controller
         ]);
 
         $notification = array(
-            'messsage' => 'Testimonial Data Inserted Successfully',
+            'messsage' => 'Thêm dữ liệu đánh giá thành công',
             'alert-type' => 'success'
         );
-        return redirect()->route('all.testimonial')->with('message', 'Testimonial Data Inserted Successfully')->with('alert-type', 'success');
+        return redirect()->route('all.testimonial')->with('message', 'Thêm dữ liệu đánh giá thành công')->with('alert-type', 'success');
     }
 
     public function EditTestimonial($id){
@@ -63,10 +63,10 @@ class TestimonialController extends Controller
             ]);
     
             $notification = array(
-                'messsage' => 'Testimonial Updated With Image Successfully',
+                'messsage' => 'Cập nhật đánh giá thành công với hình ảnh',
                 'alert-type' => 'success'
             );
-            return redirect()->route('all.testimonial')->with('message', 'Testimonial Updated With Image Successfully')->with('alert-type', 'success');
+            return redirect()->route('all.testimonial')->with('message', 'Cập nhật đánh giá thành công với hình ảnh')->with('alert-type', 'success');
         } else {
             Testimonial::findOrFail($test_id)->update([
                 'name' => $request->name,
@@ -76,10 +76,10 @@ class TestimonialController extends Controller
             ]);
     
             $notification = array(
-                'message' => 'Testimonial Updated Without Image Successfully',
+                'message' => 'Cập nhật đánh giá thành công không có hình ảnh',
                 'alert-type' => 'success'
             );
-            return redirect()->route('all.testimonial')->with('message', 'Testimonial Updated Without Image Successfully')->with('alert-type', 'success');
+            return redirect()->route('all.testimonial')->with('message', 'Cập nhật đánh giá thành công không có hình ảnh')->with('alert-type', 'success');
         }
     }
 
@@ -90,9 +90,9 @@ class TestimonialController extends Controller
 
         Testimonial::findOrFail($id)->delete();
         $notification = array(
-            'message' => 'Testimonial Deleted Successfully',
+            'message' => 'Xóa đánh giá thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Testimonial Deleted Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Xóa đánh giá thành công')->with('alert-type', 'success');
     }
 }

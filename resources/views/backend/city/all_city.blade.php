@@ -9,13 +9,13 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a></li>
-                    <li class="breadcrumb-item active" aria-current="page">All City</li>
+                    <li class="breadcrumb-item active" aria-current="page">Tất Cả Thành Phố</li>
                 </ol>
             </nav>
         </div>
         <div class="ms-auto">
             <div class="btn-group">
-                <a href="{{ route('add.city') }}" class="btn btn-primary px-5"> Add City </a>
+                <a href="{{ route('add.city') }}" class="btn btn-primary px-5"> Thêm Thành Phố </a>
             </div>
         </div>
     </div>
@@ -28,12 +28,12 @@
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Serial</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Image</th>
+                            <th>STT</th>
+                            <th>Tên</th>
+                            <th>Mô Tả</th>
+                            <th>Hình Ảnh</th>
                             <th>Slug</th>
-                            <th>Action</th>
+                            <th>Hành Động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,8 +51,8 @@
                                 </td>
                                 <td>{{ $city->slug }}</td>
                                 <td>
-                                    <a href="{{ route('edit.city', $city->id) }}" class="btn btn-warning px-3 radius-30">Edit</a>
-                                    <a href="{{ route('delete.city', $city->id) }}" class="btn btn-danger px-3 radius-30" id="delete">Delete</a>
+                                    <a href="{{ route('edit.city', $city->id) }}" class="btn btn-warning px-3 radius-30">Sửa</a>
+                                    <a href="{{ route('delete.city', $city->id) }}" class="btn btn-danger px-3 radius-30" id="delete">Xóa</a>
                                 </td>
                             </tr>
                         @endforeach

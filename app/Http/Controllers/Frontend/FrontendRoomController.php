@@ -42,10 +42,10 @@ class FrontendRoomController extends Controller
         if($request->check_in == $request->check_out){
 
             $notification = array(
-                'messsage' => 'Something want to wrong',
+                'message' => 'Đã xảy ra lỗi!',
                 'alert-type' => 'error'
             );
-            return redirect()->back()->with('message', 'Something want to wrong')->with('alert-type', 'error');
+            return redirect()->back()->with('message', 'Đã xảy ra lỗi!')->with('alert-type', 'error');
         }
         $sdate = date('Y-m-d', strtotime($request->check_in));
         $edate = date('Y-m-d', strtotime($request->check_out));
@@ -131,10 +131,10 @@ class FrontendRoomController extends Controller
         if($request->check_in == $request->check_out){
 
             $notification = array(
-                'messsage' => 'Something want to wrong',
+                'message' => 'Đã xảy ra lỗi!',
                 'alert-type' => 'error'
             );
-            return redirect()->back()->with('message', 'Something want to wrong')->with('alert-type', 'error');
+            return redirect()->back()->with('message', 'Đã xảy ra lỗi!')->with('alert-type', 'error');
         }
         $sdate = date('Y-m-d', strtotime($request->check_in));
         $edate = date('Y-m-d', strtotime($request->check_out));

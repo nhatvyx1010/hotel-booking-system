@@ -6,11 +6,11 @@
     <div class="container">
         <div class="inner-title">
             <ul>
-                <li><a href="{{ url('/') }}">Home</a></li>
+                <li><a href="{{ url('/') }}">Trang Chủ</a></li>
                 <li><i class='bx bx-chevron-right'></i></li>
-                <li>Services</li>
+                <li>Dịch Vụ</li>
             </ul>
-            <h3>Our Services</h3>
+            <h3>Dịch Vụ Của Chúng Tôi</h3>
         </div>
     </div>
 </div>

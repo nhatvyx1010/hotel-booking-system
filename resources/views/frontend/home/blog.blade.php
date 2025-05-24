@@ -6,7 +6,7 @@
     <div class="container">
         <div class="section-title text-center">
             <span class="sp-color">BLOGS</span>
-            <h2>Our Latest Blogs to the Intranational Journal at a Glance</h2>
+            <h2>Những bài blog mới nhất của chúng tôi</h2>
         </div>
         <div class="row pt-45">
 
@@ -27,7 +27,7 @@
                         </h3>
                         <p>{{ $item->short_desc }}</p>
                         <a href="{{ url('blog/details/'.$item->post_slug) }}" class="read-btn">
-                            Read More
+                            Xem Thêm
                         </a>
                     </div>
                 </div>

@@ -8,12 +8,12 @@
                 <div class="inner-title">
                     <ul>
                         <li>
-                            <a href="index.html">Home</a>
+                            <a href="index.html">Trang chủ</a>
                         </li>
                         <li><i class='bx bx-chevron-right'></i></li>
-                        <li> Check Out</li>
+                        <li> Thanh toán</li>
                     </ul>
-                    <h3> Check Out</h3>
+                    <h3> Thanh toán</h3>
                 </div>
             </div>
         </div>
@@ -27,15 +27,15 @@
 					<div class="row">
                         <div class="col-lg-8">
 							<div class="billing-details">
-								<h3 class="title">Billing Details</h3>
+								<h3 class="title">Chi tiết thanh toán</h3>
 
 								<div class="row">
 									<div class="col-lg-12 col-md-12">
 										<div class="form-group">
-											<label>Country <span class="required">*</span></label>
+											<label>Quốc gia <span class="required">*</span></label>
 											<div class="select-box">
 												<select name="country" class="form-control">
-													<option value="Viet Nam">Viet Nam</option>
+													<option value="Viet Nam">Việt Nam</option>
 												</select>
 											</div>
 										</div>
@@ -43,7 +43,7 @@
 
 									<div class="col-lg-6 col-md-6">
 										<div class="form-group">
-											<label>Name <span class="required">*</span></label>
+											<label>Họ tên <span class="required">*</span></label>
 											<input type="text" name="name" class="form-control" value="{{ \Auth::user()->name }}">
 											@error('name')
                                                 <div class="text-danger">{{ $message }}</div>
@@ -63,7 +63,7 @@
 
 									<div class="col-lg-4 col-md-12">
 										<div class="form-group">
-											<label>Phone <span class="required">*</span></label>
+											<label>Số điện thoại <span class="required">*</span></label>
 											<input type="text" name="phone" class="form-control" value="{{ \Auth::user()->phone }}">
 											@error('phone')
                                                 <div class="text-danger">{{ $message }}</div>
@@ -73,7 +73,7 @@
 
 									<div class="col-lg-4 col-md-6">
 										<div class="form-group">
-											<label>Address <span class="required">*</span></label>
+											<label>Địa chỉ <span class="required">*</span></label>
 											<input type="text" name="address" class="form-control" value="{{ \Auth::user()->address }}">
 											@error('address')
                                                 <div class="text-danger">{{ $message }}</div>
@@ -83,7 +83,7 @@
 
 									<div class="col-lg-4 col-md-6">
 										<div class="form-group">
-											<label>State <span class="required">*</span></label>
+											<label>Tỉnh / Thành phố <span class="required">*</span></label>
 											<input type="text" name="state" class="form-control">
 											@error('state')
                                                 <div class="text-danger">{{ $message }}</div>
@@ -112,14 +112,14 @@
                             <section class="checkout-area pb-70">
                                 <div class="card-body">
                                       <div class="billing-details">
-                                            <h3 class="title">Booking Summary</h3>
+                                            <h3 class="title">Tóm tắt đặt phòng</h3>
                                             <hr>
               
                                             <div style="display: flex">
                                                   <img style="height:100px; width:120px;object-fit: cover" src="{{ (!empty($room->image)) ? url('upload/roomimg/'.$room->image) : url('upload/no_image.jpg') }}" alt="Images" alt="Images">
                                                   <div style="padding-left: 10px;">
                                                         <a href=" " style="font-size: 20px; color: #595959;font-weight: bold">{{ @$room->type->name }}</a>
-                                                        <p><b>{{ $room->price }} / Night</b></p>
+                                                        <p><b>{{ $room->price }} / Đêm</b></p>
                                                   </div>
               
                                             </div>
@@ -133,23 +133,23 @@
 												@endphp
                                                    
                                                   <tr>
-                                                        <td><p>Total Night <br><b> ( {{ $book_data['check_in'] }} - {{ $book_data['check_out'] }} )</p></td>
-                                                        <td style="text-align: right"></b><p>{{ $nights }} Days</p></td>
+                                                        <td><p>Tổng số đêm <br><b> ( {{ $book_data['check_in'] }} - {{ $book_data['check_out'] }} )</p></td>
+                                                        <td style="text-align: right"></b><p>{{ $nights }} Ngày</p></td>
                                                   </tr>
                                                   <tr>
-                                                        <td><p>Total Room</p></td>
+                                                        <td><p>Tổng số phòng</p></td>
                                                         <td style="text-align: right"><p>{{ $book_data['number_of_rooms'] }}</p></td>
                                                   </tr>
                                                   <tr>
-                                                        <td><p>Subtotal</p></td>
+                                                        <td><p>Tạm tính</p></td>
                                                         <td style="text-align: right"><p>{{ number_format($subtotal, 0, ',', '.') }} VNĐ</p></td>
                                                   </tr>
                                                   <tr>
-                                                        <td><p>Discount</p></td>
+                                                        <td><p>Giảm giá</p></td>
                                                         <td style="text-align:right"> <p>{{ number_format($discount, 0, ',', '.') }} VNĐ</p></td>
                                                   </tr>
                                                   <tr>
-                                                        <td><p>Total</p></td>
+                                                        <td><p>Tổng cộng</p></td>
                                                         <td style="text-align:right"> <p>{{ number_format($subtotal - $discount, 0, ',', '.') }} VNĐ</p></td>
                                                   </tr>
                                             </table>
@@ -167,7 +167,7 @@
                                           <div class="payment-method">
                 <p>
                     <input type="radio" id="cash-on-delivery" name="payment_method" value="COD">
-                    <label for="cash-on-delivery">Cash On Delivery</label>
+                    <label for="cash-on-delivery">Thanh toán trực tiếp tại quầy lễ tân</label>
                 </p>
                 <p>
                     <input type="radio" id="vnpay" name="payment_method" value="VNPAY">
@@ -176,11 +176,11 @@
 
                 <!-- Nội dung khi chọn COD -->
                 <div id="cod_info" class="payment-info d-none">
-                    <p>You have chosen <strong>Cash On Delivery</strong>. Please prepare the exact amount upon delivery.</p>
+                    <p>Bạn đã chọn <strong>Thanh toán trực tiếp tại quầy lễ tân</strong>. Vui lòng chuẩn bị số tiền đúng khi thanh toán.</p>
                     <p><strong>Bạn phải thanh toán 30% phí.</strong></p>
                     <table class="table">
                         <tr>
-                            <td><p>Subtotal</p></td>
+                            <td><p>Tạm tính</p></td>
                             <td style="text-align: right"><p>{{ number_format($subtotal, 0, ',', '.') }} VNĐ</p></td>
                         </tr>
                         <tr>
@@ -188,11 +188,11 @@
                             <td style="text-align: right"><p>{{ number_format($subtotal * 30 / 100, 0, ',', '.') }} VNĐ</p></td>
                         </tr>
                         <tr>
-                            <td><p>Discount</p></td>
+                            <td><p>Giảm giá</p></td>
                             <td style="text-align: right"><p>{{ number_format($discount, 0, ',', '.') }} VNĐ</p></td>
                         </tr>
                         <tr>
-                            <td><p>Total</p></td>
+                            <td><p>Tổng cộng</p></td>
                             <td style="text-align: right"><p>{{ number_format($subtotal * 30 / 100 - $discount, 0, ',', '.') }} VNĐ</p></td>
                         </tr>
                         <!-- Hidden input để gửi total_price -->
@@ -202,18 +202,18 @@
 
                 <!-- Nội dung khi chọn VNPAY -->
                 <div id="vnpay_info" class="payment-info d-none">
-                    <p>You have chosen <strong>Bank Transfer (VNPAY)</strong>. You will be redirected to payment processing.</p>
+                    <p>Bạn đã chọn <strong>Chuyển khoản ngân hàng (VNPAY)</strong>. Bạn sẽ được chuyển đến trang xử lý thanh toán.</p>
                     <table class="table">
                         <tr>
-                            <td><p>Subtotal</p></td>
+                            <td><p>Tạm tính</p></td>
                             <td style="text-align: right"><p>{{ number_format($subtotal, 0, ',', '.') }} VNĐ</p></td>
                         </tr>
                         <tr>
-                            <td><p>Discount</p></td>
+                            <td><p>Giảm giá</p></td>
                             <td style="text-align: right"><p>{{ number_format($discount, 0, ',', '.') }} VNĐ</p></td>
                         </tr>
                         <tr>
-                            <td><p>Total</p></td>
+                            <td><p>Tổng cộng</p></td>
                             <td style="text-align: right"><p>{{ number_format($subtotal - $discount, 0, ',', '.') }} VNĐ</p></td>
                         </tr>
                         <!-- Hidden input để gửi total_price -->
@@ -222,7 +222,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="order-btn" id="myButton">Place Order</button>
+            <button type="submit" class="order-btn" id="myButton">Đặt hàng</button>
 
                             </div>
 						</div>
@@ -262,7 +262,7 @@ $(document).ready(function () {
     $('#checkout-form').on('submit', function (e) {
         var pay_method = $('input[name="payment_method"]:checked').val();
         if (!pay_method) {
-            alert('Please select a payment method.');
+            alert('Vui lòng chọn phương thức thanh toán.');
             e.preventDefault();
         }
     });

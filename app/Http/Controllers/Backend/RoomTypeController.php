@@ -48,7 +48,7 @@ class RoomTypeController extends Controller
         ]);
 
         $notification = array(
-            'message' => 'RoomType Inserted Successfully',
+            'message' => 'Loại phòng đã được thêm thành công',
             'alert-type' => 'success'
         );
 
@@ -69,7 +69,7 @@ class RoomTypeController extends Controller
         ]);
 
         $notification = [
-            'message' => 'RoomType Inserted Successfully',
+            'message' => 'Loại phòng đã được thêm thành công',
             'alert-type' => 'success',
         ];
 

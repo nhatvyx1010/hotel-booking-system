@@ -22,10 +22,10 @@ class CommentController extends Controller
         ]);
 
         $notification = array(
-            'message' => 'Comment Added Successfully Admin will approve',
+            'message' => 'Bình luận đã được thêm, quản trị viên sẽ duyệt',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Comment Added Successfully Admin will approve')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Bình luận đã được thêm, quản trị viên sẽ duyệt')->with('alert-type', 'success');
     }
 
     public function AllComment(){
@@ -42,6 +42,6 @@ class CommentController extends Controller
             $comment->save();
         }
 
-        return response()->json(['message' => 'Comment Status Updated Successfully']);
+        return response()->json(['message' => 'Cập nhật trạng thái bình luận thành công']);
     }
 }

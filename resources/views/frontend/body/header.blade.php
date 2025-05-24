@@ -27,20 +27,20 @@
         @auth
         <li>
             <i class='bx bxs-user-pin'></i>
-            <a href="{{ route('user.profile') }}">Profile</a>
+            <a href="{{ route('user.profile') }}">Hồ sơ cá nhân</a>
         </li>
         <li>
             <i class='bx bxs-user-retangle'></i>
-            <a href="{{ route('user.logout') }}">Logout</a>
+            <a href="{{ route('user.logout') }}">Đăng xuất</a>
         </li>
         @else
         <li>
             <i class='bx bxs-user-pin'></i>
-            <a href="{{ route('login') }}">Login</a>
+            <a href="{{ route('login') }}">Đăng nhập</a>
         </li>
         <li>
             <i class='bx bxs-user-retangle'></i>
-            <a href="{{ route('register') }}">Register</a>
+            <a href="{{ route('register') }}">Đăng ký</a>
         </li>
         @endauth
 

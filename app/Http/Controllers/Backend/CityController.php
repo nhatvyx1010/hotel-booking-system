@@ -46,7 +46,7 @@ class CityController extends Controller
 
         $city->save();
 
-        return redirect()->route('all.city')->with('success', 'City created successfully');
+        return redirect()->route('all.city')->with('success', 'Thêm thành phố thành công');
     }
 
     // Form chỉnh sửa
@@ -85,7 +85,7 @@ class CityController extends Controller
 
         $city->save();
 
-        return redirect()->route('all.city')->with('success', 'City updated successfully');
+        return redirect()->route('all.city')->with('success', 'Cập nhật thành phố thành công');
     }
 
     // Xoá thành phố
@@ -97,6 +97,6 @@ class CityController extends Controller
         }
         $city->delete();
 
-        return redirect()->route('all.city')->with('success', 'City deleted successfully');
+        return redirect()->route('all.city')->with('success', 'Xóa thành phố thành công');
     }
 }

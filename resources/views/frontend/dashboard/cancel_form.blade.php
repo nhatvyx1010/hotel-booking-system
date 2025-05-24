@@ -9,12 +9,12 @@
         <div class="inner-title">
             <ul>
                 <li>
-                    <a href="#">Home</a>
+                    <a href="#">Trang chủ</a>
                 </li>
                 <li><i class='bx bx-chevron-right'></i></li>
-                <li>User Booking List</li>
+                <li>Danh sách đặt phòng của người dùng</li>
             </ul>
-            <h3>Cancel Booking</h3>
+            <h3>Huỷ đặt phòng</h3>
         </div>
     </div>
 </div>
@@ -32,15 +32,15 @@
                 <div class="service-article">
                     <section class="checkout-area pb-70">
                         <div class="container">
-                            <h3>Cancel Booking: {{ $booking->code }}</h3>
+                            <h3>Huỷ đặt phòng: {{ $booking->code }}</h3>
 
                             <!-- Booking Information -->
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <h5><strong>Booking Information</strong></h5>
-                                    <p><strong>Booking Number:</strong> {{ $booking->code }}</p>
-                                    <p><strong>Booking Date:</strong> {{ $booking->created_at->format('d/m/Y') }}</p>
-                                    <p><strong>Room Type:</strong> 
+                                    <h5><strong>Thông tin đặt phòng</strong></h5>
+                                    <p><strong>Mã đặt phòng:</strong> {{ $booking->code }}</p>
+                                    <p><strong>Ngày đặt phòng:</strong> {{ $booking->created_at->format('d/m/Y') }}</p>
+                                    <p><strong>Loại phòng:</strong> 
                                         @if($booking->room && $booking->room->type)
                                             {{ $booking->room->type->name }}
                                         @else
@@ -54,8 +54,8 @@
                                             N/A
                                         @endif
                                     </p>
-                                    <p><strong>Check In:</strong> {{ $booking->check_in }}</p>
-                                    <p><strong>Check Out:</strong> {{ $booking->check_out }}</p>
+                                    <p><strong>Ngày nhận phòng:</strong> {{ $booking->check_in }}</p>
+                                    <p><strong>Ngày trả phòng:</strong> {{ $booking->check_out }}</p>
                                 </div>
                             </div>
 
@@ -81,7 +81,7 @@
                                 @csrf
 
                                 <div class="form-group">
-                                    <label for="cancel_reason">Reason for Cancellation</label>
+                                    <label for="cancel_reason">Lý do huỷ đặt phòng</label>
                                     <textarea name="cancel_reason" id="cancel_reason" class="form-control" rows="3" required>{{ old('cancel_reason') }}</textarea>
                                     @error('cancel_reason')
                                         <div class="text-danger">{{ $message }}</div>
@@ -116,7 +116,7 @@
 
 
                                 <button type="submit" class="btn btn-danger mt-3" {{ $hoursDiff < 24 ? 'disabled' : '' }}>
-                                    Submit Cancellation
+                                    Gửi yêu cầu huỷ
                                 </button>
                                 <a href="{{ route('user.booking') }}" class="btn btn-secondary mt-3">Back</a>
                             </form>

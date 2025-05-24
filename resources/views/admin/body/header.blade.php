@@ -41,7 +41,7 @@
 						<div class="dropdown-menu dropdown-menu-end">
 							<a href="javascript:;">
 								<div class="msg-header">
-									<p class="msg-header-title">Notifications</p>
+									<p class="msg-header-title">Thông báo</p>
 									<p class="msg-header-badge"></p>
 								</div>
 							</a>
@@ -61,16 +61,17 @@
 											</div>
 											<div class="flex-grow-1">
 												<h6 class="msg-name">{{ $notification->data['message'] }}<span class="msg-time float-end">{{ Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</span></h6>
-												<p class="msg-info">New Booking</p>
+												<p class="msg-info">Đặt phòng mới</p>
 											</div>
 										</div>
 									</a>
 									@empty
+									<p class="text-center">Không có thông báo nào</p>
 								@endforelse
 							</div>
 							<a href="javascript:;">
 								<div class="text-center msg-footer">
-									<button class="btn btn-primary w-100">View All Notifications</button>
+									<button class="btn btn-primary w-100">Xem tất cả thông báo</button>
 								</div>
 							</a>
 						</div>
@@ -276,20 +277,16 @@
 					</div>
 				</a>
 				<ul class="dropdown-menu dropdown-menu-end">
-					<li><a class="dropdown-item d-flex align-items-center" href="{{ route('admin.profile')}}"><i class="bx bx-user fs-5"></i><span>Profile</span></a>
+					<li><a class="dropdown-item d-flex align-items-center" href="{{ route('admin.profile')}}"><i class="bx bx-user fs-5"></i><span>Hồ sơ cá nhân</span></a>
 					</li>
-					<li><a class="dropdown-item d-flex align-items-center" href="{{ route('admin.change.password')}}"><i class="bx bx-cog fs-5"></i><span>Change Password</span></a>
+					<li><a class="dropdown-item d-flex align-items-center" href="{{ route('admin.change.password')}}"><i class="bx bx-cog fs-5"></i><span>Đổi mật khẩu</span></a>
 					</li>
-					<li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i class="bx bx-home-circle fs-5"></i><span>Dashboard</span></a>
-					</li>
-					<li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i class="bx bx-dollar-circle fs-5"></i><span>Earnings</span></a>
-					</li>
-					<li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i class="bx bx-download fs-5"></i><span>Downloads</span></a>
+					<li><a class="dropdown-item d-flex align-items-center" href="{{ route('admin.dashboard')}}"><i class="bx bx-home-circle fs-5"></i><span>Dashboard</span></a>
 					</li>
 					<li>
 						<div class="dropdown-divider mb-0"></div>
 					</li>
-					<li><a class="dropdown-item d-flex align-items-center" href="{{ route('admin.logout')}}"><i class="bx bx-log-out-circle"></i><span>Logout</span></a>
+					<li><a class="dropdown-item d-flex align-items-center" href="{{ route('admin.logout')}}"><i class="bx bx-log-out-circle"></i><span>Đăng xuất</span></a>
 					</li>
 				</ul>
 			</div>

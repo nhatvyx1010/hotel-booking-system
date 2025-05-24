@@ -5,7 +5,7 @@
 <div class="banner-area" style="height: 480px;">
     <div class="container">
         <div class="banner-content">
-            <h1>Discover a Hotel to Book a Suitable Room</h1>
+            <h1>Tìm Khách Sạn Để Đặt Phòng Phù Hợp</h1>
         </div>
     </div>
 </div>
@@ -20,7 +20,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-3">
                         <div class="form-group">
-                            <label>CHECK IN TIME</label>
+                            <label>THỜI GIAN CHECK IN</label>
                             <div class="input-group">
                                 <input autocomplete="off" type="text" required name="check_in" class="form-control dt_picker" placeholder="yyyy-mm-dd" id="check_in">
                                 <span class="input-group-addon"></span>
@@ -31,7 +31,7 @@
 
                     <div class="col-lg-3 col-md-3">
                         <div class="form-group">
-                            <label>CHECK OUT TIME</label>
+                            <label>THỜI GIAN CHECK OUT</label>
                             <div class="input-group">
                                 <input autocomplete="off" type="text" required name="check_out" class="form-control dt_picker" placeholder="yyyy-mm-dd" id="check_out">
                                 <span class="input-group-addon"></span>
@@ -43,7 +43,7 @@
 
                     <div class="col-lg-2 col-md-2">
                         <div class="form-group">
-                            <label>GUESTS</label>
+                            <label>SỐ KHÁCH</label>
                             <select name="persion" class="form-control">
                                 <option>01</option>
                                 <option>02</option>
@@ -55,7 +55,7 @@
                     
                    <div class="col-lg-2 col-md-2">
                         <div class="form-group">
-                            <label>City</label>
+                            <label>THÀNH PHỐ</label>
                             <input list="cities" id="city_name" class="form-control" placeholder="Enter city name" value="{{ old('city_name') ?? $cityName ?? '' }}">
                             <datalist id="cities">
                                 @foreach($cities as $city)
@@ -69,7 +69,7 @@
 
                     <div class="col-lg-2 col-md-2">
                         <button type="submit" class="default-btn btn-bg-one border-radius-5">
-                            Check Availability
+                            Kiểm Tra Tình Trạng
                         </button>
                     </div>
                 </div>
