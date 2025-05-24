@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>Booking Confirmation</title>
+    <title>Xác nhận đặt phòng</title>
     <style>
         body {
             background-color: #f7f9fc;
@@ -67,15 +67,15 @@
 </head>
 <body>
     <div class="container">
-        <h1>Thank you for your booking!</h1>
+        <h1>Cảm ơn bạn đã đặt phòng!</h1>
         <p class="message">
-            We're happy to confirm your reservation. Below are your booking details:
+            Chúng tôi vui mừng xác nhận đặt phòng của bạn. Dưới đây là thông tin chi tiết về đặt phòng:
         </p>
 
-        <h2>Guest Information</h2>
+        <h2>Thông tin khách</h2>
         <table>
             <tr>
-                <th>Name</th>
+                <th>Họ và tên</th>
                 <td>{{ $booking['name'] }}</td>
             </tr>
             <tr>
@@ -83,27 +83,27 @@
                 <td>{{ $booking['email'] }}</td>
             </tr>
             <tr>
-                <th>Phone</th>
+                <th>Số điện thoại</th>
                 <td>{{ $booking['phone'] }}</td>
             </tr>
             <tr>
-                <th>Check In</th>
+                <th>Ngày nhận phòng</th>
                 <td>{{ $booking['check_in'] }}</td>
             </tr>
             <tr>
-                <th>Check Out</th>
+                <th>Ngày trả phòng</th>
                 <td>{{ $booking['check_out'] }}</td>
             </tr>
         </table>
 
-        <h2>Hotel Information</h2>
+        <h2>Thông tin khách sạn</h2>
         <table>
             <tr>
-                <th>Hotel Name</th>
+                <th>Tên khách sạn</th>
                 <td>{{ $booking['hotel_name'] }}</td>
             </tr>
             <tr>
-                <th>Phone</th>
+                <th>Điện thoại</th>
                 <td>{{ $booking['hotel_phone'] }}</td>
             </tr>
             <tr>
@@ -111,33 +111,33 @@
                 <td>{{ $booking['hotel_email'] }}</td>
             </tr>
             <tr>
-                <th>Address</th>
+                <th>Địa chỉ</th>
                 <td>{{ $booking['hotel_address'] }}</td>
             </tr>
         </table>
 
-        <h2>Payment Details</h2>
+        <h2>Chi tiết thanh toán</h2>
         <table>
             <tr>
-                <th>Discount</th>
+                <th>Giảm giá</th>
                 <td>{{ number_format($booking['discount'], 0, '.', ',') }} VND</td>
             </tr>
             <tr>
-                <th>Prepaid Amount</th>
+                <th>Số tiền đã thanh toán trước</th>
                 <td>{{ number_format($booking['prepaid_amount'], 0, '.', ',') }} VND</td>
             </tr>
             <tr>
-                <th>Remaining Amount</th>
+                <th>Số tiền còn lại</th>
                 <td>{{ number_format($booking['remaining_amount'], 0, '.', ',') }} VND</td>
             </tr>
             <tr>
-                <th>Total Amount</th>
+                <th>Tổng số tiền</th>
                 <td><strong>{{ number_format($booking['total_amount'], 0, '.', ',') }} VND</strong></td>
             </tr>
         </table>
 
         <p class="message">
-            If you have any questions, feel free to contact us. We look forward to welcoming you!
+            Nếu bạn có bất kỳ câu hỏi nào, xin vui lòng liên hệ với chúng tôi. Chúng tôi rất mong được đón tiếp bạn!
         </p>
     </div>
 </body>

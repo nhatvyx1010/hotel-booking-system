@@ -24,12 +24,12 @@
 			<a href="javascript:;" class="has-arrow">
 				<div class="parent-icon"><i class="bx bx-category"></i>
 				</div>
-				<div class="menu-title">Manage Teams</div>
+				<div class="menu-title">Quản lý đội ngũ</div>
 			</a>
 			<ul>
-				<li> <a href="{{ route('hotel.all.team') }}"><i class='bx bx-radio-circle'></i>All Team</a>
+				<li> <a href="{{ route('hotel.all.team') }}"><i class='bx bx-radio-circle'></i>Tất cả đội ngũ</a>
 				</li>
-				<li> <a href="{{ route('hotel.add.team') }}"><i class='bx bx-radio-circle'></i>Add Team</a>
+				<li> <a href="{{ route('hotel.add.team') }}"><i class='bx bx-radio-circle'></i>Thêm đội ngũ</a>
 				</li>
 			</ul>
 		</li>
@@ -38,10 +38,10 @@
 			<a href="javascript:;" class="has-arrow">
 				<div class="parent-icon"><i class="bx bx-category"></i>
 				</div>
-				<div class="menu-title">Manage Book Area</div>
+				<div class="menu-title">Quản lý Book Area</div>
 			</a>
 			<ul>
-				<li> <a href="{{ route('hotel.book.area') }}"><i class='bx bx-radio-circle'></i>Update Book Area</a>
+				<li> <a href="{{ route('hotel.book.area') }}"><i class='bx bx-radio-circle'></i>Cập nhật Book Area</a>
 				</li>
 			</ul>
 		</li>
@@ -50,32 +50,32 @@
 			<a href="javascript:;" class="has-arrow">
 				<div class="parent-icon"><i class="bx bx-category"></i>
 				</div>
-				<div class="menu-title">Manage Room Type</div>
+				<div class="menu-title">Quản lý loại phòng</div>
 			</a>
 			<ul>
-				<li> <a href="{{ route('hotel.room.type.list') }}"><i class='bx bx-radio-circle'></i>Room Type List</a>
+				<li> <a href="{{ route('hotel.room.type.list') }}"><i class='bx bx-radio-circle'></i>Danh sách loại phòng</a>
 				</li>
 			</ul>
 		</li>
 
-		<li class="menu-label">Booking Manage</li>
+		<li class="menu-label">Quản lý đặt phòng</li>
 		<li>
 			<a href="javascript:;" class="has-arrow">
 				<div class="parent-icon"><i class='bx bx-cart'></i>
 				</div>
-				<div class="menu-title">Booking</div>
+				<div class="menu-title">Đặt phòng</div>
 			</a>
 			<ul>
-				<li> <a href="{{ route('hotel.booking.list') }}"><i class='bx bx-radio-circle'></i>Booking List</a>
+				<li> <a href="{{ route('hotel.booking.list') }}"><i class='bx bx-radio-circle'></i>Danh sách đặt phòng</a>
 				</li>
-				<li> <a href="{{ route('hotel.add.room.list') }}"><i class='bx bx-radio-circle'></i>Add Booking</a>
+				<li> <a href="{{ route('hotel.add.room.list') }}"><i class='bx bx-radio-circle'></i>Thêm đặt phòng</a>
 				</li>
 			</ul>
 		</li>
 		<li>
 			<a href="javascript:;" class="has-arrow">
 				<div class="parent-icon"><i class='bx bx-cart'></i></div>
-				<div class="menu-title">Cancel Booking</div>
+				<div class="menu-title">Hủy đặt phòng</div>
 				@php
 					$cancelPendingCount = App\Models\Booking::whereHas('room', function($query) {
 						$query->where('hotel_id', Auth::id());
@@ -90,7 +90,7 @@
 			<ul>
 				<li>
 					<a href="{{ route('hotel.booking.cancel_pending.list') }}">
-						<i class='bx bx-radio-circle'></i>Cancel Pending
+						<i class='bx bx-radio-circle'></i>Đang chờ hủy
 						
 						@if($cancelPendingCount > 0)
 							<span style="font-weight: bold;"> ({{ $cancelPendingCount }})</span>
@@ -99,7 +99,7 @@
 				</li>
 				<li>
 					<a href="{{ route('hotel.booking.cancel_complete.list') }}">
-						<i class='bx bx-radio-circle'></i>Cancel Complete
+						<i class='bx bx-radio-circle'></i>Hủy hoàn tất
 					</a>
 				</li>
 			</ul>
@@ -109,10 +109,10 @@
 			<a class="has-arrow" href="javascript:;">
 				<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
 				</div>
-				<div class="menu-title">Manage Room List</div>
+				<div class="menu-title">Quản lý danh sách phòng</div>
 			</a>
 			<ul>
-				<li> <a href="{{ route('hotel.view.room.list') }}"><i class='bx bx-radio-circle'></i>Room List</a>
+				<li> <a href="{{ route('hotel.view.room.list') }}"><i class='bx bx-radio-circle'></i>Danh sách phòng</a>
 				</li>
 			</ul>
 		</li>
@@ -133,10 +133,10 @@
 			<a class="has-arrow" href="javascript:;">
 				<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
 				</div>
-				<div class="menu-title">Booking Report</div>
+				<div class="menu-title">Báo cáo đặt phòng</div>
 			</a>
 			<ul>
-				<li> <a href="{{ route('hotel.booking.report') }}"><i class='bx bx-radio-circle'></i>Booking Report</a>
+				<li> <a href="{{ route('hotel.booking.report') }}"><i class='bx bx-radio-circle'></i>Báo cáo đặt phòng</a>
 				</li>
 			</ul>
 		</li>
@@ -145,10 +145,10 @@
 			<a class="has-arrow" href="javascript:;">
 				<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
 				</div>
-				<div class="menu-title">Hotel Review</div>
+				<div class="menu-title">Đánh giá khách sạn</div>
 			</a>
 			<ul>
-				<li> <a href="{{ route('hotel.all.review') }}"><i class='bx bx-radio-circle'></i>All Review</a>
+				<li> <a href="{{ route('hotel.all.review') }}"><i class='bx bx-radio-circle'></i>Tất cả đánh giá</a>
 				</li>
 			</ul>
 		</li>
@@ -157,10 +157,10 @@
 			<a class="has-arrow" href="javascript:;">
 				<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
 				</div>
-				<div class="menu-title">Hotel Gallery</div>
+				<div class="menu-title">Thư viện khách sạn</div>
 			</a>
 			<ul>
-				<li> <a href="{{ route('hotel.all.gallery') }}"><i class='bx bx-radio-circle'></i>All Gallery</a>
+				<li> <a href="{{ route('hotel.all.gallery') }}"><i class='bx bx-radio-circle'></i>Tất cả thư viện ảnh</a>
 				</li>
 			</ul>
 		</li>
@@ -177,12 +177,12 @@
 			</ul>
 		</li> -->
 
-		<li class="menu-label">Others</li>
+		<li class="menu-label">Khác</li>
 		<li>
 			<a href="#" target="_blank">
 				<div class="parent-icon"><i class="bx bx-support"></i>
 				</div>
-				<div class="menu-title">Support</div>
+				<div class="menu-title">Hỗ trợ</div>
 			</a>
 		</li>
 	</ul>

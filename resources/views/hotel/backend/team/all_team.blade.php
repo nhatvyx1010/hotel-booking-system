@@ -10,13 +10,13 @@
 							<ol class="breadcrumb mb-0 p-0">
 								<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
 								</li>
-								<li class="breadcrumb-item active" aria-current="page">All Team</li>
+								<li class="breadcrumb-item active" aria-current="page">Tất Cả Thành Viên Đội Ngũ</li>
 							</ol>
 						</nav>
 					</div>
 					<div class="ms-auto">
 						<div class="btn-group">
-                        <a href="{{ route('hotel.add.team') }}" class="btn btn-primary px-5"> Add Team </a>
+                        <a href="{{ route('hotel.add.team') }}" class="btn btn-primary px-5"> Thêm Thành Viên </a>
 						</div>
 					</div>
 				</div>
@@ -29,12 +29,12 @@
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Serial</th>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>Position</th>
+                            <th>STT</th>
+                            <th>Ảnh</th>
+                            <th>Tên</th>
+                            <th>Chức Vụ</th>
                             <th>Facebook</th>
-                            <th>Action</th>
+                            <th>Hành Động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -46,8 +46,8 @@
                                 <td>{{ $item->position }}</td>
                                 <td>{{ $item->facebook }}</td>
                                 <td>
-                                    <a href="{{ route('hotel.edit.team', $item->id) }}" class="btn btn-warning px-3 radius-30">Edit</a>
-                                    <a href="{{ route('hotel.delete.team', $item->id) }}" class="btn btn-danger px-3 radius-30" id="delete">Delete</a>
+                                    <a href="{{ route('hotel.edit.team', $item->id) }}" class="btn btn-warning px-3 radius-30">Sửa</a>
+                                    <a href="{{ route('hotel.delete.team', $item->id) }}" class="btn btn-danger px-3 radius-30" id="delete">Xóa</a>
                                 </td>
                             </tr>
                         @endforeach

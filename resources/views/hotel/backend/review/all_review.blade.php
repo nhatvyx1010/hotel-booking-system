@@ -16,7 +16,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a></li>
-                    <li class="breadcrumb-item active" aria-current="page">All Reviews</li>
+                    <li class="breadcrumb-item active" aria-current="page">Tất cả Đánh giá</li>
                 </ol>
             </nav>
         </div>
@@ -30,12 +30,12 @@
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Serial</th>
-                            <th>User</th>
-                            <th>Hotel</th>
-                            <th>Rating</th>
-                            <th>Comment</th>
-                            <th>Action</th>
+                            <th>STT</th>
+                            <th>Người dùng</th>
+                            <th>Khách sạn</th>
+                            <th>Đánh giá</th>
+                            <th>Bình luận</th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,19 +51,19 @@
                                     {{-- Nếu có phản hồi --}}
                                     @if($review->replies->isNotEmpty())
                                         <div class="mt-2 p-2 bg-light border rounded">
-                                            <strong>Hotel Reply:</strong> {{ $review->replies->first()->comment }}
+                                            <strong>Phản hồi từ Khách sạn:</strong> {{ $review->replies->first()->comment }}
                                         </div>
                                     @endif
                                 </td>
                                 <td>
                                     @if ($review->status === 'approved')
-                                        <span class="badge bg-success">Approved</span>
+                                        <span class="badge bg-success">Đã duyệt</span>
                                     @elseif ($review->status === 'pending')
-                                        <span class="badge bg-warning text-dark">Pending</span>
+                                        <span class="badge bg-warning text-dark">Đang chờ</span>
                                     @elseif ($review->status === 'rejected')
-                                        <span class="badge bg-danger">Rejected</span>
+                                        <span class="badge bg-danger">Bị từ chối</span>
                                     @else
-                                        <span class="badge bg-secondary">Unknown</span>
+                                        <span class="badge bg-secondary">Không xác định</span>
                                     @endif
 
                                     @if ($review->replies->isEmpty())
@@ -71,7 +71,7 @@
                                             @csrf
                                             <textarea name="comment" class="form-control mb-2" rows="2"
                                                 placeholder="Reply to this review..." required></textarea>
-                                            <button type="submit" class="btn btn-sm btn-primary">Reply</button>
+                                            <button type="submit" class="btn btn-sm btn-primary">Phản hồi</button>
                                         </form>
                                     @endif
                                 </td>

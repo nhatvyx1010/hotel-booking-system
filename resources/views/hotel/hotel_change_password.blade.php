@@ -5,13 +5,13 @@
 <div class="page-content">
     <!--breadcrumb-->
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">Admin Change Password</div>
+        <div class="breadcrumb-title pe-3">Đổi Mật Khẩu Admin</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Admin Change Password</li>
+                    <li class="breadcrumb-item active" aria-current="page">Đổi Mật Khẩu Admin</li>
                 </ol>
             </nav>
         </div>
@@ -63,7 +63,7 @@
             <div class="card-body">
                 <div class="row mb-3">
                     <div class="col-sm-3">
-                        <h6 class="mb-0">Old Password</h6>
+                        <h6 class="mb-0">Mật khẩu cũ</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
                         <input type="password" name="old_password" class="form-control @error('old_password') is-invalid
@@ -76,7 +76,7 @@
 
                 <div class="row mb-3">
                     <div class="col-sm-3">
-                        <h6 class="mb-0">New Password</h6>
+                        <h6 class="mb-0">Mật khẩu mới</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
                         <input type="password" name="new_password" class="form-control @error('new_password') is-invalid
@@ -89,7 +89,7 @@
 
                 <div class="row mb-3">
                     <div class="col-sm-3">
-                        <h6 class="mb-0">Confirm New Password</h6>
+                        <h6 class="mb-0">Xác nhận mật khẩu mới</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
                         <input type="password" name="new_password_confirmation" class="form-control"
@@ -100,7 +100,7 @@
                 <div class="row">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-9 text-secondary">
-                        <input type="submit" class="btn btn-primary px-4" value="Save Changes" />
+                        <input type="submit" class="btn btn-primary px-4" value="Lưu thay đổi" />
                     </div>
                 </div>
             </div>
