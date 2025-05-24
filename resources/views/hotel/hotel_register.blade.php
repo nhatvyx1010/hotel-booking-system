@@ -20,7 +20,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 	<link href="{{asset('backend/assets/css/app.css')}}" rel="stylesheet">
 	<link href="{{asset('backend/assets/css/icons.css')}}" rel="stylesheet">
-	<title>Hotel Register Page</title>
+	<title>Trang Đăng ký Hotel</title>
 </head>
 
 <body class="">
@@ -49,14 +49,14 @@
 									</div>
 									<div class="text-center mb-4">
 										<h5 class="">Hotel Booking - Hotel Manage</h5>
-										<p class="mb-0">Register New Account</p>
+										<p class="mb-0">Đăng ký tài khoản mới</p>
 									</div>
 									<div class="form-body">
             <form class="row g-3" method="POST" action="{{ route('hotel.register_submit') }}">
                 @csrf
             
 				<div class="mb-3">
-                      <label class="form-label">Store Name</label>
+                      <label class="form-label">Tên khách sạn</label>
                       <input type="text" name="name" class="form-control" id="name" placeholder="Enter Name">
 					  
 						@error('name')
@@ -65,7 +65,7 @@
 					  
                   </div>
                   <div class="mb-3">
-                      <label class="form-label">Phone</label>
+                      <label class="form-label">Số điện thoại</label>
                       <input type="text" name="phone" class="form-control" id="phone" placeholder="Enter Phone">
 					  
 						@error('phone')
@@ -73,7 +73,7 @@
 						@enderror
                   </div>
                   <div class="mb-3">
-                      <label class="form-label">Address</label>
+                      <label class="form-label">Địa chỉ</label>
                       <input type="text" name="address" class="form-control" id="address" placeholder="Enter Address">
 					  
 						@error('address')
@@ -83,7 +83,7 @@
 
 				  <input type="hidden" name="city_id" id="city_id">
 					<div class="mb-3">
-						<label class="form-label">City</label>
+						<label class="form-label">Thành phố</label>
 						<input list="cities" name="city_name" class="form-control" placeholder="Enter city name" required>
 						<datalist id="cities">
 							@foreach ($cities as $city)
@@ -105,7 +105,7 @@
 				  <div class="mb-3">
                       <div class="d-flex align-items-start">
                           <div class="flex-grow-1">
-                              <label class="form-label">Password</label>
+                              <label class="form-label">Mật khẩu</label>
                           </div>
                       </div>
                       
@@ -120,7 +120,7 @@
 				  <div class="mb-3">
 						<div class="d-flex align-items-start">
 							<div class="flex-grow-1">
-								<label class="form-label">Confirm Password</label>
+								<label class="form-label">Xác nhận mật khẩu</label>
 							</div>
 						</div>
 						
@@ -142,13 +142,13 @@
             </div>
             <div class="col-12">
                 <div class="text-center ">
-                    <p class="mb-0">Don't have an account yet? <a href="{{ route('hotel.login') }}">Sign in here</a>
+                    <p class="mb-0">Bạn chưa có tài khoản? <a href="{{ route('hotel.login') }}">Đăng nhập tại đây</a>
                     </p>
                 </div>
             </div>
         </form>
 									</div>
-									<div class="login-separater text-center mb-5"> <span>OR SIGN IN WITH</span>
+									<div class="login-separater text-center mb-5"> <span>HOẶC ĐĂNG NHẬP BẰNG</span>
 										<hr>
 									</div>
 									<div class="list-inline contacts-social text-center">

@@ -19,7 +19,7 @@
 						<div class="card-body">
 							<div class="d-flex align-items-center">
 								<div>
-									<p class="mb-0 text-secondary">Booking Number</p>
+									<p class="mb-0 text-secondary">Mã Đặt phòng</p>
 									<h6 class="my-1 text-info">{{ $editData->code }}</h6>
 								</div>
 								<div class="widgets-icons-2 rounded-circle bg-gradient-blues text-white ms-auto"><i class='bx bxs-cart'></i>
@@ -33,7 +33,7 @@
 					   <div class="card-body">
 						   <div class="d-flex align-items-center">
 							   <div>
-								   <p class="mb-0 text-secondary">Booking Date</p>
+								   <p class="mb-0 text-secondary">Ngày Đặt phòng</p>
 								   <h6 class="my-1 text-danger">{{ \Carbon\Carbon::parse( $editData->created_at )->format('d/m/Y')}}</h6>
 							   </div>
 							   <div class="widgets-icons-2 rounded-circle bg-gradient-burning text-white ms-auto"><i class='bx bxs-wallet'></i>
@@ -47,7 +47,7 @@
 					   <div class="card-body">
 						   <div class="d-flex align-items-center">
 							   <div>
-								   <p class="mb-0 text-secondary">Payment Method</p>
+								   <p class="mb-0 text-secondary">Phương thức Thanh toán</p>
 								   <h6 class="my-1 text-success">{{ $editData->payment_method }}</h6>
 							   </div>
 							   <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto"><i class='bx bxs-bar-chart-alt-2' ></i>
@@ -61,12 +61,12 @@
 					   <div class="card-body">
 						   <div class="d-flex align-items-center">
 							   <div>
-								   <p class="mb-0 text-secondary">Payment Status</p>
+								   <p class="mb-0 text-secondary">Trạng thái Thanh toán</p>
 								   <h6 class="my-1 text-warning">
                                     @if($editData->payment_status == '1')
-                                        <span class="text-success">Complete</span>
+                                        <span class="text-success">Hoàn thành</span>
                                     @else
-                                        <span class="text-danger">Pending</span>
+                                        <span class="text-danger">Chờ xử lý</span>
                                     @endif</h6>
 							   </div>
 							   <div class="widgets-icons-2 rounded-circle bg-gradient-orange text-white ms-auto"><i class='bx bxs-group'></i>
@@ -81,11 +81,11 @@
 					   <div class="card-body">
 						   <div class="d-flex align-items-center">
 							   <div>
-								   <p class="mb-0 text-secondary">Booking Status</p>
+								   <p class="mb-0 text-secondary">Trạng thái Đặt phòng</p>
 								   <h6 class="my-1 text-warning">@if($editData->status == '1')
-                                        <span class="text-success">Active</span>
+                                        <span class="text-success">Hoạt động</span>
                                     @else
-                                        <span class="text-danger">Pending</span>
+                                        <span class="text-danger">Chờ xử lý</span>
                                     @endif</h6>
 							   </div>
 							   <div class="widgets-icons-2 rounded-circle bg-gradient-orange text-white ms-auto"><i class='bx bxs-group'></i>
@@ -104,12 +104,12 @@
                                 <table class="table align-middle mb-0">
                                     <thead class="table-light">
                                         <tr>
-                                            <th>Room Type</th>
-                                            <th>Total Room</th>
-                                            <th>Price</th>
-                                            <th>Check In / Out Date</th>
-                                            <th>Total Days</th>
-                                            <th>Total</th>
+                                            <th>Loại Phòng</th>
+                                            <th>Tổng Số Phòng</th>
+                                            <th>Giá</th>
+                                            <th>Ngày Nhận / Trả Phòng</th>
+                                            <th>Tổng Số Ngày</th>
+                                            <th>Tổng Tiền</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -130,27 +130,27 @@
                                     
                                     <table class="table test_table" style="float: right" border="none">
                                         <tr>
-                                            <td>Subtotal</td>
+                                            <td>Tạm tính</td>
                                             <td>{{ number_format($editData->subtotal, 0, ',', '.') }} VNĐ</td>
                                         </tr>
                                         <tr>
-                                            <td>Discount</td>
+                                            <td>Giảm Giá</td>
                                             <td>{{ number_format($editData->discount, 0, ',', '.') }} VNĐ</td>
                                         </tr>
                                         <tr> <!-- Nhấn mạnh Grand Total -->
-                                            <td>Grand Total</td>
+                                            <td>Tổng Cộng</td>
                                             <td>{{ number_format($editData->total_price, 0, ',', '.') }} VNĐ</td>
                                         </tr>
                                         <tr class="important-row"> <!-- Nhấn mạnh Prepaid Amount -->
-                                            <td>Prepaid Amount</td>
+                                            <td>Số Tiền Đã Thanh Toán</td>
                                             <td>{{ number_format($editData->prepaid_amount, 0, ',', '.') }} VNĐ</td>
                                         </tr>
                                         <tr class="important-row"> <!-- Nhấn mạnh Remaining Amount -->
-                                            <td>Remaining Amount</td>
+                                            <td>Số Tiền Còn Lại</td>
                                             <td>{{ number_format($editData->remaining_amount, 0, ',', '.') }} VNĐ</td>
                                         </tr>
                                         <tr  class="important-row">
-                                            <td>Total Amount</td>
+                                            <td>Tổng Số Tiền</td>
                                             <td>{{ number_format($editData->total_amount, 0, ',', '.') }} VNĐ</td>
                                         </tr>
                                     </table>
@@ -160,7 +160,7 @@
 
                                 <div style="clear: both"></div>
                                 <div style="margin-top: 40px; margin-bottom: 20px">
-                                    <a href="javascript::void(0)" class="btn btn-primary assign_room">Assign Room</a>
+                                    <a href="javascript::void(0)" class="btn btn-primary assign_room">Gán Phòng</a>
                                 </div>
                                 @php
                                     $assign_rooms = App\Models\BookingRoomList::with('room_number')->where('booking_id', $editData->id)->get();
@@ -169,21 +169,21 @@
                                 @if(count($assign_rooms) > 0)
                                 <table class="table table-bordered">
                                     <tr>
-                                        <th>Room Number</th>
-                                        <th>Action</th>
+                                        <th>Số Phòng</th>
+                                        <th>Hành Động</th>
                                     </tr>
                                     @foreach ($assign_rooms as $assign_room)
                                     <tr>
                                         <td>{{ $assign_room->room_number->room_no }}</td>
                                         <td>
-                                            <a href="{{ route('hotel.assign_room_delete', $assign_room->id) }}" id="delete">Delete</a>
+                                            <a href="{{ route('hotel.assign_room_delete', $assign_room->id) }}" id="delete">Xóa</a>
                                         </td>
                                     </tr>
                                     @endforeach
                                 </table>
                                 @else
                                 <div class="alert alert-danger text-center">
-                                    Not Found Assign Room
+                                   Không Tìm Thấy Phòng Đã Gán
                                 </div>
                                 @endif
                             </div>
@@ -192,25 +192,25 @@
                                 @csrf
                                 <div class="row" style="margin-top: 40px">
                                     <div clas="col-md-5">
-                                        <label for="">Payment Status</label>
+                                        <label for="">Trạng Thái Thanh Toán</label>
                                     <select name="payment_status" id="input7" class="form-select">
-                                        <option selected="">Selected Status...</option>
-                                        <option value="0" {{$editData->payment_status == 0?'selected':''}}>Pending</option>
-                                        <option value="1" {{$editData->payment_status == 1?'selected':''}}>Complete</option>
+                                        <option selected="">Chọn Trạng Thái...</option>
+                                        <option value="0" {{$editData->payment_status == 0?'selected':''}}>Đang Chờ</option>
+                                        <option value="1" {{$editData->payment_status == 1?'selected':''}}>Hoàn Thành</option>
                                     </select>
                                     </div>
 
                                     <div clas="col-md-5">
-                                        <label for="">Booking Status</label>
+                                        <label for="">Trạng Thái Đặt Phòng</label>
                                     <select name="status" id="input7" class="form-select">
                                         <option selected="">Selected Status...</option>
-                                        <option value="0" {{$editData->status == 0?'selected':''}}>Pending</option>
-                                        <option value="1" {{$editData->status == 1?'selected':''}}>Complete</option>
+                                        <option value="0" {{$editData->status == 0?'selected':''}}>Đang Chờ<</option>
+                                        <option value="1" {{$editData->status == 1?'selected':''}}>Hoàn Thành</option>
                                     </select>
                                     </div>
 
                                     <div class="col-md-12" style="margin-top:20px">
-                                        <button type="submit" class="btn btn-primary">Update</button>
+                                        <button type="submit" class="btn btn-primary">Cập Nhật</button>
                                         <a href="{{ route('download.invoice', $editData->id) }}" class="btn btn-warning px-3 radius-10"><i class="lni lni-download"></i>Download Invoice</a>
                                     </div>
                                 </div>
@@ -224,7 +224,7 @@
 						<div class="card-header">
 							<div class="d-flex align-items-center">
 								<div>
-									<h6 class="mb-0">Manage Room and Date</h6>
+									<h6 class="mb-0">Quản Lý Phòng và Ngày</h6>
 								</div>
 							</div>
 						</div>
@@ -233,25 +233,25 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-12 mb-2">
-                                        <label for="">Check In</label>
+                                        <label for="">Ngày Nhận Phòng</label>
                                         <input type="date" required name="check_in" id="check_in" class="form-control" value="{{ $editData->check_in }}">
                                     </div>
                                     <div class="col-md-12 mb-2">
-                                        <label for="">Check Out</label>
+                                        <label for="">Ngày Trả Phòng</label>
                                         <input type="date" required name="check_out" id="check_out" class="form-control" value="{{ $editData->check_out }}">
                                     </div>
                                     <div class="col-md-12 mb-2">
-                                        <label for="">Room</label>
+                                        <label for="">Số Phòng</label>
                                         <input type="number" required name="number_of_rooms" class="form-control" value="{{ $editData->number_of_rooms }}">
                                     </div>
 
                                     <input type="hidden" name="available_room" id="available_room" class="form-control">
 
                                     <div class="col-md-12 mb-2">
-                                        <label for="">Availability: <span class="text-success availability"></span></label>
+                                        <label for="">Tình Trạng Phòng: <span class="text-success availability"></span></label>
                                     </div>
                                     <div class="mt-2">
-                                        <button type="submit" class="btn btn-primary">Update</button>
+                                        <button type="submit" class="btn btn-primary">Cập Nhật</button>
                                     </div>
                                 </div>
                             </form>
@@ -262,26 +262,24 @@
 						<div class="card-header">
 							<div class="d-flex align-items-center">
 								<div>
-									<h6 class="mb-0">Customer Information</h6>
+									<h6 class="mb-0">Thông Tin Khách Hàng</h6>
 								</div>
 							</div>
 						</div>
 						   <div class="card-body">
 
                             <ul class="list-group list-group-flush">
-							<li class="list-group-item d-flex bg-transparent justify-content-between align-items-center border-top">Name <span class="badge bg-success rounded-pill">{{ $editData['user']['name'] }}</span>
+							<li class="list-group-item d-flex bg-transparent justify-content-between align-items-center border-top">Tên <span class="badge bg-success rounded-pill">{{ $editData['user']['name'] }}</span>
 							</li>
 							<li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Email <span class="badge bg-danger rounded-pill">{{ $editData['user']['email'] }}</span>
 							</li>
-							<li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Phone <span class="badge bg-primary rounded-pill">{{ $editData->phone }}</span>
+							<li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Điện Thoại <span class="badge bg-primary rounded-pill">{{ $editData->phone }}</span>
 							</li>
-							<li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Country <span class="badge bg-warning text-dark rounded-pill">{{ $editData->country }}</span>
+							<li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Quốc Gia <span class="badge bg-warning text-dark rounded-pill">{{ $editData->country }}</span>
 							</li>
-                            <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center border-top">State <span class="badge bg-success rounded-pill">{{ $editData->state }}</span>
+                            <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center border-top">Tỉnh/ Thành phố <span class="badge bg-success rounded-pill">{{ $editData->state }}</span>
 							</li>
-							<li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Zip Code <span class="badge bg-danger rounded-pill">{{ $editData->zip_code }}</span>
-							</li>
-                            <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Address <span class="badge bg-danger rounded-pill">{{ $editData->address }}</span>
+                            <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Địa Chỉ <span class="badge bg-danger rounded-pill">{{ $editData->address }}</span>
 							</li>
 						</ul>
                             </div>
@@ -296,7 +294,7 @@
 											<div class="modal-dialog">
 												<div class="modal-content">
 													<div class="modal-header">
-														<h5 class="modal-title" id="exampleModalLabel">Rooms</h5>
+														<h5 class="modal-title" id="exampleModalLabel">Phòng</h5>
 														<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 													</div>
 													<div class="modal-body"></div>

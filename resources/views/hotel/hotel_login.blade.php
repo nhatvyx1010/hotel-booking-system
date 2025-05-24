@@ -20,7 +20,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 	<link href="{{asset('backend/assets/css/app.css')}}" rel="stylesheet">
 	<link href="{{asset('backend/assets/css/icons.css')}}" rel="stylesheet">
-	<title>Hotel Login Page</title>
+	<title>Trang Đăng Nhập Hotel</title>
 </head>
 
 <body class="">
@@ -49,7 +49,7 @@
 									</div>
 									<div class="text-center mb-4">
 										<h5 class="">Hotel Booking - Hotel Manage</h5>
-										<p class="mb-0">Please log in to your account</p>
+										<p class="mb-0">Vui lòng đăng nhập vào tài khoản của bạn</p>
 									</div>
 									<div class="form-body">
 									<form class="row g-3" method="POST" action="{{ route('login') }}">
@@ -63,7 +63,7 @@
                 @enderror
             </div>
             <div class="col-12">
-                <label for="inputChoosePassword" class="form-label">Password</label>
+                <label for="inputChoosePassword" class="form-label">Mật khẩu</label>
                 <div class="input-group" id="show_hide_password">
                     <input type="password" name="password" class="form-control border-end-0" id="password" placeholder="Enter Password"> <a href="javascript:;" class="input-group-text bg-transparent"><i class="bx bx-hide"></i></a>
                 </div>
@@ -71,10 +71,10 @@
             <div class="col-md-6">
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
-                    <label class="form-check-label" for="flexSwitchCheckChecked">Remember Me</label>
+                    <label class="form-check-label" for="flexSwitchCheckChecked">Ghi nhớ đăng nhập</label>
                 </div>
             </div>
-            <div class="col-md-6 text-end">	<a href="authentication-forgot-password.html">Forgot Password ?</a>
+            <div class="col-md-6 text-end">	<a href="authentication-forgot-password.html">Quên mật khẩu?</a>
             </div>
             <div class="col-12">
                 <div class="d-grid">
@@ -83,13 +83,13 @@
             </div>
             <div class="col-12">
                 <div class="text-center ">
-                    <p class="mb-0">Don't have an account yet? <a href="authentication-signup.html">Sign up here</a>
+                    <p class="mb-0">Chưa có tài khoản? <a href="authentication-signup.html">Đăng ký tại đây</a>
                     </p>
                 </div>
             </div>
         </form>
 									</div>
-									<div class="login-separater text-center mb-5"> <span>OR SIGN IN WITH</span>
+									<div class="login-separater text-center mb-5"> <span>HOẶC ĐĂNG NHẬP BẰNG</span>
 										<hr>
 									</div>
 									<div class="list-inline contacts-social text-center">

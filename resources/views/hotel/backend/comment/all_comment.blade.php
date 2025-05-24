@@ -17,7 +17,7 @@
 							<ol class="breadcrumb mb-0 p-0">
 								<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
 								</li>
-								<li class="breadcrumb-item active" aria-current="page">All Comments</li>
+								<li class="breadcrumb-item active" aria-current="page">Tất cả bình luận</li>
 							</ol>
 						</nav>
 					</div>
@@ -35,11 +35,11 @@
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Serial</th>
-                            <th>User Name</th>
-                            <th>Post Name</th>
-                            <th>Message</th>
-                            <th>Action</th>
+                            <th>STT</th>
+                            <th>Tên người dùng</th>
+                            <th>Bài viết</th>
+                            <th>Nội dung</th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>

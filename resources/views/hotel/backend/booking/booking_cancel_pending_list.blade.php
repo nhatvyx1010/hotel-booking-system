@@ -10,13 +10,13 @@
 							<ol class="breadcrumb mb-0 p-0">
 								<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
 								</li>
-								<li class="breadcrumb-item active" aria-current="page">All Booking</li>
+								<li class="breadcrumb-item active" aria-current="page">Danh sách Đặt phòng</li>
 							</ol>
 						</nav>
 					</div>
 					<div class="ms-auto">
 						<div class="btn-group">
-                        <a href="{{ route('hotel.add.room.list') }}" class="btn btn-primary px-5"> Add Booking </a>
+                        <a href="{{ route('hotel.add.room.list') }}" class="btn btn-primary px-5"> Thêm Đặt phòng </a>
 						</div>
 					</div>
 				</div>
@@ -29,17 +29,17 @@
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Serial</th>
-                            <th>Booking Number</th>
-                            <th>Booking Date</th>
-                            <th>Customer</th>
-                            <th>Room</th>
-                            <th>Check IN/OUT</th>
-                            <th>Total Room</th>
-                            <th>Guest</th>
-                            <th>Payment</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>STT</th>
+                            <th>Mã đặt phòng</th>
+                            <th>Ngày đặt</th>
+                            <th>Khách hàng</th>
+                            <th>Loại phòng</th>
+                            <th>Ngày nhận/trả phòng</th>
+                            <th>Tổng số phòng</th>
+                            <th>Khách</th>
+                            <th>Thanh toán</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,18 +55,18 @@
                                 <td>{{ $item->persion }}</td>
                                 <td>
                                     @if($item->payment_status == '1')
-                                        <span class="text-success">Complete</span>
+                                        <span class="text-success">Hoàn thành</span>
                                     @else
-                                        <span class="text-danger">Pending</span>
+                                        <span class="text-danger">Chờ xử lý</span>
                                     @endif
                                 </td>
                                 <td>@if($item->status == '1')
-                                        <span class="text-success">Active</span>
+                                        <span class="text-success">Hoạt động</span>
                                     @else
-                                        <span class="text-danger">Pending</span>
+                                        <span class="text-danger">Chờ xử lý</span>
                                     @endif</td>
                                 <td>
-                                    <a href="{{ route('hotel.booking.cancel_pending.detail', $item->id) }}" class="btn btn-primary px-3 radius-30" >Detail</a>
+                                    <a href="{{ route('hotel.booking.cancel_pending.detail', $item->id) }}" class="btn btn-primary px-3 radius-30" >Chi tiết</a>
                                 </td>
                             </tr>
                         @endforeach

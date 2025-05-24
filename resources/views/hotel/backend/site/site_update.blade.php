@@ -5,13 +5,13 @@
 <div class="page-content">
     <!--breadcrumb-->
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">Update Site Setting</div>
+        <div class="breadcrumb-title pe-3">Cập nhật cấu hình trang web</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Update Site Setting</li>
+                    <li class="breadcrumb-item active" aria-current="page">Cập nhật cấu hình trang web</li>
                 </ol>
             </nav>
         </div>
@@ -28,7 +28,7 @@
             <div class="card-body">
                 <div class="row mb-3">
                     <div class="col-sm-3">
-                        <h6 class="mb-0">Phone</h6>
+                        <h6 class="mb-0">Số điện thoại</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
                         <input type="text" name="phone" class="form-control" value="{{ $site->phone }}" />
@@ -36,7 +36,7 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-sm-3">
-                        <h6 class="mb-0">Address</h6>
+                        <h6 class="mb-0">Địa chỉ</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
                         <input type="text" name="address" class="form-control" value="{{ $site->address }}" />
@@ -71,7 +71,7 @@
 
                 <div class="row mb-3">
                     <div class="col-sm-3">
-                        <h6 class="mb-0">Copyright</h6>
+                        <h6 class="mb-0">Bản quyền</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
                         <input type="text" name="copyright" class="form-control" value="{{ $site->copyright }}"/>
@@ -91,7 +91,7 @@
                 <div class="row">
                     <div class="col-sm-3"></div>
                     <div class="col-sm-9 text-secondary">
-                        <input type="submit" class="btn btn-primary px-4" value="Save Changes" />
+                        <input type="submit" class="btn btn-primary px-4" value="Lưu thay đổi" />
                     </div>
                 </div>
             </div>

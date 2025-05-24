@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Invoice</title>
+    <title>Hóa đơn</title>
 
     <style type="text/css"> 
         * {
@@ -64,18 +64,18 @@
   <h2 style="color: green; font-size: 26px;"><strong>Booking Hotel</strong></h2>
   <!-- Hotel information -->
   <div class="hotel-info">
-      <p><strong>Hotel Name:</strong> {{ $hotel->name ?? 'Hotel Name' }}</p>
-      <p><strong>Address:</strong> {{ $hotel->address ?? 'Hotel Address' }}</p>
-      <p><strong>Phone:</strong> {{ $hotel->phone ?? '+84 123 456 789' }}</p>
+      <p><strong>Tên khách sạn:</strong> {{ $hotel->name ?? 'Hotel Name' }}</p>
+      <p><strong>Địa chỉ:</strong> {{ $hotel->address ?? 'Hotel Address' }}</p>
+      <p><strong>Điện thoại:</strong> {{ $hotel->phone ?? '+84 123 456 789' }}</p>
       <p><strong>Email:</strong> {{ $hotel->email ?? 'hotel@example.com' }}</p>
   </div>
 </td>
           <td align="right">
               <pre class="font" >
-                 Booking Office
+                 Booking Hotel
                  Email: bookinghotel@book.com
-                 Phone: +8484848484
-                 Vietnam
+                 Điện thoại: +8484848484
+                 Việt Nam
               </pre>
           </td>
       </tr>
@@ -87,13 +87,13 @@
 
       <thead class="table-light">
           <tr>
-              <th>Room Type</th>
-              <th>Number of Rooms</th>
-              <th>Price</th>
-              <th>Check-in / Check-out</th>
-              <th>Total Nights</th>
-              <th>Total</th>
-              <th>Payment Method</th>
+            <th>Loại phòng</th>
+            <th>Số lượng phòng</th>
+            <th>Giá</th>
+            <th>Ngày nhận / Ngày trả</th>
+            <th>Tổng số đêm</th>
+            <th>Tổng cộng</th>
+            <th>Phương thức thanh toán</th>
           </tr>
       </thead>
       <tbody>
@@ -116,18 +116,18 @@
 
     <table class="table test_table" style="float: right" border="none">
       <tr>
-          <td>Subtotal</td>
+          <td>Tạm tính</td>
           <td>{{ number_format($editData->subtotal, 0, ',', '.') }} VND</td> 
       </tr>
       <tr>
-          <td>Discount</td>
+          <td>Giảm giá</td>
           <td>{{ number_format($editData->discount, 0, ',', '.') }} VND</td>
       </tr>
     <tr>
-        <td>Prepaid Amount</td>
+        <td>Số tiền trả trước</td>
         <td>{{ number_format($editData->prepaid_amount ?? 0, 0, ',', '.') }} VND</td>
     <tr>
-      <td><strong>Total</strong></td>
+      <td><strong>Tổng cộng</strong></td>
       <td>
         <strong>
           {{ number_format($editData->subtotal - $editData->discount - ($editData->prepaid_amount ?? 0), 0, ',', '.') }} VND
@@ -137,11 +137,11 @@
     </table>
 
     <div class="thanks mt-3">
-      <p>Thank you for your booking!</p>
+      <p>Cảm ơn bạn đã đặt phòng!</p>
     </div>
     <div class="authority float-right mt-5">
         <p>-----------------------------------</p>
-        <h5>Authorized Signature:</h5>
+        <h5>Chữ ký xác nhận:</h5>
     </div>
   </body>
 </html>

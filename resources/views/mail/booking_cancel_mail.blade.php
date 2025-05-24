@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>Booking Cancelled</title>
+    <title>Đặt Phòng Đã Bị Hủy</title>
     <style>
         body {
             background-color: #f7f9fc;
@@ -72,13 +72,13 @@
 </head>
 <body>
     <div class="container">
-        <h1>Your Booking Has Been Cancelled</h1>
-        <p>We’ve successfully cancelled your reservation. Below are the details of your cancelled booking:</p>
+        <h1>Đặt Phòng Của Bạn Đã Bị Hủy</h1>
+        <p>Chúng tôi đã hủy thành công đặt phòng của bạn. Dưới đây là chi tiết về đặt phòng đã bị hủy:</p>
 
-        <h2>Guest Information</h2>
+        <h2>Thông Tin Khách Hàng</h2>
         <table>
             <tr>
-                <th>Name</th>
+                <th>Tên</th>
                 <td><strong>{{ $booking['name'] }}</strong></td>
             </tr>
             <tr>
@@ -86,27 +86,27 @@
                 <td><strong>{{ $booking['email'] }}</strong></td>
             </tr>
             <tr>
-                <th>Phone</th>
+                <th>Điện Thoại</th>
                 <td><strong>{{ $booking['phone'] }}</strong></td>
             </tr>
             <tr>
-                <th>Check In</th>
+                <th>Ngày Nhận Phòng</th>
                 <td><strong>{{ $booking['check_in'] }}</strong></td>
             </tr>
             <tr>
-                <th>Check Out</th>
+                <th>Ngày Trả Phòng</th>
                 <td><strong>{{ $booking['check_out'] }}</strong></td>
             </tr>
         </table>
 
-        <h2>Hotel Information</h2>
+        <h2>Thông Tin Khách Sạn</h2>
         <table>
             <tr>
-                <th>Hotel Name</th>
+                <th>Tên Khách Sạn</th>
                 <td>{{ $booking['hotel_name'] }}</td>
             </tr>
             <tr>
-                <th>Phone</th>
+                <th>Điện Thoại</th>
                 <td>{{ $booking['hotel_phone'] }}</td>
             </tr>
             <tr>
@@ -114,33 +114,33 @@
                 <td>{{ $booking['hotel_email'] }}</td>
             </tr>
             <tr>
-                <th>Address</th>
+                <th>Địa Chỉ</th>
                 <td>{{ $booking['hotel_address'] }}</td>
             </tr>
         </table>
         
-        <h2>Payment Information</h2>
+        <h2>Thông Tin Thanh Toán</h2>
         <table>
             <tr>
-                <th>Discount</th>
+                <th>Giảm Giá</th>
                 <td>{{ number_format($booking['discount'], 0, ',', '.') }} VNĐ</td>
             </tr>
             <tr>
-                <th>Prepaid Amount</th>
+                <th>Số Tiền Đã Thanh Toán Trước</th>
                 <td>{{ number_format($booking['prepaid_amount'], 0, ',', '.') }} VNĐ</td>
             </tr>
             <tr>
-                <th>Remaining Amount</th>
+                <th>Số Tiền Còn Lại</th>
                 <td>{{ number_format($booking['remaining_amount'], 0, ',', '.') }} VNĐ</td>
             </tr>
             <tr>
-                <th>Total Amount</th>
+                <th>Tổng Tiền</th>
                 <td>{{ number_format($booking['total_amount'], 0, ',', '.') }} VNĐ</td>
             </tr>
         </table>
 
         <div class="note">
-            If this cancellation was a mistake or if you have questions regarding refunds, please contact our support team.
+            Nếu việc hủy đặt phòng này là một nhầm lẫn hoặc bạn có thắc mắc về việc hoàn tiền, vui lòng liên hệ với đội ngũ hỗ trợ của chúng tôi.
         </div>
     </div>
 </body>

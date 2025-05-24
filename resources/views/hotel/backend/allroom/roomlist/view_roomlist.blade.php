@@ -9,13 +9,13 @@
 							<ol class="breadcrumb mb-0 p-0">
 								<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
 								</li>
-								<li class="breadcrumb-item active" aria-current="page">All Room List</li>
+								<li class="breadcrumb-item active" aria-current="page">Danh sách tất cả phòng</li>
 							</ol>
 						</nav>
 					</div>
 					<div class="ms-auto">
 						<div class="btn-group">
-                        <a href="{{ route('hotel.add.room.list') }}" class="btn btn-primary px-5"> Add Booking </a>
+                        <a href="{{ route('hotel.add.room.list') }}" class="btn btn-primary px-5"> Thêm Đặt Phòng </a>
 						</div>
 					</div>
 				</div>
@@ -28,14 +28,14 @@
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Serial</th>
-                            <th>Room Type</th>
-                            <th>Room Number</th>
-                            <th>Booking Status</th>
-                            <th>Check In/ Out Date</th>
-                            <th>Booking Number</th>
-                            <th>Customer</th>
-                            <th>Stastus</th>
+                            <th>STT</th>
+                            <th>Loại Phòng</th>
+                            <th>Số Phòng</th>
+                            <th>Trạng Thái Đặt</th>
+                            <th>Ngày Nhận / Trả Phòng</th>
+                            <th>Mã Đặt Phòng</th>
+                            <th>Khách Hàng</th>
+                            <th>Trạng Thái</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,12 +47,12 @@
                                 <td>
                                     @if($item->booking_id != '')
                                         @if($item->booking_status == 1)
-                                            <span class="badge bg-danger">Booked</span>
+                                            <span class="badge bg-danger">Đã đặt</span>
                                         @else
-                                            <span class="badge bg-warning">Pending</span>
+                                            <span class="badge bg-warning">Đang chờ</span>
                                         @endif
                                     @else
-                                        <span class="badge bg-success">Available</span>
+                                        <span class="badge bg-success">Còn trống</span>
                                     @endif
                                 </td>
                                 <td>
@@ -74,9 +74,9 @@
                                 </td>
                                 <td>
                                     @if($item->status == 'Active')
-                                    <span class="badge bg-success">Published</span>
+                                    <span class="badge bg-success">Đang hoạt động</span>
                                     @else
-                                    <span class="badge bg-danger">InActive</span>
+                                    <span class="badge bg-danger">Không hoạt động</span>
                                     @endif
                                 </td>
                             </tr>
