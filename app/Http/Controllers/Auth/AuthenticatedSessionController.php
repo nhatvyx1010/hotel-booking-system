@@ -35,7 +35,7 @@ class AuthenticatedSessionController extends Controller
         $username = $profileData->name;
 
         $notification = array(
-            'messsage' => 'User '.$username.' Login Successfully',
+            'message' => 'Người dùng '.$username.' đã đăng nhập thành công',
             'alert-type' => 'info'
         );
         // return redirect()->back()->with('message', 'User '.$username.' Login Successfully')->with('alert-type', 'info');
@@ -46,10 +46,10 @@ class AuthenticatedSessionController extends Controller
         }elseif($request->user()->role === 'hotel'){
             $url = '/hotel/dashboard';
         }elseif($request->user()->role === 'user'){
-            $url = '/dashboard';
+            $url = '/profile';
         }
 
-        return redirect()->intended($url)->with('message', 'User '.$username.' Login Successfully')->with('alert-type', 'info');
+        return redirect()->intended($url)->with('message', 'Người dùng '.$username.' đã đăng nhập thành công')->with('alert-type', 'info');
     }
 
     /**

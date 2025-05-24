@@ -5,13 +5,13 @@
 <div class="page-content">
     <!--breadcrumb-->
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">Add Gallery</div>
+        <div class="breadcrumb-title pe-3">Thêm Bộ Sưu Tập</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Add Gallery</li>
+                    <li class="breadcrumb-item active" aria-current="page">Thêm Bộ Sưu Tập</li>
                 </ol>
             </nav>
         </div>
@@ -27,14 +27,14 @@
                             @csrf
 
 									<div class="col-md-6">
-										<label for="input1" class="form-label">Gallery Image</label>
+										<label for="input1" class="form-label">Ảnh Bộ Sưu Tập</label>
 										<input type="file" name="photo_name[]" class="form-control" id="multiImg" multiple>
                                         <div class="row" id="preview_img"></div>
 									</div>
 
 									<div class="col-md-12">
 										<div class="d-md-flex d-grid align-items-center gap-3">
-											<button type="submit" class="btn btn-primary px-4">Save Changes</button>
+											<button type="submit" class="btn btn-primary px-4">Lưu Thay Đổi</button>
 										</div>
 									</div>
 								</form>

@@ -5,12 +5,12 @@
 <div class="page-content">
     <!--breadcrumb-->
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">Add Hotel</div>
+        <div class="breadcrumb-title pe-3">Thêm Khách Sạn</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Add Hotel</li>
+                    <li class="breadcrumb-item active" aria-current="page">Thêm Khách Sạn</li>
                 </ol>
             </nav>
         </div>
@@ -26,7 +26,7 @@
                             @csrf
                             <div class="card-body">
                                 <div class="row mb-3">
-                                    <div class="col-sm-3"><h6 class="mb-0">Name</h6></div>
+                                    <div class="col-sm-3"><h6 class="mb-0">Tên</h6></div>
                                     <div class="form-group col-sm-9 text-secondary">
                                         <input type="text" name="name" class="form-control" />
                                     </div>
@@ -40,14 +40,14 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <div class="col-sm-3"><h6 class="mb-0">Phone</h6></div>
+                                    <div class="col-sm-3"><h6 class="mb-0">Số Điện Thoại</h6></div>
                                     <div class="form-group col-sm-9 text-secondary">
                                         <input type="text" name="phone" class="form-control" />
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
-                                    <div class="col-sm-3"><h6 class="mb-0">Address</h6></div>
+                                    <div class="col-sm-3"><h6 class="mb-0">Địa chỉ</h6></div>
                                     <div class="form-group col-sm-9 text-secondary">
                                         <input type="text" name="address" class="form-control" />
                                     </div>
@@ -56,10 +56,10 @@
                                 <input type="hidden" name="city_id" id="city_id">
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">City</h6>
+                                        <h6 class="mb-0">Thành phố</h6>
                                     </div>
                                     <div class="form-group col-sm-9 text-secondary">
-                                        <input list="cities" name="city_name" class="form-control" placeholder="Enter city name" required>
+                                        <input list="cities" name="city_name" class="form-control" placeholder="Nhập tên thành phố" required>
                                         <datalist id="cities">
                                             @foreach ($cities as $city)
                                                 <option value="{{ $city->name }}" data-id="{{ $city->id }}"></option>
@@ -72,21 +72,21 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <div class="col-sm-3"><h6 class="mb-0">Password</h6></div>
+                                    <div class="col-sm-3"><h6 class="mb-0">Mật khẩu</h6></div>
                                     <div class="form-group col-sm-9 text-secondary">
                                         <input type="password" name="password" class="form-control" />
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
-                                    <div class="col-sm-3"><h6 class="mb-0">Confirm Password</h6></div>
+                                    <div class="col-sm-3"><h6 class="mb-0">Xác nhận mật khẩu</h6></div>
                                     <div class="form-group col-sm-9 text-secondary">
                                         <input type="password" name="password_confirmation" class="form-control" />
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
-                                    <div class="col-sm-3"><h6 class="mb-0">Photo</h6></div>
+                                    <div class="col-sm-3"><h6 class="mb-0">Hình ảnh</h6></div>
                                     <div class="form-group col-sm-9 text-secondary">
                                         <input class="form-control" name="photo" type="file" id="photo" />
                                     </div>
@@ -102,7 +102,7 @@
                                 <div class="row">
                                     <div class="col-sm-3"></div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="submit" class="btn btn-primary px-4" value="Save Hotel" />
+                                        <input type="submit" class="btn btn-primary px-4" value="Lưu khách sạn" />
                                     </div>
                                 </div>
                             </div>
@@ -140,12 +140,12 @@
                 photo: { required: true }
             },
             messages :{
-                name: { required: 'Please enter name' },
-                email: { required: 'Please enter email', email: 'Email format is incorrect' },
-                phone: { required: 'Please enter phone number' },
-                address: { required: 'Please enter address' },
-                password: { required: 'Please enter password', minlength: 'At least 6 characters' },
-                photo: { required: 'Please select a photo' },
+                name: { required: 'Vui lòng nhập tên' },
+                email: { required: 'Vui lòng nhập email', email: 'Định dạng email không đúng' },
+                phone: { required: 'Vui lòng nhập số điện thoại' },
+                address: { required: 'Vui lòng nhập địa chỉ' },
+                password: { required: 'Vui lòng nhập mật khẩu', minlength: 'Tối thiểu 6 ký tự' },
+                photo: { required: 'Vui lòng chọn hình ảnh' },
             },
             errorElement : 'span', 
             errorPlacement: function (error, element) {

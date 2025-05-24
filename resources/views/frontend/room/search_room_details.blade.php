@@ -31,10 +31,10 @@
                 <div class="inner-title">
                     <ul>
                         <li>
-                            <a href="index.html">Home</a>
+                            <a href="index.html">Trang chủ</a>
                         </li>
                         <li><i class='bx bx-chevron-right'></i></li>
-                        <li>Room Details </li>
+                        <li>Chi tiết phòng</li>
                     </ul>
                     <h3>{{ $roomdetails->type->name }}</h3>
                 </div>
@@ -53,7 +53,7 @@
                                 <input type="text" required name="hotel_id" value="{{ $hotel->id }}" hidden>
                                 <div class="col-lg-3 col-md-3">
                                     <div class="form-group">
-                                        <label>CHECK IN TIME</label>
+                                        <label>THỜI GIAN NHẬN PHÒNG</label>
                                         <div class="input-group">
                                             <input autocomplete="off" type="text" required name="check_in" class="form-control dt_picker" placeholder="yyy-mm-dd" value="{{ old('check_in') }}">
                                             <span class="input-group-addon"></span>
@@ -64,7 +64,7 @@
 
                                 <div class="col-lg-3 col-md-3">
                                     <div class="form-group">
-                                        <label>CHECK OUT TIME</label>
+                                        <label>THỜI GIAN TRẢ PHÒNG</label>
                                         <div class="input-group">
                                             <input autocomplete="off" type="text" required name="check_out" class="form-control dt_picker" placeholder="yyy-mm-dd" value="{{ old('check_out') }}">
                                             <span class="input-group-addon"></span>
@@ -75,7 +75,7 @@
 
                                 <div class="col-lg-2 col-md-2">
                                     <div class="form-group">
-                                        <label>GUESTS</label>
+                                        <label>KHÁCH</label>
                                         <select name="persion" class="form-control">
                                             <option value="01" {{ old('persion') == '01' ? 'selected' : '' }}>01</option>
                                             <option value="02" {{ old('persion') == '02' ? 'selected' : '' }}>02</option>
@@ -87,7 +87,7 @@
 
                                 <div class="col-lg-2 col-md-2">
                                     <button type="submit" class="default-btn btn-bg-one border-radius-5">
-                                        Check Availability
+                                        Kiểm tra tình trạng
                                     </button>
                                 </div>
                             </div>
@@ -105,7 +105,7 @@
                     <div class="col-lg-4">
                         <div class="room-details-side">
                             <div class="side-bar-form">
-                                <h3>Booking Sheet </h3>
+                                <h3>Phiếu Đặt Phòng </h3>
                                 <form action="{{ route('user_booking_store', $roomdetails->id) }}" method="post" id="bk_form">
                                     @csrf
                                     
@@ -114,7 +114,7 @@
                                     <div class="row align-items-center">
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Check in</label>
+                                                <label>Ngày nhận phòng</label>
                                                 <div class="input-group">
                                                     <input autocomplete="off" type="text" required name="check_in" id="check_in" class="form-control dt_picker" value="{{ old('check_in') ? date('Y-m-d', strtotime(old('check_in'))) : '' }}">
                                                     <span class="input-group-addon"></span>
@@ -125,7 +125,7 @@
 
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Check Out</label>
+                                                <label>Ngày trả phòng</label>
                                                 <div class="input-group">
                                                     <input autocomplete="off" type="text" required name="check_out" id="check_out" class="form-control dt_picker" value="{{ old('check_out') ? date('Y-m-d', strtotime(old('check_out'))) : '' }}">
                                                     <span class="input-group-addon"></span>
@@ -136,7 +136,7 @@
 
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Numbers of Persons</label>
+                                                <label>Số lượng khách</label>
                                                 <select class="form-control" name="persion" id="number_persion">
                                                     @for($i = 1; $i <= 4; $i++)
                                                         <option {{ old('persion') == $i ? 'selected' : '' }} value="0{{ $i }}">0{{ $i }}</option>
@@ -151,7 +151,7 @@
 
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Numbers of Rooms</label>
+                                                <label>Số lượng phòng</label>
                                                 <select class="form-control number_of_rooms" name="number_of_rooms" id="select_room">
                                                 @for($i = 1; $i <= 5; $i++)
                                                     <option value="0{{ $i }}">0{{ $i }}</option>
@@ -166,17 +166,17 @@
                                         <table class="table">
                                             <tbody>
                                                 <tr>
-                                                <td><p>SubTotal</p></td>
+                                                <td><p>Tạm tính</p></td>
                                                 <td style="text-align: right"><span class="t_subtotal">0</span></td>
                                                 </tr>
 
                                                 <tr>
-                                                <td><p>Discount</p></td>
+                                                <td><p>Giảm giá</p></td>
                                                 <td style="text-align: right"><span class="t_discount">0</span></td>
                                                 </tr>
 
                                                 <tr>
-                                                <td><p>Total</p></td>
+                                                <td><p>Tổng cộng</p></td>
                                                 <td style="text-align: right"><span class="t_g_total">0</span></td>
                                                 </tr>
                                             </tbody>
@@ -185,14 +185,13 @@
             
                                         <div class="col-lg-12 col-md-12">
                                             <button type="submit" class="default-btn btn-bg-three border-radius-5">
-                                                Book Now
+                                                Đặt ngay
                                             </button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
 
-                          
                         </div>
                     </div>
 
@@ -206,16 +205,12 @@
                                 @endforeach 
                             </div>
 
-
- 
-
-
                             <div class="room-details-title">
                                 <h2>{{ $roomdetails->type->name }}</h2>
                                 <ul>
                                     
                                     <li>
-                                       <b> Basic : {{ number_format($roomdetails->price, 0, ',', '.') }} VNĐ/Night/Room</b>
+                                       <b> Giá cơ bản : {{ number_format($roomdetails->price, 0, ',', '.') }} VNĐ/Đêm/Phòng</b>
                                     </li> 
                                  
                                 </ul>
@@ -226,11 +221,8 @@
                                     {!! $roomdetails->description !!}
                                 </p>
 
-
-
-
    <div class="side-bar-plan">
-                                <h3>Basic Plan Facilities</h3>
+                                <h3>Tiện ích cơ bản</h3>
                                 <ul>
                                     @foreach ($facility as $fac)
                                     <li><a href="#">{{ $fac->facility_name }}</a></li>
@@ -240,50 +232,38 @@
                                 
                             </div>
 
-
-
-
-
-
-
 <div class="row"> 
  <div class="col-lg-6">
 
 
 
  <div class="services-bar-widget">
-                                <h3 class="title">Room Details</h3>
+                                <h3 class="title">Chi tiết phòng</h3>
         <div class="side-bar-list">
             <ul>
                <li>
-                    <a href="#"> <b>Capacity : </b>{{ $roomdetails->room_capacity }}<i class='bx bxs-cloud-download'></i></a>
+                    <a href="#"> <b>Sức chứa : </b>{{ $roomdetails->room_capacity }}</a>
                 </li>
                 <li>
-                     <a href="#"> <b>Size : </b>{{ $roomdetails->size }}<i class='bx bxs-cloud-download'></i></a>
+                     <a href="#"> <b>Kích thước : </b>{{ $roomdetails->size }}</a>
                 </li>
-               
                
             </ul>
         </div>
     </div>
 
-
-
-
  </div>
-
-
 
  <div class="col-lg-6">
  <div class="services-bar-widget">
-    <h3 class="title">Room Details</h3>
+    <h3 class="title">Chi tiết phòng</h3>
     <div class="side-bar-list">
         <ul>
             <li>
-                <a href="#"> <b>View : </b>{{ $roomdetails->view }}<i class='bx bxs-cloud-download'></i></a>
+                <a href="#"> <b>View : </b>{{ $roomdetails->view }}</a>
             </li>
             <li>
-                    <a href="#"> <b>Bed Style : </b>{{ $roomdetails->bed_style }} <i class='bx bxs-cloud-download'></i></a>
+                    <a href="#"> <b>Kiểu giường : </b>{{ $roomdetails->bed_style }} </a>
             </li>
                 
         </ul>
@@ -293,11 +273,9 @@
                     </div> 
                         </div>
 
- 
-
                             </div>
                             <div class="room-details-review mt-5">
-                                <h2>Client Review and Rating</h2>
+                                <h2>Đánh giá và Xếp hạng của Khách hàng</h2>
                                 {{-- Danh sách đánh giá --}}
                                 <div class="review-list mb-5">
                                     @forelse($reviews as $review)
@@ -305,14 +283,14 @@
                                             <div class="card-body">
                                                 <h5>{{ $review->user->name }}</h5>
                                                 <p>
-                                                    <strong>Room:</strong> {{ $review->booking->room->type->name ?? 'N/A' }} <br>
-                                                    <strong>Nights:</strong> {{ $review->booking->total_night ?? '?' }} |
-                                                    <strong>Month:</strong> {{ \Carbon\Carbon::parse($review->created_at)->format('F Y') }} |
-                                                    <strong>People:</strong> {{ $review->booking->persion ?? '?' }} <br>
-                                                    <strong>Review Date:</strong> {{ $review->created_at->format('d/m/Y') }}
+                                                    <strong>Phòng:</strong> {{ $review->booking->room->type->name ?? 'N/A' }} <br>
+                                                    <strong>Số đêm:</strong> {{ $review->booking->total_night ?? '?' }} |
+                                                    <strong>Tháng:</strong> {{ \Carbon\Carbon::parse($review->created_at)->format('F Y') }} |
+                                                    <strong>Số người:</strong> {{ $review->booking->persion ?? '?' }} <br>
+                                                    <strong>Ngày đánh giá:</strong> {{ $review->created_at->format('d/m/Y') }}
                                                 </p>
                                                 <div>
-                                                    <strong>Rating:</strong>
+                                                    <strong>Đánh giá:</strong>
                                                     @for($i = 1; $i <= 5; $i++)
                                                         <i class="bx {{ $i <= $review->rating ? 'bxs-star' : 'bx-star' }}" 
                                                         style="{{ $i <= $review->rating ? 'color: red;' : '' }}"></i>
@@ -326,7 +304,7 @@
                                                 @foreach($review->replies as $reply)
                                                     <div class="card bg-light ms-4 me-4 mb-2 border-start border-primary border-3">
                                                         <div class="card-body py-2">
-                                                            <strong class="text-primary">Hotel Reply:</strong>
+                                                            <strong class="text-primary">Phản hồi từ khách sạn:</strong>
                                                             <p class="mb-1">{{ $reply->comment }}</p>
                                                             <small class="text-muted">{{ $reply->created_at->diffForHumans() }}</small>
                                                         </div>
@@ -338,13 +316,13 @@
                                             @if (auth()->check() && auth()->id() === $review->hotel_id && $review->replies->isEmpty())
                                                 <form action="{{ route('reviews.reply', $review->id) }}" method="POST" class="ms-4 me-4 mb-4">
                                                     @csrf
-                                                    <textarea name="comment" class="form-control mb-2" placeholder="Reply to this review..." rows="2" required></textarea>
+                                                    <textarea name="comment" class="form-control mb-2" placeholder="Phản hồi đánh giá này..." rows="2" required></textarea>
                                                     <button type="submit" class="btn btn-sm btn-outline-primary">Send Reply</button>
                                                 </form>
                                             @endif
                                         </div>
                                     @empty
-                                        <p class="text-muted">No reviews yet.</p>
+                                        <p class="text-muted">Chưa có đánh giá nào.</p>
                                     @endforelse
                                 </div>
 
@@ -357,9 +335,9 @@
                                         <input type="hidden" name="booking_id" value="{{ session('booking_id') }}">
 
                                         <div class="form-group mb-3">
-                                            <label for="rating">Rating:</label>
+                                            <label for="rating">Đánh giá:</label>
                                             <div class="form-group">
-                                                <label>Rating</label>
+                                                <label>Đánh giá</label>
                                                 <div id="star-rating" class="star-rating">
                                                     @for($i = 1; $i <= 5; $i++)
                                                         <span class="star" data-value="{{ $i }}">&#9733;</span>
@@ -371,12 +349,12 @@
                                         </div>
 
                                         <div class="form-group mb-3">
-                                            <label for="comment">Your Review:</label>
-                                            <textarea name="comment" class="form-control" rows="4" required placeholder="Write your review here..."></textarea>
+                                            <label for="comment">Nhận xét của bạn:</label>
+                                            <textarea name="comment" class="form-control" rows="4" required placeholder="Viết nhận xét của bạn tại đây..."></textarea>
                                         </div>
 
                                         <button type="submit" class="default-btn btn-bg-three border-radius-5">
-                                            Submit Review
+                                            Gửi đánh giá
                                         </button>
                                     </form>
                                 @else
@@ -398,7 +376,7 @@
         <div class="room-details-other pb-70">
             <div class="container">
                 <div class="room-details-text">
-                    <h2>Other Rooms</h2>
+                    <h2>Các Phòng Khác</h2>
                 </div>
 
                 <div class="row ">
@@ -432,7 +410,7 @@
                                         </div>
                                         <p>{{ $item->short_desc }}</p>
                                         <ul>
-                                            <li><i class='bx bx-user'></i>{{ $item->room_capacity }} Person</li>
+                                            <li><i class='bx bx-user'></i>{{ $item->room_capacity }} Người</li>
                                             <li><i class='bx bx-expand'></i>{{ $item->size }}m2</li>
                                         </ul>
 
@@ -442,7 +420,7 @@
                                         </ul>
                                         
                                         <a href="#" class="book-more-btn">
-                                            Book Now
+                                            Đặt Ngay
                                         </a>
                                     </div>
                                 </div>
@@ -542,7 +520,7 @@
           url: "{{ route('check_room_availability_hotel') }}",
           data: {room_id:room_id, check_in:check_in, check_out:check_out, hotel_id:hotel_id},
           success: function(data){
-             $(".available_room").html('Availability : <span class="text-success">'+data['available_room']+' Rooms</span>');
+             $(".available_room").html('Tình trạng phòng : <span class="text-success">'+data['available_room']+' Phòng</span>');
              $("#available_room").val(data['available_room']);
              price_calculate(data['total_nights']);
           }
@@ -568,13 +546,13 @@
        var av_room = $("#available_room").val();
        var select_room = $("#select_room").val();
        if (parseInt(select_room) >  av_room){
-          alert('Sorry, you select maximum number of room');
+          alert('Xin lỗi, bạn đã chọn vượt quá số lượng phòng tối đa');
           return false;
        }
        var number_persion = $("#number_persion").val();
        var total_adult = $("#total_adult").val();
        if(parseInt(number_persion) > parseInt(total_adult)){
-          alert('Sorry, you select maximum number of person');
+          alert('Xin lỗi, bạn đã chọn vượt quá số lượng người tối đa');
           return false;
        }
 

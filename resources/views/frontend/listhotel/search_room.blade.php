@@ -6,11 +6,11 @@
     <div class="container">
         <div class="inner-title">
             <ul>
-                <li><a href="{{ url('/') }}">Home</a></li>
+                <li><a href="{{ url('/') }}">Trang chủ</a></li>
                 <li><i class='bx bx-chevron-right'></i></li>
-                <li>Rooms</li>
+                <li>Trang chủ</li>
             </ul>
-            <h3>Rooms</h3>
+            <h3>Phòng</h3>
         </div>
     </div>
 </div>
@@ -25,7 +25,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-3">
                         <div class="form-group">
-                            <label>CHECK IN TIME</label>
+                            <label>Thời gian nhận phòng</label>
                             <div class="input-group">
                                 <input autocomplete="off" type="text" required name="check_in" class="form-control dt_picker" placeholder="yyy-mm-dd" value="{{ old('check_in') }}">
                                 <span class="input-group-addon"></span>
@@ -36,7 +36,7 @@
 
                     <div class="col-lg-3 col-md-3">
                         <div class="form-group">
-                            <label>CHECK OUT TIME</label>
+                            <label>Thời gian trả phòng</label>
                             <div class="input-group">
                                 <input autocomplete="off" type="text" required name="check_out" class="form-control dt_picker" placeholder="yyy-mm-dd" value="{{ old('check_out') }}">
                                 <span class="input-group-addon"></span>
@@ -47,7 +47,7 @@
 
                     <div class="col-lg-2 col-md-2">
                         <div class="form-group">
-                            <label>GUESTS</label>
+                            <label>Số khách</label>
                             <select name="persion" class="form-control">
                                 @for($i = 1; $i <= 4; $i++)
                                     <option value="{{ sprintf('%02d', $i) }}" {{ old('persion') == sprintf('%02d', $i) ? 'selected' : '' }}>
@@ -60,7 +60,7 @@
                     
                     <div class="col-lg-2 col-md-2">
                         <div class="form-group">
-                            <label>City</label>
+                            <label>Thành phố</label>
                             <input list="cities" id="city_name" class="form-control" placeholder="Enter city name" value="{{ old('city_name') ?? $cityName ?? '' }}">
                             <datalist id="cities">
                                 @foreach($cities as $city)
@@ -73,7 +73,7 @@
 
                     <div class="col-lg-2 col-md-2">
                         <button type="submit" class="default-btn btn-bg-one border-radius-5">
-                            Check Availability
+                            Kiểm tra tình trạng
                         </button>
                     </div>
                 </div>
@@ -88,8 +88,8 @@
 <div class="room-area pt-100 pb-70">
     <div class="container">
         <div class="section-title text-center">
-            <span class="sp-color">ROOMS</span>
-            <h2>Our Hotels & Rooms</h2>
+            <span class="sp-color">PHÒNG</span>
+            <h2>Khách Sạn & Phòng Của Chúng Tôi</h2>
         </div>
 
         <div class="row pt-45">
@@ -112,7 +112,7 @@
                                                     'check_out' => old('check_out'),
                                                     'persion' => old('persion')
                                                 ]) }}" target="_blank" class="btn btn-outline-primary mb-4 rounded-pill px-4 py-2">
-                                        Visit Hotel Website
+                                        Truy cập khách sạn
                                     </a>
 
                                     <!-- Room Section -->
@@ -154,7 +154,7 @@
                                                         {{ $foundRoom->type->name }}
                                                     </a>
                                                 </h6>
-                                                <small class="text-muted">{{ number_format($foundRoom->price, 0, ',', '.') }} VNĐ / night</small>
+                                                <small class="text-muted">{{ number_format($foundRoom->price, 0, ',', '.') }} VNĐ / đêm</small>
                                                 <div class="rating text-warning mt-1">
                                                     <i class='bx bxs-star'></i>
                                                     <i class='bx bxs-star'></i>
@@ -165,7 +165,7 @@
                                             </div>
                                         </div>
                                     @elseif($hotelRooms->count() == count($empty_array))
-                                        <p class="text-danger mt-3">Sorry, No Available Rooms for {{ $hotel->name }}.</p>
+                                        <p class="text-danger mt-3">Xin lỗi, không còn phòng trống tại {{ $hotel->name }}.</p>
                                     @endif
 
                                 </div>
@@ -176,7 +176,7 @@
                 </div>
             @empty
                 <div class="col-12">
-                    <p class="text-center text-danger">Sorry, No Hotels Found.</p>
+                    <p class="text-center text-danger">Xin lỗi, không tìm thấy khách sạn nào.</p>
                 </div>
             @endforelse
         </div>

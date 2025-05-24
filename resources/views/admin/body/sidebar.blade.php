@@ -24,26 +24,26 @@
 			<a class="has-arrow" href="javascript:;">
 				<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
 				</div>
-				<div class="menu-title">Manage Hotel</div>
+				<div class="menu-title">Quản Lý Khách Sạn</div>
 			</a>
 			<ul>
-				<li> <a href="{{ route('all.hotel') }}"><i class='bx bx-radio-circle'></i>All Hotel</a>
+				<li> <a href="{{ route('all.hotel') }}"><i class='bx bx-radio-circle'></i>Danh Sách Khách Sạn</a>
 				</li>
 
-				<li> <a href="{{ route('add.hotel') }}"><i class='bx bx-radio-circle'></i>Add Hotel</a>
+				<li> <a href="{{ route('add.hotel') }}"><i class='bx bx-radio-circle'></i>Thêm Khách Sạn</a>
 				</li>
 			</ul>
 		</li>
 
-		<li class="menu-label">Booking Manage</li>
+		<li class="menu-label">Quản Lý Đặt Phòng</li>
 		<li>
 			<a href="javascript:;" class="has-arrow">
 				<div class="parent-icon"><i class='bx bx-cart'></i>
 				</div>
-				<div class="menu-title">Booking</div>
+				<div class="menu-title">Đặt Phòng</div>
 			</a>
 			<ul>
-				<li> <a href="{{ route('booking.list') }}"><i class='bx bx-radio-circle'></i>Booking List</a>
+				<li> <a href="{{ route('booking.list') }}"><i class='bx bx-radio-circle'></i>Danh Sách Đặt Phòng</a>
 				</li>
 				<!-- <li> <a href="{{ route('add.room.list') }}"><i class='bx bx-radio-circle'></i>Add Booking</a>
 				</li> -->
@@ -54,12 +54,12 @@
 			<a class="has-arrow" href="javascript:;">
 				<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
 				</div>
-				<div class="menu-title">Setting</div>
+				<div class="menu-title">Cài Đặt</div>
 			</a>
 			<ul>
-				<li> <a href="{{ route('smtp.setting') }}"><i class='bx bx-radio-circle'></i>Smtp Setting</a>
+				<li> <a href="{{ route('smtp.setting') }}"><i class='bx bx-radio-circle'></i>Cài Đặt SMTP</a>
 				</li>
-				<li> <a href="{{ route('site.setting') }}"><i class='bx bx-radio-circle'></i>Site Setting</a>
+				<li> <a href="{{ route('site.setting') }}"><i class='bx bx-radio-circle'></i>Cài Đặt Website</a>
 				</li>
 			</ul>
 		</li>
@@ -68,13 +68,13 @@
 			<a class="has-arrow" href="javascript:;">
 				<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
 				</div>
-				<div class="menu-title">Testimonial</div>
+				<div class="menu-title">Nhận Xét</div>
 			</a>
 			<ul>
-				<li> <a href="{{ route('all.testimonial') }}"><i class='bx bx-radio-circle'></i>All Testimonial</a>
+				<li> <a href="{{ route('all.testimonial') }}"><i class='bx bx-radio-circle'></i>Tất Cả Nhận Xét</a>
 				</li>
 
-				<li> <a href="{{ route('add.testimonial') }}"><i class='bx bx-radio-circle'></i>Add Testimonial</a>
+				<li> <a href="{{ route('add.testimonial') }}"><i class='bx bx-radio-circle'></i>Thêm Nhận Xét</a>
 				</li>
 			</ul>
 		</li>
@@ -86,22 +86,10 @@
 				<div class="menu-title">Blog</div>
 			</a>
 			<ul>
-				<li> <a href="{{ route('blog.category') }}"><i class='bx bx-radio-circle'></i>Blog Category</a>
+				<li> <a href="{{ route('blog.category') }}"><i class='bx bx-radio-circle'></i>Danh Mục Blog</a>
 				</li>
 
-				<li> <a href="{{ route('all.blog.post') }}"><i class='bx bx-radio-circle'></i>All Blog Post</a>
-				</li>
-			</ul>
-		</li>
-
-		<li>
-			<a class="has-arrow" href="javascript:;">
-				<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
-				</div>
-				<div class="menu-title">Manage Comment</div>
-			</a>
-			<ul>
-				<li> <a href="{{ route('all.comment') }}"><i class='bx bx-radio-circle'></i>All Comments</a>
+				<li> <a href="{{ route('all.blog.post') }}"><i class='bx bx-radio-circle'></i>Tất Cả Bài Blog</a>
 				</li>
 			</ul>
 		</li>
@@ -110,10 +98,10 @@
 			<a class="has-arrow" href="javascript:;">
 				<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
 				</div>
-				<div class="menu-title">Manage Review</div>
+				<div class="menu-title">Quản Lý Bình Luận</div>
 			</a>
 			<ul>
-				<li> <a href="{{ route('all.review') }}"><i class='bx bx-radio-circle'></i>All Reviews</a>
+				<li> <a href="{{ route('all.comment') }}"><i class='bx bx-radio-circle'></i>Tất Cả Bình Luận</a>
 				</li>
 			</ul>
 		</li>
@@ -122,10 +110,10 @@
 			<a class="has-arrow" href="javascript:;">
 				<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
 				</div>
-				<div class="menu-title">Booking Report</div>
+				<div class="menu-title">Quản Lý Đánh Giá</div>
 			</a>
 			<ul>
-				<li> <a href="{{ route('booking.report') }}"><i class='bx bx-radio-circle'></i>Booking Report</a>
+				<li> <a href="{{ route('all.review') }}"><i class='bx bx-radio-circle'></i>Tất Cả Đánh Giá</a>
 				</li>
 			</ul>
 		</li>
@@ -134,13 +122,25 @@
 			<a class="has-arrow" href="javascript:;">
 				<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
 				</div>
-				<div class="menu-title">City</div>
+				<div class="menu-title">Báo Cáo Đặt Phòng</div>
 			</a>
 			<ul>
-				<li> <a href="{{ route('all.city') }}"><i class='bx bx-radio-circle'></i>All City</a>
+				<li> <a href="{{ route('booking.report') }}"><i class='bx bx-radio-circle'></i>Báo Cáo Đặt Phòng</a>
+				</li>
+			</ul>
+		</li>
+
+		<li>
+			<a class="has-arrow" href="javascript:;">
+				<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
+				</div>
+				<div class="menu-title">Thành Phố</div>
+			</a>
+			<ul>
+				<li> <a href="{{ route('all.city') }}"><i class='bx bx-radio-circle'></i>Tất Cả Thành Phố</a>
 				</li>
 
-				<li> <a href="{{ route('add.city') }}"><i class='bx bx-radio-circle'></i>Add City</a>
+				<li> <a href="{{ route('add.city') }}"><i class='bx bx-radio-circle'></i>Thêm Thành Phố</a>
 				</li>
 			</ul>
 		</li>
@@ -156,49 +156,49 @@
 			</ul>
 		</li> -->
 
-		<li class="menu-label">Role & Permission</li>
+		<!-- <li class="menu-label">Vai Trò & Quyền Hạn</li>
 		<li>
 			<a class="has-arrow" href="javascript:;">
 				<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
 				</div>
-				<div class="menu-title">Role & Permission</div>
+				<div class="menu-title">Vai Trò & Quyền Hạn</div>
 			</a>
 			<ul>
-				<li> <a href="{{ route('all.permission') }}"><i class='bx bx-radio-circle'></i>All Permission</a>
+				<li> <a href="{{ route('all.permission') }}"><i class='bx bx-radio-circle'></i>Tất Cả Quyền Hạn</a>
 				</li>
 
-				<li> <a href="{{ route('all.roles') }}"><i class='bx bx-radio-circle'></i>All Roles</a>
+				<li> <a href="{{ route('all.roles') }}"><i class='bx bx-radio-circle'></i>Tất Cả Vai Trò</a>
 				</li>
 
-				<li> <a href="{{ route('add.roles.permission') }}"><i class='bx bx-radio-circle'></i>Role In Permission</a>
+				<li> <a href="{{ route('add.roles.permission') }}"><i class='bx bx-radio-circle'></i>Thêm Quyền Cho Vai Trò</a>
 				</li>
 
-				<li> <a href="{{ route('all.roles.permission') }}"><i class='bx bx-radio-circle'></i>All Role In Permission</a>
+				<li> <a href="{{ route('all.roles.permission') }}"><i class='bx bx-radio-circle'></i>Danh Sách Vai Trò & Quyền</a>
 				</li>
 			</ul>
-		</li>
+		</li> -->
 
-		<li>
+		<!-- <li>
 			<a class="has-arrow" href="javascript:;">
 				<div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
 				</div>
-				<div class="menu-title">Manage Admin User</div>
+				<div class="menu-title">Quản Lý Admin</div>
 			</a>
 			<ul>
-				<li> <a href="{{ route('all.admin') }}"><i class='bx bx-radio-circle'></i>All Admin</a>
+				<li> <a href="{{ route('all.admin') }}"><i class='bx bx-radio-circle'></i>Tất Cả Admin</a>
 				</li>
 
-				<li> <a href="{{ route('add.admin') }}"><i class='bx bx-radio-circle'></i>Add Admin</a>
+				<li> <a href="{{ route('add.admin') }}"><i class='bx bx-radio-circle'></i>Thêm Admin</a>
 				</li>
 			</ul>
-		</li>
+		</li> -->
 
-		<li class="menu-label">Others</li>
+		<li class="menu-label">Khác</li>
 		<li>
 			<a href="#" target="_blank">
 				<div class="parent-icon"><i class="bx bx-support"></i>
 				</div>
-				<div class="menu-title">Support</div>
+				<div class="menu-title">Hỗ Trợ</div>
 			</a>
 		</li>
 	</ul>

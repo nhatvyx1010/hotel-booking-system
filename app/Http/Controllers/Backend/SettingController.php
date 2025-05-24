@@ -28,10 +28,10 @@ class SettingController extends Controller
         ]);
 
         $notification = array(
-            'messsage' => 'Smtp Setting Updated Successfully',
+            'messsage' => 'Cài đặt SMTP đã được cập nhật thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Smtp Setting Updated Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Cài đặt SMTP đã được cập nhật thành công')->with('alert-type', 'success');
     }
 
     public function SiteSetting(){
@@ -59,10 +59,10 @@ class SettingController extends Controller
             ]);
     
             $notification = array(
-                'message' => 'Site Setting Updated Successfully',
+                'message' => 'Cài đặt trang web đã được cập nhật thành công',
                 'alert-type' => 'success'
             );
-            return redirect()->back()->with('message', 'Site Setting Updated Successfully')->with('alert-type', 'success');
+            return redirect()->back()->with('message', 'Cài đặt trang web đã được cập nhật thành công')->with('alert-type', 'success');
         } else {
             SiteSetting::findOrFail($site_id)->update([
                 'phone' => $request->phone,
@@ -74,10 +74,10 @@ class SettingController extends Controller
             ]);
     
             $notification = array(
-                'message' => 'Site Setting Updated Successfully',
+                'message' => 'Cài đặt trang web đã được cập nhật thành công',
                 'alert-type' => 'success'
             );
-            return redirect()->back()->with('message', 'Site Setting Updated Successfully')->with('alert-type', 'success');
+            return redirect()->back()->with('message', 'Cài đặt trang web đã được cập nhật thành công')->with('alert-type', 'success');
         }
     }
 }

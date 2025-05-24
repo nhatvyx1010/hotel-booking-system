@@ -55,11 +55,11 @@ class AdminHotelController extends Controller
         $hotel->save();
 
         $notification = array(
-            'message' => 'Hotel added successfully!',
+            'message' => 'Thêm khách sạn thành công!',
             'alert-type' => 'success'
         );
 
-        return redirect()->route('all.hotel')->with('message', 'Hotel added successfully!')->with('alert-type', 'success');
+        return redirect()->route('all.hotel')->with('message', 'Thêm khách sạn thành công!')->with('alert-type', 'success');
     }
 
     public function EditHotel($id){
@@ -98,11 +98,11 @@ class AdminHotelController extends Controller
         $hotel->save();
 
         $notification = array(
-            'message' => 'Hotel updated successfully!',
+            'message' => 'Cập nhật khách sạn thành công!',
             'alert-type' => 'success'
         );
 
-        return redirect()->route('all.hotel')->with('message', 'Hotel updated successfully!')->with('alert-type', 'success');
+        return redirect()->route('all.hotel')->with('message', 'Cập nhật khách sạn thành công!')->with('alert-type', 'success');
     }
 
     public function DeleteHotel($id){
@@ -110,10 +110,10 @@ class AdminHotelController extends Controller
         $hotel->delete();
 
         $notification = array(
-            'message' => 'Hotel deleted successfully!',
+            'message' => 'Xóa khách sạn thành công!',
             'alert-type' => 'success'
         );
 
-        return redirect()->route('all.hotel')->with('message', 'Hotel deleted successfully!')->with('alert-type', 'success');
+        return redirect()->route('all.hotel')->with('message', 'Xóa khách sạn thành công!')->with('alert-type', 'success');
     }
 }

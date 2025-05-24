@@ -10,7 +10,7 @@
 							<ol class="breadcrumb mb-0 p-0">
 								<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
 								</li>
-								<li class="breadcrumb-item active" aria-current="page">All Contact Message</li>
+								<li class="breadcrumb-item active" aria-current="page">Tất Cả Tin Nhắn Liên Hệ</li>
 							</ol>
 						</nav>
 					</div>
@@ -28,13 +28,13 @@
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Serial</th>
-                            <th>Name</th>
+                            <th>STT</th>
+                            <th>Tên</th>
                             <th>Email</th>
-                            <th>Phone</th>
-                            <th>Subject</th>
-                            <th>Message</th>
-                            <th>Time</th>
+                            <th>Điện Thoại</th>
+                            <th>Chủ Đề</th>
+                            <th>Tin Nhắn</th>
+                            <th>Thời Gian</th>
                         </tr>
                     </thead>
                     <tbody>

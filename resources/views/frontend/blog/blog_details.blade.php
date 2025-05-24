@@ -7,10 +7,10 @@
                 <div class="inner-title">
                     <ul>
                         <li>
-                            <a href="index.html">Home</a>
+                            <a href="index.html">Trang chủ</a>
                         </li>
                         <li><i class='bx bx-chevron-right'></i></li>
-                        <li>Blog Details </li>
+                        <li>Chi tiết bài viết</li>
                     </ul>
                     <h3>{{ $blog->post_title }}</h3>
                 </div>
@@ -54,7 +54,7 @@
                                 $comment = App\Models\Comment::where('post_id', $blog->id)->where('status', '1')->limit(5)->get();
                             @endphp
                             <div class="comments-wrap">
-								<h3 class="title">Comments</h3>
+								<h3 class="title">Bình luận</h3>
 								<ul>
                                     @foreach ($comment as $cmt)
 									<li>
@@ -72,7 +72,7 @@
 
                             <div class="comments-form">
                                 <div class="contact-form">
-                                    <h2>Leave A Comment</h2>
+                                    <h2>Để lại bình luận</h2>
 
                                     @php
                                         if(Auth::check()){
@@ -102,13 +102,13 @@
                                            
                                             <div class="col-lg-12 col-md-12">
                                                 <button type="submit" class="default-btn btn-bg-three">
-                                                    Post A Comment
+                                                    Gửi bình luận
                                                 </button>
                                             </div>
                                         </div>
                                     </form>
                                     @else
-                                    <p>Please <a href="{{ route('login') }}">Login</a> First for Add Comment</p>
+                                    <p>Vui lòng <a href="{{ route('login') }}">đăng nhập</a> để bình luận</p>
                                     @endauth
                                 </div>
                             </div>
@@ -119,7 +119,7 @@
                         <div class="side-bar-wrap">
                             <div class="search-widget">
                                 <form class="search-form">
-                                    <input type="search" class="form-control" placeholder="Search...">
+                                    <input type="search" class="form-control" placeholder="Tìm kiếm...">
                                     <button type="submit">
                                         <i class="bx bx-search"></i>
                                     </button>
@@ -127,7 +127,7 @@
                             </div>
 
                             <div class="services-bar-widget">
-                                <h3 class="title">Blog Category</h3>
+                                <h3 class="title">Danh mục blog</h3>
                                 <div class="side-bar-categories">
                                     @foreach ($bcategory as $cat)
                                     <ul>
@@ -140,7 +140,7 @@
                             </div>
 
                             <div class="side-bar-widget">
-                                <h3 class="title">Recent Posts</h3>
+                                <h3 class="title">Bài viết gần đây</h3>
                                 <div class="widget-popular-post">
                                 @foreach ($lpost as $post)
                                     <article class="item">

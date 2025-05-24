@@ -5,8 +5,8 @@
 <div class="testimonials-area-three pb-70">
     <div class="container">
         <div class="section-title text-center">
-            <span class="sp-color">TESTIMONIAL</span>
-            <h2>Our Latest Testimonials and What Our Client Says</h2>
+            <span class="sp-color">NHẬN XÉT</span>
+            <h2>Những Phản Hồi Mới Nhất và Ý Kiến Khách Hàng Của Chúng Tôi</h2>
         </div>
         <div class="row align-items-center pt-45">
             <div class="col-lg-6 col-md-6">

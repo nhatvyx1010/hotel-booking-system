@@ -14,7 +14,7 @@
                             </a>
                         </div>
                         <p>
-                        The end of the valley is close to the mouth. The foliage grows from the base, adding color and form.
+                        Ở nơi tận cùng thung lũng, gần kề lối thoát, những chiếc lá đâm chồi từ gốc, điểm xuyết màu sắc và dáng hình riêng biệt.
                         </p>
                         <ul class="footer-list-contact">
                             <li>
@@ -35,37 +35,31 @@
 
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-widget pl-5">
-                        <h3>Links</h3>
+                        <h3>Liên kết</h3>
                         <ul class="footer-list">
                             <li>
                                 <a href="{{ route('about.us') }}" target="_blank">
                                     <i class='bx bx-caret-right'></i>
-                                    About Us
+                                    Về chúng tôi
                                 </a>
                             </li> 
                             <li>
                                 <a href="{{ route('services.us') }}" target="_blank">
                                     <i class='bx bx-caret-right'></i>
-                                    Services
+                                    Dịch vụ
                                 </a>
                             </li> 
-                            </li> 
-                            <li>
-                                <a href="{{ route('show.gallery') }}" target="_blank">
-                                    <i class='bx bx-caret-right'></i>
-                                    Gallery
-                                </a>
                             </li> 
                             <li>
                                 <a href="{{ route('terms.us') }}" target="_blank">
                                     <i class='bx bx-caret-right'></i>
-                                    Terms & Conditions 
+                                    Điều khoản & Điều kiện
                                 </a>
                             </li> 
                             <li>
                                 <a href="{{ route('privacy.us') }}" target="_blank">
                                     <i class='bx bx-caret-right'></i>
-                                    Privacy Policy
+                                    Chính sách bảo mật
                                 </a>
                             </li> 
                         </ul>
@@ -74,12 +68,12 @@
 
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-widget">
-                        <h3>Useful Links</h3>
+                        <h3>Liên kết hữu ích</h3>
                         <ul class="footer-list">
                             <li>
                                 <a href="{{ url('/') }}" target="_blank">
                                     <i class='bx bx-caret-right'></i>
-                                    Home
+                                    Trang chủ
                                 </a>
                             </li> 
                             <li>
@@ -91,19 +85,13 @@
                             <li>
                                 <a href="{{ route('testimonials.list') }}" target="_blank">
                                     <i class='bx bx-caret-right'></i>
-                                    Testimonials
-                                </a>
-                            </li> 
-                            <li>
-                                <a href="{{ route('show.gallery') }}" target="_blank">
-                                    <i class='bx bx-caret-right'></i>
-                                    Gallery
+                                    Nhận xét
                                 </a>
                             </li> 
                             <li>
                                 <a href="{{ route('contact.us') }}" target="_blank">
                                     <i class='bx bx-caret-right'></i>
-                                    Contact Us
+                                    Liên hệ
                                 </a>
                             </li> 
                         </ul>
@@ -112,7 +100,7 @@
 
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-widget">
-                        <h3>Newsletter</h3>
+                        <h3>Bản tin</h3>
                         <div class="footer-form">
                             <form class="newsletter-form" data-toggle="validator" method="POST">
                                 <div class="row">
@@ -124,7 +112,7 @@
 
                                     <div class="col-lg-12 col-md-12">
                                         <button type="submit" class="default-btn btn-bg-one">
-                                            Subscribe Now
+                                            Đăng ký ngay
                                         </button>
                                         <div id="validator-newsletter" class="form-result"></div>
                                     </div>

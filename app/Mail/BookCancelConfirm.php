@@ -31,7 +31,7 @@ class BookCancelConfirm extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Your Booking Is Confirm',
+            subject: 'Xác nhận hủy đặt phòng của bạn',
         );
     }
 

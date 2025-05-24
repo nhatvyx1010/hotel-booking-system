@@ -8,12 +8,12 @@
         <div class="inner-title">
             <ul>
                 <li>
-                    <a href="index.html">Home</a>
+                    <a href="index.html">Trang chủ</a>
                 </li>
                 <li><i class='bx bx-chevron-right'></i></li>
-                <li>User Change Password </li>
+                <li>Đổi mật khẩu người dùng</li>
             </ul>
-            <h3>User Change Password</h3>
+            <h3>Đổi mật khẩu người dùng</h3>
         </div>
     </div>
 </div>
@@ -39,13 +39,13 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <div class="billing-details">
-                        <h3 class="title">User Change Password</h3>
+                        <h3 class="title">Đổi mật khẩu người dùng</h3>
 
                         <div class="row">
                             
         <div class="col-lg-12 col-md-12">
             <div class="form-group">
-                <label>Old Password <span class="required">*</span></label>
+                <label>Mật khẩu cũ <span class="required">*</span></label>
                 <input type="password" name="old_password" class="form-control @error('old_password') is-invalid
                         @enderror" id="old_password">
                         @error('old_password')
@@ -56,7 +56,7 @@
 
         <div class="col-lg-12 col-md-12">
             <div class="form-group">
-                <label>New Password <span class="required">*</span></label>
+                <label>Mật khẩu mới <span class="required">*</span></label>
                 <input type="password" name="new_password" class="form-control @error('new_password') is-invalid
                         @enderror" id="new_password">
                         @error('old_password')
@@ -67,12 +67,12 @@
 
         <div class="col-lg-12 col-md-12">
             <div class="form-group">
-                <label>Confirm New Password<span class="required">*</span></label>
+                <label>Xác nhận mật khẩu mới<span class="required">*</span></label>
                 <input type="password" name="new_password_confirmation" class="form-control" id="new_password_confirmation">
             </div>
         </div>
 
-<button type="submit" class="btn btn-danger">Save Changes </button>
+<button type="submit" class="btn btn-danger">Lưu thay đổi</button>
 </div>
 </div>
 </div>

@@ -7,11 +7,11 @@
     <div class="container">
         <div class="inner-title">
             <ul>
-                <li><a href="{{ url('/') }}">Home</a></li>
+                <li><a href="{{ url('/') }}">Trang Chủ</a></li>
                 <li><i class='bx bx-chevron-right'></i></li>
-                <li>Testimonials</li>
+                <li>Nhận xét</li>
             </ul>
-            <h3 class="text-white">What Our Guests Say</h3>
+            <h3 class="text-white">Khách Hàng Nói Gì Về Chúng Tôi</h3>
         </div>
     </div>
 </div>
@@ -21,8 +21,8 @@
 <div class="testimonials-area pt-100 pb-70 bg-light">
     <div class="container">
         <div class="section-title text-center mb-60">
-            <span class="sp-color">TESTIMONIALS</span>
-            <h2>What Our Guests Are Saying</h2>
+            <span class="sp-color">NHẬN XÉT</span>
+            <h2>Khách Hàng Của Chúng Tôi Nói Gì</h2>
         </div>
 
         <div class="row">

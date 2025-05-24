@@ -8,12 +8,12 @@
         <div class="inner-title">
             <ul>
                 <li>
-                    <a href="index.html">Home</a>
+                    <a href="index.html">Trang chủ</a>
                 </li>
                 <li><i class='bx bx-chevron-right'></i></li>
-                <li>User Booking List </li>
+                <li>Danh sách đặt phòng của người dùng </li>
             </ul>
-            <h3>User Booking List</h3>
+            <h3>Danh sách đặt phòng của người dùng</h3>
         </div>
     </div>
 </div>
@@ -39,19 +39,19 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <div class="billing-details">
-                        <h3 class="title">User Booking List</h3>
+                        <h3 class="title">Danh sách đặt phòng của người dùng</h3>
 
                         <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">Booking Number</th>
-      <th scope="col">Hotel Name</th>
-      <th scope="col">Booking Date</th>
-      <th scope="col">Customer</th>
-      <th scope="col">Room</th>
-      <th scope="col">Check In/Out</th>
-      <th scope="col">Total Room</th>
-      <th scope="col">Status</th>
+        <th scope="col">Số đặt phòng</th>  
+        <th scope="col">Tên khách sạn</th>  
+        <th scope="col">Ngày đặt phòng</th>  
+        <th scope="col">Khách hàng</th>  
+        <th scope="col">Phòng</th>  
+        <th scope="col">Ngày nhận / trả phòng</th>  
+        <th scope="col">Tổng số phòng</th>  
+        <th scope="col">Trạng thái</th>  
     </tr>
   </thead>
   <tbody>
@@ -62,18 +62,18 @@
       <td>{{ $item->created_at->format('d/m/Y') }}</td>
       <td>{{ $item['user']['name'] }}</td>
       <td>
-        {{ $item['room'] ? $item['room']['type']['name'] : 'No Room/Type' }}
+        {{ $item['room'] ? $item['room']['type']['name'] : 'Không có phòng/loại' }}
     </td>
 
       <td><span class="badge bg-primary">{{ $item->check_in }}</span><span class="badge bg-warning text-dark">{{ $item->check_out }}</span> </td>
       <td>{{ $item->number_of_rooms }}</td>
       <td>
         @if ($item->status == 1)
-            <span class="badge bg-success">Complete</span>
+            <span class="badge bg-success">Hoàn thành</span>
         @else
-            <span class="badge bg-info text-dark">Pending</span>
+            <span class="badge bg-info text-dark">Đang chờ</span>
         @endif
-        <a href="{{ route('user.booking.cancel.form', $item->id) }}" class="btn btn-sm btn-danger mt-2">Cancel</a>
+        <a href="{{ route('user.booking.cancel.form', $item->id) }}" class="btn btn-sm btn-danger mt-2">Huỷ</a>
       </td>
     </tr>
     @endforeach

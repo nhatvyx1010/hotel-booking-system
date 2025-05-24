@@ -9,13 +9,13 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a></li>
-                    <li class="breadcrumb-item active" aria-current="page">All Hotel</li>
+                    <li class="breadcrumb-item active" aria-current="page">Danh sách khách sạn</li>
                 </ol>
             </nav>
         </div>
         <div class="ms-auto">
             <div class="btn-group">
-                <a href="{{ route('add.hotel') }}" class="btn btn-primary px-5"> Add Hotel </a>
+                <a href="{{ route('add.hotel') }}" class="btn btn-primary px-5"> Thêm khách sạn </a>
             </div>
         </div>
     </div>
@@ -28,15 +28,15 @@
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Serial</th>
-                            <th>Image</th>
-                            <th>Name</th>
+                            <th>STT</th>
+                            <th>Hình ảnh</th>
+                            <th>Tên</th>
                             <th>Email</th>
-                            <th>Phone</th>
-                            <th>Address</th>
-                            <th>City</th> {{-- thêm cột City --}}
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>Điện thoại</th>
+                            <th>Địa chỉ</th>
+                            <th>Thành phố</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,11 +54,11 @@
                                 <td>{{ $hotel->email }}</td>
                                 <td>{{ $hotel->phone }}</td>
                                 <td>{{ $hotel->address }}</td>
-                                <td>{{ $hotel->city ? $hotel->city->name : 'N/A' }}</td> {{-- hiển thị tên city --}}
+                                <td>{{ $hotel->city ? $hotel->city->name : 'N/A' }}</td>
                                 <td>{{ ucfirst($hotel->status) }}</td>
                                 <td>
-                                    <a href="{{ route('edit.hotel', $hotel->id) }}" class="btn btn-warning px-3 radius-30">Edit</a>
-                                    <a href="{{ route('delete.hotel', $hotel->id) }}" class="btn btn-danger px-3 radius-30" id="delete">Delete</a>
+                                    <a href="{{ route('edit.hotel', $hotel->id) }}" class="btn btn-warning px-3 radius-30">Chỉnh sửa</a>
+                                    <a href="{{ route('delete.hotel', $hotel->id) }}" class="btn btn-danger px-3 radius-30" id="delete">Xóa</a>
                                 </td>
                             </tr>
                         @endforeach

@@ -7,12 +7,12 @@
         <div class="inner-title">
             <ul>
                 <li>
-                    <a href="{{ url('/') }}">Home</a>
+                    <a href="{{ url('/') }}">Trang chủ</a>
                 </li>
                 <li><i class='bx bx-chevron-right'></i></li>
-                <li>About Us</li>
+                <li>Về chúng tôi</li>
             </ul>
-            <h3>About Us</h3>
+            <h3>Về chúng tôi</h3>
         </div>
     </div>
 </div>
@@ -31,13 +31,13 @@
 
             <div class="col-lg-6 d-flex align-items-center">
                 <div class="about-content ps-lg-4">
-                    <h2 class="mb-4 text-primary">Welcome to Our Booking Platform</h2>
+                    <h2 class="mb-4 text-primary">Chào mừng bạn đến với nền tảng đặt phòng của chúng tôi</h2>
                     <p class="text-muted">
-                        Founded in 2025, our platform connects travelers with thousands of hotels across the country.
-                        Whether you're planning a business trip, a family vacation, or a romantic getaway,
-                        our system helps you find and book the perfect stay quickly and easily.
-                        With an easy-to-use interface, secure payment options, and verified user reviews,
-                        we are committed to making hotel booking as seamless as possible.
+                    Được thành lập vào năm 2025, nền tảng của chúng tôi kết nối khách du lịch với hàng nghìn khách sạn trên toàn quốc.
+                    Dù bạn đang lên kế hoạch cho chuyến công tác, kỳ nghỉ gia đình hay một chuyến đi lãng mạn,
+                    hệ thống của chúng tôi giúp bạn tìm và đặt chỗ ở hoàn hảo một cách nhanh chóng và dễ dàng.
+                    Với giao diện dễ sử dụng, tùy chọn thanh toán an toàn và đánh giá người dùng đã được xác minh,
+                    chúng tôi cam kết giúp việc đặt phòng khách sạn trở nên dễ dàng nhất có thể.
                     </p>
                 </div>
             </div>
@@ -47,19 +47,19 @@
         <div class="row mb-5">
             <div class="col-lg-12">
                 <div class="about-services text-center">
-                    <h3 class="mb-4 text-secondary">What We Offer</h3>
+                    <h3 class="mb-4 text-secondary">Chúng tôi cung cấp những gì?</h3>
                     <div class="row">
                         @php
                             $services = [
-                                'Wide Range of Hotel Options',
-                                'Real-Time Availability & Pricing',
-                                'Secure Online Booking',
-                                'Verified Guest Reviews',
-                                'Multilingual Customer Support',
-                                'Flexible Payment Methods',
-                                'Exclusive Deals & Discounts',
-                                'Mobile-Friendly Booking',
-                                'Easy Cancellation Policies'
+                            'Nhiều lựa chọn khách sạn đa dạng',
+                            'Cập nhật giá cả & tình trạng phòng theo thời gian thực',
+                            'Đặt phòng trực tuyến an toàn',
+                            'Đánh giá khách đã xác minh',
+                            'Hỗ trợ khách hàng đa ngôn ngữ',
+                            'Nhiều phương thức thanh toán linh hoạt',
+                            'Ưu đãi & giảm giá độc quyền',
+                            'Đặt phòng thân thiện trên thiết bị di động',
+                            'Chính sách hủy phòng linh hoạt'
                             ];
                         @endphp
                         @foreach ($services as $service)
@@ -78,11 +78,11 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="about-team text-center">
-                    <h3 class="mb-4 text-secondary">Our Team</h3>
+                    <h3 class="mb-4 text-secondary">Đội ngũ của chúng tôi</h3>
                     <p class="text-muted px-lg-5">
-                        Our dedicated team is made up of tech enthusiasts, hospitality experts, and customer service professionals
-                        working together to provide you with the best hotel booking experience.
-                        We continuously improve our system to meet the changing needs of modern travelers and hospitality partners.
+                    Đội ngũ của chúng tôi gồm những người đam mê công nghệ, chuyên gia ngành khách sạn và các nhân viên chăm sóc khách hàng,
+                    cùng nhau làm việc để mang đến cho bạn trải nghiệm đặt phòng tốt nhất.
+                    Chúng tôi liên tục cải tiến hệ thống để đáp ứng nhu cầu thay đổi của khách du lịch hiện đại và các đối tác khách sạn.
                     </p>
                 </div>
             </div>

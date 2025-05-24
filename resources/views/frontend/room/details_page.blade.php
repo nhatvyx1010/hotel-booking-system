@@ -17,7 +17,7 @@
                         <h2 class="text-white">xxx</h2>
                         <p class="text-white mb-1">
                             <i class="icofont-location-pin"></i>xxx 
-                            <span class="badge badge-success">OPEN</span>
+                            <span class="badge badge-success">MỞ CỬA</span>
                         </p>
                         <p class="text-white mb-0">
                             <i class="icofont-food-cart"></i> xxx
@@ -27,13 +27,13 @@
                 <div class="col-md-4">
                     <div class="restaurant-detailed-header-right text-right">
                         <button class="btn btn-success" type="button">
-                            <i class="icofont-clock-time"></i> 25–35 min
+                            <i class="icofont-clock-time"></i> 25–35 phút
                         </button>
                         <h6 class="text-white mb-0 restaurant-detailed-ratings">
                             <span class="generator-bg rounded text-white">
                                 <i class="icofont-star"></i> xxx
                             </span> 
-                            <i class="ml-3 icofont-speech-comments"></i> reviews
+                            <i class="ml-3 icofont-speech-comments"></i> đánh giá
                         </h6>
                     </div>
                 </div>
@@ -51,23 +51,23 @@
                         <i class="icofont-cauli-flower text-success"></i> Pure Veg
                     </button>
                     <button class="btn btn-outline-danger btn-sm" type="button">
-                        <i class="icofont-sale-discount"></i> OFFERS
+                        <i class="icofont-sale-discount"></i> ƯU ĐÃI
                     </button>
                 </span>
                 <ul class="nav" id="pills-tab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="pills-order-online-tab" data-toggle="pill" href="#pills-order-online" role="tab" aria-controls="pills-order-online" aria-selected="true">
-                            Order Online
+                            Đặt hàng trực tuyến
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="pills-gallery-tab" data-toggle="pill" href="#pills-gallery" role="tab" aria-controls="pills-gallery" aria-selected="false">
-                            Gallery
+                            Thư viện ảnh
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="pills-restaurant-info-tab" data-toggle="pill" href="#pills-restaurant-info" role="tab" aria-controls="pills-restaurant-info" aria-selected="false">
-                            Market Info
+                            Thông tin cửa hàng
                         </a>
                     </li>
                 </ul>
@@ -91,11 +91,11 @@
                                 <div class="container">
                                     <div class="inner-title">
                                         <ul>
-                                            <li><a href="index.html">Home</a></li>
+                                            <li><a href="index.html">Trang chủ</a></li>
                                             <li><i class='bx bx-chevron-right'></i></li>
-                                            <li>Rooms</li>
+                                            <li>Phòng</li>
                                         </ul>
-                                        <h3>Rooms</h3>
+                                        <h3>Phòng</h3>
                                     </div>
                                 </div>
                             </div>
@@ -104,8 +104,8 @@
                             <div class="room-area pt-100 pb-70">
                                 <div class="container">
                                     <div class="section-title text-center">
-                                        <span class="sp-color">ROOMS</span>
-                                        <h2>Our Rooms & Rates</h2>
+                                        <span class="sp-color">PHÒNG</span>
+                                        <h2>Phòng & Giá Phòng</h2>
                                     </div>
                                     <div class="row pt-45">
                                         <?php $empty_array = []; ?>
@@ -130,7 +130,7 @@
                                                             </h6>
                                                             <ul>
                                                                 <li class="text-color">{{ number_format($item->price, 0, ',', '.') }} VNĐ</li>
-                                                                <li class="text-color">Per Night</li>
+                                                                <li class="text-color">Mỗi đêm</li>
                                                             </ul>
                                                             <div class="rating text-color">
                                                                 <i class='bx bxs-star'></i>
@@ -148,7 +148,7 @@
                                         @endforeach
 
                                         @if(count($rooms) == count($empty_array))
-                                            <p class="text-center text-danger">Sorry No Data Found</p>
+                                            <p class="text-center text-danger">Rất tiếc, không tìm thấy dữ liệu nào</p>
                                         @endif
                                     </div>
                                 </div>
@@ -178,23 +178,23 @@
                                         </div>
                                     </div>
                                 </div>
-                                <h5 class="mb-4">Market Info</h5>
-                                <p class="mb-3">Name</p>
+                                <h5 class="mb-4">Thông tin thị trường</h5>
+                                <p class="mb-3">Tên</p>
                                 <p class="mb-2 text-black">
-                                    <i class="icofont-phone-circle text-primary mr-2"></i> phone
+                                    <i class="icofont-phone-circle text-primary mr-2"></i> điện thoại
                                 </p>
                                 <p class="mb-2 text-black">
                                     <i class="icofont-email text-primary mr-2"></i> email
                                 </p>
                                 <p class="mb-2 text-black">
                                     <i class="icofont-clock-time text-primary mr-2"></i>
-                                    Today 11am – 5pm, 6pm – 11pm
-                                    <span class="badge badge-success">OPEN NOW</span>
+                                    Hôm nay 11h – 17h, 18h – 23h
+                                    <span class="badge badge-success">ĐANG MỞ CỬA</span>
                                 </p>
                                 <hr class="clearfix">
                                 <p class="text-black mb-0">
-                                    You can also check the 3D view by using our menu map clicking here &nbsp;&nbsp;&nbsp;
-                                    <a class="text-info font-weight-bold" href="#">Venue Map</a>
+                                    Bạn cũng có thể xem bản đồ 3D bằng cách nhấp vào bản đồ địa điểm tại đây &nbsp;&nbsp;&nbsp;
+                                    <a class="text-info font-weight-bold" href="#">Bản đồ địa điểm</a>
                                 </p>
                                 <hr class="clearfix">
                             </div>

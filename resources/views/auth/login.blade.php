@@ -7,12 +7,12 @@
         <div class="inner-title">
             <ul>
                 <li>
-                    <a href="index.html">Home</a>
+                    <a href="index.html">Trang Chủ</a>
                 </li>
                 <li><i class='bx bx-chevron-right'></i></li>
-                <li>Sign In</li>
+                <li>Đăng Nhập</li>
             </ul>
-            <h3>Sign In</h3>
+            <h3>Đăng Nhập</h3>
         </div>
     </div>
 </div>
@@ -26,8 +26,8 @@
                 <div class="user-all-form">
                     <div class="contact-form">
                         <div class="section-title text-center">
-                            <span class="sp-color">Sign In</span>
-                            <h2>Sign In to Your Account!</h2>
+                            <span class="sp-color">Đăng Nhập</span>
+                            <h2>Đăng Nhập Vào Tài Khoản Của Bạn!</h2>
                         </div>
 
                         <form method="POST" action="{{ route('login') }}">
@@ -49,25 +49,25 @@
                                     <div class="agree-label">
                                         <input type="checkbox" id="chb1">
                                         <label for="chb1">
-                                            Remember Me
+                                            Ghi nhớ đăng nhập
                                         </label>
                                     </div>
                                 </div>
     
                                 <div class="col-lg-6 col-sm-6">
-                                    <a class="forget" href="{{ route('password.request') }}">Forgot My Password?</a>
+                                    <a class="forget" href="{{ route('password.request') }}">Quên Mật Khẩu?</a>
                                 </div>
 
                                 <div class="col-lg-12 col-md-12 text-center">
                                     <button type="submit" class="default-btn btn-bg-three border-radius-5">
-                                        Sign In Now
+                                        Đăng Nhập Ngay
                                     </button>
                                 </div>
 
                                 <div class="col-12">
                                     <p class="account-desc">
-                                        Not a Member?
-                                        <a href="{{ route('register') }}">Sign Up</a>
+                                        Chưa có tài khoản?
+                                        <a href="{{ route('register') }}">Đăng Ký</a>
                                     </p>
                                 </div>
                             </div>
@@ -76,11 +76,11 @@
                 </div>
                     
                 <div class="become-host-section mt-5 pt-4 border-top">
-                    <h5 class="text-center mb-3">Do you have a hotel to list?</h5>
+                    <h5 class="text-center mb-3">Bạn có khách sạn muốn đăng ký?</h5>
                     <p class="text-center">
-                        Become a partner and reach thousands of guests.
+                        Trở thành đối tác và tiếp cận hàng ngàn khách hàng.
                         <br>
-                        <a href="{{ route('hotel.register') }}" class="btn btn-outline-primary mt-2">Become a Host</a>
+                        <a href="{{ route('hotel.register') }}" class="btn btn-outline-primary mt-2">Trở thành Host</a>
                     </p>
                 </div>
             </div>

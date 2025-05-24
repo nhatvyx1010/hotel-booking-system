@@ -7,10 +7,10 @@
                 <div class="inner-title">
                     <ul>
                         <li>
-                            <a href="index.html">Home</a>
+                            <a href="index.html">Trang Chủ</a>
                         </li>
                         <li><i class='bx bx-chevron-right'></i></li>
-                        <li>Room Details </li>
+                        <li>Chi Tiết Phòng</li>
                     </ul>
                     <h3>{{ $roomdetails->type->name }}</h3>
                 </div>
@@ -25,14 +25,14 @@
                     <div class="col-lg-4">
                         <div class="room-details-side">
                             <div class="side-bar-form">
-                                <h3>Booking Sheet </h3>
+                                <h3>Phiếu Đặt Phòng</h3>
                                 <form>
                                     <div class="row align-items-center">
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Check in</label>
+                                                <label>Ngày Nhận Phòng</label>
                                                 <div class="input-group">
-                                                    <input id="datetimepicker" type="text" class="form-control" placeholder="09/29/2020">
+                                                    <input id="datetimepicker" type="text" class="form-control" placeholder="01/06/2025">
                                                     <span class="input-group-addon"></span>
                                                 </div>
                                                 <i class='bx bxs-calendar'></i>
@@ -41,9 +41,9 @@
 
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Check Out</label>
+                                                <label>Ngày Trả Phòng</label>
                                                 <div class="input-group">
-                                                    <input id="datetimepicker-check" type="text" class="form-control" placeholder="09/29/2020">
+                                                    <input id="datetimepicker-check" type="text" class="form-control" placeholder="05/06/2025">
                                                     <span class="input-group-addon"></span>
                                                 </div>
                                                 <i class='bx bxs-calendar'></i>
@@ -52,7 +52,7 @@
 
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Numbers of Persons</label>
+                                                <label>Số Người</label>
                                                 <select class="form-control">
                                                     <option>01</option>
                                                     <option>02</option>
@@ -65,7 +65,7 @@
 
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <label>Numbers of Rooms</label>
+                                                <label>Số Phòng</label>
                                                 <select class="form-control">
                                                     <option>01</option>
                                                     <option>02</option>
@@ -78,7 +78,7 @@
             
                                         <div class="col-lg-12 col-md-12">
                                             <button type="submit" class="default-btn btn-bg-three border-radius-5">
-                                                Book Now
+                                               Đặt Ngay
                                             </button>
                                         </div>
                                     </div>
@@ -108,7 +108,7 @@
                                 <ul>
                                     
                                     <li>
-                                       <b> Basic : {{ number_format($roomdetails->price, 0, ',', '.') }} VNĐ/Night/Room</b>
+                                       <b> Cơ bản : {{ number_format($roomdetails->price, 0, ',', '.') }} VNĐ/Night/Room</b>
                                     </li> 
                                  
                                 </ul>
@@ -123,7 +123,7 @@
 
 
    <div class="side-bar-plan">
-                                <h3>Basic Plan Facilities</h3>
+                                <h3>Tiện Nghi Cơ Bản</h3>
                                 <ul>
                                     @foreach ($facility as $fac)
                                     <li><a href="#">{{ $fac->facility_name }}</a></li>
@@ -145,14 +145,14 @@
 
 
  <div class="services-bar-widget">
-                                <h3 class="title">Room Details</h3>
+                                <h3 class="title">Chi Tiết Phòng</h3>
         <div class="side-bar-list">
             <ul>
                <li>
-                    <a href="#"> <b>Capacity : </b>{{ $roomdetails->room_capacity }}<i class='bx bxs-cloud-download'></i></a>
+                    <a href="#"> <b>Sức Chứa : </b>{{ $roomdetails->room_capacity }}</a>
                 </li>
                 <li>
-                     <a href="#"> <b>Size : </b>{{ $roomdetails->size }}<i class='bx bxs-cloud-download'></i></a>
+                     <a href="#"> <b>Kích Thước : </b>{{ $roomdetails->size }}</a>
                 </li>
                
                
@@ -169,14 +169,14 @@
 
  <div class="col-lg-6">
  <div class="services-bar-widget">
-        <h3 class="title">Room Details</h3>
+        <h3 class="title">Chi Tiết Phòng</h3>
         <div class="side-bar-list">
             <ul>
                <li>
-                    <a href="#"> <b>View : </b>{{ $roomdetails->view }}<i class='bx bxs-cloud-download'></i></a>
+                    <a href="#"> <b>View : </b>{{ $roomdetails->view }}</a>
                 </li>
                 <li>
-                     <a href="#"> <b>Bed Style : </b>{{ $roomdetails->bed_style }} <i class='bx bxs-cloud-download'></i></a>
+                     <a href="#"> <b>Kiểu Giường : </b>{{ $roomdetails->bed_style }}</a>
                 </li>
                  
             </ul>
@@ -191,9 +191,9 @@
                             </div>
 
                             <div class="room-details-review">
-                                <h2>Clients Review and Retting's</h2>
+                                <h2>Đánh Giá Và Nhận Xét Của Khách Hàng</h2>
                                 <div class="review-ratting">
-                                    <h3>Your retting: </h3>
+                                    <h3>Đánh Giá Của Bạn: </h3>
                                     <i class='bx bx-star'></i>
                                     <i class='bx bx-star'></i>
                                     <i class='bx bx-star'></i>
@@ -204,13 +204,13 @@
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12">
                                             <div class="form-group">
-                                                <textarea name="message" class="form-control"  cols="30" rows="8" required data-error="Write your message" placeholder="Write your review here.... "></textarea>
+                                                <textarea name="message" class="form-control"  cols="30" rows="8" required data-error="Viết nhận xét của bạn" placeholder="Viết nhận xét của bạn ở đây.... "></textarea>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-12 col-md-12">
                                             <button type="submit" class="default-btn btn-bg-three">
-                                                Submit Review
+                                                Gửi Nhận Xét
                                             </button>
                                         </div>
                                     </div>
@@ -227,7 +227,7 @@
         <div class="room-details-other pb-70">
             <div class="container">
                 <div class="room-details-text">
-                    <h2>Other Rooms</h2>
+                    <h2>Phòng Khác</h2>
                 </div>
 
                 <div class="row ">
@@ -259,7 +259,7 @@
                                         </div>
                                         <p>{{ $item->short_desc }}</p>
                                         <ul>
-                                            <li><i class='bx bx-user'></i>{{ $item->room_capacity }} Person</li>
+                                            <li><i class='bx bx-user'></i>{{ $item->room_capacity }} Người</li>
                                             <li><i class='bx bx-expand'></i>{{ $item->size }}m2</li>
                                         </ul>
 
@@ -269,7 +269,7 @@
                                         </ul>
                                         
                                         <a href="room-details.html" class="book-more-btn">
-                                            Book Now
+                                            Đặt Ngay
                                         </a>
                                     </div>
                                 </div>

@@ -10,13 +10,13 @@
 							<ol class="breadcrumb mb-0 p-0">
 								<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
 								</li>
-								<li class="breadcrumb-item active" aria-current="page">All Post</li>
+								<li class="breadcrumb-item active" aria-current="page">Tất cả bài viết</li>
 							</ol>
 						</nav>
 					</div>
 					<div class="ms-auto">
 						<div class="btn-group">
-                        <a href="{{ route('add.blog.post') }}" class="btn btn-primary px-5"> Add Post </a>
+                        <a href="{{ route('add.blog.post') }}" class="btn btn-primary px-5"> Thêm bài viết </a>
 						</div>
 					</div>
 				</div>
@@ -29,12 +29,12 @@
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Serial</th>
-                            <th>Post Title</th>
-                            <th>Blog Category</th>
-                            <th>Hotel</th>
-                            <th>Post Image</th>
-                            <th>Action</th>
+                            <th>STT</th>
+                            <th>Tiêu đề bài viết</th>
+                            <th>Danh mục Blog</th>
+                            <th>Khách sạn</th>
+                            <th>Ảnh bài viết</th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -46,8 +46,8 @@
                                 <td>{{ $item->hotel?->name ?? 'N/A' }}</td>
                                 <td><img src="{{ asset($item->post_image) }}" alt="" style="width:70px; height:40px"></td>
                                 <td>
-                                    <a href="{{ route('edit.blog.post', $item->id) }}" class="btn btn-warning px-3 radius-30">Edit</a>
-                                    <a href="{{ route('delete.blog.post', $item->id) }}" class="btn btn-danger px-3 radius-30" id="delete">Delete</a>
+                                    <a href="{{ route('edit.blog.post', $item->id) }}" class="btn btn-warning px-3 radius-30">Sửa</a>
+                                    <a href="{{ route('delete.blog.post', $item->id) }}" class="btn btn-danger px-3 radius-30" id="delete">Xóa</a>
                                 </td>
                             </tr>
                         @endforeach

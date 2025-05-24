@@ -85,28 +85,28 @@ class RoomListController extends Controller
         if($request->check_in == $request->check_out){
             $request->flash();
             $notification = array(
-                'messsage' => 'You Enter Same Date',
+                'message' => 'Bạn đã nhập ngày giống nhau',
                 'alert-type' => 'error'
             );
-            return redirect()->back()->with('message', 'You Enter Same Date')->with('alert-type', 'error');
+            return redirect()->back()->with('message', 'Bạn đã nhập ngày giống nhau')->with('alert-type', 'error');
         }
 
         if($request->available_room < $request->number_of_rooms){
             $request->flash();
             $notification = array(
-                'messsage' => 'You Enter Maximum Number of Rooms!',
+                'messsage' => 'Số phòng đặt vượt quá số phòng hiện có!',
                 'alert-type' => 'error'
             );
-            return redirect()->back()->with('message', 'You Enter Maximum Number of Rooms!')->with('alert-type', 'error');
+            return redirect()->back()->with('message', 'Số phòng đặt vượt quá số phòng hiện có!')->with('alert-type', 'error');
         }
 
         $room = Room::find($request['room_id']);
         if($room->room_capacity < $request->number_of_person){
             $notification = array(
-                'messsage' => 'You Enter Maximum Number of Guest!',
+                'messsage' => 'Số lượng khách vượt quá sức chứa của phòng!',
                 'alert-type' => 'error'
             );
-            return redirect()->back()->with('message', 'You Enter Maximum Number of Guest!')->with('alert-type', 'error');
+            return redirect()->back()->with('message', 'Số lượng khách vượt quá sức chứa của phòng!')->with('alert-type', 'error');
         }
 
         $toDate = Carbon::parse($request['check_in']);
@@ -159,26 +159,26 @@ class RoomListController extends Controller
         }
 
         $notification = array(
-            'messsage' => 'Booking Added Successfully',
+            'messsage' => 'Đặt phòng thành công',
             'alert-type' => 'success'
         );
-        return redirect()->back()->with('message', 'Booking Added Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Đặt phòng thành công')->with('alert-type', 'success');
     }
 
     public function HotelStoreRoomList(Request $request){
         if($request->check_in == $request->check_out){
             $request->flash();
-            return redirect()->back()->with('message', 'You Enter Same Date')->with('alert-type', 'error');
+            return redirect()->back()->with('message', 'Bạn đã nhập ngày giống nhau')->with('alert-type', 'error');
         }
     
         if($request->available_room < $request->number_of_rooms){
             $request->flash();
-            return redirect()->back()->with('message', 'You Enter Maximum Number of Rooms!')->with('alert-type', 'error');
+            return redirect()->back()->with('message', 'Số phòng đặt vượt quá số phòng hiện có!')->with('alert-type', 'error');
         }
     
         $room = Room::where('hotel_id', Auth::id())->find($request['room_id']); // Lọc theo hotel_id
         if($room->room_capacity < $request->number_of_person){
-            return redirect()->back()->with('message', 'You Enter Maximum Number of Guest!')->with('alert-type', 'error');
+            return redirect()->back()->with('message', 'Số lượng khách vượt quá sức chứa của phòng!')->with('alert-type', 'error');
         }
     
         $toDate = Carbon::parse($request['check_in']);
@@ -231,6 +231,6 @@ class RoomListController extends Controller
             $booked_dates->save();
         }
     
-        return redirect()->back()->with('message', 'Booking Added Successfully')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Đặt phòng thành công')->with('alert-type', 'success');
     }    
 }

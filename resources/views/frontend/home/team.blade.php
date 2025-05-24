@@ -5,8 +5,8 @@
 <div class="team-area-three pt-100 pb-70">
     <div class="container">
         <div class="section-title text-center">
-            <span class="sp-color">TEAM</span>
-            <h2>Let's Meet Up With Our Special Team Members</h2>
+            <span class="sp-color">ĐỘI NGŨ</span>
+            <h2>Hãy Gặp Gỡ Các Thành Viên Đặc Biệt Trong Đội Ngũ Của Chúng Tôi</h2>
         </div>
         <div class="team-slider-two owl-carousel owl-theme pt-45">
             @foreach($team as $item)

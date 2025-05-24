@@ -6,11 +6,11 @@
     <div class="container">
         <div class="inner-title">
             <ul>
-                <li><a href="{{ url('/') }}">Home</a></li>
+                <li><a href="{{ url('/') }}">Trang Chủ</a></li>
                 <li><i class='bx bx-chevron-right'></i></li>
-                <li>Rooms</li>
+                <li>Phòng</li>
             </ul>
-            <h3>Rooms</h3>
+            <h3>Phòng</h3>
         </div>
     </div>
 </div>
@@ -25,7 +25,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-3">
                         <div class="form-group">
-                            <label>CHECK IN TIME</label>
+                            <label>THỜI GIAN NHẬN PHÒNG</label>
                             <div class="input-group">
                                 <input autocomplete="off" type="text" required name="check_in" class="form-control dt_picker" placeholder="yyy-mm-dd" value="{{ old('check_in') }}">
                                 <span class="input-group-addon"></span>
@@ -36,7 +36,7 @@
 
                     <div class="col-lg-3 col-md-3">
                         <div class="form-group">
-                            <label>CHECK OUT TIME</label>
+                            <label>THỜI GIAN TRẢ PHÒNG</label>
                             <div class="input-group">
                                 <input autocomplete="off" type="text" required name="check_out" class="form-control dt_picker" placeholder="yyy-mm-dd" value="{{ old('check_out') }}">
                                 <span class="input-group-addon"></span>
@@ -47,7 +47,7 @@
 
                     <div class="col-lg-2 col-md-2">
                         <div class="form-group">
-                            <label>GUESTS</label>
+                            <label>SỐ KHÁCH</label>
                             <select name="persion" class="form-control">
                                 <option>01</option>
                                 <option>02</option>
@@ -59,8 +59,8 @@
                     
                     <div class="col-lg-2 col-md-2">
                         <div class="form-group">
-                            <label>City</label>
-                            <input list="cities" id="city_name" class="form-control" placeholder="Enter city name" value="{{ old('city_name') ?? $cityName ?? '' }}">
+                            <label>THÀNH PHỐ</label>
+                            <input list="cities" id="city_name" class="form-control" placeholder="Nhập tên thành phố" value="{{ old('city_name') ?? $cityName ?? '' }}">
                             <datalist id="cities">
                                 @foreach($cities as $city)
                                     <option value="{{ $city->name }}" data-id="{{ $city->id }}"></option>
@@ -72,7 +72,7 @@
 
                     <div class="col-lg-2 col-md-2">
                         <button type="submit" class="default-btn btn-bg-one border-radius-5">
-                            Check Availability
+                            Kiểm Tra Tình Trạng
                         </button>
                     </div>
                 </div>
@@ -87,8 +87,8 @@
 <div class="room-area pt-100 pb-70">
     <div class="container">
         <div class="section-title text-center">
-            <span class="sp-color">ROOMS</span>
-            <h2>Our Hotels & Rooms</h2>
+            <span class="sp-color">PHÒNG</span>
+            <h2>Khách Sạn & Phòng Của Chúng Tôi</h2>
         </div>
 
         <div class="row pt-45">
@@ -113,7 +113,7 @@
                                                     'check_out' => old('check_out'),
                                                     'persion' => old('persion')
                                                 ]) }}" target="_blank" class="btn btn-outline-primary mb-4 rounded-pill px-4 py-2">
-                                        Visit Hotel Website
+                                        Truy Cập Khách Sạn
                                     </a>
                                     
                                     <ul>
@@ -122,7 +122,7 @@
                                                 @forelse($hotel->room_views as $view)
                                                     <span class="badge bg-primary me-1">{{ $view }}</span>
                                                 @empty
-                                                    <span class="text-muted">No view data</span>
+                                                    <span class="text-muted">Không có dữ liệu view</span>
                                                 @endforelse
                                         </li>
                                     </ul>
@@ -137,10 +137,10 @@
                                             <div>
                                                 <h6 class="mb-1">
                                                     <a href="{{ route('search_room_details', $hotel->random_room->id) }}" class="text-dark">
-                                                        {{ $hotel->random_room->type->name ?? 'Room' }}
+                                                        {{ $hotel->random_room->type->name ?? 'Phòng' }}
                                                     </a>
                                                 </h6>
-                                                <small class="text-muted">{{ number_format($hotel->random_room->price, 0, ',', '.') }} VNĐ / night</small>
+                                                <small class="text-muted">{{ number_format($hotel->random_room->price, 0, ',', '.') }} VNĐ / đêm</small>
                                                 <div class="rating text-warning mt-1">
                                                     <i class='bx bxs-star'></i>
                                                     <i class='bx bxs-star'></i>
@@ -151,7 +151,7 @@
                                             </div>
                                         </div>
                                     @else
-                                        <p class="text-danger mt-3">No rooms available for this hotel.</p>
+                                        <p class="text-danger mt-3">Không có phòng trống cho khách sạn này.</p>
                                     @endif
 
                                 </div>
@@ -162,7 +162,7 @@
                 </div>
             @empty
                 <div class="col-12">
-                    <p class="text-center text-danger">Sorry, No Hotels Found.</p>
+                    <p class="text-center text-danger">Xin lỗi, không tìm thấy khách sạn nào.</p>
                 </div>
             @endforelse
         </div>

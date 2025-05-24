@@ -1,0 +1,4 @@
+
+# php artisan config:clear
+
+# vendor/bin/pest tests/Feature/... .php

@@ -15,8 +15,8 @@
 <div class="hotel-area pt-100 pb-70 section-bg" style="background-color:#ffffff">
     <div class="container">
         <div class="section-title text-center">
-            <span class="sp-color">HOTELS</span>
-            <h2>Our Top Hotels</h2>
+            <span class="sp-color">KHÁCH SẠN</span>
+            <h2>Những Khách Sạn Hàng Đầu Của Chúng Tôi</h2>
         </div>
         <div class="row pt-45">
             @foreach ($hotels as $hotel)
@@ -40,7 +40,7 @@
                                 <p><i class='bx bx-map'></i> {{ $hotel->address }}</p>
 
                                 <a href="{{ url('hotel/details/'.$hotel->id) }}" class="book-more-btn mt-2">
-                                    View Details
+                                    Xem Chi Tiết
                                 </a>
                             </div>
                         </div>

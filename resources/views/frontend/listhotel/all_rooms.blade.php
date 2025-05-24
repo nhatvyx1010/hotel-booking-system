@@ -7,12 +7,12 @@
                 <div class="inner-title">
                     <ul>
                         <li>
-                            <a href="index.html">Home</a>
+                            <a href="index.html">Trang Chủ</a>
                         </li>
                         <li><i class='bx bx-chevron-right'></i></li>
-                        <li>Rooms</li>
+                        <li>Phòng</li>
                     </ul>
-                    <h3>Rooms</h3>
+                    <h3>Phòng</h3>
                 </div>
             </div>
         </div>
@@ -22,8 +22,8 @@
         <div class="room-area pt-100 pb-70">
             <div class="container">
                 <div class="section-title text-center">
-                    <span class="sp-color">ROOMS</span>
-                    <h2>Our Rooms & Rates</h2>
+                    <span class="sp-color">PHÒNG</span>
+                    <h2>Phòng & Giá Của Chúng Tôi</h2>
                 </div>
                 <div class="row pt-45">
                     @foreach($rooms as $item)
@@ -36,7 +36,7 @@
                                 <h6><a href="{{ url('room/details/'.$item->id) }}">{{ $item['type']['name'] }}</a></h6>
                                 <ul>
                                     <li class="text-color">{{ number_format($item->price, 0, ',', '.') }} VNĐ</li>
-                                    <li class="text-color">Per Night</li>
+                                    <li class="text-color">Mỗi Đêm</li>
                                 </ul>
                                 <div class="rating text-color">
                                     <i class='bx bxs-star'></i>

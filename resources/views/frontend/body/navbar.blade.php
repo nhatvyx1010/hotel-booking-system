@@ -24,12 +24,12 @@
                     <ul class="navbar-nav m-auto">
                         <li class="nav-item">
                             <a href="{{ url('/') }}" class="nav-link active">
-                                Home 
+                                Trang chủ 
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('about.us') }}" class="nav-link">
-                                About
+                                Giới thiệu
                             </a>
                         </li>
                         <!-- <li class="nav-item">
@@ -70,17 +70,17 @@
 
                         <li class="nav-item">
                             <a href="{{ route('contact.us') }}" class="nav-link">
-                                Contact
+                                Liên hệ
                             </a>
                         </li>
 
                         <li class="nav-item-btn">
-                            <a href="#" class="default-btn btn-bg-one border-radius-5">Book Now</a>
+                            <a href="#" class="default-btn btn-bg-one border-radius-5">Đặt ngay</a>
                         </li>
                     </ul>
 
                     <div class="nav-btn">
-                        <a href="#" class="default-btn btn-bg-one border-radius-5">Book Now</a>
+                        <a href="#" class="default-btn btn-bg-one border-radius-5">Đặt ngay</a>
                     </div>
                 </div>
             </nav>
