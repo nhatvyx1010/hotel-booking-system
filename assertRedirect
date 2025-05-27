@@ -1,0 +1,9 @@
+
+  [30;42;1m PASS [39;49;22m[39m Tests\Feature\ProfileTest[39m
+  [32;1m✓[39;22m[39m [2mprofile page is displayed[22m[39m
+  [32;1m✓[39;22m[39m [2mprofile information can be updated[22m[39m
+  [32;1m✓[39;22m[39m [2memail verification status is unchanged when the email address is unchanged[22m[39m
+
+  [37;1mTests:  [39;22m[32;1m3 passed[39;22m
+  [37;1mTime:   [39;22m[39m1.44s[39m
+

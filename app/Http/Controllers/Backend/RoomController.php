@@ -191,9 +191,9 @@ class RoomController extends Controller
             $imagePath = $deletedata->multi_img;
             if(file_exists($imagePath)){
                 unlink($imagePath);
-                echo "Xóa ảnh thành công";
+                // echo "Xóa ảnh thành công";
             }else{
-                echo "Ảnh không tồn tại";
+                // echo "Ảnh không tồn tại";
             }
 
             MultiImage::where('id', $id)->delete();
@@ -216,9 +216,9 @@ class RoomController extends Controller
             $imagePath = $deletedata->multi_img;
             if(file_exists($imagePath)){
                 unlink($imagePath);
-                echo "Xóa ảnh thành công";
+                // echo "Xóa ảnh thành công";
             } else {
-                echo "Ảnh không tồn tại";
+                // echo "Ảnh không tồn tại";
             }
             MultiImage::where('id', $id)->delete();
     

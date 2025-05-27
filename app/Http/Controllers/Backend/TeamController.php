@@ -26,13 +26,17 @@ class TeamController extends Controller
     }
 
     public function HotelStoreTeam(Request $request){
-        // Lấy ID người dùng đang đăng nhập
         $user_id = Auth::id();
 
-        $image = $request->file('image');
-        $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-        Image::make($image)->resize(550, 670)->save('upload/team/'.$name_gen);
-        $save_url = 'upload/team/'.$name_gen;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+            Image::make($image)->resize(550, 670)->save('upload/team/' . $name_gen);
+            $save_url = 'upload/team/' . $name_gen;
+        } else {
+            // Sử dụng ảnh mặc định nếu không upload
+            $save_url = 'upload/team/default.jpg';
+        }
 
         Team::insert([
             'hotel_id' => $user_id,

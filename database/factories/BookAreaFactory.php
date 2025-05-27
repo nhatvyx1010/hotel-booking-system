@@ -12,6 +12,7 @@ class BookAreaFactory extends Factory
     public function definition()
     {
         return [
+            'hotel_id' => null,
             'image' => $this->faker->imageUrl(),
             'short_title' => $this->faker->words(3, true),
             'main_title' => $this->faker->sentence(),

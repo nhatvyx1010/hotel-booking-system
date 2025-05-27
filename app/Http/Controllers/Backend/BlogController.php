@@ -72,10 +72,14 @@ class BlogController extends Controller
     }
 
     public function StoreBlogPost(Request $request){
-        $image = $request->file('post_image');
-        $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-        Image::make($image)->resize(550, 370)->save('upload/post/'.$name_gen);
-        $save_url = 'upload/post/'.$name_gen;
+        if ($request->hasFile('post_image')) {
+            $image = $request->file('post_image');
+            $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+            Image::make($image)->resize(550, 370)->save('upload/post/'.$name_gen);
+            $save_url = 'upload/post/'.$name_gen;
+        } else {
+            $save_url = 'upload/post/default.jpg';
+        }
 
         $blogPostData = [
             'blogcat_id' => $request->blogcat_id,

@@ -21,9 +21,13 @@ class TestimonialController extends Controller
 
     public function StoreTestimonial(Request $request){
         $image = $request->file('image');
-        $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-        Image::make($image)->resize(50, 50)->save('upload/testimonial/'.$name_gen);
-        $save_url = 'upload/testimonial/'.$name_gen;
+        if ($image) {
+            $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+            Image::make($image)->resize(50, 50)->save('upload/testimonial/' . $name_gen);
+            $save_url = 'upload/testimonial/' . $name_gen;
+        } else {
+            $save_url = null;
+        }
 
         Testimonial::insert([
             'name' => $request->name,

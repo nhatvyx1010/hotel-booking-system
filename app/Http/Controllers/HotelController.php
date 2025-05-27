@@ -107,7 +107,7 @@ class HotelController extends Controller
     
     public function HotelProfileStore(Request $request) {
         $id = Auth::guard('hotel')->id();
-        $data = Hotel::find($id);
+        $data = User::find($id);
 
         $data->name = $request->name;
         $data->email = $request->email;
@@ -156,7 +156,7 @@ class HotelController extends Controller
 
     public function HotelChangePassword() {
         $id = Auth::guard('hotel')->id();
-        $profileData = Hotel::find($id);
+        $profileData = User::find($id);
 
 
         return view('hotel.hotel_change_password', compact('profileData'));
@@ -179,7 +179,7 @@ class HotelController extends Controller
         }
 
         // Update new password
-        Hotel::whereId($hotel->id)->update([
+        User::whereId($hotel->id)->update([
             'password' => Hash::make($request->new_password)
         ]);
         $notification = array(
