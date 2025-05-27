@@ -34,23 +34,25 @@ class GalleryController extends Controller
         return view('hotel.backend.gallery.add_gallery');
     }
 
-    public function StoreGallery(Request $request){
+    public function StoreGallery(Request $request)
+    {
         $images = $request->file('photo_name');
+
+        if (!$images || count($images) === 0) {
+            return redirect()->back()->with('message', 'Vui lòng chọn ít nhất một ảnh để upload')->with('alert-type', 'error');
+        }
+
         foreach ($images as $img) {
-            $name_gen = hexdec(uniqid()).'.'.$img->getClientOriginalExtension();
-            Image::make($img)->resize(550, 550)->save('upload/gallery/'.$name_gen);
-            $save_url = 'upload/gallery/'.$name_gen;
-            
+            $name_gen = hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
+            Image::make($img)->resize(550, 550)->save('upload/gallery/' . $name_gen);
+            $save_url = 'upload/gallery/' . $name_gen;
+
             Gallery::insert([
                 'photo_name' => $save_url,
                 'created_at' => Carbon::now(),
             ]);
         }
 
-        $notification = array(
-            'message' => 'Thêm ảnh thư viện thành công',
-            'alert-type' => 'success'
-        );
         return redirect()->route('all.gallery')->with('message', 'Thêm ảnh thư viện thành công')->with('alert-type', 'success');
     }
 

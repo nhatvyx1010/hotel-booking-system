@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('facilities', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('hotel_id')->nullable();
             $table->integer('rooms_id');
             $table->string('facility_name')->nullable();
             $table->timestamps();

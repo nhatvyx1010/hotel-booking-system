@@ -74,10 +74,10 @@ class AdminController extends Controller
 
         if(!Hash::check($request->old_password, auth::user()->password)){
             $notification = array(
-                'messsage' => 'Mật khẩu cũ không đúng!',
+                'message' => 'Mật khẩu cũ không đúng!',
                 'alert-type' => 'error'
             );
-            return back()->with('message', 'Mật khẩu cũ không đúng!')->with('alert-type', 'error');
+            return redirect()->back()->with('message', 'Mật khẩu cũ không đúng!')->with('alert-type', 'error');
         }
 
         //Update the password
@@ -85,10 +85,10 @@ class AdminController extends Controller
             'password' => Hash::make($request->new_password)
         ]);
         $notification = array(
-            'messsage' => 'Đổi mật khẩu thành công',
+            'message' => 'Đổi mật khẩu thành công',
             'alert-type' => 'success'
         );
-        return back()->with('message', 'Đổi mật khẩu thành công')->with('alert-type', 'success');
+        return redirect()->back()->with('message', 'Đổi mật khẩu thành công')->with('alert-type', 'success');
     }
 
     public function AllAdmin(){
@@ -110,6 +110,7 @@ class AdminController extends Controller
         $user->password = Hash::make($request->password);
         $user->role = 'admin';
         $user->status = 'active';
+        $user->city_id = $request->city_id;
         $user->save();
 
         if($request->roles){

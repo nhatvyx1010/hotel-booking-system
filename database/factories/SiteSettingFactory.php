@@ -2,12 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Models\SiteSetting;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SiteSettingFactory extends Factory
 {
-    protected $model = SiteSetting::class;
+    protected $model = \App\Models\SiteSetting::class;
 
     public function definition()
     {

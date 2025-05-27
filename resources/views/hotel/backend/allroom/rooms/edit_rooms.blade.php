@@ -40,7 +40,7 @@
 
                 <div class="col-md-4">
                     <label for="input1" class="form-label">Tên Loại Phòng </label>
-                    <input type="text" name="roomtype_name" class="form-control" id="input1" value="{{ $editData['type']['name'] }}" >
+                    <input type="text" name="roomtype_name" class="form-control" id="input1" value="{{ $editData->type->name }}" >
                 </div>
 				<div class="col-md-4">
 					<label for="input2" class="form-label">Tổng số Người lớn</label>
