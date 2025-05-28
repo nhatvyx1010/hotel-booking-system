@@ -18,11 +18,11 @@
                     <ul>
                         <li>
                             <i class='bx bx-home-alt'></i>
-                            <a href="#">{{ $setting->address }}</a>
+                            <a href="#">Da Nang, Viet Nam</a>
                         </li>
                         <li>
                             <i class='bx bx-phone-call'></i>
-                            <a href="tel:+1-(123)-456-7890">{{ $setting->phone }}</a>
+                            <a href="tel:+1-(123)-456-7890">+84 959595959</a>
                         </li>
         @auth
         <li>

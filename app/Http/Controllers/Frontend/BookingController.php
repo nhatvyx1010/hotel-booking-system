@@ -177,7 +177,7 @@ class BookingController extends Controller
 
         $admin = User::where('role', 'admin')->get();
         if ($admin) {
-            dd($admin);
+            // dd($admin);
             Notification::send($admin, new BookingComplete($request->name));
             
         }

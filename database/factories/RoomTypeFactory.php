@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\RoomType;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RoomTypeFactory extends Factory
@@ -13,6 +14,7 @@ class RoomTypeFactory extends Factory
     {
         return [
             'name' => $this->faker->word(),
+            'hotel_id' => User::factory(),
         ];
     }
 }

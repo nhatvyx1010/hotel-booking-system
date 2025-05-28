@@ -41,6 +41,11 @@ return new class extends Migration
             $table->string('address')->nullable();
 
             $table->string('code')->nullable();
+
+            $table->float('prepaid_amount')->default(0);
+            $table->float('remaining_amount')->default(0);
+            $table->float('total_amount')->default(0);
+            
             $table->integer('status')->default(1);
             $table->timestamps();
         });

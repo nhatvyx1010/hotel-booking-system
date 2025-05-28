@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('multi_images', function (Blueprint $table) {
             $table->id();
-            $table->integer('hotel_id');
+            $table->unsignedBigInteger('hotel_id')->nullable();
             $table->integer('rooms_id');
             $table->string('multi_img')->nullable();
             $table->timestamps();
