@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('booking_id')->nullable();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->text('comment')->nullable();
-            $table->tinyInteger('rating')->unsigned(); // 1-5
+            $table->tinyInteger('rating')->unsigned()->default(0); // 1-5
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamps();
 

@@ -49,8 +49,8 @@
                                 <td><a href="{{ route('edit_booking', $item->id) }}"> {{ $item->code }}</a></td>
                                 <td>{{ $item->created_at->format('d/m/Y') }}</td>
                                 <td>{{ $item->room->hotel->name ?? 'N/A' }}</td>
-                                <td>{{ $item['user']['name'] }}</td>
-                                <td>{{ $item['room']['type']['name'] }}</td>
+                                <td>{{ optional($item->user)->name ?? 'N/A' }}</td>
+                                <td>{{ optional(optional($item->room)->type)->name ?? 'N/A' }}</td>
                                 <td><span class="badge bg-primary"> {{ $item->check_in }}</span> / <br><span class="badge bg-warning text-dark"> {{ $item->check_out }}</span></td>
                                 <td>{{ $item->number_of_rooms }}</td>
                                 <td>{{ $item->persion }}</td>

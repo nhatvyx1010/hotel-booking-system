@@ -8,9 +8,9 @@
             <div class="row align-items-center">
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-widget">
-                        <div class="footer-logo">
-                            <a href="/">
-                                <img src="{{ asset($setting->logo) }}" alt="Images">
+                        <div class="footer-logo" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: 700; font-size: 24px; color: #fff; letter-spacing: 2px;">
+                            <a href="/" style="text-decoration: none; color: inherit;">
+                                Hotel <span style="color: #f39c12;">Booking</span>
                             </a>
                         </div>
                         <p>
@@ -19,15 +19,15 @@
                         <ul class="footer-list-contact">
                             <li>
                                 <i class='bx bx-home-alt'></i>
-                                <a href="#">{{ $setting->address }}</a>
+                                <a href="#">Da Nang, Viet Nam</a>
                             </li>
                             <li>
                                 <i class='bx bx-phone-call'></i>
-                                <a href="tel:+1-(123)-456-7890">{{ $setting->phone }}</a>
+                                <a href="tel:+1-(123)-456-7890">+84 959595959</a>
                             </li>
                             <li>
                                 <i class='bx bx-envelope'></i>
-                                <a href="mailto:{{ $setting->email }}">{{ $setting->email }}</a>
+                                <a href="mailto:bookinghotel@booking.com">bookinghotel@booking.com</a>
                             </li>
                         </ul>
                     </div>
@@ -100,7 +100,7 @@
 
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-widget">
-                        <h3>Bản tin</h3>
+                        <h3>Liên hệ</h3>
                         <div class="footer-form">
                             <form class="newsletter-form" data-toggle="validator" method="POST">
                                 <div class="row">
@@ -112,7 +112,7 @@
 
                                     <div class="col-lg-12 col-md-12">
                                         <button type="submit" class="default-btn btn-bg-one">
-                                            Đăng ký ngay
+                                            Liên hệ
                                         </button>
                                         <div id="validator-newsletter" class="form-result"></div>
                                     </div>
@@ -129,7 +129,6 @@
                 <div class="col-lg-8 col-md-8">
                     <div class="copy-right-text text-align1">
                         <p>
-                            {{ $setting->copyright }}
                         </p>
                     </div>
                 </div>
@@ -138,10 +137,10 @@
                     <div class="social-icon text-align2">
                         <ul class="social-link">
                             <li>
-                                <a href="{{ $setting->facebook }}" target="_blank"><i class='bx bxl-facebook'></i></a>
+                                <a href="https://www.facebook.com/" target="_blank"><i class='bx bxl-facebook'></i></a>
                             </li> 
                             <li>
-                                <a href="{{ $setting->twitter }}" target="_blank"><i class='bx bxl-twitter'></i></a>
+                                <a href="https://www.twitter.com/" target="_blank"><i class='bx bxl-twitter'></i></a>
                             </li> 
                             <li>
                                 <a href="#" target="_blank"><i class='bx bxl-instagram'></i></a>

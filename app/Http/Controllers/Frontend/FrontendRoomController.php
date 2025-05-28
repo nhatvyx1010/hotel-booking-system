@@ -28,6 +28,9 @@ class FrontendRoomController extends Controller
 
     public function RoomDetailsPage($id){
         $roomdetails = Room::find($id);
+        if (!$roomdetails) {
+            abort(404, 'Room not found');
+        }
         $multiImage = MultiImage::where('rooms_id', $id)->get();
         $facility = Facility::where('rooms_id', $id)->get();
         $otherRooms = Room::where('id', '!=', $id)->orderBy('id', 'DESC')->limit(2)->get();

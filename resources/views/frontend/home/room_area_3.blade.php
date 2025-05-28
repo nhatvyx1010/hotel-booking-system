@@ -2,6 +2,7 @@
     $bookarea = App\Models\BookArea::find(1);
 @endphp
 
+@if ($bookarea)
 <div class="book-area-two pt-100 pb-70">
     <div class="container">
         <div class="row align-items-center">
@@ -26,3 +27,6 @@
         </div>
     </div>
 </div>
+@else
+<p>Không tìm thấy dữ liệu BookArea.</p>
+@endif

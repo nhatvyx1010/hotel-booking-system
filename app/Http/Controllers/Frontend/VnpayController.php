@@ -63,8 +63,8 @@ class VnpayController extends Controller
         }
 
         $vnp_Locale = 'vn';
-        // $vnp_IpAddr = request()->ip();
-        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+        $vnp_IpAddr = request()->ip();
+        // $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
 
         $inputData = [
             "vnp_Version" => "2.1.0",
