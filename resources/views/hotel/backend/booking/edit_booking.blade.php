@@ -159,9 +159,15 @@
                                 </div>
 
                                 <div style="clear: both"></div>
-                                <div style="margin-top: 40px; margin-bottom: 20px">
-                                    <a href="javascript::void(0)" class="btn btn-primary assign_room">Gán Phòng</a>
-                                </div>
+                                @if(!$isExpired)
+                                    <div style="margin-top: 40px; margin-bottom: 20px">
+                                        <a href="javascript:void(0)" class="btn btn-primary assign_room">Gán Phòng</a>
+                                    </div>
+                                @else
+                                    <div class="alert alert-warning text-center mt-4">
+                                        Đã quá ngày nhận/trả phòng, không thể gán phòng.
+                                    </div>
+                                @endif
                                 @php
                                     $assign_rooms = App\Models\BookingRoomList::with('room_number')->where('booking_id', $editData->id)->get();
                                 @endphp
@@ -182,9 +188,6 @@
                                     @endforeach
                                 </table>
                                 @else
-                                <div class="alert alert-danger text-center">
-                                   Không Tìm Thấy Phòng Đã Gán
-                                </div>
                                 @endif
                             </div>
 
@@ -204,7 +207,7 @@
                                         <label for="">Trạng Thái Đặt Phòng</label>
                                     <select name="status" id="input7" class="form-select">
                                         <option selected="">Selected Status...</option>
-                                        <option value="0" {{$editData->status == 0?'selected':''}}>Đang Chờ<</option>
+                                        <option value="0" {{$editData->status == 0?'selected':''}}>Đang Chờ</option>
                                         <option value="1" {{$editData->status == 1?'selected':''}}>Hoàn Thành</option>
                                     </select>
                                     </div>

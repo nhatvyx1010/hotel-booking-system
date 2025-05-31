@@ -14,7 +14,7 @@
                             </a>
                         </div>
                         <p>
-                        Ở nơi tận cùng thung lũng, gần kề lối thoát, những chiếc lá đâm chồi từ gốc, điểm xuyết màu sắc và dáng hình riêng biệt.
+                        Giữa muôn vàn điểm đến, website đặt phòng là nơi bắt đầu cho mỗi hành trình đáng nhớ – nơi giấc mơ nghỉ dưỡng khởi nguồn chỉ bằng một cú nhấp chuột.
                         </p>
                         <ul class="footer-list-contact">
                             <li>

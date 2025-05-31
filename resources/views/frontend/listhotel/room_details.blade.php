@@ -152,7 +152,7 @@
                     <a href="#"> <b>Sức Chứa : </b>{{ $roomdetails->room_capacity }}</a>
                 </li>
                 <li>
-                     <a href="#"> <b>Kích Thước : </b>{{ $roomdetails->size }}</a>
+                     <a href="#"> <b>Kích Thước : </b>{{ $roomdetails->size }}m2</a>
                 </li>
                
                

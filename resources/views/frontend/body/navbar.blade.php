@@ -20,38 +20,22 @@
                 <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
                     <ul class="navbar-nav m-auto">
                         <li class="nav-item">
-                            <a href="{{ url('/') }}" class="nav-link active">
+                            <a href="{{ url('/') }}" class="nav-link {{ Request::is('/') ? 'active' : '' }}">
                                 Trang chủ 
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('about.us') }}" class="nav-link">
+                            <a href="{{ route('about.us') }}" class="nav-link {{ Request::is('about') ? 'active' : '' }}">
                                 Giới thiệu
                             </a>
                         </li>
-                        <!-- <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                Restaurant 
-                            </a>
-                        </li> -->
-
-                        <!-- <li class="nav-item">
-                            <a href="{{ route('show.gallery') }}" class="nav-link">
-                                Gallery 
-                            </a>
-                        </li> -->
-
                         <li class="nav-item">
-                            <a href="{{ route('blog.list') }}" class="nav-link">
+                            <a href="{{ route('blog.list') }}" class="nav-link {{ Request::is('blog*') ? 'active' : '' }}">
                                 Blog
                             </a>
                         </li>
-    @php
-        $room = App\Models\Room::latest()->get();
-    @endphp
-
                         <li class="nav-item">
-                            <a href="{{ route('contact.us') }}" class="nav-link">
+                            <a href="{{ route('contact.us') }}" class="nav-link {{ Request::is('contact') ? 'active' : '' }}">
                                 Liên hệ
                             </a>
                         </li>

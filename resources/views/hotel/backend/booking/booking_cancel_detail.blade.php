@@ -221,15 +221,28 @@
                                         <th>Số phòng</th>
                                         <th>Trạng thái thanh toán</th>
                                         <th>Trạng thái đặt phòng</th>
+                                        <th>Hành động</th>
                                     </tr>
-                                    <tr>
-                                        @foreach ($assign_rooms as $assign_room)
-                                        <td>{{ $assign_room->room_number->room_no }}</td>
-                                        @endforeach
-                                        <td>{{ $editData->payment_status == 0?'Đang chờ':'Hoàn thành' }}</td>
-                                        <td>{{ $editData->status == 0?'Đang chờ':'Hoàn thành' }}</td>
 
+                                    @foreach ($assign_rooms as $index => $assign_room)
+                                    <tr>
+                                        <td>{{ $assign_room->room_number->room_no }}</td>
+
+                                        {{-- Chỉ hiển thị trạng thái booking ở dòng đầu --}}
+                                        @if($index == 0)
+                                            <td rowspan="{{ count($assign_rooms) }}">
+                                                {{ $editData->payment_status == 0 ? 'Đang chờ' : 'Hoàn thành' }}
+                                            </td>
+                                            <td rowspan="{{ count($assign_rooms) }}">
+                                                {{ $editData->status == 0 ? 'Đang chờ' : 'Hoàn thành' }}
+                                            </td>
+                                        @endif
+
+                                        <td>
+                                            <a href="{{ route('hotel.assign_room_delete', $assign_room->id) }}" id="delete">Xóa</a>
+                                        </td>
                                     </tr>
+                                    @endforeach
                                 </table>
                                 @else
                                 <div class="alert alert-danger text-center">
