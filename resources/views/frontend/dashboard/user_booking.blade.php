@@ -67,14 +67,14 @@
 
       <td><span class="badge bg-primary">{{ $item->check_in }}</span><span class="badge bg-warning text-dark">{{ $item->check_out }}</span> </td>
       <td>{{ $item->number_of_rooms }}</td>
-      <td>
+    <td>
         @if ($item->status == 1)
             <span class="badge bg-success">Hoàn thành</span>
         @else
             <span class="badge bg-info text-dark">Đang chờ</span>
+            <a href="{{ route('user.booking.cancel.form', $item->id) }}" class="btn btn-sm btn-danger mt-2">Huỷ</a>
         @endif
-        <a href="{{ route('user.booking.cancel.form', $item->id) }}" class="btn btn-sm btn-danger mt-2">Huỷ</a>
-      </td>
+    </td>
     </tr>
     @endforeach
   </tbody>

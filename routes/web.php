@@ -25,6 +25,7 @@ use App\Http\Controllers\Backend\AdminHotelController;
 use App\Http\Controllers\Frontend\VnpayController;
 use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\ReviewController;
+use App\Http\Controllers\Backend\CustomerController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -228,6 +229,17 @@ Route::middleware(['auth', 'roles:admin'])->group(function(){
         Route::get('/edit/hotel/{id}', 'EditHotel')->name('edit.hotel');
         Route::post('/update/hotel/{id}', 'UpdateHotel')->name('update.hotel');
         Route::get('/delete/hotel/{id}', 'DeleteHotel')->name('delete.hotel');
+    });
+    
+    Route::controller(CustomerController::class)->group(function(){
+        Route::get('/all-customer', 'AllCustomer')->name('all.customer');
+        Route::get('/add-customer', 'AddCustomer')->name('add.customer');
+        Route::post('/store-customer', 'StoreCustomer')->name('customer.store');
+    
+        Route::get('/edit-customer/{id}', 'EditCustomer')->name('customer.edit');
+        Route::post('/update-customer/{id}', 'UpdateCustomer')->name('customer.update');
+        
+        Route::get('/delete-customer/{id}', 'DeleteCustomer')->name('customer.delete'); 
     });
 });
 

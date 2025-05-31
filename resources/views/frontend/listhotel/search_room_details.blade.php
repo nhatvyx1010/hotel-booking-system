@@ -166,7 +166,7 @@
                     <a href="#"> <b>Sức chứa : </b>{{ $roomdetails->room_capacity }}</a>
                 </li>
                 <li>
-                     <a href="#"> <b>Diện tích : </b>{{ $roomdetails->size }}</a>
+                     <a href="#"> <b>Diện tích : </b>{{ $roomdetails->size }}m2</a>
                 </li>
                
                

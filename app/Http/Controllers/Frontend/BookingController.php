@@ -267,17 +267,24 @@ class BookingController extends Controller
     }
 
     public function HotelEditBooking($id) {
-        $user_id = Auth::id();  // Lấy ID người dùng hiện tại
-    
+        $user_id = Auth::id();
+
         // Lọc booking theo hotel_id từ bảng rooms
         $editData = Booking::with('room')
             ->whereHas('room', function($query) use ($user_id) {
                 $query->where('hotel_id', $user_id);
             })
             ->find($id);
-    
-        return view('hotel.backend.booking.edit_booking', compact('editData'));
-    }    
+
+        $today = \Carbon\Carbon::today();
+
+        $isExpired = false;
+        if ($editData && ($today->gt($editData->check_in) || $today->gt($editData->check_out))) {
+            $isExpired = true;
+        }
+
+        return view('hotel.backend.booking.edit_booking', compact('editData', 'isExpired'));
+    }
 
     public function UpdateBookingStatus(Request $request, $id){
         $booking = Booking::find($id);
@@ -783,5 +790,4 @@ class BookingController extends Controller
 
         return redirect()->route('user.booking')->with('success', 'Huỷ đặt phòng thành công. Bạn sẽ được hoàn tiền trong vòng 5 ngày làm việc.');
     }
-
 }
