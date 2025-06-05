@@ -5,13 +5,13 @@
 <div class="page-content">
     <!--breadcrumb-->
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">Đổi Mật Khẩu Admin</div>
+        <div class="breadcrumb-title pe-3">Đổi Mật Khẩu Khách Sạn</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Đổi Mật Khẩu Admin</li>
+                    <li class="breadcrumb-item active" aria-current="page">Đổi Mật Khẩu Khách Sạn</li>
                 </ol>
             </nav>
         </div>
@@ -35,13 +35,15 @@
                 <div class="col-lg-4">
                     <div class="card">
                         <div class="card-body">
-        <div class="d-flex flex-column align-items-center text-center">
-            <img src="{{ (!empty($profileData->photo)) ? url('upload/hotel_images/' . $profileData->photo) : url('upload/no_image.jpg') }}" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
-            <div class="mt-3">
-                <h4>{{ $profileData->name }}</h4>
-                <p class="text-secondary mb-1">{{ $profileData->email }}</p>
-            </div>
-        </div>
+                            <div class="d-flex flex-column align-items-center text-center">
+                                 <img src="{{ asset($profileData->photo ? 'upload/admin_images/' . $profileData->photo : 'upload/no_image.jpg') }}" 
+                                     alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+
+                                <div class="mt-3">
+                                    <h4>{{ $profileData->name }}</h4>
+                                    <p class="text-secondary mb-1">{{ $profileData->email }}</p>
+                                </div>
+                            </div>
                             <hr class="my-4" />
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">

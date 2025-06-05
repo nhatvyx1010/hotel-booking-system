@@ -153,41 +153,56 @@
                                             <td>Tổng Số Tiền</td>
                                             <td>{{ number_format($editData->total_amount, 0, ',', '.') }} VNĐ</td>
                                         </tr>
+                                        @if($editData->status == '1')
+                                            <tr  class="important-row">
+                                                <td>Phí dịch vụ</td>
+                                                <td>{{ number_format($editData->service_fee, 0, ',', '.') }} VNĐ</td>
+                                            </tr>
+                                        @endif
                                     </table>
-
-
                                 </div>
 
                                 <div style="clear: both"></div>
-                                @if(!$isExpired)
+                                {{-- Nếu hôm nay < ngày check-in thì cho phép gán phòng --}}
+                                @if($isBeforeCheckIn)
                                     <div style="margin-top: 40px; margin-bottom: 20px">
                                         <a href="javascript:void(0)" class="btn btn-primary assign_room">Gán Phòng</a>
                                     </div>
+                                @elseif($isAfterCheckOut)
+                                    <div class="alert alert-warning text-center mt-4">
+                                        Đã quá ngày trả phòng, không thể gán hoặc xóa phòng.
+                                    </div>
                                 @else
                                     <div class="alert alert-warning text-center mt-4">
-                                        Đã quá ngày nhận/trả phòng, không thể gán phòng.
+                                        Đã đến hoặc đang trong thời gian check-in, không thể gán thêm phòng.
                                     </div>
                                 @endif
+
                                 @php
-                                    $assign_rooms = App\Models\BookingRoomList::with('room_number')->where('booking_id', $editData->id)->get();
+                                    $assign_rooms = App\Models\BookingRoomList::with('room_number')
+                                        ->where('booking_id', $editData->id)
+                                        ->get();
                                 @endphp
 
                                 @if(count($assign_rooms) > 0)
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <th>Số Phòng</th>
-                                        <th>Hành Động</th>
-                                    </tr>
-                                    @foreach ($assign_rooms as $assign_room)
-                                    <tr>
-                                        <td>{{ $assign_room->room_number->room_no }}</td>
-                                        <td>
-                                            <a href="{{ route('hotel.assign_room_delete', $assign_room->id) }}" id="delete">Xóa</a>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </table>
-                                @else
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th>Số Phòng</th>
+                                            @if(!$isAfterCheckOut)
+                                                <th>Hành Động</th>
+                                            @endif
+                                        </tr>
+                                        @foreach ($assign_rooms as $assign_room)
+                                            <tr>
+                                                <td>{{ $assign_room->room_number->room_no }}</td>
+                                                @if(!$isAfterCheckOut)
+                                                    <td>
+                                                        <a href="{{ route('hotel.assign_room_delete', $assign_room->id) }}" id="delete">Xóa</a>
+                                                    </td>
+                                                @endif
+                                            </tr>
+                                        @endforeach
+                                    </table>
                                 @endif
                             </div>
 

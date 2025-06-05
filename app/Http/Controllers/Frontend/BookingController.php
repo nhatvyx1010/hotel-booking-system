@@ -14,6 +14,7 @@ use App\Models\MultiImage;
 use App\Models\Facility;
 use App\Models\RoomBookedDate;
 use App\Models\Booking;
+use App\Models\Report;
 use Illuminate\Support\Facades\Auth;
 use Stripe;
 use App\Models\BookingRoomList;
@@ -266,25 +267,27 @@ class BookingController extends Controller
         return view('backend.booking.edit_booking', compact('editData', 'hotel'));
     }
 
-    public function HotelEditBooking($id) {
-        $user_id = Auth::id();
+public function HotelEditBooking($id) {
+    $user_id = Auth::id();
 
-        // Lọc booking theo hotel_id từ bảng rooms
-        $editData = Booking::with('room')
-            ->whereHas('room', function($query) use ($user_id) {
-                $query->where('hotel_id', $user_id);
-            })
-            ->find($id);
+    $editData = Booking::with('room')
+        ->whereHas('room', function($query) use ($user_id) {
+            $query->where('hotel_id', $user_id);
+        })
+        ->find($id);
 
-        $today = \Carbon\Carbon::today();
+    $today = \Carbon\Carbon::today();
 
-        $isExpired = false;
-        if ($editData && ($today->gt($editData->check_in) || $today->gt($editData->check_out))) {
-            $isExpired = true;
-        }
+    $isBeforeCheckIn = false;
+    $isAfterCheckOut = false;
 
-        return view('hotel.backend.booking.edit_booking', compact('editData', 'isExpired'));
+    if ($editData) {
+        $isBeforeCheckIn = $today->lt($editData->check_in);  // Hôm nay < check-in
+        $isAfterCheckOut = $today->gt($editData->check_out); // Hôm nay > check-out
     }
+
+    return view('hotel.backend.booking.edit_booking', compact('editData', 'isBeforeCheckIn', 'isAfterCheckOut'));
+}
 
     public function UpdateBookingStatus(Request $request, $id){
         $booking = Booking::find($id);
@@ -313,7 +316,7 @@ class BookingController extends Controller
         ];
 
         try {
-            Mail::to($sendmail->email)->send(new BookConfirm($data));
+            Mail::to('nguyenphamnhatvy10101@gmail.com')->cc($sendmail->email)->send(new BookConfirm($data));
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
@@ -330,6 +333,16 @@ class BookingController extends Controller
         $booking = Booking::find($id);
         $booking->payment_status = $request->payment_status;
         $booking->status = $request->status;
+
+        if ($booking->status == 1) {
+            // Phí hoa hồng (Commission)
+            $serviceFeePercent = 0.15;
+            $serviceFee = $booking->total_price * $serviceFeePercent;
+            $booking->service_fee = round($serviceFee, 0);
+        } else {
+            $booking->service_fee = 0;
+        }
+
         $booking->save();
 
         $sendmail = Booking::with('room')->find($id);
@@ -353,7 +366,9 @@ class BookingController extends Controller
         ];
 
         try {
-            Mail::to($sendmail->email)->send(new BookConfirm($data));
+            Mail::to('nguyenphamnhatvy10101@gmail.com')
+            ->cc($sendmail->email)
+            ->send(new BookConfirm($data));
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
@@ -392,7 +407,9 @@ class BookingController extends Controller
         ];
 
         try {
-            Mail::to($sendmail->email)->send(new BookCancelConfirm($data));
+            Mail::to('nguyenphamnhatvy10101@gmail.com')
+            ->cc($sendmail->email)
+            ->send(new BookCancelConfirm($data));
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
@@ -714,7 +731,7 @@ class BookingController extends Controller
             ->where('user_id', $id)
             ->whereIn('status', [0, 1])
             ->orderBy('id', 'desc')
-            ->get();
+            ->paginate(5);
     
         return view('frontend.dashboard.user_booking', compact('allData'));
     }
@@ -789,5 +806,33 @@ class BookingController extends Controller
         ]);
 
         return redirect()->route('user.booking')->with('success', 'Huỷ đặt phòng thành công. Bạn sẽ được hoàn tiền trong vòng 5 ngày làm việc.');
+    }
+
+    
+    // Hiển thị form lý do huỷ
+    public function ShowReportForm($id)
+    {
+        $booking = Booking::with(['room.type', 'report'])->findOrFail($id);
+
+        return view('frontend.dashboard.report_form', compact('booking'));
+    }
+
+    public function StoreReportReason(Request $request, $id)
+    {
+        $booking = Booking::with('room.hotel')->findOrFail($id);
+        
+        $validated = $request->validate([
+            'report_reason' => 'required|string|max:1000',
+        ]);
+
+        Report::create([
+            'user_id'   => Auth::id(),
+            'hotel_id'  => $booking->room->hotel->id,
+            'booking_id'=> $booking->id,
+            'message'   => $validated['report_reason'],
+            'status'    => 'pending',
+        ]);
+
+        return redirect()->route('user.booking')->with('success', 'Báo cáo đã được gửi thành công. Quản trị viên sẽ xem xét trong thời gian sớm nhất.');
     }
 }

@@ -30,7 +30,7 @@
                                 </h3>
                                 <p><i class='bx bx-map'></i> {{ $city->name }}</p>
                                 <p><i class='bx bx-info-circle'></i> {{ $city->description }}</p>
-                                <p><i class='bx bx-hotel'></i> {{ $city->hotels->count() }} Khách Sạn Đang Hoạt Động</p>
+                                <p><i class='bx bx-hotel'></i> {{ $city->hotels->where('status', 'active')->count() }} Khách Sạn Đang Hoạt Động</p>
 
                                 <a href="{{ url('city/details/'.$city->id) }}" class="book-more-btn mt-2">
                                     Xem Chi Tiết

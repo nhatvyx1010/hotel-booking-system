@@ -73,7 +73,7 @@
 
                     <div class="col-lg-2 col-md-2">
                         <button type="submit" class="default-btn btn-bg-one border-radius-5">
-                            Kiểm tra tình trạng
+                            Kiểm tra
                         </button>
                     </div>
                 </div>

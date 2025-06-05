@@ -39,7 +39,7 @@
                                 <p><i class='bx bx-phone'></i> {{ $hotel->phone }}</p>
                                 <p><i class='bx bx-map'></i> {{ $hotel->address }}</p>
 
-                                <a href="{{ url('hotel/details/'.$hotel->id) }}" class="book-more-btn mt-2">
+                                <a href="{{ url('hotel_detail/'.$hotel->id) }}" class="book-more-btn mt-2">
                                     Xem Chi Tiết
                                 </a>
                             </div>

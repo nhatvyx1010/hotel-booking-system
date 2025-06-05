@@ -18,10 +18,12 @@
     $pendingRate = $totalBooking > 0 ? round(count($pending) / $totalBooking * 100, 1) : 0;
     $completeRate = $totalBooking > 0 ? round(count($complete) / $totalBooking * 100, 1) : 0;
     $cancelRate = $totalBooking > 0 ? round(count($cancel) / $totalBooking * 100, 1) : 0;
+	$totalServiceFee = $bookings->sum('service_fee');
+
 @endphp
 
 <div class="page-content">
-				<div class="row row-cols-1 row-cols-md-2 row-cols-xl-5 g-3">
+				<div class="row row-cols-1 row-cols-md-2 row-cols-xl-6 g-3">
                    <div class="col">
 					 <div class="card radius-10 border-start border-0 border-4 border-info">
 						<div class="card-body">
@@ -90,7 +92,7 @@
 						   <div class="d-flex align-items-center">
 							   <div>
 								   <p class="mb-0 text-secondary">Tổng tiền</p>
-								   <h4 class="my-1 text-warning"> {{ number_format($totalPrice, 0, ',', '.') }} VNĐ</h4>
+								   <h5 class="my-1 text-warning"> {{ number_format($totalPrice, 0, ',', '.') }} VNĐ</h5>
 								   <p class="mb-0 font-13">VNĐ</p>
 							   </div>
 							   <div class="widgets-icons-2 rounded-circle bg-gradient-orange text-white ms-auto"><i class='bx bxs-group'></i>
@@ -99,6 +101,22 @@
 					   </div>
 					</div>
 				  </div> 
+				  <div class="col">
+						<div class="card radius-10 border-start border-0 border-4 border-primary">
+							<div class="card-body">
+								<div class="d-flex align-items-center">
+									<div>
+										<p class="mb-0 text-secondary">Tổng phí dịch vụ</p>
+										<h5 class="my-1 text-primary">{{ number_format($totalServiceFee, 0, ',', '.') }} VNĐ</h5>
+										<p class="mb-0 font-13">Tính từ tất cả đơn</p>
+									</div>
+									<div class="widgets-icons-2 rounded-circle bg-primary text-white ms-auto">
+										<i class='bx bx-dollar'></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div><!--end row-->
 
 				<div class="row">

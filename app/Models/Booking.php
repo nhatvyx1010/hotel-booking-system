@@ -21,4 +21,10 @@ class Booking extends Model
     public function room(){
         return $this->belongsTo(Room::class, 'rooms_id');
     }
+    
+    public function report()
+    {
+        return $this->hasOne(Report::class, 'booking_id');
+    }
+
 }

@@ -4,7 +4,9 @@
 			<img src="{{asset('backend/assets/images/logo-icon.png')}}" class="logo-icon" alt="logo icon">
 		</div>
 		<div>
-			<h4 class="logo-text">Hotel Booking</h4>
+			<h4 class="logo-text">
+				<a href="{{ route('admin.dashboard') }}" class="text-decoration-none text-primary">Hotel Booking</a>
+			</h4>
 		</div>
 		<div class="toggle-icon ms-auto"><i class='bx bx-arrow-back'></i>
 		</div>
@@ -27,8 +29,11 @@
 				<div class="menu-title">Quản Lý Khách Sạn</div>
 			</a>
 			<ul>
-				<li> <a href="{{ route('all.hotel') }}"><i class='bx bx-list-ul'></i>Danh Sách Khách Sạn</a>
-				</li>
+				<li><a href="{{ route('all.hotel') }}"><i class='bx bx-list-ul'></i>Khách sạn đang hoạt động</a></li>
+				<li><a href="{{ route('all.hotel.inactive') }}"><i class='bx bx-list-ul'></i>Khách sạn bị khóa</a></li>
+				<li><a href="{{ route('all.hotel.pending') }}"><i class='bx bx-list-ul'></i>Khách sạn chờ phê duyệt</a></li>
+				<li><a href="{{ route('all.hotel.cancelled') }}"><i class='bx bx-list-ul'></i>Khách sạn không được duyệt</a></li>
+
 
 				<li> <a href="{{ route('add.hotel') }}"><i class='bx bx-plus'></i>Thêm Khách Sạn</a>
 				</li>
@@ -125,6 +130,18 @@
 			</a>
 			<ul>
 				<li> <a href="{{ route('all.review') }}"><i class='bx bx-star'></i>Tất Cả Đánh Giá</a>
+				</li>
+			</ul>
+		</li>
+
+		<li>
+			<a class="has-arrow" href="javascript:;">
+				<div class="parent-icon"><i class='bx bx-star'></i>
+				</div>
+				<div class="menu-title">Vấn Đề Từ Khách Hàng</div>
+			</a>
+			<ul>
+				<li> <a href="{{ route('all.report') }}"><i class='bx bx-star'></i>Tất Cả Vấn Đề</a>
 				</li>
 			</ul>
 		</li>

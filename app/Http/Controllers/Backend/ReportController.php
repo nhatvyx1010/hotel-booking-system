@@ -74,7 +74,10 @@ class ReportController extends Controller
                 $bookings = collect();
         }
 
-        return view('backend.report.booking_search_date', compact('bookings', 'reportType', 'startDate', 'endDate'));
+        // Tính tổng phí dịch vụ
+        $totalServiceFee = $bookings->sum('service_fee');
+
+        return view('backend.report.booking_search_date', compact('bookings', 'reportType', 'startDate', 'endDate', 'totalServiceFee'));
     }
 
 

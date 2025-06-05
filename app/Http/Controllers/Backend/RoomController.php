@@ -8,6 +8,7 @@ use App\Models\Room;
 use App\Models\Facility;
 use App\Models\MultiImage;
 use App\Models\RoomNumber;
+use App\Models\RoomSpecialPrice;
 use App\Models\RoomType;
 use Intervention\Image\Facades\Image;
 use Carbon\Carbon;
@@ -177,6 +178,23 @@ class RoomController extends Controller
             }
         }
     
+        // Xoá các giá đặc biệt cũ trước khi thêm mới
+        RoomSpecialPrice::where('room_id', $room->id)->delete();
+
+        if ($request->has('special_prices')) {
+            foreach ($request->special_prices as $price) {
+                if (!empty($price['start_date']) && !empty($price['end_date']) && !empty($price['special_price'])) {
+                    RoomSpecialPrice::create([
+                        'room_id' => $room->id,
+                        'start_date' => $price['start_date'],
+                        'end_date' => $price['end_date'],
+                        'special_price' => $price['special_price'],
+                        'description' => $price['description'] ?? null,
+                    ]);
+                }
+            }
+        }
+
         $notification = array(
             'message' => 'Cập nhật phòng thành công',
             'alert-type' => 'success'

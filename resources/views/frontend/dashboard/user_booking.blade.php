@@ -2,6 +2,78 @@
 @section('main')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+<style>
+    .pagination {
+        padding: 10px 15px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+    }
+
+    .page-item.active .page-link {
+        background-color:rgb(227, 190, 103);
+        border-color: rgb(227, 190, 103);
+        color: white;
+    }
+
+    .page-link {
+        color: rgb(227, 190, 103);
+    }
+
+    .page-link:hover {
+        background-color: #e9ecef;
+        color: rgb(227, 190, 103);
+    }
+
+    .btn-danger-custom {
+        background-color: #d9534f; /* đỏ đậm bootstrap */
+        border-color: #d43f3a;
+        color: white;
+        font-weight: 600;
+        border-radius: 6px;
+        padding: 6px 14px;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-danger-custom:hover {
+        background-color: #c9302c;
+        box-shadow: 0 4px 10px rgba(217, 83, 79, 0.5);
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-cancel-custom {
+        background-color: #f0ad4e; /* màu cam bootstrap */
+        border-color: #eea236;
+        color: #fff;
+        font-weight: 600;
+        border-radius: 6px;
+        padding: 6px 14px;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-cancel-custom:hover {
+        background-color: #ec971f;
+        box-shadow: 0 4px 10px rgba(240, 173, 78, 0.5);
+        color: white;
+        text-decoration: none;
+    }
+    /* Cố định chiều rộng cột trạng thái */
+    .table td:nth-child(8),
+    .table th:nth-child(8) {
+        width: 170px; /* chỉnh tăng giảm */
+        vertical-align: middle;
+    }
+
+    /* Cho trạng thái và nút nằm ngang */
+    .status-cell {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px; /* khoảng cách giữa trạng thái và nút */
+    }
+</style>
+
 <!-- Inner Banner -->
 <div class="inner-banner inner-bg6">
     <div class="container">
@@ -67,19 +139,24 @@
 
       <td><span class="badge bg-primary">{{ $item->check_in }}</span><span class="badge bg-warning text-dark">{{ $item->check_out }}</span> </td>
       <td>{{ $item->number_of_rooms }}</td>
-    <td>
-        @if ($item->status == 1)
-            <span class="badge bg-success">Hoàn thành</span>
-        @else
-            <span class="badge bg-info text-dark">Đang chờ</span>
-            <a href="{{ route('user.booking.cancel.form', $item->id) }}" class="btn btn-sm btn-danger mt-2">Huỷ</a>
-        @endif
-    </td>
+        <td>
+            <div class="status-cell">
+            @if ($item->status == 1)
+                <span class="badge bg-success">Hoàn thành</span>
+                <a href="{{ route('user.booking.report.form', $item->id) }}" class="btn btn-sm btn-danger-custom mt-1">Báo cáo vấn đề</a>
+            @else
+                <span class="badge bg-info text-dark">Đang chờ</span>
+                <a href="{{ route('user.booking.cancel.form', $item->id) }}" class="btn btn-sm btn-cancel-custom mt-1">Huỷ</a>
+            @endif
+            </div>
+        </td>
     </tr>
     @endforeach
   </tbody>
 </table>
-
+<div class="d-flex justify-content-center mt-4">
+    {{ $allData->links('pagination::bootstrap-5') }}
+</div>
 </div>
 </div>
 </div>

@@ -46,20 +46,20 @@ class HotelController extends Controller
             'address' => $request->address,
             'city_id' => $request->city_id,
             'role' => 'hotel',
-            'status' => 'inactive',
+            'status' => 'pending',
         ]);
     
         event(new Registered($user));
     
-        Auth::login($user);
+        // Auth::login($user);
     
         $notification = array(
-            'message' => 'Đăng ký khách sạn thành công!',
+            'message' => 'Đăng ký khách sạn thành công! Vui lòng chờ phê duyệt trước khi hoạt động tại hệ thống của chúng tôi!',
             'alert-type' => 'success'
         );
 
-        // return redirect()->route('login')->with($notification);
-        return redirect()->route('hotel.dashboard')->with($notification);
+        return redirect()->route('login')->with($notification);
+        // return redirect()->route('hotel.dashboard')->with($notification);
     }
     //End Method
     
@@ -155,16 +155,15 @@ class HotelController extends Controller
     //End Private Method
 
     public function HotelChangePassword() {
-        $id = Auth::guard('hotel')->id();
+        $id = Auth::id();
         $profileData = User::find($id);
-
-
+// dd($profileData);
         return view('hotel.hotel_change_password', compact('profileData'));
     }
     //End Method
     
     public function HotelPasswordUpdate(Request $request) {
-        $hotel = Auth::guard('hotel')->user();
+        $hotel = Auth::user();
         $request->validate([
             'old_password' => 'required',
             'new_password' => 'required|confirmed',

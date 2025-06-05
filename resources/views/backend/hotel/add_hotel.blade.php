@@ -99,6 +99,24 @@
                                     </div>
                                 </div>
 
+                                <div class="row mb-3">
+                                    <div class="col-sm-3"><h6 class="mb-0">File âm thanh</h6></div>
+                                    <div class="form-group col-sm-9 text-secondary">
+                                        <input class="form-control" name="hotel_audio" type="file" id="audio" accept="audio/*" />
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <audio id="showAudio" controls style="display:none; width: 100%;">
+                                            <source src="" type="audio/mp4">
+                                            Trình duyệt của bạn không hỗ trợ thẻ audio.
+                                        </audio>
+                                    </div>
+                                </div>
+                                <!-- End phần upload âm thanh -->
+
                                 <div class="row">
                                     <div class="col-sm-3"></div>
                                     <div class="col-sm-9 text-secondary">
@@ -123,6 +141,28 @@
                 $('#showPhoto').attr('src', e.target.result);
             }
             reader.readAsDataURL(e.target.files[0]);
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#photo').change(function(e){
+            var reader = new FileReader();
+            reader.onload = function(e){
+                $('#showPhoto').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+        $('#audio').change(function(e){
+            const file = e.target.files[0];
+            if (file) {
+                const audioURL = URL.createObjectURL(file);
+                $('#showAudio').attr('src', audioURL).show();
+            } else {
+                $('#showAudio').hide();
+            }
         });
     });
 </script>

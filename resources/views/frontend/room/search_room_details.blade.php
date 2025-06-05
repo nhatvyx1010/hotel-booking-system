@@ -87,7 +87,7 @@
 
                                 <div class="col-lg-2 col-md-2">
                                     <button type="submit" class="default-btn btn-bg-one border-radius-5">
-                                        Kiểm tra tình trạng
+                                        Kiểm tra
                                     </button>
                                 </div>
                             </div>
@@ -146,7 +146,7 @@
                                         </div>
 
                                         <input type="hidden" id="total_adult" value="{{ $roomdetails->total_adult }}">
-                                        <input type="hidden" id="room_price" value="{{ $roomdetails->price }}">
+                                        <input type="hidden" id="room_price" value="{{ $roomdetails->priceToShow }}">
                                         <input type="hidden" id="discount_p" value="{{ $roomdetails->discount }}">
 
                                         <div class="col-lg-12">
@@ -166,8 +166,11 @@
                                         <table class="table">
                                             <tbody>
                                                 <tr>
-                                                <td><p>Tạm tính</p></td>
-                                                <td style="text-align: right"><span class="t_subtotal">0</span></td>
+                                                    <td><p>Tạm tính</p></td>
+                                                    <td style="text-align: right"><span class="t_subtotal">0</span></td>
+                                                    @if($roomdetails->isHolidayPrice)
+                                                        <small class="text-danger">* Giá lễ tết áp dụng</small>
+                                                    @endif
                                                 </tr>
 
                                                 <tr>

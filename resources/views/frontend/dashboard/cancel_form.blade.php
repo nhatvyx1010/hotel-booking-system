@@ -65,30 +65,27 @@
                                 $now = \Carbon\Carbon::now();
                                 $hoursDiff = $now->diffInHours($checkInTime, false);
                             @endphp
-
                             @if ($hoursDiff < 24)
                                 <div class="alert alert-warning">
-                                    <strong>Lưu ý:</strong> Thời gian nhận phòng còn chưa đến 24h. Bạn sẽ <strong>không được hoàn tiền</strong>.
+                                    <strong>Lưu ý:</strong> Thời gian nhận phòng còn lại chưa đến 24 giờ. Theo chính sách của chúng tôi, bạn sẽ <strong>không thể hủy phòng</strong> và <strong>không được hoàn lại tiền</strong> trong trường hợp này.
                                 </div>
                             @else
                                 <div class="alert alert-success">
-                                    Bạn sẽ được <strong>hoàn tiền 100%</strong> sau khi huỷ booking.
+                                    Bạn có thể <strong>hủy đặt phòng</strong> và sẽ được <strong hoàn lại 100% số tiền</strong> đã thanh toán theo chính sách hoàn tiền của chúng tôi.
                                 </div>
                             @endif
 
                             <!-- Cancel Form -->
                             <form action="{{ route('user.booking.cancel.store', $booking->id) }}" method="POST">
                                 @csrf
-
-                                <div class="form-group">
-                                    <label for="cancel_reason">Lý do huỷ đặt phòng</label>
-                                    <textarea name="cancel_reason" id="cancel_reason" class="form-control" rows="3" required>{{ old('cancel_reason') }}</textarea>
-                                    @error('cancel_reason')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
                                 @if ($hoursDiff >= 24)
+                                    <div class="form-group">
+                                        <label for="cancel_reason">Lý do huỷ đặt phòng</label>
+                                        <textarea name="cancel_reason" id="cancel_reason" class="form-control" rows="3" required>{{ old('cancel_reason') }}</textarea>
+                                        @error('cancel_reason')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                     <div class="form-group mt-3">
                                         <label for="phone">Số điện thoại nhận hoàn tiền</label>
                                         <input type="text" name="phone" id="phone" class="form-control" value="{{ old('phone') }}" required>

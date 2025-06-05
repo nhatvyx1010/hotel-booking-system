@@ -72,6 +72,14 @@ class BlogController extends Controller
     }
 
     public function StoreBlogPost(Request $request){
+
+        $request->validate([
+            'post_title' => 'required',
+            'post_slug' => 'required|unique:blog_posts,post_slug',
+            'post_image' => 'nullable|image',
+            'audio_file' => 'nullable|mimes:mp3,wav,m4a',
+        ]);
+
         if ($request->hasFile('post_image')) {
             $image = $request->file('post_image');
             $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
@@ -79,6 +87,14 @@ class BlogController extends Controller
             $save_url = 'upload/post/'.$name_gen;
         } else {
             $save_url = 'upload/post/default.jpg';
+        }
+
+        $audio_save_url = null;
+        if ($request->hasFile('audio_file')) {
+            $audio = $request->file('audio_file');
+            $audio_name = hexdec(uniqid()) . '.' . $audio->getClientOriginalExtension();
+            $audio->move('upload/blog_audio/', $audio_name);
+            $audio_save_url = 'upload/blog_audio/' . $audio_name;
         }
 
         $blogPostData = [
@@ -91,6 +107,10 @@ class BlogController extends Controller
             'post_image' => $save_url,
             'created_at' => Carbon::now(),
         ];
+
+        if ($audio_save_url) {
+            $blogPostData['audio_file'] = $audio_save_url;
+        }    
 
         if ($request->has('hotel_id')) {
             $blogPostData['hotel_id'] = $request->hotel_id;
@@ -114,51 +134,64 @@ class BlogController extends Controller
 
     public function UpdateBlogPost(Request $request){
         $post_id = $request->id;
-    
-        // Kiểm tra xem có file ảnh không
+
+        // Tìm bài viết
+        $blogPost = BlogPost::findOrFail($post_id);
+
+        // Xử lý ảnh nếu có upload mới
         if($request->file('post_image')){
             $image = $request->file('post_image');
             $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
             Image::make($image)->resize(550, 370)->save('upload/post/'.$name_gen);
             $save_url = 'upload/post/'.$name_gen;
-    
-            // Cập nhật bài viết với ảnh mới và hotel_id (nếu có)
-            BlogPost::findOrFail($post_id)->update([
-                'blogcat_id' => $request->blogcat_id,
-                'user_id' => Auth::user()->id,
-                'post_title' => $request->post_title,
-                'post_slug' => strtolower(str_replace(' ','-',$request->post_title)),
-                'short_desc' => $request->short_desc,
-                'long_desc' => $request->long_desc,
-                'post_image' => $save_url,
-                'created_at' => Carbon::now(),
-                'hotel_id' => $request->hotel_id ? $request->hotel_id : null, // Nếu có hotel_id thì lưu, không thì null
-            ]);
-    
-            $notification = array(
-                'message' => 'Cập nhật bài viết blog thành công (có ảnh)',
-                'alert-type' => 'success'
-            );
-            return redirect()->route('all.blog.post')->with('message', 'Cập nhật bài viết blog thành công (có ảnh)')->with('alert-type', 'success');
-        } else {
-            // Cập nhật bài viết mà không thay đổi ảnh và hotel_id (nếu có)
-            BlogPost::findOrFail($post_id)->update([
-                'blogcat_id' => $request->blogcat_id,
-                'user_id' => Auth::user()->id,
-                'post_title' => $request->post_title,
-                'post_slug' => strtolower(str_replace(' ','-',$request->post_title)),
-                'short_desc' => $request->short_desc,
-                'long_desc' => $request->long_desc,
-                'created_at' => Carbon::now(),
-                'hotel_id' => $request->hotel_id ? $request->hotel_id : null, // Nếu có hotel_id thì lưu, không thì null
-            ]);
-    
-            $notification = array(
-                'message' => 'Cập nhật bài viết blog thành công (không có ảnh)',
-                'alert-type' => 'success'
-            );
-            return redirect()->route('all.blog.post')->with('message', 'Cập nhật bài viết blog thành công (không có ảnh)')->with('alert-type', 'success');
+
+            // Xóa ảnh cũ nếu có
+            if($blogPost->post_image && file_exists(public_path($blogPost->post_image))){
+                unlink(public_path($blogPost->post_image));
+            }
+
+            $blogPost->post_image = $save_url;
         }
+
+        // Xử lý audio
+        // Nếu có yêu cầu xóa audio (checkbox remove_audio)
+        if($request->has('remove_audio') && $request->remove_audio == 1){
+            if($blogPost->audio_file && file_exists(public_path($blogPost->audio_file))){
+                unlink(public_path($blogPost->audio_file));
+            }
+            $blogPost->audio_file = null;
+        }
+
+        // Nếu upload file audio mới
+        if($request->file('audio_file')){
+            // Xóa audio cũ nếu có
+            if($blogPost->audio_file && file_exists(public_path($blogPost->audio_file))){
+                unlink(public_path($blogPost->audio_file));
+            }
+            $audio = $request->file('audio_file');
+            $audio_name = hexdec(uniqid()) . '.' . $audio->getClientOriginalExtension();
+            $audio->move('upload/blog_audio/', $audio_name);
+            $blogPost->audio_file = 'upload/blog_audio/' . $audio_name;
+        }
+
+        // Cập nhật các trường còn lại
+        $blogPost->blogcat_id = $request->blogcat_id;
+        $blogPost->user_id = Auth::user()->id;
+        $blogPost->post_title = $request->post_title;
+        $blogPost->post_slug = strtolower(str_replace(' ','-',$request->post_title));
+        $blogPost->short_desc = $request->short_desc;
+        $blogPost->long_desc = $request->long_desc;
+        $blogPost->hotel_id = $request->hotel_id ? $request->hotel_id : null;
+        $blogPost->created_at = Carbon::now();
+
+        $blogPost->save();
+
+        $notification = array(
+            'message' => 'Cập nhật bài viết blog thành công',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('all.blog.post')->with($notification);
     }
 
     public function DeleteBlogPost($id){

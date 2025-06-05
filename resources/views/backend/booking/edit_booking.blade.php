@@ -155,6 +155,10 @@
                                             <td>Tổng số tiền</td>
                                             <td>{{ number_format($editData->total_amount, 0, ',', '.') }} VNĐ</td>
                                         </tr>
+                                        <tr  class="important-row">
+                                            <td>Phí dịch vụ</td>
+                                            <td>{{ number_format($editData->service_fee, 0, ',', '.') }} VNĐ</td>
+                                        </tr>
                                     </table>
 
 

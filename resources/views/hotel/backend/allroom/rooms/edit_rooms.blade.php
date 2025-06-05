@@ -85,6 +85,52 @@
 					<input type="text" name="room_capacity" class="form-control" id="input2" value="{{ $editData->room_capacity }}">
 				</div>
 
+                @php
+                    $specialPrices = \App\Models\RoomSpecialPrice::where('room_id', $editData->id)->get();
+                @endphp
+
+                <div class="col-md-12 mt-3">
+                    <label class="form-label">Giá đặc biệt theo ngày</label>
+                    <div id="special_prices_container">
+                        @foreach($specialPrices as $index => $price)
+                        <div class="row mb-2 special-price-group">
+                            <div class="col-md-3">
+                                <input type="date" name="special_prices[{{ $index }}][start_date]" value="{{ $price->start_date }}" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="date" name="special_prices[{{ $index }}][end_date]" value="{{ $price->end_date }}" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="number" name="special_prices[{{ $index }}][special_price]" value="{{ $price->special_price }}" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" name="special_prices[{{ $index }}][description]" value="{{ $price->description }}" class="form-control">
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+
+                    {{-- Nếu chưa có dữ liệu, hiển thị một dòng trống --}}
+                    @if($specialPrices->isEmpty())
+                    <div class="row mb-2 special-price-group">
+                        <div class="col-md-3">
+                            <input type="date" name="special_prices[0][start_date]" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="date" name="special_prices[0][end_date]" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="number" name="special_prices[0][special_price]" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" name="special_prices[0][description]" class="form-control">
+                        </div>
+                    </div>
+                    @endif
+
+                    <button type="button" class="btn btn-sm btn-success mt-2" onclick="addSpecialPrice()">+ Thêm giá đặc biệt</button>
+                </div>
+
 				<div class="col-md-6">
 					<label for="input7" class="form-label">View</label>
 					<select name="view" id="input7" class="form-select">
@@ -360,6 +406,31 @@
         $('#roomview').hide();
         $('#addRoomNo').hide();
    }
+</script>
+
+<script>
+    let index = 1;
+    function addSpecialPrice() {
+        const container = document.getElementById('special_prices_container');
+        const newGroup = document.createElement('div');
+        newGroup.classList.add('row', 'mb-2', 'special-price-group');
+        newGroup.innerHTML = `
+            <div class="col-md-3">
+                <input type="date" name="special_prices[${index}][start_date]" class="form-control">
+            </div>
+            <div class="col-md-3">
+                <input type="date" name="special_prices[${index}][end_date]" class="form-control">
+            </div>
+            <div class="col-md-3">
+                <input type="number" name="special_prices[${index}][special_price]" class="form-control" step="0.01">
+            </div>
+            <div class="col-md-3">
+                <input type="text" name="special_prices[${index}][description]" class="form-control">
+            </div>
+        `;
+        container.appendChild(newGroup);
+        index++;
+    }
 </script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -43,6 +43,15 @@
                                     </li>
                                 </ul>
                             </div>
+
+                            @if($blog->audio_file)
+                                <div class="blog-audio" style="margin: 20px 0;">
+                                    <audio controls>
+                                        <source src="{{ asset($blog->audio_file) }}" type="audio/mpeg">
+                                        Trình duyệt của bạn không hỗ trợ thẻ audio.
+                                    </audio>
+                                </div>
+                            @endif
                             
                             <div class="article-content">
                                 <p>
@@ -117,15 +126,6 @@
 
                     <div class="col-lg-4">
                         <div class="side-bar-wrap">
-                            <div class="search-widget">
-                                <form class="search-form">
-                                    <input type="search" class="form-control" placeholder="Tìm kiếm...">
-                                    <button type="submit">
-                                        <i class="bx bx-search"></i>
-                                    </button>
-                                </form>
-                            </div>
-
                             <div class="services-bar-widget">
                                 <h3 class="title">Danh mục blog</h3>
                                 <div class="side-bar-categories">
