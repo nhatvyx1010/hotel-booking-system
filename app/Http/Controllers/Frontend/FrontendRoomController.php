@@ -67,13 +67,33 @@ class FrontendRoomController extends Controller
 
     public function SearchRoomDetails(Request $request, $id){
         $request->flash();
-        $roomdetails = Room::find($id);
+        $roomdetails = Room::with('specialPrices')->findOrFail($id);
         $hotel = $roomdetails->hotel;
 
         $multiImage = MultiImage::where('rooms_id', $id)->get();
         $facility = Facility::where('rooms_id', $id)->get();
-        $otherRooms = Room::where('id', '!=', $id)->orderBy('id', 'DESC')->limit(2)->get();
+        $otherRooms = Room::where('id', '!=', $id)->where('hotel_id', $hotel->id)->orderBy('id', 'DESC')->limit(2)->get();
         $room_id = $id;
+
+        // Lấy ngày check_in từ request (nếu có)
+        $checkInDate = $request->check_in ? date('Y-m-d', strtotime($request->check_in)) : null;
+
+        // Giá mặc định
+        $priceToShow = $roomdetails->price;
+        $isHolidayPrice = false;
+
+        if ($checkInDate && $roomdetails->specialPrices->count() > 0) {
+            foreach ($roomdetails->specialPrices as $sp) {
+                if ($checkInDate >= $sp->start_date && $checkInDate <= $sp->end_date) {
+                    $priceToShow = $sp->special_price;
+                    $isHolidayPrice = true;
+                    break;
+                }
+            }
+        }
+
+        $roomdetails->priceToShow = $priceToShow;
+        $roomdetails->isHolidayPrice = $isHolidayPrice;
 
         // dd( $roomdetails, $multiImage, $facility, $otherRooms);
 
@@ -158,6 +178,7 @@ class FrontendRoomController extends Controller
 
         $hotelQuery = User::with('bookarea')
             ->withCount('room_numbers')
+            ->where('status', 'active')
             ->whereIn('id', $hotel_ids);
 
         if (!empty($city_id)) {
@@ -205,15 +226,6 @@ class FrontendRoomController extends Controller
     
     public function BookingSearchHotel(Request $request){
         $request->flash();
-
-        // if($request->check_in == $request->check_out){
-
-        //     $notification = array(
-        //         'messsage' => 'Something want to wrong',
-        //         'alert-type' => 'error'
-        //     );
-        //     return redirect()->back()->with('message', 'Something want to wrong')->with('alert-type', 'error');
-        // }
         $sdate = date('Y-m-d', strtotime($request->check_in));
         $edate = date('Y-m-d', strtotime($request->check_out));
         $alldate = Carbon::create($edate)->subDay();
@@ -224,19 +236,20 @@ class FrontendRoomController extends Controller
         }
         $check_date_booking_ids = RoomBookedDate::whereIn('book_date', $dt_array)->distinct()->pluck('booking_id')->toArray();
 
-        $rooms = Room::withCount('room_numbers')
-                    ->where('status', '1')
-                    ->where('hotel_id', $request->hotel_id)
-                    ->get();
+        $rooms = Room::withCount(['specialPrices', 'room_numbers'])
+                ->where('status', '1')
+                ->where('hotel_id', $request->hotel_id)
+                ->get();
 
         $gallery = Gallery::where('hotel_id', $request->hotel_id)->latest()->get();
 
         $hotel = User::where('id', $request->hotel_id)->where('role', 'hotel')->first();
         $bookArea = BookArea::where('hotel_id', $request->hotel_id)->first();
+        
+        $audioPath = $hotel?->hotel_audio ?? null;
 
-        return view('frontend.room.search_room', compact('rooms', 'check_date_booking_ids', 'gallery', 'bookArea', 'hotel'));
+        return view('frontend.room.search_room', compact('rooms', 'check_date_booking_ids', 'gallery', 'bookArea', 'hotel', 'audioPath'));
     }
-
     
     public function HotelDetail($id){
         $rooms = Room::withCount('room_numbers')
@@ -254,8 +267,9 @@ class FrontendRoomController extends Controller
         $bookArea = BookArea::where('hotel_id', $id)->first();
 
         $cities = City::all();
+        $audioPath = $hotel?->hotel_audio ?? null;
 
-        return view('frontend.room.search_hotel_detail', compact('rooms', 'gallery', 'bookArea', 'hotel', 'cities'));
+        return view('frontend.room.search_hotel_detail', compact('rooms', 'gallery', 'bookArea', 'hotel', 'cities', 'audioPath'));
     }
 
 
@@ -296,9 +310,7 @@ class FrontendRoomController extends Controller
 
         return response()->json(['available_room'=>$av_room, 'total_nights'=>$nights]);
     }
-
-
-
+    
     // public function CheckRoomAvailability(Request $request){
     //     $sdate = date('Y-m-d', strtotime($request->check_in));
     //     $edate = date('Y-m-d', strtotime($request->check_out));

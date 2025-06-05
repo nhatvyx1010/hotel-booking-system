@@ -27,5 +27,13 @@ class Room extends Model
         return $this->belongsTo(User::class, 'hotel_id', 'id');
     }
 
+    public function facilities()
+    {
+        return $this->hasMany(Facility::class, 'rooms_id');
+    }
 
+    public function specialPrices()
+    {
+        return $this->hasMany(RoomSpecialPrice::class, 'room_id');
+    }
 }

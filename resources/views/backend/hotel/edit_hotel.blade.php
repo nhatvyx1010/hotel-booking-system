@@ -95,6 +95,44 @@
                                     </div>
                                 </div>
 
+<!-- File âm thanh -->
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Âm thanh giới thiệu</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input class="form-control" name="hotel_audio" type="file" id="hotel_audio" accept=".mp3,.wav,.m4a" />
+                                    </div>
+                                </div>
+
+                                <!-- Preview audio nếu có file audio hiện tại -->
+                                @if (!empty($hotel->hotel_audio))
+                                    <div class="row mb-3" id="currentAudioRow">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Âm thanh hiện tại</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <audio controls id="currentAudio">
+                                                <source src="{{ asset($hotel->hotel_audio) }}" type="audio/mp4">
+                                                Trình duyệt không hỗ trợ phát âm thanh.
+                                            </audio>
+                                        </div>
+                                    </div>
+                                @endif
+
+                                <!-- Preview audio file mới chọn (ẩn ban đầu) -->
+                                <div class="row mb-3" id="newAudioRow" style="display:none;">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Preview âm thanh mới</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <audio controls id="audioPreview" style="width: 100%;">
+                                            <source src="#" type="audio/mp4" />
+                                            Trình duyệt không hỗ trợ phát âm thanh.
+                                        </audio>
+                                    </div>
+                                </div>
+
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
                                         <h6 class="mb-0">Trạng thái</h6>
@@ -125,14 +163,30 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
+        // Preview ảnh
         $('#image').change(function(e){
             var reader = new FileReader();
             reader.onload = function(e){
                 $('#showImage').attr('src', e.target.result);
             }
-            reader.readAsDataURL(e.target.files['0']);
-        })
-    })
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+        // Preview âm thanh mới chọn
+        $('#hotel_audio').change(function(e){
+            var file = e.target.files[0];
+            if (file) {
+                var url = URL.createObjectURL(file);
+                $('#audioPreview').attr('src', url);
+                $('#newAudioRow').show();
+                $('#currentAudioRow').hide(); // Ẩn audio hiện tại khi chọn file mới
+            } else {
+                $('#audioPreview').attr('src', '#');
+                $('#newAudioRow').hide();
+                $('#currentAudioRow').show();
+            }
+        });
+    });
 </script>
 
 @endsection

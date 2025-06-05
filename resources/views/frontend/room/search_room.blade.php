@@ -69,7 +69,7 @@
 
                                 <div class="col-lg-2 col-md-2">
                                     <button type="submit" class="default-btn btn-bg-one border-radius-5">
-                                        Kiểm tra tình trạng
+                                        Kiểm tra
                                     </button>
                                 </div>
                             </div>
@@ -95,6 +95,19 @@
                         $bookings = App\Models\Booking::withCount('assign_rooms')->whereIn('id', $check_date_booking_ids)->where('rooms_id', $item->id)->get()->toArray();
                         $total_book_room = array_sum(array_column($bookings, 'assign_rooms_count'));
                         $av_room = @$item->room_numbers_count-$total_book_room;
+                        $isHolidayPrice = false;
+                        
+                        $priceToShow = $item->price; // Giá mặc định
+                        $checkInDate = old('check_in') ? date('Y-m-d', strtotime(old('check_in'))) : null;
+                        if ($checkInDate && count($item->specialPrices)) {
+                            foreach ($item->specialPrices as $sp) {
+                                if ($checkInDate >= $sp->start_date && $checkInDate <= $sp->end_date) {
+                                    $priceToShow = $sp->special_price;
+                                    $isHolidayPrice = true;
+                                    break;
+                                }
+                            }
+                        }
                     @endphp
 
                     @if($av_room > 0 && old('persion') <= $item->total_adult)
@@ -108,8 +121,11 @@
                             <div class="content">
                                 <h6><a href="{{ route('search_room_details', $item->id.'?check_in='.old('check_in').'&check_out='.old('check_out').'&persion='.old('persion')) }}">{{ $item['type']['name'] }}</a></h6>
                                 <ul>
-                                    <li class="text-color">{{ number_format($item->price, 0, ',', '.') }} VNĐ</li>
+                                    <li class="text-color">{{ number_format($priceToShow, 0, ',', '.') }} VNĐ</li>
                                     <li class="text-color">Mỗi đêm</li>
+                                    @if($isHolidayPrice)
+                                        <small class="text-danger">* Giá lễ tết áp dụng</small>
+                                    @endif
                                 </ul>
                                 <div class="rating text-color">
                                     <i class='bx bxs-star'></i>
@@ -185,8 +201,7 @@
         <div class="container">
             <div class="row">
 
-                {{-- Hotel Info --}}
-                @if($hotel)
+                {{-- Hotel Info --}}@if($hotel)
                 <div class="col-md-6 mb-4 mb-md-0">
                     <div class="card h-100 shadow-sm border-0">
                         <div class="card-body d-flex align-items-center">
@@ -204,6 +219,16 @@
                                 <p class="mb-0"><i class="fas fa-map-marker-alt text-muted"></i> {{ $hotel->address }}</p>
                             </div>
                         </div>
+
+                        @if ($audioPath)
+                        <div class="px-4 pb-4">
+                            <h6 class="mb-2"><i class="fas fa-music text-primary me-2"></i>Giới thiệu khách sạn</h6>
+                            <audio controls style="width: 100%; border-radius: 5px;">
+                                <source src="{{ asset($audioPath) }}" type="audio/mpeg">
+                                Trình duyệt của bạn không hỗ trợ thẻ audio.
+                            </audio>
+                        </div>
+                        @endif
                     </div>
                 </div>
                 @endif
@@ -226,6 +251,7 @@
                     </div>
                 </div>
                 @endif
+                
 
             </div>
         </div>

@@ -1,7 +1,6 @@
 @php
     $setting = App\Models\SiteSetting::find(1);
 @endphp
-
 <div class="navbar-area">
     <!-- Menu For Mobile Device -->
     <div class="mobile-nav">
@@ -39,6 +38,15 @@
                                 Liên hệ
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <div class="nav-search ms-3">
+                                <form action="{{ route('filter.hotel') }}" method="POST" class="search-form position-relative">
+                                    @csrf
+                                    <span class="search-icon"><i class="fas fa-search"></i></span>
+                                    <input type="text" name="keyword" class="form-control search-input ps-5" placeholder="Tìm khách sạn..." />
+                                </form>
+                            </div>
+                        </li>
 
                         <li class="nav-item-btn">
                             <a href="#" class="default-btn btn-bg-one border-radius-5">Đặt ngay</a>
@@ -53,3 +61,33 @@
         </div>
     </div>
 </div>
+<style>
+    .search-form {
+        display: inline-block;
+        position: relative;
+    }
+
+    .search-icon {
+        position: absolute;
+        top: 50%;
+        left: 12px;
+        transform: translateY(-50%);
+        color: #999;
+        font-size: 14px;
+    }
+
+    .search-input {
+        width: 160px;
+        transition: width 0.4s ease;
+        border-radius: 20px;
+        padding: 6px 12px 6px 35px; /* padding-left for icon */
+        border: 1px solid #ccc;
+    }
+
+    .search-input:focus {
+        width: 220px;
+        outline: none;
+        box-shadow: 0 0 5px rgba(243, 156, 18, 0.5);
+        border-color: #f39c12;
+    }
+</style>

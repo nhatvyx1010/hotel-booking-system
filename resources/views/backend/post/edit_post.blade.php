@@ -74,6 +74,27 @@
                                     <img id="showImage" src="{{ asset($post->post_image) }}" alt="Admin" class="rounded-circle p-1 bg-primary" width="80">
                                 </div>
 
+                                <div class="col-md-6">
+                                    <label for="audio_file" class="form-label">File Audio (mp3, wav)</label>
+                                    <input class="form-control" name="audio_file" type="file" id="audio_file" accept=".mp3,.wav,.m4a" />
+                                </div>
+
+                                <div class="col-md-6">
+                                    @if($post->audio_file)
+                                        <label class="form-label">Audio hiện tại</label><br>
+                                        <audio controls style="width: 100%;">
+                                            <source src="{{ asset($post->audio_file) }}" type="audio/mpeg">
+                                            Trình duyệt của bạn không hỗ trợ thẻ audio.
+                                        </audio>
+                                        <div class="form-check mt-2">
+                                            <input class="form-check-input" type="checkbox" name="remove_audio" value="1" id="remove_audio">
+                                            <label class="form-check-label" for="remove_audio">
+                                                Xóa audio hiện tại
+                                            </label>
+                                        </div>
+                                    @endif
+                                </div>
+
                                 <div class="col-md-12">
                                     <div class="d-md-flex d-grid align-items-center gap-3">
                                         <button type="submit" class="btn btn-primary px-4">Gửi</button>
@@ -88,15 +109,33 @@
     </div>
 </div>
 
-        <script type="text/javascript">
-            $(document).ready(function(){
-                $('#image').change(function(e){
-                    var reader = new FileReader();
-                    reader.onload = function(e){
-                        $('#showImage').attr('src', e.target.result);
-                    }
-                    reader.readAsDataURL(e.target.files['0']);
-                })
-            })
-        </script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        // Preview ảnh bài viết khi chọn file mới
+        $('#image').change(function(e){
+            var reader = new FileReader();
+            reader.onload = function(e){
+                $('#showImage').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+        // Preview audio khi chọn file audio mới
+        $('#audio_file').change(function(e){
+            var file = e.target.files[0];
+            if (file) {
+                var url = URL.createObjectURL(file);
+                // Nếu chưa có thẻ audio preview, bạn có thể tạo hoặc chọn thẻ audio hiện có
+                // Ở đây mình tạo thẻ audio mới dưới input audio_file nếu chưa có
+                if ($('#audioPreview').length === 0) {
+                    $('<audio controls style="width: 100%; margin-top:10px;" id="audioPreview"></audio>').insertAfter('#audio_file');
+                }
+                $('#audioPreview').attr('src', url).show();
+            } else {
+                $('#audioPreview').hide();
+            }
+        });
+    });
+</script>
+
 @endsection

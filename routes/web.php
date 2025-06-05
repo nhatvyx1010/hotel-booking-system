@@ -19,12 +19,14 @@ use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\CommentController;
 use App\Http\Controllers\Backend\AdminReviewController;
 use App\Http\Controllers\Backend\ReportController;
+use App\Http\Controllers\Backend\ReportIssueController;
 use App\Http\Controllers\Backend\GalleryController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\AdminHotelController;
 use App\Http\Controllers\Frontend\VnpayController;
 use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\ReviewController;
+use App\Http\Controllers\Frontend\FilterController;
 use App\Http\Controllers\Backend\CustomerController;
 
 // Route::get('/', function () {
@@ -154,11 +156,14 @@ Route::middleware(['auth', 'roles:admin'])->group(function(){
     });
 
     Route::controller(AdminReviewController::class)->group(function(){
-
         Route::get('/all/review/', 'AllReview')->name('all.review');
         Route::post('/update/review/status', 'UpdateReviewStatus')->name('update.review.status');
     });
 
+    Route::controller(ReportIssueController::class)->group(function(){
+        Route::get('/all/report/', 'AllReport')->name('all.report');
+        Route::post('/update/report/status', 'UpdateReportStatus')->name('update.report.status');
+    });
 
     Route::controller(ReportController::class)->group(function(){
 
@@ -224,10 +229,15 @@ Route::middleware(['auth', 'roles:admin'])->group(function(){
 
     Route::controller(AdminHotelController::class)->group(function(){
         Route::get('/all/hotel', 'AllHotel')->name('all.hotel');
+        Route::get('/all/hotel/inactive', 'AllHotelInactive')->name('all.hotel.inactive');
+        Route::get('/all/hotel/pending', 'AllHotelPending')->name('all.hotel.pending');
+        Route::get('/all/hotel/cancelled', 'AllHotelCancelled')->name('all.hotel.cancelled');
         Route::get('/add/hotel', 'AddHotel')->name('add.hotel');
         Route::post('/store/hotel', 'StoreHotel')->name('store.hotel');
         Route::get('/edit/hotel/{id}', 'EditHotel')->name('edit.hotel');
+        Route::get('/edit/hotel/pending/{id}', 'EditHotelPending')->name('edit.hotel.pending');
         Route::post('/update/hotel/{id}', 'UpdateHotel')->name('update.hotel');
+        Route::post('/update/hotel/pending/{id}', 'UpdateHotelPending')->name('update.hotel.pending');
         Route::get('/delete/hotel/{id}', 'DeleteHotel')->name('delete.hotel');
     });
     
@@ -258,6 +268,10 @@ Route::controller(FrontendRoomController::class)->group(function(){
     Route::get('/check_room_availability_hotel/', 'CheckRoomAvailabilityHotel')->name('check_room_availability_hotel');
 });
 
+Route::controller(FilterController::class)->group(function(){
+    Route::post('/filter/hotel/', 'FilterHotel')->name('filter.hotel');
+});
+
 Route::middleware(['auth'])->group(function(){
     Route::controller(BookingController::class)->group(function(){
 
@@ -279,6 +293,9 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/user/booking/cancel-form/{id}','ShowCancelForm')->name('user.booking.cancel.form');
         Route::post('/user/booking/cancel-store/{id}', 'StoreCancelReason')->name('user.booking.cancel.store');
 
+        Route::get('/user/booking/report-form/{id}','ShowReportForm')->name('user.booking.report.form');
+        Route::post('/user/booking/report-store/{id}', 'StoreReportReason')->name('user.booking.report.store');
+        
         Route::get('/user/invoice/{id}', 'UserInvoice')->name('user.invoice');
     });
 });

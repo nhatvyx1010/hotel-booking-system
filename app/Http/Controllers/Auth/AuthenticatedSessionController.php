@@ -23,34 +23,43 @@ class AuthenticatedSessionController extends Controller
 
     /**
      * Handle an incoming authentication request.
-     */
-    public function store(LoginRequest $request): RedirectResponse
-    {
-        $request->authenticate();
+        */
+        public function store(LoginRequest $request): RedirectResponse
+        {
+            $request->authenticate();
 
-        $request->session()->regenerate();
+            $id = Auth::user()->id;
+            $profileData = User::find($id);
 
-        $id = Auth::user()->id;
-        $profileData = User::find($id);
-        $username = $profileData->name;
+            // ✅ Kiểm tra: nếu là tài khoản khách sạn (hotel) và đang chờ phê duyệt
+            if ($profileData->role === 'hotel' && $profileData->status === 'pending' || $profileData->status === 'cancelled') {
+                Auth::logout(); // Huỷ đăng nhập
+                return redirect()->back()
+                    ->with('message', 'Tài khoản khách sạn của bạn đang chờ phê duyệt. Vui lòng quay lại sau.')
+                    ->with('alert-type', 'error');
+            }
 
-        $notification = array(
-            'message' => 'Người dùng '.$username.' đã đăng nhập thành công',
-            'alert-type' => 'info'
-        );
-        // return redirect()->back()->with('message', 'User '.$username.' Login Successfully')->with('alert-type', 'info');
+            $request->session()->regenerate();
+            
+            $username = $profileData->name;
 
-        $url = '';
-        if($request->user()->role === 'admin'){
-            $url = '/admin/dashboard';
-        }elseif($request->user()->role === 'hotel'){
-            $url = '/hotel/dashboard';
-        }elseif($request->user()->role === 'user'){
-            $url = '/profile';
+            $notification = array(
+                'message' => 'Người dùng '.$username.' đã đăng nhập thành công',
+                'alert-type' => 'info'
+            );
+            // return redirect()->back()->with('message', 'User '.$username.' Login Successfully')->with('alert-type', 'info');
+
+            $url = '';
+            if($request->user()->role === 'admin'){
+                $url = '/admin/dashboard';
+            }elseif($request->user()->role === 'hotel'){
+                $url = '/hotel/dashboard';
+            }elseif($request->user()->role === 'user'){
+                $url = '/profile';
+            }
+
+            return redirect()->intended($url)->with('message', 'Người dùng '.$username.' đã đăng nhập thành công')->with('alert-type', 'info');
         }
-
-        return redirect()->intended($url)->with('message', 'Người dùng '.$username.' đã đăng nhập thành công')->with('alert-type', 'info');
-    }
 
     /**
      * Destroy an authenticated session.

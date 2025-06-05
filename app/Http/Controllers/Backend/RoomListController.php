@@ -42,18 +42,46 @@ class RoomListController extends Controller
         return view('backend.allroom.roomlist.view_roomlist', compact('room_number_list'));
     }
 
-    public function HotelViewRoomList() {
+    public function HotelViewRoomList(Request $request) {
         $user_id = Auth::id();
-    
-        $room_number_list = RoomNumber::with(['room_type', 'last_booking.booking:id,check_in,check_out,status,code,name,phone'])
-            ->orderBy('room_type_id', 'asc')
+
+        // Lấy ngày được chọn, mặc định là ngày hiện tại
+        $selected_date = $request->query('date', date('Y-m-d'));
+
+        // Lấy tất cả ngày đã có booking của khách sạn (dạng YYYY-MM-DD)
+        $booked_days = \DB::table('bookings')
+            ->join('booking_room_lists', 'bookings.id', '=', 'booking_room_lists.booking_id')
+            ->join('room_numbers', 'booking_room_lists.room_number_id', '=', 'room_numbers.id')
+            ->join('rooms', 'room_numbers.rooms_id', '=', 'rooms.id')
+            ->where('rooms.hotel_id', $user_id)
+            ->where('bookings.status', 1) // ví dụ lấy booking trạng thái "đã đặt"
+            ->select('bookings.check_in', 'bookings.check_out')
+            ->get()
+            ->flatMap(function($booking) {
+                $period = [];
+                $start = strtotime($booking->check_in);
+                $end = strtotime($booking->check_out);
+                for ($date = $start; $date <= $end; $date += 86400) {
+                    $period[] = date('Y-m-d', $date);
+                }
+                return $period;
+            })
+            ->unique()
+            ->values()
+            ->all();
+
+        // Lấy danh sách phòng và booking của ngày được chọn
+        $room_number_list = RoomNumber::with(['room_type'])
             ->leftJoin('room_types', 'room_types.id', 'room_numbers.room_type_id')
             ->leftJoin('booking_room_lists', 'booking_room_lists.room_number_id', 'room_numbers.id')
-            ->leftJoin('bookings', 'bookings.id', 'booking_room_lists.booking_id')
+            ->leftJoin('bookings', function($join) use ($selected_date) {
+                $join->on('bookings.id', '=', 'booking_room_lists.booking_id')
+                    ->where('bookings.check_in', '<=', $selected_date)
+                    ->where('bookings.check_out', '>=', $selected_date);
+            })
             ->leftJoin('rooms', 'rooms.id', 'room_numbers.rooms_id')
             ->select(
                 'room_numbers.*',
-                'room_numbers.id as id',
                 'room_types.name',
                 'bookings.id as booking_id',
                 'bookings.check_in',
@@ -64,12 +92,14 @@ class RoomListController extends Controller
                 'bookings.code as booking_number'
             )
             ->where('rooms.hotel_id', $user_id)
+            ->orderByRaw('CASE WHEN bookings.id IS NULL THEN 1 ELSE 0 END ASC')
             ->orderBy('room_types.id', 'asc')
             ->orderBy('bookings.id', 'desc')
             ->get();
-    
-        return view('hotel.backend.allroom.roomlist.view_roomlist', compact('room_number_list'));
-    }      
+
+        return view('hotel.backend.allroom.roomlist.view_roomlist', compact('room_number_list', 'selected_date', 'booked_days'));
+    }
+   
 
     public function AddRoomList(){
         $roomtype = RoomType::all();

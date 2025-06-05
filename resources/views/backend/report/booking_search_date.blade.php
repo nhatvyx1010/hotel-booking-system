@@ -27,6 +27,9 @@
     <hr/>
     <div class="card">
         <div class="card-body">
+            <div class="mb-3">
+                <h5>Tổng phí dịch vụ: <span class="text-danger">{{ number_format($totalServiceFee ?? 0, 0, ',', '.') }} VNĐ</span></h5>
+            </div>
             <div class="table-responsive">
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>

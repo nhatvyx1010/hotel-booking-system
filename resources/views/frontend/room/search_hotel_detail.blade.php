@@ -70,7 +70,7 @@
 
                                 <div class="col-lg-2 col-md-2">
                                     <button type="submit" class="default-btn btn-bg-one border-radius-5">
-                                        Kiểm tra phòng trống
+                                        Kiểm tra
                                     </button>
                                 </div>
                             </div>
@@ -191,6 +191,15 @@
                                         <p class="mb-0"><i class="fas fa-map-marker-alt text-muted"></i> {{ $hotel->address }}</p>
                                     </div>
                                 </div>
+                                @if ($audioPath)
+                                <div class="px-4 pb-4">
+                                    <h6 class="mb-2"><i class="fas fa-music text-primary me-2"></i>Giới thiệu khách sạn</h6>
+                                    <audio controls style="width: 100%; border-radius: 5px;">
+                                        <source src="{{ asset($audioPath) }}" type="audio/mpeg">
+                                        Trình duyệt của bạn không hỗ trợ thẻ audio.
+                                    </audio>
+                                </div>
+                                @endif
                             </div>
                         </div>
                         @endif
@@ -213,7 +222,6 @@
                             </div>
                         </div>
                         @endif
-
                     </div>
                 </div>
             </div>

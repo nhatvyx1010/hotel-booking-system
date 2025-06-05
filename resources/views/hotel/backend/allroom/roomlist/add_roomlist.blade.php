@@ -203,7 +203,7 @@
             },
             error: function (xhr, status, error) {
                 console.error("AJAX error:", status, error);
-                alert('Lỗi khi kiểm tra phòng trống.');
+                alert('Lỗi khi Kiểm tra.');
             }
         });
     }

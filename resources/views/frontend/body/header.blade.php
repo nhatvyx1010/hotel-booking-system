@@ -7,7 +7,7 @@
             <div class="col-lg-3 col-md-2 pr-0">
                 <div class="language-list">
                     <select class="language-list-item">
-                        <option>English</option>
+                        <!-- <option>English</option> -->
                         <option>Tiếng Việt</option>
                     </select>	
                 </div>

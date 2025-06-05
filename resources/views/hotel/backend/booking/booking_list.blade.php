@@ -39,7 +39,6 @@
                             <th>Số khách</th>
                             <th>Thanh toán</th>
                             <th>Trạng thái</th>
-                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -65,9 +64,6 @@
                                     @else
                                         <span class="text-danger">Chờ xử lý</span>
                                     @endif</td>
-                                <td>
-                                    <a href="{{ route('delete.team', $item->id) }}" class="btn btn-danger px-3 radius-30" id="delete">Xóa</a>
-                                </td>
                             </tr>
                         @endforeach
                     </tbody>

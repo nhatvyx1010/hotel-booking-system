@@ -71,6 +71,19 @@
                                     <img id="showImage" src="{{ url('upload/no_image.jpg') }}" alt="Admin" class="rounded-circle p-1 bg-primary" width="80">
                                 </div>
 
+                                <div class="col-md-6">
+                                    <label for="audio_file" class="form-label">File Audio (mp3, wav)</label>
+                                    <input class="form-control" name="audio_file" type="file" id="audio_file" accept=".mp3,.wav,.m4a" />
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="audio_file" class="form-label">Preview audio (nếu chọn)</label>
+                                    <audio id="audioPreview" controls style="width: 100%; display: none;">
+                                        <source src="#" type="audio/mpeg" />
+                                        Trình duyệt không hỗ trợ thẻ audio.
+                                    </audio>
+                                </div>
+
                                 <div class="col-md-12">
                                     <div class="d-md-flex d-grid align-items-center gap-3">
                                         <button type="submit" class="btn btn-primary px-4">Gửi</button>
@@ -85,15 +98,28 @@
     </div>
 </div>
 
-        <script type="text/javascript">
-            $(document).ready(function(){
-                $('#image').change(function(e){
-                    var reader = new FileReader();
-                    reader.onload = function(e){
-                        $('#showImage').attr('src', e.target.result);
-                    }
-                    reader.readAsDataURL(e.target.files['0']);
-                })
-            })
-        </script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        // Preview ảnh bài viết
+        $('#image').change(function(e){
+            var reader = new FileReader();
+            reader.onload = function(e){
+                $('#showImage').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+        // Preview audio khi chọn file audio
+        $('#audio_file').change(function(e){
+            var file = e.target.files[0];
+            if (file) {
+                var url = URL.createObjectURL(file);
+                $('#audioPreview').attr('src', url).show();
+            } else {
+                $('#audioPreview').hide();
+            }
+        });
+    });
+</script>
+
 @endsection
