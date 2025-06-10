@@ -106,22 +106,30 @@ class HotelController extends Controller
     //End Method
     
     public function HotelProfileStore(Request $request) {
-        $id = Auth::guard('hotel')->id();
+        $id = Auth::user()->id;
         $data = User::find($id);
 
         $data->name = $request->name;
         $data->email = $request->email;
         $data->phone = $request->phone;
         $data->address = $request->address;
-        $data->city_id = $request->city_id;
-        $data->shop_info = $request->shop_info;
-        $data->cover_photo = $request->cover_photo;
         
         $oldPhotoPath = $data->photo;
+        $oldAudioPath = $data->hotel_audio;
+
+        if ($request->delete_audio == '1') {
+            if (!empty($data->hotel_audio)) {
+                $audioPath = public_path('upload/audio/' . $data->hotel_audio);
+                if (file_exists($audioPath)) {
+                    unlink($audioPath);
+                }
+                $data->hotel_audio = null;
+            }
+        }
 
         if($request->hasFile('photo')){
             $file = $request->file('photo');
-            $filename = time().'.'.$file->getHotelOriginalExtension();
+            $filename = time().'.'.$file->getClientOriginalExtension();
             $file->move(public_path('upload/hotel_images'), $filename);
             $data->photo = $filename;
 
@@ -129,12 +137,17 @@ class HotelController extends Controller
                 $this->deleteOldImage($oldPhotoPath);
             }
         }
-        
-        if($request->hasFile('cover_photo')){
-            $file1 = $request->file('cover_photo');
-            $filename1 = time().'.'.$file1->getHotelOriginalExtension();
-            $file1->move(public_path('upload/hotel_images'), $filename1);
-            $data->cover_photo = $filename1;
+
+        if ($request->hasFile('audio_file')) {
+            $file = $request->file('audio_file'); 
+            $filename = time() . '.' . $file->getClientOriginalExtension(); 
+            $file->move(public_path('upload/hotel_audio'), $filename); 
+
+            $data->hotel_audio = 'upload/hotel_audio/' . $filename;
+
+            if ($oldAudioPath && $oldAudioPath !== $data->hotel_audio && file_exists(public_path($oldAudioPath))) {
+                unlink(public_path($oldAudioPath));
+            }
         }
 
         $data->save();

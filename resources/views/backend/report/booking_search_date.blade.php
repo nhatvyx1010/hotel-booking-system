@@ -18,7 +18,14 @@
 					</div>
 					<div class="ms-auto">
 						<div class="btn-group">
-                        <a href="{{ route('booking.report') }}" class="btn btn-primary px-5">Báo cáo Đặt phòng</a>
+                        <a href="{{ route('booking.report') }}" class="btn btn-primary px-5 me-2">Báo cáo Đặt phòng</a>
+                        <a href="{{ route('booking.export.excel', [
+                                'start_date' => \Carbon\Carbon::parse($startDate)->format('Y-m-d'),
+                                'end_date' => \Carbon\Carbon::parse($endDate)->format('Y-m-d')
+                            ]) }}" class="btn btn-success px-4">
+
+                            <i class="lni lni-exit"></i> Xuất Excel
+                        </a>
 						</div>
 					</div>
 				</div>

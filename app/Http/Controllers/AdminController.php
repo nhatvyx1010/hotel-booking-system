@@ -12,7 +12,8 @@ use Spatie\Permission\Models\Permission;
 class AdminController extends Controller
 {
     public function AdminDashboard(){
-        return view('admin.index');
+        $hotels = User::where('role', 'hotel')->get();
+        return view('admin.index', compact('hotels'));
     }
 
     public function AdminLogout(Request $request){

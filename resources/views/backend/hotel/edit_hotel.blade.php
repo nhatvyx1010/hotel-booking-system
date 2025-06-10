@@ -31,7 +31,7 @@
                                         <h6 class="mb-0">Tên khách sạn</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" name="name" class="form-control" value="{{ $hotel->name }}" />
+                                        <input type="text" name="name" class="form-control" value="{{ $hotel->name }}" readonly />
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -39,7 +39,7 @@
                                         <h6 class="mb-0">Email khách sạn</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="email" name="email" class="form-control" value="{{ $hotel->email }}" />
+                                        <input type="email" name="email" class="form-control" value="{{ $hotel->email }}" readonly/>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -47,7 +47,7 @@
                                         <h6 class="mb-0">Số điện thoại</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" name="phone" class="form-control" value="{{ $hotel->phone }}" />
+                                        <input type="text" name="phone" class="form-control" value="{{ $hotel->phone }}" readonly/>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -55,53 +55,28 @@
                                         <h6 class="mb-0">Địa chỉ</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" name="address" class="form-control" value="{{ $hotel->address }}" />
+                                        <input type="text" name="address" class="form-control" value="{{ $hotel->address }}" readonly/>
                                     </div>
                                 </div>
-                                
-                                <div class="row mb-3">
+
+                               <div class="row mb-3">
                                     <div class="col-sm-3">
                                         <h6 class="mb-0">Thành phố</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <select name="city_id" class="form-control">
-                                            <option value="" disabled>Chọn thành phố</option>
-                                            @foreach($cities as $city)
-                                                <option value="{{ $city->id }}" {{ $hotel->city_id == $city->id ? 'selected' : '' }}>
-                                                    {{ $city->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
+                                        <input type="text" class="form-control" value="{{ $hotel->city->name ?? 'Không xác định' }}" readonly>
                                     </div>
                                 </div>
+
 
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
                                         <h6 class="mb-0">Ảnh khách sạn</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input class="form-control" name="image" type="file" id="image" />
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0"></h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
                                         <img id="showImage" 
                                             src="{{ (!empty($hotel->photo)) ? url('upload/admin_images/' . $hotel->photo) : url('upload/no_image.jpg') }}" 
-                                            alt="Hotel Image" class="rounded-circle p-1 bg-primary" width="80">
-                                    </div>
-                                </div>
-
-<!-- File âm thanh -->
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Âm thanh giới thiệu</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input class="form-control" name="hotel_audio" type="file" id="hotel_audio" accept=".mp3,.wav,.m4a" />
+                                            alt="Hotel Image" class="rounded-circle p-1 bg-primary" width="400">
                                     </div>
                                 </div>
 

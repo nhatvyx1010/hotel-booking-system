@@ -82,7 +82,6 @@
                                             <input type="hidden" name="available_room" id="available_room">
                                             <p class="available_room"></p>
                                         </div>
-
                                         <div class="col-lg-12">
                                         <table class="table">
                                             <tbody>

@@ -89,10 +89,11 @@
           <tr>
               <th>Room Type</th>
               <th>Number of Rooms</th>
-              <th>Price</th>
               <th>Check-in / Check-out</th>
               <th>Total Nights</th>
-              <th>Total</th>
+              <th>Prepaid Amount</th>
+              <th>Remaining Amount</th>
+              <th>Total Amount</th>
               <th>Payment Method</th> <!-- Thêm cột payment method -->
           </tr>
       </thead>
@@ -100,19 +101,43 @@
           <tr>
               <td>{{ $editData->room->type->name }}</td>
               <td>{{ $editData->number_of_rooms }}</td>
-              <td>{{ number_format($editData->actual_price, 0, ',', '.') }} VND</td> 
               <td>
                 <span class="badge bg-primary">{{ $editData->check_in }}</span> / <br>
                 <span class="badge bg-warning text-dark">{{ $editData->check_out }}</span>
               </td>
               <td>{{ $editData->total_night }}</td>
-              <td>{{ number_format($editData->actual_price * $editData->number_of_rooms, 0, ',', '.') }} VND</td> 
+              <td>{{ number_format($editData->prepaid_amount, 0, ',', '.') }} VND</td> 
+              <td>{{ number_format($editData->remaining_amount, 0, ',', '.') }} VND</td> 
+              <td>{{ number_format($editData->total_amount, 0, ',', '.') }} VND</td> 
               <td>{{ $editData->payment_method ?? 'N/A' }}</td>
           </tr>
       </tbody>
 
     </table>
     <br/>
+
+    <br>
+    <h3>Booking Price Breakdown</h3>
+    <table width="100%" border="1" cellspacing="0" cellpadding="5" style="margin-top: 10px; border-collapse: collapse; font-size: small;">
+        <thead style="background-color: #e0e0e0;">
+            <tr>
+                <th style="text-align: left;">Date</th>
+                <th style="text-align: left;">Type</th>
+                <th style="text-align: right;">Price / Room</th>
+                <th style="text-align: right;">Total (x{{ $editData->number_of_rooms }})</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($dailyPrices as $day)
+                <tr>
+                    <td>{{ $day['date'] }}</td>
+                    <td>{{ $day['is_special'] ? 'Special Price' : 'Regular Price' }}</td>
+                    <td style="text-align: right;">{{ number_format($day['price'], 0, ',', '.') }} VND</td>
+                    <td style="text-align: right;">{{ number_format($day['total'], 0, ',', '.') }} VND</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 
     <table class="table test_table" style="float: right" border="none">
       <tr>

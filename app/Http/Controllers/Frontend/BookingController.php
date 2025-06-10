@@ -26,6 +26,7 @@ use App\Mail\BookCancelConfirm;
 use App\Models\User;
 use App\Notifications\BookingComplete;
 use Illuminate\Support\Facades\Notification;
+use App\Models\RoomSpecialPrice;
 
 class BookingController extends Controller
 {
@@ -33,17 +34,36 @@ class BookingController extends Controller
         if(Session::has('book_date')){
             $book_data = Session::get('book_date');
             $room = Room::find($book_data['room_id']);
-            $toDate = Carbon::parse($book_data['check_in']);
-            $fromDate = Carbon::parse($book_data['check_out']);
-            $nights = $toDate->diffInDays($fromDate);
+            $checkIn = Carbon::parse($book_data['check_in']);
+            $checkOut = Carbon::parse($book_data['check_out']);
+            $nights = $checkIn->diffInDays($checkOut);
 
-            return view('frontend.checkout.checkout', compact('book_data', 'room', 'nights'));
-        }else{
-                $notification = array(
-                    'messsage' => 'Đã xảy ra lỗi!',
-                    'alert-type' => 'error'
-                );
-                return redirect('/')->with('message', 'Đã xảy ra lỗi!')->with('alert-type', 'error');
+            $total = 0;
+            $dates = [];
+
+            for ($date = $checkIn->copy(); $date->lt($checkOut); $date->addDay()) {
+                $special = RoomSpecialPrice::where('room_id', $room->id)
+                    ->whereDate('start_date', '<=', $date->format('Y-m-d'))
+                    ->whereDate('end_date', '>=', $date->format('Y-m-d'))
+                    ->first();
+
+                $price = $special ? $special->special_price : $room->price;
+                $total += $price;
+                $dates[] = [
+                    'date' => $date->format('Y-m-d'),
+                    'price' => $price,
+                    'is_special' => $special ? true : false
+                ];
+            }
+
+            $subtotal = $total * $book_data['number_of_rooms'];
+            $discount = ($room->discount / 100) * $subtotal;
+
+            return view('frontend.checkout.checkout', compact(
+                'book_data', 'room', 'nights', 'subtotal', 'discount', 'dates'
+            ));
+        } else {
+            return redirect('/')->with('message', 'Đã xảy ra lỗi!')->with('alert-type', 'error');
         }
     }
 
@@ -267,27 +287,27 @@ class BookingController extends Controller
         return view('backend.booking.edit_booking', compact('editData', 'hotel'));
     }
 
-public function HotelEditBooking($id) {
-    $user_id = Auth::id();
+    public function HotelEditBooking($id) {
+        $user_id = Auth::id();
 
-    $editData = Booking::with('room')
-        ->whereHas('room', function($query) use ($user_id) {
-            $query->where('hotel_id', $user_id);
-        })
-        ->find($id);
+        $editData = Booking::with('room')
+            ->whereHas('room', function($query) use ($user_id) {
+                $query->where('hotel_id', $user_id);
+            })
+            ->find($id);
 
-    $today = \Carbon\Carbon::today();
+        $today = \Carbon\Carbon::today();
 
-    $isBeforeCheckIn = false;
-    $isAfterCheckOut = false;
+        $isBeforeCheckIn = false;
+        $isAfterCheckOut = false;
 
-    if ($editData) {
-        $isBeforeCheckIn = $today->lt($editData->check_in);  // Hôm nay < check-in
-        $isAfterCheckOut = $today->gt($editData->check_out); // Hôm nay > check-out
+        if ($editData) {
+            $isBeforeCheckIn = $today->lt($editData->check_in);  // Hôm nay < check-in
+            $isAfterCheckOut = $today->gt($editData->check_out); // Hôm nay > check-out
+        }
+
+        return view('hotel.backend.booking.edit_booking', compact('editData', 'isBeforeCheckIn', 'isAfterCheckOut'));
     }
-
-    return view('hotel.backend.booking.edit_booking', compact('editData', 'isBeforeCheckIn', 'isAfterCheckOut'));
-}
 
     public function UpdateBookingStatus(Request $request, $id){
         $booking = Booking::find($id);
@@ -748,17 +768,41 @@ public function HotelEditBooking($id) {
         return view('frontend.dashboard.user_booking_canceleds', compact('allData'));
     }
 
-    public function UserInvoice($id){
-        $editData = Booking::with('room')->find($id);
-        
-        $hotel = User::where('id', $editData->room->hotel_id)
-                        ->first();
+    public function UserInvoice($id)
+    {
+        $editData = Booking::with('room')->findOrFail($id);
 
-        $pdf = Pdf::loadView('backend.booking.booking_invoice', compact('editData', 'hotel'))
-        ->setPaper('a4')->setOption([
-            'tempDir' => public_path(),
-            'chroot' => public_path(),
-        ]);
+        $hotel = User::findOrFail($editData->room->hotel_id);
+
+        $checkIn = Carbon::parse($editData->check_in);
+        $checkOut = Carbon::parse($editData->check_out);
+        $numberOfRooms = $editData->number_of_rooms;
+        $room = $editData->room;
+
+        $dailyPrices = [];
+
+        for ($date = $checkIn->copy(); $date->lt($checkOut); $date->addDay()) {
+            $special = RoomSpecialPrice::where('room_id', $room->id)
+                ->whereDate('start_date', '<=', $date)
+                ->whereDate('end_date', '>=', $date)
+                ->first();
+
+            $pricePerRoom = $special ? $special->special_price : $room->price;
+
+            $dailyPrices[] = [
+                'date' => $date->toDateString(),
+                'is_special' => $special !== null,
+                'price' => $pricePerRoom,
+                'total' => $pricePerRoom * $numberOfRooms,
+            ];
+        }
+
+        $pdf = Pdf::loadView('backend.booking.booking_invoice', compact('editData', 'hotel', 'dailyPrices'))
+            ->setPaper('a4')->setOption([
+                'tempDir' => public_path(),
+                'chroot' => public_path(),
+            ]);
+
         return $pdf->download('invoice.pdf');
     }
 

@@ -162,6 +162,20 @@
                                             <p class="available_room"></p>
                                         </div>
 
+                                        <h5>Bảng giá theo từng ngày:</h5>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Ngày</th>
+                                                    <th>Giá</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="date_price_table_body">
+                                                {{-- Dữ liệu sẽ được cập nhật bằng JavaScript --}}
+                                            </tbody>
+                                        </table>
+
+
                                         <div class="col-lg-12">
                                         <table class="table">
                                             <tbody>
@@ -487,80 +501,87 @@
 
 <script>
     $(document).ready(function () {
-       var check_in = "{{ old('check_in') }}";
-       var check_out = "{{ old('check_out') }}";
-       var hotel_id = "{{ $roomdetails->hotel_id }}";
-       var room_id = "{{ $room_id }}";
+        var check_in = "{{ old('check_in') ? date('Y-m-d', strtotime(old('check_in'))) : '' }}";
+        var check_out = "{{ old('check_out') ? date('Y-m-d', strtotime(old('check_out'))) : '' }}";
+        var hotel_id = "{{ $roomdetails->hotel_id }}";
+        var room_id = "{{ $roomdetails->id }}";
 
-       if (check_in != '' && check_out != ''){
-          getAvaility(check_in, check_out, room_id, hotel_id);
-       }
+        if (check_in !== '' && check_out !== '') {
+            getAvaility(check_in, check_out, room_id, hotel_id);
+        }
 
+        $("#check_out, #check_in").on('change', function () {
+            var check_out = $("#check_out").val();
+            var check_in = $("#check_in").val();
+            if (check_in !== '' && check_out !== '') {
+                getAvaility(check_in, check_out, room_id, hotel_id);
+            }
+        });
 
-       $("#check_out").on('change', function () {
-          var check_out = $(this).val();
-          var check_in = $("#check_in").val();
+        $(".number_of_rooms").on('change', function () {
+            var check_out = $("#check_out").val();
+            var check_in = $("#check_in").val();
+            if (check_in !== '' && check_out !== '') {
+                getAvaility(check_in, check_out, room_id, hotel_id);
+            }
+        });
 
-          if(check_in != '' && check_out != ''){
-             getAvaility(check_in, check_out, room_id, hotel_id);
-          }
-       });
+        $("#bk_form").on('submit', function () {
+            var av_room = $("#available_room").val();
+            var select_room = $("#select_room").val();
+            if (parseInt(select_room) > av_room) {
+                alert('Xin lỗi, bạn đã chọn vượt quá số lượng phòng tối đa');
+                return false;
+            }
 
-       $(".number_of_rooms").on('change', function () {
-          var check_out = $("#check_out").val();
-          var check_in = $("#check_in").val();
-
-          if(check_in != '' && check_out != ''){
-             getAvaility(check_in, check_out, room_id, hotel_id);
-          }
-       });
-
-
+            var number_persion = $("#number_persion").val();
+            var total_adult = $("#total_adult").val();
+            if (parseInt(number_persion) > parseInt(total_adult)) {
+                alert('Xin lỗi, bạn đã chọn vượt quá số lượng người tối đa');
+                return false;
+            }
+        });
     });
 
     function getAvaility(check_in, check_out, room_id, hotel_id) {
-       $.ajax({
-          url: "{{ route('check_room_availability_hotel') }}",
-          data: {room_id:room_id, check_in:check_in, check_out:check_out, hotel_id:hotel_id},
-          success: function(data){
-             $(".available_room").html('Tình trạng phòng : <span class="text-success">'+data['available_room']+' Phòng</span>');
-             $("#available_room").val(data['available_room']);
-             price_calculate(data['total_nights']);
-          }
-       });
+        let number_of_rooms = parseInt($("#select_room").val()) || 1;
+        $.ajax({
+            url: "{{ route('check_room_availability_hotel') }}",
+            data: {
+                room_id: room_id,
+                check_in: check_in,
+                check_out: check_out,
+                hotel_id: hotel_id,
+                number_of_rooms: number_of_rooms
+            },
+            success: function (data) {
+                $(".available_room").html('Tình trạng phòng : <span class="text-success">' + data['available_room'] + ' Phòng</span>');
+                $("#available_room").val(data['available_room']);
+                $(".t_subtotal").text(data['total_price'].toLocaleString('vi-VN') + " VNĐ");
+                $(".t_discount").text(data['discount_price'].toLocaleString('vi-VN') + " VNĐ");
+                $(".t_g_total").text(data['final_price'].toLocaleString('vi-VN') + " VNĐ");
+
+                // Cập nhật bảng giá theo từng ngày
+                let tableBody = $("#date_price_table_body");
+                tableBody.empty();
+
+                data.date_prices.forEach(item => {
+                    let isSpecial = item.is_special ? `<span style="color: red;">* Giá lễ tết áp dụng</span>` : '';
+                    let row = `
+                        <tr>
+                            <td>${item.date}</td>
+                            <td>
+                                ${item.price.toLocaleString('vi-VN')} VNĐ 
+                                (${item.price_per_room?.toLocaleString('vi-VN')} x ${item.room_qty} phòng)
+                                ${isSpecial}
+                            </td>
+                        </tr>`;
+                    tableBody.append(row);
+                });
+            }
+        });
     }
-
-    function price_calculate(total_nights){
-       var room_price = $("#room_price").val();
-       var discount_p = $("#discount_p").val();
-       var select_room = $("#select_room").val();
-
-       var sub_total = room_price * total_nights * parseInt(select_room);
-
-       var discount_price = (parseInt(discount_p)/100)*sub_total;
-
-       $(".t_subtotal").text(sub_total);
-       $(".t_discount").text(discount_price);
-       $(".t_g_total").text(sub_total-discount_price);
-
-    }
-
-    $("#bk_form").on('submit', function () {
-       var av_room = $("#available_room").val();
-       var select_room = $("#select_room").val();
-       if (parseInt(select_room) >  av_room){
-          alert('Xin lỗi, bạn đã chọn vượt quá số lượng phòng tối đa');
-          return false;
-       }
-       var number_persion = $("#number_persion").val();
-       var total_adult = $("#total_adult").val();
-       if(parseInt(number_persion) > parseInt(total_adult)){
-          alert('Xin lỗi, bạn đã chọn vượt quá số lượng người tối đa');
-          return false;
-       }
-
-    })
- </script>
+</script>
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
