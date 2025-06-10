@@ -9,6 +9,10 @@ use Carbon\CarbonPeriod;
 use App\Models\Booking;
 use Illuminate\Support\Facades\Auth;
 
+use App\Exports\BookingsExport;
+use App\Exports\HotelBookingsExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class ReportController extends Controller
 {
     public function BookingReport(){
@@ -141,4 +145,19 @@ class ReportController extends Controller
 
         return view('hotel.backend.report.booking_search_date', compact('startDate', 'endDate', 'bookings'));
     }    
+
+    public function ExportExcel(Request $request)
+    {
+        $startDate = $request->query('start_date');
+        $endDate = $request->query('end_date');
+        return Excel::download(new BookingsExport($startDate, $endDate), 'bookings.xlsx');
+    }
+    
+    public function HotelExportExcel(Request $request)
+    {
+        $hotelId = Auth::id();
+        $startDate = $request->query('start_date');
+        $endDate = $request->query('end_date');
+        return Excel::download(new HotelBookingsExport($startDate, $endDate, $hotelId), 'hotel_bookings.xlsx');
+    }
 }

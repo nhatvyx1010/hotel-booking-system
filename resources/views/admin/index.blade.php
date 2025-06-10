@@ -121,6 +121,13 @@
 
 				<div class="row">
 					<div class="d-flex align-items-center mb-3">
+						<label for="hotelFilter" class="me-2">Khách sạn:</label>
+						<select id="hotelFilter" class="form-select me-2" style="width: 200px;">
+							<option value="">Tất cả</option>
+							@foreach($hotels as $hotel)
+								<option value="{{ $hotel->id }}">{{ $hotel->name}} </option>
+							@endforeach
+						</select>
 						<label for="dateFilter" class="me-2">Xem theo:</label>
 						<select id="dateFilter" class="form-select me-2" style="width: 150px;">
 							<option value="week">Tuần</option>
@@ -197,13 +204,13 @@
     var bookingChart;
     const ctx = document.getElementById('bookingChart').getContext('2d');
     let currentType = 'week';
+	let currentHotelId = null;
     let offset = 0;
 
-    function loadChart(type = 'week', offsetVal = 0) {
-        $.get(`/admin/bookings/chart-data?type=${type}&offset=${offsetVal}`, function(response) {
+    function loadChart(type = 'week', offsetVal = 0, hotel = '') {
+		$.get(`/admin/bookings/chart-data?type=${currentType}&offset=${offset}&hotel=${currentHotelId}`, function(response) {
             const labels = response.map(item => item.label);
             const data = response.map(item => item.value);
-
             if (bookingChart) bookingChart.destroy();
 
             bookingChart = new Chart(ctx, {
@@ -234,17 +241,23 @@
     $('#dateFilter').on('change', function() {
         currentType = $(this).val();
         offset = 0; // reset offset when changing type
-        loadChart(currentType, offset);
+        loadChart(currentType, offset, currentHotelId);
     });
+
+	$('#hotelFilter').on('change', function () {
+		currentHotelId = $(this).val();
+		offset = 0;
+		loadChart(currentType, offset, currentHotelId);
+	});
 
     $('#prevBtn').on('click', function() {
         offset--;
-        loadChart(currentType, offset);
+        loadChart(currentType, offset, currentHotelId);
     });
 
     $('#nextBtn').on('click', function() {
         offset++;
-        loadChart(currentType, offset);
+        loadChart(currentType, offset, currentHotelId);
     });
 </script>
 

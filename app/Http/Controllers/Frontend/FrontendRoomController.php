@@ -66,47 +66,58 @@ class FrontendRoomController extends Controller
     }
 
     public function SearchRoomDetails(Request $request, $id){
-        $request->flash();
-        $roomdetails = Room::with('specialPrices')->findOrFail($id);
-        $hotel = $roomdetails->hotel;
+    $request->flash();
+    $roomdetails = Room::with('specialPrices')->findOrFail($id);
+    $hotel = $roomdetails->hotel;
 
-        $multiImage = MultiImage::where('rooms_id', $id)->get();
-        $facility = Facility::where('rooms_id', $id)->get();
-        $otherRooms = Room::where('id', '!=', $id)->where('hotel_id', $hotel->id)->orderBy('id', 'DESC')->limit(2)->get();
-        $room_id = $id;
+    $multiImage = MultiImage::where('rooms_id', $id)->get();
+    $facility = Facility::where('rooms_id', $id)->get();
+    $otherRooms = Room::where('id', '!=', $id)->where('hotel_id', $hotel->id)->orderBy('id', 'DESC')->limit(2)->get();
+    $room_id = $id;
 
-        // Lấy ngày check_in từ request (nếu có)
-        $checkInDate = $request->check_in ? date('Y-m-d', strtotime($request->check_in)) : null;
+    $checkInDate = $request->check_in ? Carbon::parse($request->check_in) : null;
+    $checkOutDate = $request->check_out ? Carbon::parse($request->check_out) : null;
 
-        // Giá mặc định
-        $priceToShow = $roomdetails->price;
-        $isHolidayPrice = false;
+    $priceToShow = $roomdetails->price;
+    $isHolidayPrice = false;
+    $datePriceList = [];
 
-        if ($checkInDate && $roomdetails->specialPrices->count() > 0) {
-            foreach ($roomdetails->specialPrices as $sp) {
-                if ($checkInDate >= $sp->start_date && $checkInDate <= $sp->end_date) {
-                    $priceToShow = $sp->special_price;
-                    $isHolidayPrice = true;
-                    break;
-                }
-            }
+    if ($checkInDate && $checkOutDate && $checkInDate->lt($checkOutDate)) {
+        $period = CarbonPeriod::create($checkInDate, $checkOutDate->copy()->subDay()); // trừ 1 ngày vì trả phòng không tính
+        foreach ($period as $date) {
+            $specialPrice = $roomdetails->specialPrices->first(function($sp) use ($date) {
+                return $date->between(Carbon::parse($sp->start_date), Carbon::parse($sp->end_date));
+            });
+
+            $price = $specialPrice ? $specialPrice->special_price : $roomdetails->price;
+            $datePriceList[] = [
+                'date' => $date->format('Y-m-d'),
+                'price' => $price,
+                'is_special' => $specialPrice ? true : false
+            ];
         }
 
-        $roomdetails->priceToShow = $priceToShow;
-        $roomdetails->isHolidayPrice = $isHolidayPrice;
-
-        // dd( $roomdetails, $multiImage, $facility, $otherRooms);
-
-        $reviews = Review::with('user', 'booking.room')
-                ->where('hotel_id', $hotel->id)
-                ->where('status', 'approved')
-                ->whereNull('parent_id')
-                ->get();
-
-        $canReview = session('canReview', false);
-
-        return view('frontend.room.search_room_details', compact('roomdetails', 'multiImage', 'facility', 'otherRooms', 'room_id', 'hotel', 'reviews', 'canReview'));
+        // Nếu có ít nhất 1 ngày đặc biệt
+        $isHolidayPrice = collect($datePriceList)->contains('is_special', true);
+        // Giá đầu tiên để hiển thị mặc định
+        $priceToShow = $datePriceList[0]['price'] ?? $roomdetails->price;
     }
+
+    $roomdetails->priceToShow = $priceToShow;
+    $roomdetails->isHolidayPrice = $isHolidayPrice;
+
+    $reviews = Review::with('user', 'booking.room')
+            ->where('hotel_id', $hotel->id)
+            ->where('status', 'approved')
+            ->whereNull('parent_id')
+            ->get();
+
+    $canReview = session('canReview', false);
+    return view('frontend.room.search_room_details', compact(
+        'roomdetails', 'multiImage', 'facility', 'otherRooms',
+        'room_id', 'hotel', 'reviews', 'canReview', 'datePriceList'
+    ));
+}
 
     public function CheckRoomAvailability(Request $request){
         $sdate = date('Y-m-d', strtotime($request->check_in));
@@ -272,24 +283,27 @@ class FrontendRoomController extends Controller
         return view('frontend.room.search_hotel_detail', compact('rooms', 'gallery', 'bookArea', 'hotel', 'cities', 'audioPath'));
     }
 
-
-    public function CheckRoomAvailabilityHotel(Request $request){
+    public function CheckRoomAvailabilityHotel(Request $request) {
         $hotel_id_val = $request->hotel_id;
+        $roomQty = max(1, intval($request->input('number_of_rooms', 1))); // ✅ tránh chia cho 0
 
-        $sdate = date('Y-m-d', strtotime($request->check_in));
-        $edate = date('Y-m-d', strtotime($request->check_out));
-        $alldate = Carbon::create($edate)->subDay();
+        $sdate = Carbon::parse($request->check_in)->format('Y-m-d');
+        $edate = Carbon::parse($request->check_out)->format('Y-m-d');
+        $alldate = Carbon::parse($edate)->subDay(); // không tính ngày trả phòng
         $d_period = CarbonPeriod::create($sdate, $alldate);
+
         $dt_array = [];
         foreach ($d_period as $period) {
-            array_push($dt_array, date('Y-m-d', strtotime($period)));
+            $dt_array[] = $period->format('Y-m-d');
         }
+
         $check_date_booking_ids = RoomBookedDate::whereIn('book_date', $dt_array)->distinct()->pluck('booking_id')->toArray();
 
         $room = Room::where('hotel_id', $hotel_id_val)
+            ->with(['specialPrices', 'room_numbers'])
             ->withCount('room_numbers')
-            ->find($request->room_id);
-        
+            ->findOrFail($request->room_id);
+
         $bookings = Booking::withCount('assign_rooms')
             ->whereIn('id', $check_date_booking_ids)
             ->whereHas('room', function ($query) use ($hotel_id_val) {
@@ -299,17 +313,94 @@ class FrontendRoomController extends Controller
             ->get()
             ->toArray();
 
-        // $room = Room::where('hotel_id', $hotel_id)->withCount('room_numbers')->find($request->room_id);
-        // $bookings = Booking::withCount('assign_rooms')->whereIn('id', $check_date_booking_ids)->where('rooms_id', $room->id)->get()->toArray();
         $total_book_room = array_sum(array_column($bookings, 'assign_rooms_count'));
-        $av_room = @$room->room_numbers_count-$total_book_room;
+        $av_room = $room->room_numbers_count - $total_book_room;
 
-        $toDate = Carbon::parse($request->check_in);
-        $fromDate = Carbon::parse($request->check_out);
-        $nights = $toDate->diffInDays($fromDate);
+        // Tính tổng tiền theo từng ngày
+        $totalPrice = 0;
+        $datePrices = [];
 
-        return response()->json(['available_room'=>$av_room, 'total_nights'=>$nights]);
+        foreach ($dt_array as $dateStr) {
+            $price = $room->price;
+            $isSpecial = false;
+
+            foreach ($room->specialPrices as $sp) {
+                if ($dateStr >= $sp->start_date && $dateStr <= $sp->end_date) {
+                    $price = $sp->special_price;
+                    $isSpecial = true;
+                    break;
+                }
+            }
+
+            $dailyTotal = $price * $roomQty;
+            $totalPrice += $dailyTotal;
+
+            $datePrices[] = [
+                'date' => $dateStr,
+                'price_per_room' => $price,
+                'room_qty' => $roomQty,
+                'price' => $dailyTotal,
+                'is_special' => $isSpecial,
+            ];
+        }
+
+        $nights = count($dt_array);
+        $discount_percent = $room->discount;
+        $discount = 0;
+
+        if ($discount_percent > 0) {
+            $discount = ($totalPrice * $discount_percent) / 100;
+        }
+
+        $final_price = $totalPrice - $discount;
+
+        return response()->json([
+            'available_room' => $av_room,
+            'total_nights' => $nights,
+            'total_price' => $totalPrice,
+            'discount_price' => $discount,
+            'final_price' => $final_price,
+            'date_prices' => $datePrices
+        ]);
     }
+
+    // public function CheckRoomAvailabilityHotel(Request $request){
+    //     $hotel_id_val = $request->hotel_id;
+
+    //     $sdate = date('Y-m-d', strtotime($request->check_in));
+    //     $edate = date('Y-m-d', strtotime($request->check_out));
+    //     $alldate = Carbon::create($edate)->subDay();
+    //     $d_period = CarbonPeriod::create($sdate, $alldate);
+    //     $dt_array = [];
+    //     foreach ($d_period as $period) {
+    //         array_push($dt_array, date('Y-m-d', strtotime($period)));
+    //     }
+    //     $check_date_booking_ids = RoomBookedDate::whereIn('book_date', $dt_array)->distinct()->pluck('booking_id')->toArray();
+
+    //     $room = Room::where('hotel_id', $hotel_id_val)
+    //         ->withCount('room_numbers')
+    //         ->find($request->room_id);
+        
+    //     $bookings = Booking::withCount('assign_rooms')
+    //         ->whereIn('id', $check_date_booking_ids)
+    //         ->whereHas('room', function ($query) use ($hotel_id_val) {
+    //             $query->where('hotel_id', $hotel_id_val);
+    //         })
+    //         ->where('rooms_id', $room->id)
+    //         ->get()
+    //         ->toArray();
+
+    //     // $room = Room::where('hotel_id', $hotel_id)->withCount('room_numbers')->find($request->room_id);
+    //     // $bookings = Booking::withCount('assign_rooms')->whereIn('id', $check_date_booking_ids)->where('rooms_id', $room->id)->get()->toArray();
+    //     $total_book_room = array_sum(array_column($bookings, 'assign_rooms_count'));
+    //     $av_room = @$room->room_numbers_count-$total_book_room;
+
+    //     $toDate = Carbon::parse($request->check_in);
+    //     $fromDate = Carbon::parse($request->check_out);
+    //     $nights = $toDate->diffInDays($fromDate);
+
+    //     return response()->json(['available_room'=>$av_room, 'total_nights'=>$nights]);
+    // }
     
     // public function CheckRoomAvailability(Request $request){
     //     $sdate = date('Y-m-d', strtotime($request->check_in));

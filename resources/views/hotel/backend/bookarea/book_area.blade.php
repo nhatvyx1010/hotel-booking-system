@@ -83,7 +83,7 @@
                             src="{{ asset($book->image ?? 'upload/no_image.jpg') }}" 
                             alt="Admin" 
                             class="rounded-circle p-1 bg-primary" 
-                            width="80">
+                            width="400">
                     </div>
                 </div>
 

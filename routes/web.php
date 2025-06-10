@@ -169,6 +169,8 @@ Route::middleware(['auth', 'roles:admin'])->group(function(){
 
         Route::get('/booking/report/', 'BookingReport')->name('booking.report');
         Route::post('/search-by-date', 'SearchByDate')->name('search-by-date');
+        Route::get('/admin/bookings/export-excel', 'ExportExcel')->name('booking.export.excel');
+
     });
 
     Route::controller(SettingController::class)->group(function(){
@@ -420,6 +422,8 @@ Route::middleware(['auth', 'roles:hotel'])->group(function(){
 
         Route::get('/hotel/booking/report/', 'HotelBookingReport')->name('hotel.booking.report');
         Route::post('/hotel/search-by-date', 'HotelSearchByDate')->name('hotel.search-by-date');
+
+        Route::get('/hotel/bookings/export-excel', 'HotelExportExcel')->name('hotel.booking.export.excel');
     });
 
     Route::controller(GalleryController::class)->group(function(){
@@ -447,8 +451,6 @@ Route::post('/send-message', [UserController::class, 'SendMessage'])->name('send
 
 Route::get('/admin/bookings/chart-data', [DashboardController::class, 'getBookingChartData']);
 Route::get('/admin/bookings/chart-data-hotel', [DashboardController::class, 'getBookingChartDataHotel']);
-
-
 
 Route::post('/validate-booking-review', [ReviewController::class, 'ValidateBooking'])->name('validate.booking.for.review');
 Route::post('/reviews/store', [ReviewController::class, 'ReviewStore'])->name('reviews.store');

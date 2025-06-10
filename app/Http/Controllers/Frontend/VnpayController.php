@@ -14,6 +14,7 @@ use App\Models\Room;
 use App\Models\MultiImage;
 use App\Models\Facility;
 use App\Models\RoomBookedDate;
+use App\Models\RoomSpecialPrice;
 use App\Models\Booking;
 use Illuminate\Support\Facades\Auth;
 use Stripe;
@@ -124,13 +125,27 @@ class VnpayController extends Controller
     public function vnpayOrder(Request $request){
 
             $book_data = Session::get('book_date');
-            $toDate = Carbon::parse($book_data['check_in']);
-            $fromDate = Carbon::parse($book_data['check_out']);
-            $total_nights = $toDate->diffInDays($fromDate);
-            $room = Room::find($book_data['room_id']);
-            $subtotal = $room->price * $total_nights * $book_data['number_of_rooms'];
-            $discount = ($room->discount/100) * $subtotal;
-            $total_price = $subtotal - $discount;
+
+            $checkIn = Carbon::parse($book_data['check_in']);
+            $checkOut = Carbon::parse($book_data['check_out']);
+            $total_nights = $checkIn->diffInDays($checkOut);
+            $room = Room::findOrFail($book_data['room_id']);
+            $numberOfRooms = $book_data['number_of_rooms'];
+            $total = 0;
+
+            // Tính tổng theo từng ngày
+            for ($date = $checkIn->copy(); $date->lt($checkOut); $date->addDay()) {
+                $special = RoomSpecialPrice::where('room_id', $room->id)
+                    ->whereDate('start_date', '<=', $date->format('Y-m-d'))
+                    ->whereDate('end_date', '>=', $date->format('Y-m-d'))
+                    ->first();
+
+                $pricePerRoom = $special ? $special->special_price : $room->price;
+                $total += $pricePerRoom * $numberOfRooms;
+            }
+            
+            $discount = ($room->discount/100) * $total;
+            $total_price = $total - $discount;
             $code = rand(000000000, 999999999);
 
 
@@ -160,7 +175,7 @@ class VnpayController extends Controller
             $data->number_of_rooms = $book_data['number_of_rooms'];
             $data->total_night = $total_nights;
             $data->actual_price = $room->price;
-            $data->subtotal = $subtotal;
+            $data->subtotal = $total;
             $data->discount = $discount;
             $data->total_price = $total_price;
             $data->payment_method = $payment_method_value;

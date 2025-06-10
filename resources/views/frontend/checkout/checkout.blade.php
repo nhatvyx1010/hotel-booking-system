@@ -127,19 +127,29 @@
                                             <br>
               
                                             <table class="table" style="width: 100%">
-												@php
-													$subtotal = $room->price * $nights * $book_data['number_of_rooms'];
-													$discount = ($room->discount/100) * $subtotal;
-												@endphp
-                                                   
                                                   <tr>
                                                         <td><p>Tổng số đêm <br><b> ( {{ $book_data['check_in'] }} - {{ $book_data['check_out'] }} )</p></td>
                                                         <td style="text-align: right"></b><p>{{ $nights }} Ngày</p></td>
                                                   </tr>
-                                                  <tr>
-                                                        <td><p>Tổng số phòng</p></td>
-                                                        <td style="text-align: right"><p>{{ $book_data['number_of_rooms'] }}</p></td>
-                                                  </tr>
+                                                  <table class="table">
+                                                    <tr>
+                                                        <th>Ngày</th>
+                                                        <th>Giá/phòng</th>
+                                                        <th>Số phòng</th>
+                                                    </tr>
+                                                    @foreach($dates as $d)
+                                                        <tr>
+                                                            <td>{{ $d['date'] }}</td>
+                                                            <td>
+                                                                {{ number_format($d['price'], 0, ',', '.') }} VNĐ
+                                                                @if($d['is_special'])
+                                                                    <span style="color: red;">* Giá lễ/tết</span>
+                                                                @endif
+                                                            </td>
+                                                            <td>{{ $book_data['number_of_rooms'] }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </table>
                                                   <tr>
                                                         <td><p>Tạm tính</p></td>
                                                         <td style="text-align: right"><p>{{ number_format($subtotal, 0, ',', '.') }} VNĐ</p></td>
