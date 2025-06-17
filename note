@@ -2,3 +2,293 @@
 # php artisan config:clear
 
 # vendor/bin/pest tests/Feature/... .php
+
+//// Docs: https://dbml.dbdiagram.io/docs
+
+Table blog_categories {
+  id bigint [pk, increment]
+  category_name varchar
+  category_slug varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table blog_posts {
+  id bigint [pk, increment]
+  hotel_id int
+  blogcat_id int [ref: > blog_categories.id]
+  user_id int [ref: > users.id]
+  post_title varchar
+  post_slug varchar
+  post_image varchar
+  short_desc text
+  long_desc text
+  audio_file varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table bookings {
+  id bigint [pk, increment]
+  rooms_id int [ref: > rooms.id]
+  user_id int [ref: > users.id]
+  check_in varchar
+  check_out varchar
+  persion varchar
+  number_of_rooms varchar
+  total_night double [default: 0.00]
+  actual_price int [default: 0]
+  subtotal int [default: 0]
+  discount int [default: 0]
+  total_price int [default: 0]
+  service_fee int [default: 0, note: 'Phí dịch vụ theo %']
+  payment_method varchar
+  transation_id varchar
+  payment_status varchar
+  name varchar
+  email varchar
+  phone varchar
+  country varchar
+  state varchar
+  zip_code varchar
+  address varchar
+  code varchar
+  prepaid_amount int
+  remaining_amount int
+  total_amount int
+  cancel_reason varchar
+  refund_phone text
+  refund_bank_code text
+  refund_bank_name text
+  status int [default: 1]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table booking_room_lists {
+  id bigint [pk, increment]
+  booking_id int [ref: > bookings.id]
+  room_id int [ref: > rooms.id]
+  room_number_id int [ref: > room_numbers.id]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table book_areas {
+  id bigint [pk, increment]
+  hotel_id int [ref: > users.id] // Assuming hotel_id here refers to a user with role 'hotel'
+  image varchar
+  short_title varchar
+  main_title varchar
+  short_desc text
+  link_url varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table cities {
+  id bigint [pk, increment]
+  name varchar
+  description text
+  image varchar
+  slug varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table comments {
+  id bigint [pk, increment]
+  user_id int [ref: > users.id]
+  post_id int [ref: > blog_posts.id]
+  message text
+  status varchar [default: '0']
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table facilities {
+  id bigint [pk, increment]
+  hotel_id int [ref: > users.id] // Assuming hotel_id here refers to a user with role 'hotel'
+  rooms_id int [ref: > rooms.id]
+  facility_name varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table galleries {
+  id bigint [pk, increment]
+  hotel_id int [ref: > users.id] // Assuming hotel_id here refers to a user with role 'hotel'
+  photo_name varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table multi_images {
+  id bigint [pk, increment]
+  hotel_id int [ref: > users.id] // Assuming hotel_id here refers to a user with role 'hotel'
+  rooms_id int [ref: > rooms.id]
+  multi_img varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table notifications {
+  id char [pk]
+  type varchar
+  notifiable_type varchar
+  notifiable_id bigint
+  data text
+  read_at timestamp
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table reports {
+  id bigint [pk, increment]
+  user_id bigint [ref: > users.id]
+  hotel_id bigint [ref: > users.id] // Assuming hotel_id here refers to a user with role 'hotel'
+  booking_id bigint [ref: > bookings.id]
+  message text
+  status enum('pending','reviewed','resolved') [default: 'pending']
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table reviews {
+  id bigint [pk, increment]
+  hotel_id bigint [ref: > users.id] // Assuming hotel_id here refers to a user with role 'hotel'
+  user_id bigint [ref: > users.id]
+  booking_id bigint [ref: > bookings.id]
+  parent_id bigint
+  comment text
+  rating tinyint
+  status enum('pending','approved','rejected') [default: 'pending']
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table rooms {
+  id bigint [pk, increment]
+  hotel_id int [ref: > users.id] // Assuming hotel_id here refers to a user with role 'hotel'
+  roomtype_id int [ref: > room_types.id]
+  total_adult varchar
+  total_child varchar
+  room_capacity varchar
+  image varchar
+  price varchar
+  size varchar
+  view varchar
+  bed_style varchar
+  discount int [default: 0]
+  short_desc text
+  description text
+  status int [default: 1]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table room_booked_dates {
+  id bigint [pk, increment]
+  booking_id int [ref: > bookings.id]
+  room_id int [ref: > rooms.id]
+  book_date date
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table room_numbers {
+  id bigint [pk, increment]
+  hotel_id int [ref: > users.id] // Assuming hotel_id here refers to a user with role 'hotel'
+  rooms_id int [ref: > rooms.id]
+  room_type_id int [ref: > room_types.id]
+  room_no varchar
+  status varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table room_special_prices {
+  id bigint [pk, increment]
+  room_id bigint [ref: > rooms.id]
+  start_date date
+  end_date date
+  special_price bigint
+  description varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table room_types {
+  id bigint [pk, increment]
+  hotel_id int [ref: > users.id] // Assuming hotel_id here refers to a user with role 'hotel'
+  name varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table site_settings {
+  id bigint [pk, increment]
+  logo varchar
+  phone varchar
+  address text
+  email varchar
+  facebook varchar
+  twitter varchar
+  copyright varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table smtp_settings {
+  id bigint [pk, increment]
+  mailer varchar
+  host varchar
+  port varchar
+  username varchar
+  password varchar
+  encryption varchar
+  from_address varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table teams {
+  id bigint [pk, increment]
+  hotel_id int [ref: > users.id] // Assuming hotel_id here refers to a user with role 'hotel'
+  image varchar
+  name varchar
+  position varchar
+  facebook varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table testimonials {
+  id bigint [pk, increment]
+  name varchar
+  city varchar
+  image varchar
+  message text
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table users {
+  id bigint [pk, increment]
+  name varchar
+  email varchar
+  email_verified_at timestamp
+  password varchar
+  photo varchar
+  phone varchar
+  city_id int [ref: > cities.id]
+  address text
+  role enum('admin','user','hotel') [default: 'user']
+  status enum('active','inactive','pending','cancelled') [default: 'active']
+  hotel_audio varchar
+  remember_token varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Ref: users.id > notifications.notifiable_id

@@ -10,14 +10,9 @@
 							<ol class="breadcrumb mb-0 p-0">
 								<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
 								</li>
-								<li class="breadcrumb-item active" aria-current="page">Danh sách đặt phòng</li>
+								<li class="breadcrumb-item active" aria-current="page">Danh sách hủy đặt phòng hoàn tất</li>
 							</ol>
 						</nav>
-					</div>
-					<div class="ms-auto">
-						<div class="btn-group">
-                        <a href="{{ route('hotel.add.room.list') }}" class="btn btn-primary px-5"> Thêm Đặt phòng </a>
-						</div>
 					</div>
 				</div>
 				<!--end breadcrumb-->

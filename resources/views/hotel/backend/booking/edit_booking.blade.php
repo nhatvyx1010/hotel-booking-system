@@ -168,14 +168,6 @@
                                     <div style="margin-top: 40px; margin-bottom: 20px">
                                         <a href="javascript:void(0)" class="btn btn-primary assign_room">Gán Phòng</a>
                                     </div>
-                                @elseif($isAfterCheckOut)
-                                    <div class="alert alert-warning text-center mt-4">
-                                        Đã quá ngày trả phòng, không thể gán hoặc xóa phòng.
-                                    </div>
-                                @else
-                                    <div class="alert alert-warning text-center mt-4">
-                                        Đã đến hoặc đang trong thời gian check-in, không thể gán thêm phòng.
-                                    </div>
                                 @endif
 
                                 @php
@@ -229,7 +221,7 @@
 
                                     <div class="col-md-12" style="margin-top:20px">
                                         <button type="submit" class="btn btn-primary">Cập Nhật</button>
-                                        <a href="{{ route('download.invoice', $editData->id) }}" class="btn btn-warning px-3 radius-10"><i class="lni lni-download"></i>Download Invoice</a>
+                                        <a href="{{ route('hotel.download.invoice', $editData->id) }}" class="btn btn-warning px-3 radius-10"><i class="lni lni-download"></i>Download Invoice</a>
                                     </div>
                                 </div>
                             </form>

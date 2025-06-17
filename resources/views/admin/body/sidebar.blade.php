@@ -136,12 +136,12 @@
 
 		<li>
 			<a class="has-arrow" href="javascript:;">
-				<div class="parent-icon"><i class='bx bx-star'></i>
+				<div class="parent-icon"><i class='bx bx-error'></i>
 				</div>
 				<div class="menu-title">Vấn Đề Từ Khách Hàng</div>
 			</a>
 			<ul>
-				<li> <a href="{{ route('all.report') }}"><i class='bx bx-star'></i>Tất Cả Vấn Đề</a>
+				<li> <a href="{{ route('all.report') }}"><i class='bx bx-error'></i>Tất Cả Vấn Đề</a>
 				</li>
 			</ul>
 		</li>
