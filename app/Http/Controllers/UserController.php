@@ -111,9 +111,8 @@ class UserController extends Controller
             $history = [];
         }
 
-
         try {
-            $response = Http::post('http://192.168.254.1:8001/chat', [
+            $response = Http::timeout(60)->post('http://192.168.254.1:8001/chat', [
                 'message' => $message,
                 'history' => $history
             ]);

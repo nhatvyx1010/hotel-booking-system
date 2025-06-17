@@ -61,19 +61,30 @@
 
                             <!-- Time Check -->
                             @php
-                                $checkInTime = \Carbon\Carbon::parse($booking->check_in);
-                                $now = \Carbon\Carbon::now();
-                                $hoursDiff = $now->diffInHours($checkInTime, false);
+                                use Carbon\Carbon;
+
+                                $checkInTime = Carbon::parse($booking->check_in);
+                                $checkOutTime = Carbon::parse($booking->check_out);
+                                $now = Carbon::now();
+
+                                $isStaying = $now->between($checkInTime, $checkOutTime); // đang ở
+                                $hoursDiff = $now->diffInHours($checkInTime, false);     // số giờ còn lại đến check-in
                             @endphp
-                            @if ($hoursDiff < 24)
+
+                            @if ($isStaying)
+                                <div class="alert alert-danger">
+                                    <strong>Thông báo:</strong> Bạn đang trong quá trình lưu trú. Đặt phòng hiện tại <strong>không thể hủy</strong>.
+                                </div>
+                            @elseif ($hoursDiff < 24)
                                 <div class="alert alert-warning">
                                     <strong>Lưu ý:</strong> Thời gian nhận phòng còn lại chưa đến 24 giờ. Theo chính sách của chúng tôi, bạn sẽ <strong>không thể hủy phòng</strong> và <strong>không được hoàn lại tiền</strong> trong trường hợp này.
                                 </div>
                             @else
                                 <div class="alert alert-success">
-                                    Bạn có thể <strong>hủy đặt phòng</strong> và sẽ được <strong hoàn lại 100% số tiền</strong> đã thanh toán theo chính sách hoàn tiền của chúng tôi.
+                                    Bạn có thể <strong>hủy đặt phòng</strong> và sẽ được <strong>hoàn lại 100%</strong> số tiền đã thanh toán theo chính sách hoàn tiền của chúng tôi.
                                 </div>
                             @endif
+
 
                             <!-- Cancel Form -->
                             <form action="{{ route('user.booking.cancel.store', $booking->id) }}" method="POST">

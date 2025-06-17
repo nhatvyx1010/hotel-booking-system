@@ -124,6 +124,41 @@
     </div>
 </div>
 <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const checkInInput = document.getElementById('check_in');
+    const checkOutInput = document.getElementById('check_out');
+
+    // Thiết lập ngày hiện tại là giá trị mặc định và min cho check-in
+    const today = new Date().toISOString().split('T')[0];
+    checkInInput.setAttribute('min', today);
+    checkInInput.value = today;
+
+    checkInInput.addEventListener('change', function () {
+        const checkInDate = new Date(checkInInput.value);
+        const checkOutDate = new Date(checkOutInput.value);
+
+        // Tự động cập nhật min cho ngày check-out
+        checkOutInput.setAttribute('min', checkInInput.value);
+
+        if (checkOutInput.value && checkOutDate < checkInDate) {
+            alert("Ngày trả phòng không được trước ngày nhận phòng.");
+            checkOutInput.value = checkInInput.value;
+        }
+    });
+
+    checkOutInput.addEventListener('change', function () {
+        const checkInDate = new Date(checkInInput.value);
+        const checkOutDate = new Date(checkOutInput.value);
+
+        if (checkOutDate < checkInDate) {
+            alert("Ngày trả phòng không được trước ngày nhận phòng.");
+            checkOutInput.value = checkInInput.value;
+        }
+    });
+});
+</script>
+
+<script>
     $(document).ready(function () {
         // Reset fields khi thay đổi room
         $("#room_id").on('change', function () {

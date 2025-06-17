@@ -12,11 +12,6 @@
                 </ol>
             </nav>
         </div>
-        <div class="ms-auto">
-            <div class="btn-group">
-                <a href="{{ route('hotel.add.room.list') }}" class="btn btn-primary px-5"> Thêm Đặt Phòng </a>
-            </div>
-        </div>
     </div>
 
     <form method="GET" action="{{ route('hotel.view.room.list') }}" class="mb-3 d-flex align-items-center">

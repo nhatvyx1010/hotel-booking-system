@@ -105,6 +105,69 @@
 
 								</div>
 							</div>
+                            
+                            <div class="payment-box">
+
+                                <div class="payment-method">
+                                    <p>
+                                        <input type="radio" id="cash-on-delivery" name="payment_method" value="COD">
+                                        <label for="cash-on-delivery">Thanh toán trực tiếp tại quầy lễ tân</label>
+                                    </p>
+                                    <p>
+                                        <input type="radio" id="vnpay" name="payment_method" value="VNPAY">
+                                        <label for="vnpay">Thanh toán với VNPAY</label>
+                                    </p>
+
+                                    <!-- Nội dung khi chọn COD -->
+                                    <div id="cod_info" class="payment-info d-none">
+                                        <p>Bạn đã chọn <strong>Thanh toán trực tiếp tại quầy lễ tân</strong>. Vui lòng chuẩn bị số tiền đúng khi thanh toán.</p>
+                                        <p><strong>Bạn phải thanh toán 30% phí.</strong></p>
+                                        <table class="table">
+                                            <tr>
+                                                <td><p>Tạm tính</p></td>
+                                                <td style="text-align: right"><p>{{ number_format($subtotal, 0, ',', '.') }} VNĐ</p></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p>Số tiền phải trả</p></td>
+                                                <td style="text-align: right"><p>{{ number_format($subtotal * 30 / 100, 0, ',', '.') }} VNĐ</p></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p>Giảm giá</p></td>
+                                                <td style="text-align: right"><p>{{ number_format($discount, 0, ',', '.') }} VNĐ</p></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p>Tổng cộng</p></td>
+                                                <td style="text-align: right"><p>{{ number_format($subtotal * 30 / 100 - $discount, 0, ',', '.') }} VNĐ</p></td>
+                                            </tr>
+                                            <!-- Hidden input để gửi total_price -->
+                                            <input type="hidden" name="total_price" value="{{ $subtotal * 30 / 100 - $discount }}">
+                                        </table>
+                                    </div>
+
+                                    <!-- Nội dung khi chọn VNPAY -->
+                                    <div id="vnpay_info" class="payment-info d-none">
+                                        <p>Bạn đã chọn <strong>Chuyển khoản ngân hàng (VNPAY)</strong>. Bạn sẽ được chuyển đến trang xử lý thanh toán.</p>
+                                        <table class="table">
+                                            <tr>
+                                                <td><p>Tạm tính</p></td>
+                                                <td style="text-align: right"><p>{{ number_format($subtotal, 0, ',', '.') }} VNĐ</p></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p>Giảm giá</p></td>
+                                                <td style="text-align: right"><p>{{ number_format($discount, 0, ',', '.') }} VNĐ</p></td>
+                                            </tr>
+                                            <tr>
+                                                <td><p>Tổng cộng</p></td>
+                                                <td style="text-align: right"><p>{{ number_format($subtotal - $discount, 0, ',', '.') }} VNĐ</p></td>
+                                            </tr>
+                                            <!-- Hidden input để gửi total_price -->
+                                                <input type="hidden" name="total_price" value="{{ $subtotal - $discount }}">
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="order-btn" id="myButton">Đặt hàng</button>
+                            </div>
 						</div>
                         
                         
@@ -172,69 +235,6 @@
 
 
 						<div class="col-lg-8 col-md-8">
-							<div class="payment-box">
-
-                                          <div class="payment-method">
-                <p>
-                    <input type="radio" id="cash-on-delivery" name="payment_method" value="COD">
-                    <label for="cash-on-delivery">Thanh toán trực tiếp tại quầy lễ tân</label>
-                </p>
-                <p>
-                    <input type="radio" id="vnpay" name="payment_method" value="VNPAY">
-                    <label for="vnpay">Thanh toán với VNPAY</label>
-                </p>
-
-                <!-- Nội dung khi chọn COD -->
-                <div id="cod_info" class="payment-info d-none">
-                    <p>Bạn đã chọn <strong>Thanh toán trực tiếp tại quầy lễ tân</strong>. Vui lòng chuẩn bị số tiền đúng khi thanh toán.</p>
-                    <p><strong>Bạn phải thanh toán 30% phí.</strong></p>
-                    <table class="table">
-                        <tr>
-                            <td><p>Tạm tính</p></td>
-                            <td style="text-align: right"><p>{{ number_format($subtotal, 0, ',', '.') }} VNĐ</p></td>
-                        </tr>
-                        <tr>
-                            <td><p>Số tiền phải trả</p></td>
-                            <td style="text-align: right"><p>{{ number_format($subtotal * 30 / 100, 0, ',', '.') }} VNĐ</p></td>
-                        </tr>
-                        <tr>
-                            <td><p>Giảm giá</p></td>
-                            <td style="text-align: right"><p>{{ number_format($discount, 0, ',', '.') }} VNĐ</p></td>
-                        </tr>
-                        <tr>
-                            <td><p>Tổng cộng</p></td>
-                            <td style="text-align: right"><p>{{ number_format($subtotal * 30 / 100 - $discount, 0, ',', '.') }} VNĐ</p></td>
-                        </tr>
-                        <!-- Hidden input để gửi total_price -->
-                        <input type="hidden" name="total_price" value="{{ $subtotal * 30 / 100 - $discount }}">
-                    </table>
-                </div>
-
-                <!-- Nội dung khi chọn VNPAY -->
-                <div id="vnpay_info" class="payment-info d-none">
-                    <p>Bạn đã chọn <strong>Chuyển khoản ngân hàng (VNPAY)</strong>. Bạn sẽ được chuyển đến trang xử lý thanh toán.</p>
-                    <table class="table">
-                        <tr>
-                            <td><p>Tạm tính</p></td>
-                            <td style="text-align: right"><p>{{ number_format($subtotal, 0, ',', '.') }} VNĐ</p></td>
-                        </tr>
-                        <tr>
-                            <td><p>Giảm giá</p></td>
-                            <td style="text-align: right"><p>{{ number_format($discount, 0, ',', '.') }} VNĐ</p></td>
-                        </tr>
-                        <tr>
-                            <td><p>Tổng cộng</p></td>
-                            <td style="text-align: right"><p>{{ number_format($subtotal - $discount, 0, ',', '.') }} VNĐ</p></td>
-                        </tr>
-                        <!-- Hidden input để gửi total_price -->
-                            <input type="hidden" name="total_price" value="{{ $subtotal - $discount }}">
-                    </table>
-                </div>
-            </div>
-
-            <button type="submit" class="order-btn" id="myButton">Đặt hàng</button>
-
-                            </div>
 						</div>
 					</div>
 				</form>
