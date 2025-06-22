@@ -107,14 +107,33 @@
                                     <h4 class="card-title mb-3 text-primary">{{ $hotel->bookarea->short_title ?? $hotel->name }}</h4>
                                     <p class="card-text mb-4 text-muted">{{ $hotel->bookarea->short_desc ?? '' }}</p>
                                     
-                                    <a href="{{ route('booking.search.hotel', [
-                                                    'hotel_id' => $hotel->id,
-                                                    'check_in' => old('check_in'),
-                                                    'check_out' => old('check_out'),
-                                                    'persion' => old('persion')
-                                                ]) }}" target="_blank" class="btn btn-outline-primary mb-4 rounded-pill px-4 py-2">
-                                        Truy Cập Khách Sạn
-                                    </a>
+                                    <div class="d-flex justify-content-between align-items-center mb-4"> {{-- Thêm div bọc với Flexbox --}}
+                                        <div>
+                                            @if($hotel->min_price && $hotel->max_price)
+                                                <p class="card-text mb-0"> {{-- Đặt mb-0 để loại bỏ margin dưới cùng --}}
+                                                    <strong class="text-success">Giá phòng từ:</strong> 
+                                                    {{ number_format($hotel->min_price, 0, ',', '.') }} VNĐ - 
+                                                    {{ number_format($hotel->max_price, 0, ',', '.') }} VNĐ
+                                                </p>
+                                            @elseif($hotel->random_room)
+                                                <p class="card-text mb-0"> {{-- Đặt mb-0 để loại bỏ margin dưới cùng --}}
+                                                    <strong class="text-success">Giá phòng từ:</strong> 
+                                                    {{ number_format($hotel->random_room->price, 0, ',', '.') }} VNĐ
+                                                </p>
+                                            @else
+                                                <p class="card-text mb-0 text-danger">Không có thông tin giá phòng.</p>
+                                            @endif
+                                        </div>
+                                        
+                                        <a href="{{ route('booking.search.hotel', [
+                                            'hotel_id' => $hotel->id,
+                                            'check_in' => old('check_in'),
+                                            'check_out' => old('check_out'),
+                                            'persion' => old('persion')
+                                        ]) }}" target="_blank" class="btn btn-outline-primary rounded-pill px-4 py-2"> {{-- Xóa mb-4 --}}
+                                            Truy Cập Khách Sạn
+                                        </a>
+                                    </div>
                                     
                                     <ul>
                                         <li>

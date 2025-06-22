@@ -112,7 +112,7 @@ class UserController extends Controller
         }
 
         try {
-            $response = Http::timeout(60)->post('http://192.168.254.1:8001/chat', [
+            $response = Http::timeout(60)->post('http://172.20.10.2:8001/chat', [
                 'message' => $message,
                 'history' => $history
             ]);

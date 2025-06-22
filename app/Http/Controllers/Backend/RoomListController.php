@@ -100,7 +100,6 @@ class RoomListController extends Controller
         return view('hotel.backend.allroom.roomlist.view_roomlist', compact('room_number_list', 'selected_date', 'booked_days'));
     }
    
-
     public function AddRoomList(){
         $roomtype = RoomType::all();
         return view('backend.allroom.roomlist.add_roomlist', compact('roomtype'));

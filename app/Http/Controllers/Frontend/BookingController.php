@@ -336,7 +336,7 @@ class BookingController extends Controller
         ];
 
         try {
-            Mail::to('nguyenphamnhatvy10101@gmail.com')->cc($sendmail->email)->send(new BookConfirm($data));
+            Mail::to('nguyenphamnhatvy1010@gmail.com')->cc($sendmail->email)->send(new BookConfirm($data));
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
@@ -386,7 +386,7 @@ class BookingController extends Controller
         ];
 
         try {
-            Mail::to('nguyenphamnhatvy10101@gmail.com')
+            Mail::to('nguyenphamnhatvy1010@gmail.com')
             ->cc($sendmail->email)
             ->send(new BookConfirm($data));
         } catch (\Exception $e) {
@@ -427,7 +427,7 @@ class BookingController extends Controller
         ];
 
         try {
-            Mail::to('nguyenphamnhatvy10101@gmail.com')
+            Mail::to('nguyenphamnhatvy1010@gmail.com')
             ->cc($sendmail->email)
             ->send(new BookCancelConfirm($data));
         } catch (\Exception $e) {
