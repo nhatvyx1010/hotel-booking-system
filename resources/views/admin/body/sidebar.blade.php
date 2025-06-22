@@ -66,7 +66,7 @@
 			</ul>
 		</li>
 
-		<li>
+		<!-- <li>
 			<a class="has-arrow" href="javascript:;">
 				<div class="parent-icon"><i class='bx bx-cog'></i>
 				</div>
@@ -78,7 +78,7 @@
 				<li> <a href="{{ route('site.setting') }}"><i class='bx bx-wrench'></i>Cài Đặt Website</a>
 				</li>
 			</ul>
-		</li>
+		</li> -->
 
 		<li>
 			<a class="has-arrow" href="javascript:;">

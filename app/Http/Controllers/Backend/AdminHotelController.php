@@ -176,9 +176,9 @@ class AdminHotelController extends Controller
         
         try {
             if ($hotel->status === 'active') {
-                Mail::to('nguyenphamnhatvy10101@gmail.com')->cc($hotel->email)->send(new HotelApprovedMail($hotel));
+                Mail::to('nguyenphamnhatvy1010@gmail.com')->cc($hotel->email)->send(new HotelApprovedMail($hotel));
             } elseif ($hotel->status === 'cancelled') {
-                Mail::to('nguyenphamnhatvy10101@gmail.com')->cc($hotel->email)->send(new HotelRejectedMail($hotel));
+                Mail::to('nguyenphamnhatvy1010@gmail.com')->cc($hotel->email)->send(new HotelRejectedMail($hotel));
             }
         } catch (\Exception $e) {
             return back()->with('error', 'Gửi email thất bại: ' . $e->getMessage());

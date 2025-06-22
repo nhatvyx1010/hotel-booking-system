@@ -43,7 +43,7 @@ class ReportIssueController extends Controller
 
             if ($user) {
                 try {
-                    Mail::to('nguyenphamnhatvy10101@gmail.com')->cc($user->email)->send(new FeedbackReceived($user));
+                    Mail::to('nguyenphamnhatvy1010@gmail.com')->cc($user->email)->send(new FeedbackReceived($user));
                     return response()->json(['message' => 'Cập nhật trạng thái báo cáo thành công và đã gửi email xác nhận'], 200);
                 } catch (\Exception $e) {
                     Log::error('Lỗi gửi email xác nhận phản hồi cho báo cáo #' . $reportId . ': ' . $e->getMessage());

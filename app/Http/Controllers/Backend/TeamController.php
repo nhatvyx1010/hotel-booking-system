@@ -19,7 +19,6 @@ class TeamController extends Controller
     
         return view('hotel.backend.team.all_team', compact('team'));
     }
-    
 
     public function HotelAddTeam(){
         return view('hotel.backend.team.add_team');
