@@ -6,107 +6,99 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Team;
 use App\Models\BookArea;
-use Intervention\Image\Facades\Image;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class TeamController extends Controller
 {
-    public function HotelAllTeam(){
+    public function HotelAllTeam()
+    {
         $user_id = Auth::id();
-    
         $team = Team::where('hotel_id', $user_id)->latest()->get();
-    
         return view('hotel.backend.team.all_team', compact('team'));
     }
 
-    public function HotelAddTeam(){
+    public function HotelAddTeam()
+    {
         return view('hotel.backend.team.add_team');
     }
 
-    public function HotelStoreTeam(Request $request){
+    public function HotelStoreTeam(Request $request)
+    {
         $user_id = Auth::id();
+        $imageUrl = null;
 
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-            Image::make($image)->resize(550, 670)->save('upload/team/' . $name_gen);
-            $save_url = 'upload/team/' . $name_gen;
-        } else {
-            // Sử dụng ảnh mặc định nếu không upload
-            $save_url = 'upload/team/default.jpg';
+            $uploadResult = Cloudinary::upload($request->file('image')->getRealPath(), [
+                'folder' => 'team',
+                'transformation' => [
+                    'width' => 550,
+                    'height' => 670,
+                    'crop' => 'fit',
+                ],
+            ]);
+            $imageUrl = $uploadResult->getSecurePath();
         }
 
-        Team::insert([
+        Team::create([
             'hotel_id' => $user_id,
             'name' => $request->name,
             'position' => $request->position,
             'facebook' => $request->facebook,
-            'image' => $save_url,
+            'image' => $imageUrl,
             'created_at' => Carbon::now(),
         ]);
 
-        $notification = array(
-            'message' => 'Dữ liệu Team đã được thêm thành công',
-            'alert-type' => 'success'
-        );
-        return redirect()->route('hotel.all.team')->with('message', 'Dữ liệu Team đã được thêm thành công')->with('alert-type', 'success');
+        return redirect()->route('hotel.all.team')
+            ->with('message', 'Dữ liệu Team đã được thêm thành công')
+            ->with('alert-type', 'success');
     }
 
-    public function HotelEditTeam($id){
+    public function HotelEditTeam($id)
+    {
         $team = Team::findOrFail($id);
         return view('hotel.backend.team.edit_team', compact('team'));
     }
 
-    public function HotelUpdateTeam(Request $request){
-        $team_id = $request->id;
+    public function HotelUpdateTeam(Request $request)
+    {
+        $team = Team::findOrFail($request->id);
+        $imageUrl = $team->image;
 
-        if($request->file('image')){
-            $image = $request->file('image');
-            $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-            Image::make($image)->resize(550, 670)->save('upload/team/'.$name_gen);
-            $save_url = 'upload/team/'.$name_gen;
-    
-            Team::findOrFail($team_id)->update([
-                'name' => $request->name,
-                'position' => $request->position,
-                'facebook' => $request->facebook,
-                'image' => $save_url,
-                'created_at' => Carbon::now(),
+        if ($request->hasFile('image')) {
+            $uploadResult = Cloudinary::upload($request->file('image')->getRealPath(), [
+                'folder' => 'team',
+                'transformation' => [
+                    'width' => 550,
+                    'height' => 670,
+                    'crop' => 'fit',
+                ],
             ]);
-    
-            $notification = array(
-                'message' => 'Cập nhật Team có ảnh thành công',
-                'alert-type' => 'success'
-            );
-            return redirect()->route('hotel.all.team')->with('message', 'Cập nhật Team có ảnh thành công')->with('alert-type', 'success');
-        } else {
-            Team::findOrFail($team_id)->update([
-                'name' => $request->name,
-                'position' => $request->position,
-                'facebook' => $request->facebook,
-                'created_at' => Carbon::now(),
-            ]);
-    
-            $notification = array(
-                'message' => 'Cập nhật Team không ảnh thành công',
-                'alert-type' => 'success'
-            );
-            return redirect()->route('hotel.all.team')->with('message', 'Cập nhật Team không ảnh thành công')->with('alert-type', 'success');
+            $imageUrl = $uploadResult->getSecurePath();
         }
+
+        $team->update([
+            'name' => $request->name,
+            'position' => $request->position,
+            'facebook' => $request->facebook,
+            'image' => $imageUrl,
+            'created_at' => Carbon::now(),
+        ]);
+
+        return redirect()->route('hotel.all.team')
+            ->with('message', 'Cập nhật Team thành công')
+            ->with('alert-type', 'success');
     }
 
-    public function HotelDeleteTeam($id){
-        $item = Team::findOrFail($id);
-        $img = $item->image;
-        unlink($img);
+    public function HotelDeleteTeam($id)
+    {
+        $team = Team::findOrFail($id);
+        $team->delete();
 
-        Team::findOrFail($id)->delete();
-        $notification = array(
-            'message' => 'Xóa ảnh Team thành công',
-            'alert-type' => 'success'
-        );
-        return redirect()->back()->with('message', 'Xóa ảnh Team thành công')->with('alert-type', 'success');
+        return redirect()->back()
+            ->with('message', 'Xóa Team thành công')
+            ->with('alert-type', 'success');
     }
 
     public function HotelBookArea()
@@ -131,18 +123,23 @@ class TeamController extends Controller
         ];
 
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-            Image::make($image)->resize(1000, 1000)->save('upload/bookarea/' . $name_gen);
-            $data['image'] = 'upload/bookarea/' . $name_gen;
+            $uploadResult = Cloudinary::upload($request->file('image')->getRealPath(), [
+                'folder' => 'bookarea',
+                'transformation' => [
+                    'width' => 1000,
+                    'height' => 1000,
+                    'crop' => 'fit',
+                ],
+            ]);
+            $data['image'] = $uploadResult->getSecurePath();
         }
 
         if ($book) {
             $book->update($data);
-            $message = $request->hasFile('image') ? 'Book Area Cập nhật có ảnh thành công' : 'Book Area Cập nhật không ảnh thành công';
+            $message = $request->hasFile('image') ? 'Book Area cập nhật có ảnh thành công' : 'Book Area cập nhật không ảnh thành công';
         } else {
             BookArea::create($data);
-            $message = $request->hasFile('image') ? 'Book Area Tạo có ảnh thành công' : 'Book Area Tạo không ảnh thành công';
+            $message = $request->hasFile('image') ? 'Book Area tạo có ảnh thành công' : 'Book Area tạo không ảnh thành công';
         }
 
         return redirect()->back()->with('message', $message)->with('alert-type', 'success');

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Testimonial;
 use Intervention\Image\Facades\Image;
 use Carbon\Carbon;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class TestimonialController extends Controller
 {
@@ -19,17 +20,26 @@ class TestimonialController extends Controller
         return view('backend.testimonial.add_testimonial');
     }
 
-    public function StoreTestimonial(Request $request){
-        $image = $request->file('image');
-        if ($image) {
-            $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-            Image::make($image)->resize(50, 50)->save('upload/testimonial/' . $name_gen);
-            $save_url = 'upload/testimonial/' . $name_gen;
-        } else {
-            $save_url = null;
+    public function StoreTestimonial(Request $request)
+    {
+        $save_url = null;
+
+        if ($request->hasFile('image')) {
+            $uploadResult = Cloudinary::upload($request->file('image')->getRealPath(), [
+                'folder' => 'testimonial',
+                'transformation' => [
+                    'width' => 50,
+                    'height' => 50,
+                    'crop' => 'fill',
+                    'gravity' => 'auto',
+                ],
+                'resource_type' => 'image',
+            ]);
+
+            $save_url = $uploadResult->getSecurePath();
         }
 
-        Testimonial::insert([
+        Testimonial::create([
             'name' => $request->name,
             'city' => $request->city,
             'message' => $request->message,
@@ -37,61 +47,60 @@ class TestimonialController extends Controller
             'created_at' => Carbon::now(),
         ]);
 
-        $notification = array(
-            'messsage' => 'Thêm dữ liệu đánh giá thành công',
-            'alert-type' => 'success'
-        );
-        return redirect()->route('all.testimonial')->with('message', 'Thêm dữ liệu đánh giá thành công')->with('alert-type', 'success');
+        return redirect()->route('all.testimonial')->with([
+            'message' => 'Thêm dữ liệu đánh giá thành công',
+            'alert-type' => 'success',
+        ]);
     }
+
 
     public function EditTestimonial($id){
         $testimonial = Testimonial::find($id);
         return view('backend.testimonial.edit_testimonial', compact('testimonial'));
     }
 
-    public function UpdateTestimonial(Request $request){
+    public function UpdateTestimonial(Request $request)
+    {
         $test_id = $request->id;
+        $testimonial = Testimonial::findOrFail($test_id);
 
-        if($request->file('image')){
-            $image = $request->file('image');
-            $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-            Image::make($image)->resize(50, 50)->save('upload/testimonial/'.$name_gen);
-            $save_url = 'upload/testimonial/'.$name_gen;
-    
-            Testimonial::findOrFail($test_id)->update([
-                'name' => $request->name,
-                'city' => $request->city,
-                'message' => $request->message,
-                'image' => $save_url,
-                'created_at' => Carbon::now(),
+        $data = [
+            'name' => $request->name,
+            'city' => $request->city,
+            'message' => $request->message,
+            'created_at' => Carbon::now(),
+        ];
+
+        if ($request->hasFile('image')) {
+            $uploadResult = Cloudinary::upload($request->file('image')->getRealPath(), [
+                'folder' => 'testimonial',
+                'transformation' => [
+                    'width' => 50,
+                    'height' => 50,
+                    'crop' => 'fill',
+                    'gravity' => 'auto',
+                ],
+                'resource_type' => 'image',
             ]);
-    
-            $notification = array(
-                'messsage' => 'Cập nhật đánh giá thành công với hình ảnh',
-                'alert-type' => 'success'
-            );
-            return redirect()->route('all.testimonial')->with('message', 'Cập nhật đánh giá thành công với hình ảnh')->with('alert-type', 'success');
+
+            $data['image'] = $uploadResult->getSecurePath();
+
+            $message = 'Cập nhật đánh giá thành công với hình ảnh';
         } else {
-            Testimonial::findOrFail($test_id)->update([
-                'name' => $request->name,
-                'city' => $request->city,
-                'message' => $request->message,
-                'created_at' => Carbon::now(),
-            ]);
-    
-            $notification = array(
-                'message' => 'Cập nhật đánh giá thành công không có hình ảnh',
-                'alert-type' => 'success'
-            );
-            return redirect()->route('all.testimonial')->with('message', 'Cập nhật đánh giá thành công không có hình ảnh')->with('alert-type', 'success');
+            $message = 'Cập nhật đánh giá thành công không có hình ảnh';
         }
+
+        $testimonial->update($data);
+
+        return redirect()->route('all.testimonial')->with([
+            'message' => $message,
+            'alert-type' => 'success',
+        ]);
     }
+
 
     public function DeleteTestimonial($id){
         $item = Testimonial::findOrFail($id);
-        $img = $item->image;
-        unlink($img);
-
         Testimonial::findOrFail($id)->delete();
         $notification = array(
             'message' => 'Xóa đánh giá thành công',

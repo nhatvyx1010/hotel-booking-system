@@ -9,6 +9,7 @@ use App\Models\Contact;
 use Intervention\Image\Facades\Image;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class GalleryController extends Controller
 {
@@ -39,46 +40,72 @@ class GalleryController extends Controller
         $images = $request->file('photo_name');
 
         if (!$images || count($images) === 0) {
-            return redirect()->back()->with('message', 'Vui lòng chọn ít nhất một ảnh để upload')->with('alert-type', 'error');
+            return redirect()->back()
+                ->with('message', 'Vui lòng chọn ít nhất một ảnh để upload')
+                ->with('alert-type', 'error');
         }
 
         foreach ($images as $img) {
-            $name_gen = hexdec(uniqid()) . '.' . $img->getClientOriginalExtension();
-            Image::make($img)->resize(550, 550)->save('upload/gallery/' . $name_gen);
-            $save_url = 'upload/gallery/' . $name_gen;
+            $uploadResult = Cloudinary::upload($img->getRealPath(), [
+                'folder' => 'gallery',
+                'transformation' => [
+                    'width' => 550,
+                    'height' => 550,
+                    'crop' => 'fill',
+                    'gravity' => 'auto',
+                ],
+                'resource_type' => 'image',
+            ]);
 
-            Gallery::insert([
+            $save_url = $uploadResult->getSecurePath(); // URL ảnh từ Cloudinary
+
+            Gallery::create([
                 'photo_name' => $save_url,
                 'created_at' => Carbon::now(),
             ]);
         }
 
-        return redirect()->route('all.gallery')->with('message', 'Thêm ảnh thư viện thành công')->with('alert-type', 'success');
+        return redirect()->route('all.gallery')
+            ->with('message', 'Thêm ảnh thư viện thành công')
+            ->with('alert-type', 'success');
     }
-
-    public function HotelStoreGallery(Request $request){
+    
+    public function HotelStoreGallery(Request $request)
+    {
         $images = $request->file('photo_name');
         $user_id = Auth::id();
-    
+
+        if (!$images || count($images) === 0) {
+            return redirect()->back()->with([
+                'message' => 'Vui lòng chọn ít nhất một ảnh',
+                'alert-type' => 'error'
+            ]);
+        }
+
         foreach ($images as $img) {
-            $name_gen = hexdec(uniqid()).'.'.$img->getClientOriginalExtension();
-            Image::make($img)->resize(550, 550)->save('upload/gallery/'.$name_gen);
-            $save_url = 'upload/gallery/'.$name_gen;
-    
-            Gallery::insert([
-                'photo_name' => $save_url,
+            $uploadResult = Cloudinary::upload($img->getRealPath(), [
+                'folder' => 'gallery',
+                'transformation' => [
+                    'width' => 550,
+                    'height' => 550,
+                    'crop' => 'fill',
+                    'gravity' => 'auto',
+                ],
+                'resource_type' => 'image',
+            ]);
+
+            Gallery::create([
+                'photo_name' => $uploadResult->getSecurePath(),
                 'hotel_id' => $user_id,
                 'created_at' => Carbon::now(),
             ]);
         }
-    
-        $notification = array(
+
+        return redirect()->route('hotel.all.gallery')->with([
             'message' => 'Thêm ảnh thư viện thành công',
             'alert-type' => 'success'
-        );
-    
-        return redirect()->route('hotel.all.gallery')->with('message', 'Thêm ảnh thư viện thành công')->with('alert-type', 'success');
-    }    
+        ]);
+    }
 
     public function EditGallery($id){
         $gallery = Gallery::find($id);
@@ -95,56 +122,86 @@ class GalleryController extends Controller
         return view('hotel.backend.gallery.edit_gallery', compact('gallery'));
     }
 
-    public function UpdateGallery(Request $request){
+    public function UpdateGallery(Request $request)
+    {
         $gal_id = $request->id;
         $img = $request->file('photo_name');
 
-        $name_gen = hexdec(uniqid()).'.'.$img->getClientOriginalExtension();
-        Image::make($img)->resize(550, 550)->save('upload/gallery/'.$name_gen);
-        $save_url = 'upload/gallery/'.$name_gen;
-        
-        Gallery::find($gal_id)->update([
+        if (!$img) {
+            return redirect()->back()->with([
+                'message' => 'Vui lòng chọn ảnh để cập nhật',
+                'alert-type' => 'error'
+            ]);
+        }
+
+        $uploadResult = Cloudinary::upload($img->getRealPath(), [
+            'folder' => 'gallery',
+            'transformation' => [
+                'width' => 550,
+                'height' => 550,
+                'crop' => 'fill',
+                'gravity' => 'auto',
+            ],
+            'resource_type' => 'image',
+        ]);
+
+        $save_url = $uploadResult->getSecurePath();
+
+        Gallery::findOrFail($gal_id)->update([
             'photo_name' => $save_url,
         ]);
 
-        $notification = array(
+        return redirect()->route('all.gallery')->with([
             'message' => 'Cập nhật ảnh thư viện thành công',
             'alert-type' => 'success'
-        );
-        return redirect()->route('all.gallery')->with('message', 'Cập nhật ảnh thư viện thành công')->with('alert-type', 'success');
+        ]);
     }
 
-    public function HotelUpdateGallery(Request $request){
+    public function HotelUpdateGallery(Request $request)
+    {
         $gal_id = $request->id;
-        $img = $request->file('photo_name');
         $user_id = Auth::id();
-    
+        $img = $request->file('photo_name');
+
         $gallery = Gallery::where('hotel_id', $user_id)->find($gal_id);
         if (!$gallery) {
-            return redirect()->route('hotel.all.gallery')->with('message', 'Không tìm thấy ảnh thư viện')->with('alert-type', 'error');
+            return redirect()->route('hotel.all.gallery')->with([
+                'message' => 'Không tìm thấy ảnh thư viện',
+                'alert-type' => 'error'
+            ]);
         }
-    
-        $name_gen = hexdec(uniqid()).'.'.$img->getClientOriginalExtension();
-        Image::make($img)->resize(550, 550)->save('upload/gallery/'.$name_gen);
-        $save_url = 'upload/gallery/'.$name_gen;
-    
-        $gallery->update([
-            'photo_name' => $save_url,
+
+        if (!$img) {
+            return redirect()->back()->with([
+                'message' => 'Vui lòng chọn ảnh để cập nhật',
+                'alert-type' => 'error'
+            ]);
+        }
+
+        $uploadResult = Cloudinary::upload($img->getRealPath(), [
+            'folder' => 'gallery',
+            'transformation' => [
+                'width' => 550,
+                'height' => 550,
+                'crop' => 'fill',
+                'gravity' => 'auto',
+            ],
+            'resource_type' => 'image',
         ]);
-    
-        $notification = array(
+
+        $gallery->update([
+            'photo_name' => $uploadResult->getSecurePath(),
+        ]);
+
+        return redirect()->route('hotel.all.gallery')->with([
             'message' => 'Cập nhật ảnh thư viện thành công',
             'alert-type' => 'success'
-        );
-    
-        return redirect()->route('hotel.all.gallery')->with('message', 'Cập nhật ảnh thư viện thành công')->with('alert-type', 'success');
-    }    
+        ]);
+    }
+
 
     public function DeleteGallery($id){
         $item = Gallery::findOrFail($id);
-        $img = $item->photo_name;
-        unlink($img);
-
         Gallery::findOrFail($id)->delete();
         $notification = array(
             'message' => 'Xóa ảnh thư viện thành công',
@@ -157,9 +214,6 @@ class GalleryController extends Controller
         $user_id = Auth::id();
     
         $item = Gallery::where('hotel_id', $user_id)->findOrFail($id);
-        $img = $item->photo_name;
-        unlink($img);
-    
         $item->delete();
         $notification = array(
             'message' => 'Xóa ảnh thư viện thành công',
@@ -173,8 +227,6 @@ class GalleryController extends Controller
         $selectedItems = $request->input('selectedItem', []);
         foreach($selectedItems as $itemId){
             $item = Gallery::find($itemId);
-            $img = $item->photo_name;
-            unlink($img);
             $item->delete();
         }
 
@@ -192,8 +244,6 @@ class GalleryController extends Controller
         foreach($selectedItems as $itemId){
             $item = Gallery::where('hotel_id', $user_id)->find($itemId);
             if ($item) {
-                $img = $item->photo_name;
-                unlink($img);
                 $item->delete();
             }
         }

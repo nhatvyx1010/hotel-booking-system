@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\City;
 use Illuminate\Support\Facades\Hash;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class UserController extends Controller
 {
@@ -39,13 +40,20 @@ class UserController extends Controller
         $data->address =$request->address;
 
 
-        if($request->file('photo')){
-            $file = $request->file('photo');
-            @unlink(public_path('upload/user_images/'.$data->photo));
-            $filename = date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('upload/user_images'), $filename);
-            $data['photo'] = $filename;
+        if ($request->hasFile('photo')) {
+            $uploadResult = Cloudinary::upload($request->file('photo')->getRealPath(), [
+                'folder' => 'user_images',
+                'transformation' => [
+                    'width' => 300,
+                    'height' => 300,
+                    'crop' => 'fill',
+                    'gravity' => 'face'
+                ],
+            ]);
+
+            $data['photo'] = $uploadResult->getSecurePath(); // Lưu URL ảnh từ Cloudinary
         }
+
         $data->save();
 
         $notification = array(

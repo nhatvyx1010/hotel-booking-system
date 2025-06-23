@@ -13,6 +13,7 @@ use App\Models\RoomType;
 use Intervention\Image\Facades\Image;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class RoomController extends Controller
 {
@@ -54,12 +55,21 @@ class RoomController extends Controller
         $room->description = $request->description;
         $room->status = 1;
 
-        if($request->file('image')){
-            $image = $request->file('image');
-            $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-            Image::make($image)->resize(550, 850)->save('upload/roomimg/'.$name_gen);
-            $room['image'] = $name_gen;
+        if ($request->hasFile('image')) {
+            $uploadResult = Cloudinary::upload($request->file('image')->getRealPath(), [
+                'folder' => 'room_images',
+                'transformation' => [
+                    'width' => 550,
+                    'height' => 850,
+                    'crop' => 'fill',
+                    'gravity' => 'auto',
+                ],
+                'resource_type' => 'image',
+            ]);
+
+            $room['image'] = $uploadResult->getSecurePath(); // Lưu URL ảnh vào DB
         }
+
         $room->save();
 
         if($request->facility_name == NULL){
@@ -137,12 +147,21 @@ class RoomController extends Controller
         $room->description = $request->description;
         $room->status = 1;
     
-        if($request->file('image')){
-            $image = $request->file('image');
-            $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-            Image::make($image)->resize(550, 850)->save('upload/roomimg/'.$name_gen);
-            $room['image'] = $name_gen;
+        if ($request->hasFile('image')) {
+            $uploadResult = Cloudinary::upload($request->file('image')->getRealPath(), [
+                'folder' => 'room_images', // Thư mục lưu trong Cloudinary
+                'transformation' => [
+                    'width' => 550,
+                    'height' => 850,
+                    'crop' => 'fill',
+                    'gravity' => 'auto',
+                ],
+                'resource_type' => 'image',
+            ]);
+
+            $room['image'] = $uploadResult->getSecurePath(); // Lưu đường dẫn ảnh trên Cloudinary
         }
+
         $room->save();
     
         if($request->facility_name == NULL){
@@ -206,14 +225,6 @@ class RoomController extends Controller
         $deletedata = MultiImage::where('id', $id)->first();
 
         if($deletedata){
-            $imagePath = $deletedata->multi_img;
-            if(file_exists($imagePath)){
-                unlink($imagePath);
-                // echo "Xóa ảnh thành công";
-            }else{
-                // echo "Ảnh không tồn tại";
-            }
-
             MultiImage::where('id', $id)->delete();
         }
         $notification = array(
@@ -231,13 +242,6 @@ class RoomController extends Controller
         })->first();
     
         if ($deletedata) {
-            $imagePath = $deletedata->multi_img;
-            if(file_exists($imagePath)){
-                unlink($imagePath);
-                // echo "Xóa ảnh thành công";
-            } else {
-                // echo "Ảnh không tồn tại";
-            }
             MultiImage::where('id', $id)->delete();
     
             $notification = array(
@@ -368,18 +372,6 @@ class RoomController extends Controller
     public function DeleteRoom(Request $request, $id){
         $room = Room::find($id);
 
-        if(file_exists('upload/roomimg/'.$room->image) AND ! empty($room->image)){
-            @unlink('upload/roomimg/'.$room->image);
-        }
-
-        $subimage = MultiImage::where('rooms_id', $room->id)->get()->toArray();
-        if(!empty($subimage)){
-            foreach($subimage as $value){
-                if(!empty($value)){
-                    @unlink('upload/roomimg/multi_img/'.$value['multi_img']);
-                }
-            }
-        }
         RoomType::where('id', $room->roomtype_id)->delete();
         MultiImage::where('rooms_id', $room->id)->delete();
         Facility::where('rooms_id', $room->id)->delete();
@@ -399,19 +391,6 @@ class RoomController extends Controller
     
         if (!$room) {
             return redirect()->back()->with('error', 'Không tìm thấy phòng thuộc khách sạn này');
-        }
-    
-        if(file_exists('upload/roomimg/'.$room->image) AND ! empty($room->image)){
-            @unlink('upload/roomimg/'.$room->image);
-        }
-    
-        $subimage = MultiImage::where('rooms_id', $room->id)->get()->toArray();
-        if(!empty($subimage)){
-            foreach($subimage as $value){
-                if(!empty($value)){
-                    @unlink('upload/roomimg/multi_img/'.$value['multi_img']);
-                }
-            }
         }
     
         RoomType::where('id', $room->roomtype_id)->delete();

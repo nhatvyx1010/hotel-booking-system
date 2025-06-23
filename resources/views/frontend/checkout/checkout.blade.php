@@ -179,7 +179,7 @@
                                             <hr>
               
                                             <div style="display: flex">
-                                                  <img style="height:100px; width:120px;object-fit: cover" src="{{ (!empty($room->image)) ? url('upload/roomimg/'.$room->image) : url('upload/no_image.jpg') }}" alt="Images" alt="Images">
+                                                  <img style="height:100px; width:120px;object-fit: cover" src="{{ (!empty($room->image)) ? url($room->image) : url('upload/no_image.jpg') }}" alt="Images" alt="Images">
                                                   <div style="padding-left: 10px;">
                                                         <a href=" " style="font-size: 20px; color: #595959;font-weight: bold">{{ @$room->type->name }}</a>
                                                         <p><b>{{ $room->price }} / Đêm</b></p>

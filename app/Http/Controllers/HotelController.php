@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\City;
 use Illuminate\Validation\Rules;
 use Illuminate\Auth\Events\Registered;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class HotelController extends Controller
 {
@@ -119,35 +120,32 @@ class HotelController extends Controller
 
         if ($request->delete_audio == '1') {
             if (!empty($data->hotel_audio)) {
-                $audioPath = public_path('upload/audio/' . $data->hotel_audio);
-                if (file_exists($audioPath)) {
-                    unlink($audioPath);
-                }
                 $data->hotel_audio = null;
             }
         }
 
-        if($request->hasFile('photo')){
-            $file = $request->file('photo');
-            $filename = time().'.'.$file->getClientOriginalExtension();
-            $file->move(public_path('upload/hotel_images'), $filename);
-            $data->photo = $filename;
+        if ($request->hasFile('photo')) {
+            $uploadResult = Cloudinary::upload($request->file('photo')->getRealPath(), [
+                'folder' => 'hotel_images',
+                'transformation' => [
+                    'width' => 500,
+                    'height' => 500,
+                    'crop' => 'fill',
+                    'gravity' => 'auto'
+                ],
+            ]);
 
-            if ($oldPhotoPath && $oldPhotoPath !== $filename) {
-                $this->deleteOldImage($oldPhotoPath);
-            }
+            $data->photo = $uploadResult->getSecurePath();
         }
 
         if ($request->hasFile('audio_file')) {
-            $file = $request->file('audio_file'); 
-            $filename = time() . '.' . $file->getClientOriginalExtension(); 
-            $file->move(public_path('upload/hotel_audio'), $filename); 
+            $file = $request->file('audio_file');
 
-            $data->hotel_audio = 'upload/hotel_audio/' . $filename;
-
-            if ($oldAudioPath && $oldAudioPath !== $data->hotel_audio && file_exists(public_path($oldAudioPath))) {
-                unlink(public_path($oldAudioPath));
-            }
+            $uploadResult = Cloudinary::upload($file->getRealPath(), [
+                'folder' => 'hotel_audio',
+                'resource_type' => 'video' 
+            ]);
+            $data->hotel_audio = $uploadResult->getSecurePath();
         }
 
         $data->save();

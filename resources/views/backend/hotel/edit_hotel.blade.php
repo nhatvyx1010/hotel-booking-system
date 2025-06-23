@@ -75,7 +75,7 @@
                                     </div>
                                     <div class="col-sm-9 text-secondary">
                                         <img id="showImage" 
-                                            src="{{ (!empty($hotel->photo)) ? url('upload/admin_images/' . $hotel->photo) : url('upload/no_image.jpg') }}" 
+                                            src="{{ (!empty($hotel->photo)) ? url($hotel->photo) : url('upload/no_image.jpg') }}" 
                                             alt="Hotel Image" class="rounded-circle p-1 bg-primary" width="400">
                                     </div>
                                 </div>

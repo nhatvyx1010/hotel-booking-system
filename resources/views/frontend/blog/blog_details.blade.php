@@ -67,7 +67,7 @@
 								<ul>
                                     @foreach ($comment as $cmt)
 									<li>
-										<img src="{{ (!empty($cmt->user->photo)) ? url('upload/user_images/' . $cmt->user->photo) : url('upload/no_image.jpg') }}" alt="Image" style="width: 50px; height: 50px">
+										<img src="{{ (!empty($cmt->user->photo)) ? url($cmt->user->photo) : url('upload/no_image.jpg') }}" alt="Image" style="width: 50px; height: 50px">
 										<h3>{{ $cmt->user->name }}</h3>
 										<span>{{ $cmt->created_at->format('M d Y') }}</span>
 										<p>

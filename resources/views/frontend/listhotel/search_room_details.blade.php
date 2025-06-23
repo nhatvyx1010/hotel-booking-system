@@ -121,7 +121,7 @@
                             <div class="room-details-slider owl-carousel owl-theme">
                                 @foreach ($multiImage as $image)
                                 <div class="room-details-item">
-                                    <img src="{{ asset('upload/roomimg/multi_img/'.$image->multi_img) }}" alt="Images">
+                                    <img src="{{ asset($image->multi_img) }}" alt="Images">
                                 </div>
                                 @endforeach 
                             </div>
@@ -252,7 +252,7 @@
                                 <div class="col-lg-5 col-md-4 p-0">
                                     <div class="room-card-img">
                                         <a href="{{ url('room/details/'.$item->id) }}">
-                                            <img src="{{asset('upload/roomimg/'.$item->image)}}" alt="Images">
+                                            <img src="{{asset($item->image)}}" alt="Images">
                                         </a>
                                     </div>
                                 </div>

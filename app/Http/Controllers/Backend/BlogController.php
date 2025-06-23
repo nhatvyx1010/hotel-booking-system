@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\Models\BlogPost;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class BlogController extends Controller
 {
@@ -80,22 +81,37 @@ class BlogController extends Controller
             'audio_file' => 'nullable|mimes:mp3,wav,m4a',
         ]);
 
+        // Upload ảnh bài viết lên Cloudinary
         if ($request->hasFile('post_image')) {
-            $image = $request->file('post_image');
-            $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-            Image::make($image)->resize(550, 370)->save('upload/post/'.$name_gen);
-            $save_url = 'upload/post/'.$name_gen;
+            $uploadResult = Cloudinary::upload($request->file('post_image')->getRealPath(), [
+                'folder' => 'post',
+                'transformation' => [
+                    'width' => 550,
+                    'height' => 370,
+                    'crop' => 'fill',
+                    'gravity' => 'auto'
+                ],
+                'resource_type' => 'image',
+            ]);
+
+            $save_url = $uploadResult->getSecurePath(); // URL ảnh
         } else {
-            $save_url = 'upload/post/default.jpg';
+            // Ảnh mặc định (nếu bạn có ảnh mặc định trên Cloudinary thì thay bằng URL thật)
+            $save_url = 'https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/post/default.jpg';
         }
 
+
+        // Upload audio lên Cloudinary
         $audio_save_url = null;
         if ($request->hasFile('audio_file')) {
-            $audio = $request->file('audio_file');
-            $audio_name = hexdec(uniqid()) . '.' . $audio->getClientOriginalExtension();
-            $audio->move('upload/blog_audio/', $audio_name);
-            $audio_save_url = 'upload/blog_audio/' . $audio_name;
+            $uploadResult = Cloudinary::upload($request->file('audio_file')->getRealPath(), [
+                'folder' => 'blog_audio',
+                'resource_type' => 'video' // Cloudinary yêu cầu video cho audio/mp3
+            ]);
+
+            $audio_save_url = $uploadResult->getSecurePath(); // URL audio
         }
+
 
         $blogPostData = [
             'blogcat_id' => $request->blogcat_id,
@@ -139,40 +155,36 @@ class BlogController extends Controller
         $blogPost = BlogPost::findOrFail($post_id);
 
         // Xử lý ảnh nếu có upload mới
-        if($request->file('post_image')){
-            $image = $request->file('post_image');
-            $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-            Image::make($image)->resize(550, 370)->save('upload/post/'.$name_gen);
-            $save_url = 'upload/post/'.$name_gen;
+        if ($request->hasFile('post_image')) {
+            $uploadResult = Cloudinary::upload($request->file('post_image')->getRealPath(), [
+                'folder' => 'post',
+                'transformation' => [
+                    'width' => 550,
+                    'height' => 370,
+                    'crop' => 'fill',
+                    'gravity' => 'auto',
+                ],
+                'resource_type' => 'image',
+            ]);
 
-            // Xóa ảnh cũ nếu có
-            if($blogPost->post_image && file_exists(public_path($blogPost->post_image))){
-                unlink(public_path($blogPost->post_image));
-            }
-
-            $blogPost->post_image = $save_url;
+            $blogPost->post_image = $uploadResult->getSecurePath();
         }
 
-        // Xử lý audio
         // Nếu có yêu cầu xóa audio (checkbox remove_audio)
-        if($request->has('remove_audio') && $request->remove_audio == 1){
-            if($blogPost->audio_file && file_exists(public_path($blogPost->audio_file))){
-                unlink(public_path($blogPost->audio_file));
-            }
+        if ($request->has('remove_audio') && $request->remove_audio == 1) {
             $blogPost->audio_file = null;
         }
 
-        // Nếu upload file audio mới
-        if($request->file('audio_file')){
-            // Xóa audio cũ nếu có
-            if($blogPost->audio_file && file_exists(public_path($blogPost->audio_file))){
-                unlink(public_path($blogPost->audio_file));
-            }
-            $audio = $request->file('audio_file');
-            $audio_name = hexdec(uniqid()) . '.' . $audio->getClientOriginalExtension();
-            $audio->move('upload/blog_audio/', $audio_name);
-            $blogPost->audio_file = 'upload/blog_audio/' . $audio_name;
+
+        // Upload audio mới lên Cloudinary
+        if ($request->hasFile('audio_file')) {
+            $uploadResult = Cloudinary::upload($request->file('audio_file')->getRealPath(), [
+                'folder' => 'blog_audio',
+                'resource_type' => 'video' // Bắt buộc cho file .mp3, .wav,...
+            ]);
+            $blogPost->audio_file = $uploadResult->getSecurePath();
         }
+
 
         // Cập nhật các trường còn lại
         $blogPost->blogcat_id = $request->blogcat_id;
@@ -196,8 +208,6 @@ class BlogController extends Controller
 
     public function DeleteBlogPost($id){
         $item = BlogPost::findOrFail($id);
-        $img = $item->post_image;
-        unlink($img);
 
         BlogPost::findOrFail($id)->delete();
         $notification = array(
