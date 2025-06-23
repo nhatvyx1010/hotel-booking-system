@@ -97,7 +97,7 @@ class BlogController extends Controller
             $save_url = $uploadResult->getSecurePath(); // URL ảnh
         } else {
             // Ảnh mặc định (nếu bạn có ảnh mặc định trên Cloudinary thì thay bằng URL thật)
-            $save_url = 'https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/v1/post/default.jpg';
+            $save_url = 'https://res.cloudinary.com/drvcrrmd5/image/upload/v1/post/default.jpg';
         }
 
 

@@ -90,22 +90,30 @@ class RoomController extends Controller
             }
         }
 
-        if($room->save()){
+        if ($room->save()) {
             $files = $request->multi_img;
-            if(!empty($files)){
-                $subimage = MultiImage::where('rooms_id', $id)->get()->toArray();
-                MultiImage::where('rooms_id', $id)->delete();
-            }
-            if(!empty($files)){
-                foreach($files as $file){
-                    $imgName = date('YmdHi').$file->getClientOriginalName();
-                    $file->move('upload/roomimg/multi_img/', $imgName);
-                    $subimage['multi_img'] = $imgName;
 
-                    $subimage = new MultiImage();
-                    $subimage->rooms_id = $room->id;
-                    $subimage->multi_img = $imgName;
-                    $subimage->save();
+            if (!empty($files)) {
+                MultiImage::where('rooms_id', $id)->delete();
+
+                foreach ($files as $file) {
+                    try {
+                        $upload = Cloudinary::upload($file->getRealPath(), [
+                            'folder' => 'roomimg/multi'
+                        ]);
+
+                        $imageUrl = $upload->getSecurePath();
+
+                        // Lưu đường dẫn cloud vào DB
+                        $subimage = new MultiImage();
+                        $subimage->rooms_id = $room->id;
+                        $subimage->multi_img = $imageUrl;
+                        $subimage->save();
+
+                        echo "✅ Uploaded: $imageUrl\n";
+                    } catch (Exception $e) {
+                        echo "❌ Lỗi upload ảnh phụ: " . $e->getMessage() . "\n";
+                    }
                 }
             }
         }
@@ -178,22 +186,32 @@ class RoomController extends Controller
                 $facility->save();
             }
         }
-    
+        
         if ($request->multi_img) {
             $files = $request->multi_img;
-            $subimage = MultiImage::where('rooms_id', $id)->get()->toArray();
+
+            // Xóa ảnh cũ trong DB (nếu có)
             MultiImage::where('rooms_id', $id)->delete();
-    
-            foreach($files as $file){
-                $imgName = date('YmdHi').$file->getClientOriginalName();
-                $file->move('upload/roomimg/multi_img/', $imgName);
-    
-                $user_id = Auth::id();
-                $multiImage = new MultiImage();
-                $multiImage->rooms_id = $room->id;
-                $multiImage->multi_img = $imgName;
-                $multiImage->hotel_id = $user_id;
-                $multiImage->save();
+
+            foreach ($files as $file) {
+                try {
+                    // Upload file lên Cloudinary, lưu trong folder roomimg/multi
+                    $upload = Cloudinary::upload($file->getRealPath(), [
+                        'folder' => 'roomimg/multi'
+                    ]);
+
+                    $imageUrl = $upload->getSecurePath(); // Đường dẫn ảnh trên Cloudinary
+
+                    $multiImage = new MultiImage();
+                    $multiImage->rooms_id = $room->id;
+                    $multiImage->hotel_id = Auth::id();
+                    $multiImage->multi_img = $imageUrl;
+                    $multiImage->save();
+
+                    echo "✅ Uploaded multi_img: $imageUrl\n";
+                } catch (Exception $e) {
+                    echo "❌ Lỗi upload multi_img: " . $e->getMessage() . "\n";
+                }
             }
         }
     
