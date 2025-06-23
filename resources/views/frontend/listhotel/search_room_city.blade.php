@@ -98,7 +98,6 @@
                     <div class="card border-0 shadow-lg rounded-3 overflow-hidden">
                         <div class="row g-0 align-items-center">
                             <div class="col-lg-4">
-                                <!-- <img src="{{ asset($hotel->bookarea->image ?? 'upload/no_images.jpg') }}" class="img-fluid w-100 h-100" style="object-fit: cover; border-radius: 10px;" alt="{{ $hotel->name }}"> -->
                                 <img src="{{ asset($hotel->bookarea->image ?? 'upload/no_images.jpg') }}" class="img-fluid w-100 h-100" style="object-fit: cover; border-radius: 10px;" alt="{{ $hotel->name }}">
 
                             </div>
@@ -150,7 +149,7 @@
                                         <div class="d-flex align-items-center mt-3">
                                             <div style="width: 120px; height: 80px; overflow: hidden; border-radius: 8px; margin-right: 15px;">
                                                 <a href="{{ route('search_room_details', $hotel->random_room->id) }}">
-                                                    <img src="{{ asset('upload/roomimg/' . $hotel->random_room->image) }}" class="w-100 h-100" style="object-fit: cover;" alt="Room Image">
+                                                    <img src="{{ asset($hotel->random_room->image) }}" class="w-100 h-100" style="object-fit: cover;" alt="Room Image">
                                                 </a>
                                             </div>
                                             <div>

@@ -68,7 +68,7 @@
                                     <div class="col-sm-9 text-secondary">
                                         <input type="file" name="photo" class="form-control">
                                         @if($customer->photo)
-                                            <img src="{{ asset('upload/user_images/' . $customer->photo) }}" alt="Ảnh khách hàng" class="mt-2" style="width: 100px; height: 70px;">
+                                            <img src="{{ asset($customer->photo) }}" alt="Ảnh khách hàng" class="mt-2" style="width: 100px; height: 70px;">
                                         @endif
                                         @error('photo') <small class="text-danger d-block">{{ $message }}</small> @enderror
                                     </div>

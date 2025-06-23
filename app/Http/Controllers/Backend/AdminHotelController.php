@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\HotelApprovedMail;
 use App\Mail\HotelRejectedMail;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class AdminHotelController extends Controller
 {
@@ -66,21 +67,30 @@ class AdminHotelController extends Controller
         $hotel->role = 'hotel';
         $hotel->status = 'active';
 
-        // Xử lý ảnh
-        if ($request->file('photo')) {
-            $file = $request->file('photo');
-            @unlink(public_path('upload/admin_images/' . $hotel->photo));
-            $filename = date('YmdHi') . $file->getClientOriginalName();
-            $file->move(public_path('upload/admin_images'), $filename);
-            $hotel->photo = $filename;
+        // Xử lý ảnh - upload lên Cloudinary
+        if ($request->hasFile('photo')) {
+            $uploadResult = Cloudinary::upload($request->file('photo')->getRealPath(), [
+                'folder' => 'admin_images',
+                'transformation' => [
+                    'width' => 300,
+                    'height' => 300,
+                    'crop' => 'fill',
+                    'gravity' => 'face',
+                ],
+                'resource_type' => 'image',
+            ]);
+
+            $hotel->photo = $uploadResult->getSecurePath(); // Lưu URL ảnh
         }
 
-        // Xử lý file âm thanh
+        // Xử lý file âm thanh 
         if ($request->hasFile('hotel_audio')) {
-            $audio = $request->file('hotel_audio');
-            $audio_name = date('YmdHi') . $audio->getClientOriginalName();
-            $audio->move(public_path('upload/hotel_audio'), $audio_name);
-            $hotel->hotel_audio = 'upload/hotel_audio/' . $audio_name;
+            $uploadResult = Cloudinary::upload($request->file('hotel_audio')->getRealPath(), [
+                'folder' => 'hotel_audio',
+                'resource_type' => 'video' 
+            ]);
+
+            $hotel->hotel_audio = $uploadResult->getSecurePath(); 
         }
 
         $hotel->save();
@@ -121,26 +131,30 @@ class AdminHotelController extends Controller
         $hotel->city_id = $request->city_id;
         $hotel->status = $request->status;
 
-        // Xử lý ảnh
-        if ($request->file('photo')) {
-            $file = $request->file('photo');
-            @unlink(public_path('upload/admin_images/' . $hotel->photo));
-            $filename = date('YmdHi') . $file->getClientOriginalName();
-            $file->move(public_path('upload/admin_images'), $filename);
-            $hotel->photo = $filename;
+        // Xử lý ảnh - upload lên Cloudinary
+        if ($request->hasFile('photo')) {
+            $uploadResult = Cloudinary::upload($request->file('photo')->getRealPath(), [
+                'folder' => 'admin_images',
+                'transformation' => [
+                    'width' => 300,
+                    'height' => 300,
+                    'crop' => 'fill',
+                    'gravity' => 'face',
+                ],
+                'resource_type' => 'image',
+            ]);
+
+            $hotel->photo = $uploadResult->getSecurePath(); // Lưu URL ảnh
         }
 
-        // Xử lý file âm thanh
+        // Xử lý file âm thanh - upload lên Cloudinary
         if ($request->hasFile('hotel_audio')) {
-            // Xóa file audio cũ nếu có
-            if ($hotel->hotel_audio && file_exists(public_path($hotel->hotel_audio))) {
-                unlink(public_path($hotel->hotel_audio));
-            }
+            $uploadResult = Cloudinary::upload($request->file('hotel_audio')->getRealPath(), [
+                'folder' => 'hotel_audio',
+                'resource_type' => 'video' // Bắt buộc cho file mp3/wav
+            ]);
 
-            $audio = $request->file('hotel_audio');
-            $audio_name = date('YmdHi') . $audio->getClientOriginalName();
-            $audio->move(public_path('upload/hotel_audio'), $audio_name);
-            $hotel->hotel_audio = 'upload/hotel_audio/' . $audio_name;
+            $hotel->hotel_audio = $uploadResult->getSecurePath(); // Lưu URL file audio
         }
 
         $hotel->save();
@@ -165,13 +179,20 @@ class AdminHotelController extends Controller
         $hotel->address = $request->address;
         $hotel->city_id = $request->city_id;
         $hotel->status = $request->status;
-        
-        if ($request->file('image')) {
-            $file = $request->file('image');
-            @unlink(public_path('upload/admin_images/' . $hotel->photo));
-            $filename = date('YmdHi') . $file->getClientOriginalName();
-            $file->move(public_path('upload/admin_images'), $filename);
-            $hotel->photo = $filename;
+
+        if ($request->hasFile('image')) {
+            $uploadResult = Cloudinary::upload($request->file('image')->getRealPath(), [
+                'folder' => 'admin_images',
+                'transformation' => [
+                    'width' => 300,
+                    'height' => 300,
+                    'crop' => 'fill',
+                    'gravity' => 'face',
+                ],
+                'resource_type' => 'image',
+            ]);
+
+            $hotel->photo = $uploadResult->getSecurePath(); // Lưu URL ảnh
         }
         
         try {

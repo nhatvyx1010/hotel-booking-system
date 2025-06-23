@@ -26,7 +26,7 @@
                         <div class="col-lg-5 col-md-4 p-0">
                             <div class="room-card-img">
                                 <a href="{{ url('hotel_detail/'.$hotel->id) }}">
-                                    <img src="{{ asset('upload/admin_images/' . $hotel->photo) }}" alt="{{ $hotel->name }}" style="width:100%; height:200px; object-fit:cover;">
+                                    <img src="{{ asset($hotel->photo) }}" alt="{{ $hotel->name }}" style="width:100%; height:200px; object-fit:cover;">
                                 </a>
                             </div>
                         </div>

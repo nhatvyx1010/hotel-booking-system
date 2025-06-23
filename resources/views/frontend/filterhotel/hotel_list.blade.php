@@ -76,7 +76,7 @@
                                                     <div class="d-flex align-items-center border p-2 rounded">
                                                         <div style="width: 100px; height: 70px; overflow: hidden; border-radius: 8px; margin-right: 15px;">
                                                             <a href="{{ route('search_room_details', $room->id.'?check_in='.old('check_in').'&check_out='.old('check_out').'&persion='.old('persion')) }}">
-                                                                <img src="{{ asset('upload/roomimg/'.$room->image) }}"
+                                                                <img src="{{ asset($room->image) }}"
                                                                     class="w-100 h-100"
                                                                     style="object-fit: cover;"
                                                                     alt="Room Image">

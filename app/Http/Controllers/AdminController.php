@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -44,12 +45,18 @@ class AdminController extends Controller
         $data->phone =$request->phone;
         $data->address =$request->address;
 
-        if($request->file('photo')){
-            $file = $request->file('photo');
-            @unlink(public_path('upload/admin_images/'.$data->photo));
-            $filename = date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('upload/admin_images'), $filename);
-            $data['photo'] = $filename;
+        if ($request->hasFile('photo')) {
+            $uploadedFile = $request->file('photo');
+            $uploadResult = Cloudinary::upload($uploadedFile->getRealPath(), [
+                'folder' => 'admin_profile',
+                'transformation' => [
+                    'width' => 300,
+                    'height' => 300,
+                    'crop' => 'fill',
+                    'gravity' => 'face',
+                ],
+            ]);
+            $data->photo = $uploadResult->getSecurePath();
         }
         $data->save();
 

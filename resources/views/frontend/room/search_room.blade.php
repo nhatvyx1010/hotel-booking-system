@@ -116,7 +116,7 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="room-card">
                             <a href="{{ route('search_room_details', $item->id.'?check_in='.old('check_in').'&check_out='.old('check_out').'&persion='.old('persion')) }}">
-                                <img src="{{asset('upload/roomimg/'.$item->image)}}" alt="Images" style="width: 550px; height:300px">
+                                <img src="{{asset($item->image)}}" alt="Images" style="width: 550px; height:300px">
                             </a>
                             <div class="content">
                                 <h6><a href="{{ route('search_room_details', $item->id.'?check_in='.old('check_in').'&check_out='.old('check_out').'&persion='.old('persion')) }}">{{ $item['type']['name'] }}</a></h6>
@@ -207,7 +207,7 @@
                         <div class="card-body d-flex align-items-center">
                             @if($hotel->photo)
                                 <div class="me-3">
-                                    <img src="{{ asset('upload/admin_images/' . $hotel->photo) }}"
+                                    <img src="{{ asset($hotel->photo) }}"
                                         alt="{{ $hotel->name }}"
                                         class="img-fluid rounded-circle border"
                                         style="width: 80px; height: 80px; object-fit: cover;">

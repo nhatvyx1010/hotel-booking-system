@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class CustomerController extends Controller
 {
@@ -34,12 +35,19 @@ class CustomerController extends Controller
         $customer->password = Hash::make($request->password);
         $customer->role = 'user';
 
-        if ($request->file('photo')) {
-            $file = $request->file('photo');
-            @unlink(public_path('upload/admin_images/' . $customer->photo));
-            $filename = date('YmdHi') . $file->getClientOriginalName();
-            $file->move(public_path('upload/admin_images'), $filename);
-            $customer->photo = $filename;
+        if ($request->hasFile('photo')) {
+            $uploadResult = Cloudinary::upload($request->file('photo')->getRealPath(), [
+                'folder' => 'customer_photos',
+                'transformation' => [
+                    'width' => 300,
+                    'height' => 300,
+                    'crop' => 'fill',
+                    'gravity' => 'face',
+                ],
+                'resource_type' => 'image',
+            ]);
+
+            $customer->photo = $uploadResult->getSecurePath(); // Lưu URL ảnh vào DB
         }
 
         $customer->save();
@@ -70,12 +78,19 @@ class CustomerController extends Controller
         $customer->email = $request->email;
         $customer->phone = $request->phone;
 
-        if ($request->file('photo')) {
-            $file = $request->file('photo');
-            @unlink(public_path('upload/user_images/' . $customer->photo));
-            $filename = date('YmdHi') . $file->getClientOriginalName();
-            $file->move(public_path('upload/user_images'), $filename);
-            $customer->photo = $filename;
+        if ($request->hasFile('photo')) {
+            $uploadResult = Cloudinary::upload($request->file('photo')->getRealPath(), [
+                'folder' => 'user_images',
+                'transformation' => [
+                    'width' => 300,
+                    'height' => 300,
+                    'crop' => 'fill',
+                    'gravity' => 'face',
+                ],
+                'resource_type' => 'image',
+            ]);
+
+            $customer->photo = $uploadResult->getSecurePath(); // Lưu URL vào DB
         }
 
         $customer->save();
@@ -85,9 +100,6 @@ class CustomerController extends Controller
 
     public function DeleteCustomer($id){
         $customer = User::findOrFail($id);
-        if ($customer->photo) {
-            @unlink(public_path('upload/admin_images/' . $customer->photo));
-        }
         $customer->delete();
 
         return redirect()->route('all.customer')->with('success', 'Xóa khách hàng thành công')->with('alert-type', 'success');

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class CityController extends Controller
 {
@@ -38,11 +39,18 @@ class CityController extends Controller
         $city->description = $request->description;
 
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $path = 'upload/city/';
-            $name = uniqid().'.'.$image->getClientOriginalExtension();
-            $image->move(public_path($path), $name);
-            $city->image = $path . $name;
+            $uploadResult = Cloudinary::upload($request->file('image')->getRealPath(), [
+                'folder' => 'city',
+                'transformation' => [
+                    'width' => 600,
+                    'height' => 400,
+                    'crop' => 'fill',
+                    'gravity' => 'auto',
+                ],
+                'resource_type' => 'image',
+            ]);
+
+            $city->image = $uploadResult->getSecurePath(); // Lưu URL ảnh vào DB
         }
 
         $city->save();
@@ -72,16 +80,18 @@ class CityController extends Controller
         $city->description = $request->description;
 
         if ($request->hasFile('image')) {
-            // Xoá ảnh cũ nếu tồn tại
-            if ($city->image && File::exists(public_path($city->image))) {
-                File::delete(public_path($city->image));
-            }
+            $uploadResult = Cloudinary::upload($request->file('image')->getRealPath(), [
+                'folder' => 'city',
+                'transformation' => [
+                    'width' => 600,
+                    'height' => 400,
+                    'crop' => 'fill',
+                    'gravity' => 'auto',
+                ],
+                'resource_type' => 'image',
+            ]);
 
-            $image = $request->file('image');
-            $path = 'upload/city/';
-            $name = uniqid().'.'.$image->getClientOriginalExtension();
-            $image->move(public_path($path), $name);
-            $city->image = $path . $name;
+            $city->image = $uploadResult->getSecurePath(); // Lưu URL ảnh vào DB
         }
 
         $city->save();

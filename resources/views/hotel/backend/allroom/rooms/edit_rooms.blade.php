@@ -55,13 +55,13 @@
 				<div class="col-md-6">
 					<label for="input3" class="form-label">Ảnh Chính</label>
 					<input type="file" name="image" class="form-control" id="image">
-					<img id="showImage" src="{{ (!empty($editData->image)) ? url('upload/roomimg/'.$editData->image) : url('upload/no_image.jpg') }}" alt="Admin" class="bg-primary" width="60">
+					<img id="showImage" src="{{ (!empty($editData->image)) ? url($editData->image) : url('upload/no_image.jpg') }}" alt="Admin" class="bg-primary" width="60">
 				</div>
 				<div class="col-md-6">
 					<label for="input4" class="form-label">Ảnh Thư Viện</label>
 					<input type="file" name="multi_img[]" class="form-control" multiple id="multiImg" accept="image/jpeg, image/jpg, image/gif, image/png">
 					@foreach ($multiimgs as $item)
-					<img src="{{ (!empty($item->multi_img)) ? url('upload/roomimg/multi_img/'.$item->multi_img) : url('upload/no_image.jpg') }}" alt="Admin" class="bg-primary" width="60">
+					<img src="{{ (!empty($item->multi_img)) ? url($item->multi_img) : url('upload/no_image.jpg') }}" alt="Admin" class="bg-primary" width="60">
                         <a href="{{ route('hotel.multi.image.delete', $item->id) }}"><i class="lni lni-close"></i></a>
                     @endforeach
                     <div class="row" id="preview_img"></div>

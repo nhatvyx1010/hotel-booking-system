@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\SmtpSetting;
 use App\Models\SiteSetting;
 use Intervention\Image\Facades\Image;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class SettingController extends Controller
 {
@@ -39,45 +40,39 @@ class SettingController extends Controller
         return view('backend.site.site_update', compact('site'));
     }
 
-    public function SiteUpdate(Request $request){
+    public function SiteUpdate(Request $request)
+    {
         $site_id = $request->id;
+        $data = [
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'email' => $request->email,
+            'facebook' => $request->facebook,
+            'twitter' => $request->twitter,
+            'copyright' => $request->copyright,
+        ];
 
-        if($request->file('logo')){
-            $image = $request->file('logo');
-            $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-            Image::make($image)->resize(110, 44)->save('upload/site/'.$name_gen);
-            $save_url = 'upload/site/'.$name_gen;
-    
-            SiteSetting::findOrFail($site_id)->update([
-                'phone' => $request->phone,
-                'address' => $request->address,
-                'email' => $request->email,
-                'facebook' => $request->facebook,
-                'twitter' => $request->twitter,
-                'copyright' => $request->copyright,
-                'logo' => $save_url,
+        if ($request->hasFile('logo')) {
+            $uploadResult = Cloudinary::upload($request->file('logo')->getRealPath(), [
+                'folder' => 'site_settings',
+                'transformation' => [
+                    'width' => 110,
+                    'height' => 44,
+                    'crop' => 'fill',
+                    'gravity' => 'auto',
+                ],
+                'resource_type' => 'image',
             ]);
-    
-            $notification = array(
-                'message' => 'Cài đặt trang web đã được cập nhật thành công',
-                'alert-type' => 'success'
-            );
-            return redirect()->back()->with('message', 'Cài đặt trang web đã được cập nhật thành công')->with('alert-type', 'success');
-        } else {
-            SiteSetting::findOrFail($site_id)->update([
-                'phone' => $request->phone,
-                'address' => $request->address,
-                'email' => $request->email,
-                'facebook' => $request->facebook,
-                'twitter' => $request->twitter,
-                'copyright' => $request->copyright,
-            ]);
-    
-            $notification = array(
-                'message' => 'Cài đặt trang web đã được cập nhật thành công',
-                'alert-type' => 'success'
-            );
-            return redirect()->back()->with('message', 'Cài đặt trang web đã được cập nhật thành công')->with('alert-type', 'success');
+
+            $data['logo'] = $uploadResult->getSecurePath(); // URL logo từ Cloudinary
         }
+
+        SiteSetting::findOrFail($site_id)->update($data);
+
+        return redirect()->back()->with([
+            'message' => 'Cài đặt trang web đã được cập nhật thành công',
+            'alert-type' => 'success'
+        ]);
     }
+
 }

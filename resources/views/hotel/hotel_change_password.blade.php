@@ -36,7 +36,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                 <img src="{{ asset($profileData->photo ? 'upload/admin_images/' . $profileData->photo : 'upload/no_image.jpg') }}" 
+                                 <img src="{{ asset($profileData->photo ? $profileData->photo : 'upload/no_image.jpg') }}" 
                                      alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
 
                                 <div class="mt-3">

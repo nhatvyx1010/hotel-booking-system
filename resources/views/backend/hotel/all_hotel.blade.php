@@ -45,7 +45,7 @@
                                 <td>{{ $key + 1 }}</td>
                                 <td>
                                     @if($hotel->photo)
-                                        <img src="{{ asset('upload/admin_images/' . $hotel->photo) }}" alt="" style="width:70px; height:40px">
+                                        <img src="{{ asset($hotel->photo) }}" alt="" style="width:70px; height:40px">
                                     @else
                                         <img src="{{ asset('upload/no_image.jpg') }}" alt="" style="width:70px; height:40px">
                                     @endif
